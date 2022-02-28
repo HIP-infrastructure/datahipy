@@ -37,8 +37,8 @@ RUN apt-get install --no-install-recommends -y \
     PySimpleGUI pydicom paramiko tkcalendar bids_validator && \
     gdown --id 1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6 && \
     filename="bidsificator.zip" && \
-    mkdir ./install && \
-    unzip -q -d ./install ${filename} && \
+    mkdir -p bidsmanager/install && \
+    unzip -q -d bidsmanager/install ${filename} && \
     rm ${filename} && \
     cd bidsmanager/install/$(basename $filename .zip)/ && \
     python3 setup.py install && \
