@@ -33,16 +33,12 @@ RUN apt-get install --no-install-recommends -y unzip && \
 #install bids-manager
 RUN apt-get install --no-install-recommends -y \ 
     python3-pip python3-tk python3-scipy && \
-    pip3 install setuptools PyQt5==5.15.4 nibabel xlrd \
+    pip3 install gdown setuptools PyQt5==5.15.4 nibabel xlrd \
     PySimpleGUI pydicom paramiko tkcalendar bids_validator && \
-    ggID='1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6' && \
-    ggURL='https://drive.google.com/uc?export=download' && \
-    filename="$(curl -sc /tmp/gcokie "${ggURL}&id=${ggID}" \
-    | grep -o '="uc-name.*</span>' | sed 's/.*">//;s/<.a> .*//')" && \ 
-    getcode="$(awk '/_warning_/ {print $NF}' /tmp/gcokie)"  && \
-    curl -Lb /tmp/gcokie "${ggURL}&confirm=${getcode}&id=${ggID}" -o "${filename}" && \
-    mkdir -p ./bidsmanager/install && \
-    unzip -q -d ./bidsmanager/install ${filename} && \
+    gdown --id 1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6 && \
+    filename="bidsificator.zip" && \
+    mkdir ./install && \
+    unzip -q -d ./install ${filename} && \
     rm ${filename} && \
     cd bidsmanager/install/$(basename $filename .zip)/ && \
     python3 setup.py install && \
