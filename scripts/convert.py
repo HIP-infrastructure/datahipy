@@ -10,16 +10,17 @@ import argparse
 
 # INPUT
 # input folder, passed as a (local)/docker volume contains:
-# JSON file: data.json which contains
-#   - Database name and path
-#   - demographic and clinical data about participants
-#   - Array of files to import with their associated metadata
-# /data folder with all files referenced in files
+#   - data.json which contains
+#     - Database name and path
+#     - demographic and clinical data about participants
+#     - Array of files to import with their associated metadata
+#   - data folders by participant id, with all files referenced in the JSON files key
 
 # OUTPUT
 # output folder, passed as a (local)/docker volume should point to the root file system
-# Should update existing participants, demographic, clinical data and files in databasePath/participants.tsv
-# Should create new participant in databasePath
+#   - convert should update existing participants, demographic, clinical data and files in databasePath/participants.tsv
+#   - convert should create new participant in databasePath
+#   - convert should update existing participants in their origin folder
 
 """
 You can run that script locally, just make sure that you change
