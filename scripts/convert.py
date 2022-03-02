@@ -6,25 +6,26 @@ import json
 import os
 import argparse
 
-# Script to create and update participants into an exisiting BIDS database
+# Script to create and update participants into an existing BIDS database
 
 # INPUT
-# input folder, passed as a docker volume contains:
-# JSON file: data.json, contains
+# input folder, passed as a (local)/docker volume contains:
+# JSON file: data.json which contains
 #   - Database name and path
 #   - demographic and clinical data about participants
 #   - Array of files to import with their associated metadata
 # /data folder with all files referenced in files
 
 # OUTPUT
-# output folder, passed as a docker volume should point to the root file system
-# Should update existing participants, demographic, clinical data and files in databasePath
+# output folder, passed as a (local)/docker volume should point to the root file system
+# Should update existing participants, demographic, clinical data and files in databasePath/participants.tsv
 # Should create new participant in databasePath
 
 """
 You can run that script locally, just make sure that you change
 /input and /output in ./data/input and .data/output in the folders path below
 
+run with: 
 python3 ./scripts/convert.py data.json
 
 
