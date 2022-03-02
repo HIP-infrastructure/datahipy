@@ -1,0 +1,39 @@
+{
+    "owner": "mspuhler",
+    "database": "BIDS-DATABASE",
+    "databasePath": "/BIDS-DATABASE",
+    "subjects": [{
+            "id": "sub-carole",
+            "age": "25",
+            "sex": "M",
+            "hospital": "CHUV"
+        },
+        {
+            "id": "sub-zt",
+            "age": "32",
+            "sex": "F",
+            "hospital": "CHRU"
+        }
+    ],
+    "files": [{
+            "modality": "ieeg",
+            "subject": "sub-carole",
+            "path": "/sub-carole/SZ1.TRC",
+            "entities": [{
+                "session": "postimp",
+                "acquisition": "lowres",
+                "task": "stimulation"
+            }]
+        },
+        {
+            "modality": "T1w",
+            "subject": "sub-carole",
+            "path": "/sub-carole/3DT1post_deface.nii",
+            "entities": [{
+                "session": "postimp",
+                "acquisition": "lowres",
+                "task": "eyesclosed"
+            }]
+        }
+    ]
+}

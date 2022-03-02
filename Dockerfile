@@ -47,9 +47,4 @@ RUN apt-get install --no-install-recommends -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install Flask
-
-EXPOSE 4001
-
-# ENTRYPOINT ["python3 /scripts/server.py"]
 CMD python3 /scripts/server.py 
