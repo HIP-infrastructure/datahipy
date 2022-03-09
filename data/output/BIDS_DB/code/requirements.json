@@ -1,0 +1,27 @@
+{
+ "Requirements": {
+  "Subject": {
+   "keys": {
+    "age": "",
+    "sex": "",
+    "hospital": ""
+   }
+  }
+ },
+  "Converters": {
+  "Imaging": {
+   "path": "C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe",
+   "ext": [
+    ".nii"
+   ]
+  },
+  "Electrophy": {
+   "path": "C:/AnyWave/AnyWave.exe",
+   "ext": [
+    ".vhdr",
+    ".vmrk",
+    ".eeg"
+   ]
+  }
+ }
+}

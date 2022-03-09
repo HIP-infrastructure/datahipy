@@ -1,0 +1,41 @@
+{
+    "owner": "aboyer",
+    "database": "BIDS_DB",
+    "databasePath": "/BIDS_DB",
+    "subjects": [{
+            "sub": "carole",
+            "age": "25",
+            "sex": "M",
+            "hospital": "CHUV"
+        },
+        {
+            "sub": "zt",
+            "age": "32",
+            "sex": "F",
+            "hospital": "CHRU"
+        }
+    ],
+    "files": [{
+            "modality": "ieeg",
+            "subject": "carole",
+            "path": "sub-carole/SZ1.TRC",
+            "entities": {
+				"sub": "carole",
+                "ses": "postimp",
+                "acq": "1024hz",
+                "task": "stimulation"
+            }
+        },
+        {
+            "modality": "T1w",
+            "subject": "carole",
+            "path": "sub-carole/3DT1post_deface.nii",
+            "entities": {
+                "sub": "carole",
+				"ses": "postimp",
+                "acq": "lowres",
+                "ce": "gadolinium"
+            }
+        }
+    ]
+}

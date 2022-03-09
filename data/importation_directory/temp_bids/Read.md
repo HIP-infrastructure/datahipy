@@ -1,0 +1,1 @@
+This directory is used to copy targeted files before being converted and transferred to the BIDS database.
