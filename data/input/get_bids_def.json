@@ -1,0 +1,5 @@
+{
+    "owner": "aboyer",
+	"output_path":"C:/Users/anthony/Documents/GIN/GIT/bids-converter/data/output/my_queried_definitions.json",
+	"BIDS_definitions":["Anat", "Ieeg", "DatasetDescJSON"]
+}

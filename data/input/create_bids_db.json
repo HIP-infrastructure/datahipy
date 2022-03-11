@@ -1,0 +1,18 @@
+{
+    "owner": "aboyer",
+    "database": "NEW_BIDS_DB",
+    "databasePath": "/NEW_BIDS_DB",
+	"DatasetDescJSON":{
+		"Name": "My New BIDS db",
+		"BIDSVersion": "1.4.0",
+		"License": "n/a",
+		"Authors": ["Tom", "Jerry"] ,
+		"Acknowledgements": "Overwrite test",
+		"HowToAcknowledge": "n/a",
+		"Funding": "Picsou",
+		"ReferencesAndLinks": "n/a",
+		"DatasetDOI": "n/a"
+		}
+}
+
+

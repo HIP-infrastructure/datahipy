@@ -1,0 +1,7 @@
+{
+    "owner": "aboyer",
+    "database": "BIDS_DB",
+    "databasePath": "/BIDS_DB",
+	"output_path":"C:/Users/anthony/Documents/GIN/GIT/bids-converter/data/output/my_queried_sub_info.json",
+	"info": {"sub":"carole", "dtype":"Anat"}
+}

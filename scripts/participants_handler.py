@@ -17,25 +17,57 @@ import bids_manager.ins_bids_class as bidsmanager  # BIDS Manager Python package
 class ParticipantHandler:
 
     #  Those paths shd not be hardcoded but dynamic.
-    input_dir = r'C:\...\bids-converter\data\input'  # Path to the input dir
-    database_dir = r'C:\...\bids-converter\data\output'  # Path to the BIDS database dir
-    importation_dir = r'C:\...\bids-converter\data\importation_directory'  # Path to the importation dir
+    input_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'  # Path to the input dir
+    database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'  # Path to the BIDS database dir
+    importation_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'  # Path to the importation dir
+    anywave_path = r'C:/AnyWave/AnyWave.exe'  # Path to AnyWave
+    dcm2niix_path = r'C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe'  # Path to dcm2niix
 
     def __init__(self):
         pass
+
+    def check_converters(self, db_obj=None):
+        """ Check if the converters are specified and (re)write the requirements.json if necessary """
+        def_converters = {'Electrophy': {'ext': ['.vhdr', '.vmrk', '.eeg'], 'path': self.anywave_path},
+                          'Imaging': {'ext': ['.nii'], 'path': self.dcm2niix_path}}
+        req_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
+        req_dict = bidsmanager.Requirements(req_path)  # Get the requirements.json dict
+        to_rewrite = False
+        if 'Converters' not in req_dict:
+            to_rewrite = True
+        elif req_dict['Converters'] != def_converters:
+            to_rewrite = True
+        if to_rewrite:
+            print('INFO: Updating the requirements.json converters.')
+            req_dict['Converters'] = def_converters
+            bidsmanager.BidsDataset.dirname = os.path.join(db_obj.dirname)
+            req_dict.save_as_json(req_path)  # Write the requirements.json
+            db_obj.get_requirements()
+
+    @staticmethod
+    def find_subject_dict(db_obj=None, subject=None):
+        """ Find the subject dict in the parsed BIDS db object """
+        matched_sub = [sub_idx for sub_idx, sub_dict in enumerate(db_obj['Subject']) if sub_dict['sub'] == subject]
+        if not matched_sub:
+            raise IndexError('Could not find the subject in the BIDS db.')
+        elif len(matched_sub) > 1:
+            raise IndexError('Several subjects with the same ID found in the BIDS db.')
+        sub_dict = db_obj['Subject'][matched_sub[0]]
+        return sub_dict
 
     def import_data(self, data_to_import=None):
         """ Add data to an already existing BIDS database """
         # Load the data_to_import json in a dict
         with open(data_to_import, 'r') as f:
             data_to_import = json.load(f)
-        # Load the targeted BIDS db in BIDS Manager
-        db_content = bidsmanager.BidsDataset(os.path.join(self.database_dir, data_to_import['database']))
-        requirements_path = os.path.join(self.database_dir, data_to_import['database'], 'code', 'requirements.json')
+        # Load the targeted BIDS db in BIDS Manager and check converters
+        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, data_to_import['database']))
+        self.check_converters(db_obj=db_obj)
         # Init a BIDS Manager data2import dict
+        requirements_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
         data2import = bidsmanager.Data2Import(data2import_dir=self.importation_dir, requirements_fileloc=requirements_path)
         # Populate the data2import with the data extracted from the dataset_description.json of the BIDS db.
-        data2import['DatasetDescJSON'] = db_content['DatasetDescJSON']
+        data2import['DatasetDescJSON'] = db_obj['DatasetDescJSON']
         # Populate the data2import with the subjects found in the data_to_import dict
         sub_idx = dict()  # Need to track subject indexes to populate their respective modality dict later
         for idx, subject in enumerate(data_to_import['subjects']):
@@ -80,9 +112,36 @@ class ParticipantHandler:
         # Saving the data2import now it is populated. Note: subjects without files to import are ignored
         data2import.save_as_json()
         # Importation of the data into the BIDS database using BIDS Manager
-        db_content.make_upload_issues(data2import, force_verif=True)
-        db_content.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
-        db_content.parse_bids()  # Refresh
+        db_obj.make_upload_issues(data2import, force_verif=True)
+        db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
+        db_obj.parse_bids()  # Refresh
+
+    def del_sub(self, sub_to_delete=None):
+        """ Delete a subject from an already existing BIDS database """
+        # Load the sub_to_delete json in a dict
+        with open(sub_to_delete, 'r') as f:
+            sub_to_delete = json.load(f)
+        # Load the targeted BIDS db in BIDS Manager
+        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, sub_to_delete['database']))
+        # Find the subject dict
+        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=sub_to_delete['subject'])
+        # Delete the subject from the BIDS db
+        db_obj.remove(sub_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv. Not from derivatives
+        db_obj.parse_bids()  # Refresh
+
+    def get_sub_info(self, get_sub_info=None):
+        """ Get info of a subject """
+        # Load the sub_to_delete json in a dict
+        with open(get_sub_info, 'r') as f:
+            get_sub_info = json.load(f)
+        # Load the targeted BIDS db in BIDS Manager
+        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, get_sub_info['database']))
+        # Find the info in the subject dict
+        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=get_sub_info['info']['sub'])
+        sub_info = sub_dict[get_sub_info['info']['dtype']]
+        # Dump the sub_info dict in a .json file
+        with open(get_sub_info['output_path'], 'w') as f:
+            json.dump(sub_info, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -90,12 +149,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='BIDS participant handler.')
     parser.add_argument('-data_to_import', help="User data to import in the BIDS db.")
     parser.add_argument('-sub_to_delete', help="BIDS subject to delete from the BIDS db.")
+    parser.add_argument('-get_sub_info', help="Get info of a BIDS subject.")
     cmd_args = parser.parse_args()
     data_to_import = cmd_args.data_to_import
     sub_to_delete = cmd_args.sub_to_delete
+    get_sub_info = cmd_args.get_sub_info
     # Ins
     phdl = ParticipantHandler()
     if data_to_import:
         phdl.import_data(data_to_import=data_to_import)
     if sub_to_delete:
-        pass
+        phdl.del_sub(sub_to_delete=sub_to_delete)
+    if get_sub_info:
+        phdl.get_sub_info(get_sub_info=get_sub_info)

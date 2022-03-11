@@ -5,23 +5,27 @@
     "age": "",
     "sex": "",
     "hospital": ""
-   }
+   },
+   "required_keys": [
+    "age",
+    "sex"
+   ]
   }
  },
-  "Converters": {
-  "Imaging": {
-   "path": "C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe",
-   "ext": [
-    ".nii"
-   ]
-  },
+ "Converters": {
   "Electrophy": {
-   "path": "C:/AnyWave/AnyWave.exe",
    "ext": [
     ".vhdr",
     ".vmrk",
     ".eeg"
-   ]
+   ],
+   "path": "C:/AnyWave/AnyWave.exe"
+  },
+  "Imaging": {
+   "ext": [
+    ".nii"
+   ],
+   "path": "C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe"
   }
  }
 }
