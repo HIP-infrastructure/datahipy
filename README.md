@@ -26,3 +26,12 @@ see [convert.py](./scripts/convert.py) for details
 
 - participant/delete
 Remove a participant from a given BIDS database
+
+
+# CWL baseline
+
+`sudo apt-get install cwltool`  
+
+`docker build . -t bids-converter`  
+
+`cwl-runner cwl/bids-convert.cwl --input_command=/scripts/database_handler.py  --input_file=data/input/create_bids_db.json --output_dir=data/output`  

@@ -24,18 +24,19 @@ class DatabaseHandler:
     def __init__(self):
         pass
 
-    def create_bids_db(self, create_bids_db=None):
+    def create_bids_db(self, create_bids_db=None, output_directory=None):
         """ Create a new BIDS database """
         # Load the create_bids_db json in a dict
         with open(create_bids_db, 'r') as f:
             create_bids_db = json.load(f)
+
         # Init a BIDS Manager DatasetDescJSON dict
         datasetdesc_dict = bidsmanager.DatasetDescJSON()
         # Populate datasetdesc_dict with the data extracted from the create_bids_db.json.
         for bids_key, bids_value in create_bids_db['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        db_path = os.path.join(self.database_dir, create_bids_db['database'])
+        db_path = os.path.join(output_directory, create_bids_db['database'])
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
         datasetdesc_path = os.path.join(db_path, 'dataset_description.json')
@@ -75,18 +76,27 @@ class DatabaseHandler:
         with open(get_bids_def['output_path'], 'w') as f:
             json.dump(bids_definitions, f, indent=4)
 
+            # chown created files to user (Docker)
+            user = get_bids_def['owner']
+            os.system(f"useradd {user}")
+            os.system(f"chown -R {user}:{user} {get_bids_def['output_path']}")
+
 
 if __name__ == "__main__":
     # Args
     parser = argparse.ArgumentParser(description='BIDS database handler.')
     parser.add_argument('-create_bids_db', help="Create a new BIDS database.")
+    parser.add_argument('--output_directory', help="Get BIDS output folder")
     parser.add_argument('-get_bids_def', help="Get BIDS definitions from BIDS Manager.")
+    
     cmd_args = parser.parse_args()
     create_bids_db = cmd_args.create_bids_db
+    output_directory = cmd_args.output_directory
     get_bids_def = cmd_args.get_bids_def
+    
     # Ins
     dhdl = DatabaseHandler()
     if create_bids_db:
-        dhdl.create_bids_db(create_bids_db=create_bids_db)
+        dhdl.create_bids_db(create_bids_db=create_bids_db, output_directory=output_directory)
     if get_bids_def:
         dhdl.get_bids_def(get_bids_def=get_bids_def)
