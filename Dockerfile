@@ -50,4 +50,4 @@ RUN apt-get install --no-install-recommends -y \
 RUN useradd toto  #temp fix for cwl params --user=1000:1000
 COPY ./scripts/ /scripts
 
-CMD python3 /scripts/server.py 
+ENTRYPOINT ["python3", "/scripts/main.py"]

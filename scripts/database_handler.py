@@ -8,23 +8,29 @@ Manage BIDS database using BIDS Manager.
 import os
 import argparse
 import json
+from sre_constants import SUCCESS
 
-import bids_manager.ins_bids_class as bidsmanager  # BIDS Manager Python package has to be accessible.
+# BIDS Manager Python package has to be accessible.
+import bids_manager.ins_bids_class as bidsmanager
 
 
 class DatabaseHandler:
 
     #  Those paths shd not be hardcoded but dynamic.
-    input_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'  # Path to the input dir
-    database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'  # Path to the BIDS database dir
-    importation_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'  # Path to the importation dir
+    # Path to the input dir
+    input_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'
+    # Path to the BIDS database dir
+    database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'
+    # Path to the importation dir
+    importation_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'
     anywave_path = r'C:/AnyWave/AnyWave.exe'  # Path to AnyWave
-    dcm2niix_path = r'C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe'  # Path to dcm2niix
+    # Path to dcm2niix
+    dcm2niix_path = r'C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe'
 
     def __init__(self):
         pass
 
-    def create_bids_db(self, create_bids_db=None, output_directory=None):
+    def create_bids_db(self, create_bids_db=None, database_path=None):
         """ Create a new BIDS database """
         # Load the create_bids_db json in a dict
         with open(create_bids_db, 'r') as f:
@@ -36,7 +42,7 @@ class DatabaseHandler:
         for bids_key, bids_value in create_bids_db['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        db_path = os.path.join(output_directory, create_bids_db['database'])
+        db_path = os.path.join(database_path, create_bids_db['database'])
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
         datasetdesc_path = os.path.join(db_path, 'dataset_description.json')
@@ -45,10 +51,11 @@ class DatabaseHandler:
             # Load the created BIDS db in BIDS Manager (creates companion files)
             db_obj = bidsmanager.BidsDataset(db_path)
             if db_obj:
-                print('INFO: The dataset_description.json file was updated. BIDS db successfully opened')
+                print(
+                    'INFO: The dataset_description.json file was updated. BIDS db successfully opened')
 
     @staticmethod
-    def get_bids_def(get_bids_def=None):
+    def get_bids_def(get_bids_def=None, output_file=None):
         """ Ask BIDS Manager for some BIDS definitions """
 
         def get_def_attr(cls):
@@ -66,37 +73,51 @@ class DatabaseHandler:
         # Fetch the definitions in BIDS Manager classes and store in bids_definitions dict
         bids_definitions = {'BIDS_definitions': dict()}
         for bids_def in get_bids_def['BIDS_definitions']:
-            bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(eval('bidsmanager.'+bids_def))
+            bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(
+                eval('bidsmanager.'+bids_def))
             try:
                 bids_def = bids_def+'JSON'
-                bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(eval('bidsmanager.'+bids_def))
+                bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(
+                    eval('bidsmanager.'+bids_def))
             except AttributeError:
                 pass  # Ony a few definitions have a companion .json file.
         # Dump the bids_definitions dict in a .json file
-        with open(get_bids_def['output_path'], 'w') as f:
-            json.dump(bids_definitions, f, indent=4)
 
-            # chown created files to user (Docker)
+        if (output_file):
+            with open(output_file, 'w') as f:
+                json.dump(bids_definitions, f, indent=4)
+                   # chown created files to user (Docker)
             user = get_bids_def['owner']
             os.system(f"useradd {user}")
-            os.system(f"chown -R {user}:{user} {get_bids_def['output_path']}")
+            os.system(f"chown -R {user}:{user} {output_file}")
+        else:
+            return (json.dump(bids_definitions, f, indent=4))
+
+        print(SUCCESS)
+
+ 
 
 
-if __name__ == "__main__":
-    # Args
-    parser = argparse.ArgumentParser(description='BIDS database handler.')
-    parser.add_argument('-create_bids_db', help="Create a new BIDS database.")
-    parser.add_argument('--output_directory', help="Get BIDS output folder")
-    parser.add_argument('-get_bids_def', help="Get BIDS definitions from BIDS Manager.")
-    
-    cmd_args = parser.parse_args()
-    create_bids_db = cmd_args.create_bids_db
-    output_directory = cmd_args.output_directory
-    get_bids_def = cmd_args.get_bids_def
-    
-    # Ins
-    dhdl = DatabaseHandler()
-    if create_bids_db:
-        dhdl.create_bids_db(create_bids_db=create_bids_db, output_directory=output_directory)
-    if get_bids_def:
-        dhdl.get_bids_def(get_bids_def=get_bids_def)
+# if __name__ == "__main__":
+#     # Args
+#     parser = argparse.ArgumentParser(description='BIDS database handler.')
+#     parser.add_argument('-create_bids_db', help="Create a new BIDS database.")
+#     parser.add_argument('--output_directory', help="Get BIDS output folder")
+#     parser.add_argument('-get_bids_def', help="Get BIDS definitions from BIDS Manager.")
+
+#     cmd_args = parser.parse_args()
+#     create_bids_db = cmd_args.create_bids_db
+#     output_directory = cmd_args.output_directory
+#     get_bids_def = cmd_args.get_bids_def
+
+#     print (cmd_args)
+#     print (create_bids_db)
+#     print(output_directory)
+
+#     # Ins
+#     dhdl = DatabaseHandler()
+#     if create_bids_db:
+#         dhdl.create_bids_db(create_bids_db=create_bids_db,
+#                             database_path=output_directory)
+#     if get_bids_def:
+#         dhdl.get_bids_def(get_bids_def=get_bids_def)

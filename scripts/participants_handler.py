@@ -17,9 +17,9 @@ import bids_manager.ins_bids_class as bidsmanager  # BIDS Manager Python package
 class ParticipantHandler:
 
     #  Those paths shd not be hardcoded but dynamic.
-    input_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'  # Path to the input dir
-    database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'  # Path to the BIDS database dir
-    importation_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'  # Path to the importation dir
+    input_dir = '/input' #r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'  # Path to the input dir
+    #database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'  # Path to the BIDS database dir
+    importation_dir = '/importation_directory' #r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'  # Path to the importation dir
     anywave_path = r'C:/AnyWave/AnyWave.exe'  # Path to AnyWave
     dcm2niix_path = r'C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe'  # Path to dcm2niix
 
@@ -55,13 +55,13 @@ class ParticipantHandler:
         sub_dict = db_obj['Subject'][matched_sub[0]]
         return sub_dict
 
-    def import_data(self, data_to_import=None):
+    def import_data(self, data_to_import=None, database_path=None):
         """ Add data to an already existing BIDS database """
         # Load the data_to_import json in a dict
         with open(data_to_import, 'r') as f:
             data_to_import = json.load(f)
         # Load the targeted BIDS db in BIDS Manager and check converters
-        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, data_to_import['database']))
+        db_obj = bidsmanager.BidsDataset(database_path)
         self.check_converters(db_obj=db_obj)
         # Init a BIDS Manager data2import dict
         requirements_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
@@ -129,36 +129,36 @@ class ParticipantHandler:
         db_obj.remove(sub_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv. Not from derivatives
         db_obj.parse_bids()  # Refresh
 
-    def get_sub_info(self, get_sub_info=None):
+    def get_sub_info(self, get_sub_info=None, database_path=None, output_file=None):
         """ Get info of a subject """
         # Load the sub_to_delete json in a dict
         with open(get_sub_info, 'r') as f:
             get_sub_info = json.load(f)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, get_sub_info['database']))
+        db_obj = bidsmanager.BidsDataset(database_path)
         # Find the info in the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=get_sub_info['info']['sub'])
         sub_info = sub_dict[get_sub_info['info']['dtype']]
         # Dump the sub_info dict in a .json file
-        with open(get_sub_info['output_path'], 'w') as f:
+        with open(output_file, 'w') as f:
             json.dump(sub_info, f, indent=4)
 
 
-if __name__ == "__main__":
-    # Args
-    parser = argparse.ArgumentParser(description='BIDS participant handler.')
-    parser.add_argument('-data_to_import', help="User data to import in the BIDS db.")
-    parser.add_argument('-sub_to_delete', help="BIDS subject to delete from the BIDS db.")
-    parser.add_argument('-get_sub_info', help="Get info of a BIDS subject.")
-    cmd_args = parser.parse_args()
-    data_to_import = cmd_args.data_to_import
-    sub_to_delete = cmd_args.sub_to_delete
-    get_sub_info = cmd_args.get_sub_info
-    # Ins
-    phdl = ParticipantHandler()
-    if data_to_import:
-        phdl.import_data(data_to_import=data_to_import)
-    if sub_to_delete:
-        phdl.del_sub(sub_to_delete=sub_to_delete)
-    if get_sub_info:
-        phdl.get_sub_info(get_sub_info=get_sub_info)
+# if __name__ == "__main__":
+#     # Args
+#     parser = argparse.ArgumentParser(description='BIDS participant handler.')
+#     parser.add_argument('-data_to_import', help="User data to import in the BIDS db.")
+#     parser.add_argument('-sub_to_delete', help="BIDS subject to delete from the BIDS db.")
+#     parser.add_argument('-get_sub_info', help="Get info of a BIDS subject.")
+#     cmd_args = parser.parse_args()
+#     data_to_import = cmd_args.data_to_import
+#     sub_to_delete = cmd_args.sub_to_delete
+#     get_sub_info = cmd_args.get_sub_info
+#     # Ins
+#     phdl = ParticipantHandler()
+#     if data_to_import:
+#         phdl.import_data(data_to_import=data_to_import)
+#     if sub_to_delete:
+#         phdl.del_sub(sub_to_delete=sub_to_delete)
+#     if get_sub_info:
+#         phdl.get_sub_info(get_sub_info=get_sub_info)
