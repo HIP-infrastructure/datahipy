@@ -12,11 +12,11 @@
 - db.create 
 
 ```
-cwl-runner --enable-ext cwl/db.create.cwl --input_data=data/input/create_bids_db.json --database_path=data/output
+cwl-runner --enable-ext cwl/db.create.cwl --input_data=data/input/db_create.json --database_path=data/output
 ```
 
 - db.get 
 
 ```
-cwl-runner cwl/db.get.cwl --input_data=data/input/get_sub_info.json
+cwl-runner cwl/db.get.cwl --input_data=data/input/db_get.json
 ```

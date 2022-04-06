@@ -6,22 +6,19 @@ Manage BIDS participants using BIDS Manager.
 """
 
 import os
-import argparse
 import json
 import shutil
 from datetime import datetime
+from sre_constants import SUCCESS
 
-import bids_manager.ins_bids_class as bidsmanager  # BIDS Manager Python package has to be accessible.
+import bids_manager.ins_bids_class as bidsmanager
 
 
 class ParticipantHandler:
 
-    #  Those paths shd not be hardcoded but dynamic.
-    input_dir = '/input' #r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\input'  # Path to the input dir
-    #database_dir = r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\output'  # Path to the BIDS database dir
-    importation_dir = '/importation_directory' #r'C:\Users\anthony\Documents\GIN\GIT\bids-converter\data\importation_directory'  # Path to the importation dir
-    anywave_path = r'C:/AnyWave/AnyWave.exe'  # Path to AnyWave
-    dcm2niix_path = r'C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe'  # Path to dcm2niix
+    # Converter paths in the docker image
+    dcm2niix_path = r'/apps/dcm2niix/install/dcm2niix'
+    anywave_path = r'anywave'
 
     def __init__(self):
         pass
@@ -116,49 +113,53 @@ class ParticipantHandler:
         db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
         db_obj.parse_bids()  # Refresh
 
-    def del_sub(self, sub_to_delete=None):
+    def sub_delete(self, input_data=None, database_path=None):
         """ Delete a subject from an already existing BIDS database """
-        # Load the sub_to_delete json in a dict
-        with open(sub_to_delete, 'r') as f:
-            sub_to_delete = json.load(f)
+        # Load the input_data json in a dict
+        input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(self.database_dir, sub_to_delete['database']))
+        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
         # Find the subject dict
-        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=sub_to_delete['subject'])
+        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['subject'])
         # Delete the subject from the BIDS db
         db_obj.remove(sub_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv. Not from derivatives
         db_obj.parse_bids()  # Refresh
 
-    def get_sub_info(self, get_sub_info=None, database_path=None, output_file=None):
+    def sub_delete_file(self, input_data=None, database_path=None):
+        """ Delete a data file of a subject (from /raw and /source) """
+        pass  # TODO
+
+    def sub_get(self, input_data=None, database_path=None, output_file=None):
         """ Get info of a subject """
-        # Load the sub_to_delete json in a dict
-        with open(get_sub_info, 'r') as f:
-            get_sub_info = json.load(f)
+        # Load the input_data json in a dict
+        input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
         db_obj = bidsmanager.BidsDataset(database_path)
         # Find the info in the subject dict
-        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=get_sub_info['info']['sub'])
-        sub_info = sub_dict[get_sub_info['info']['dtype']]
+        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['info']['sub'])
+        sub_info = sub_dict[input_data['info']['dtype']]
         # Dump the sub_info dict in a .json file
+        if output_file:
+            self.dump_output_file(user=input_data['owner'], output_data=sub_info, output_file=output_file)
+        print(SUCCESS)
+
+    def load_input_data(self, input_data):
+        """ Load the input_data JSON file """
+        with open(input_data, 'r') as f:
+            return json.load(f)
+
+    def dump_output_file(self, user=None, output_data=None, output_file=None):
+        """ Dump output_data dict in a JSON file """
         with open(output_file, 'w') as f:
-            json.dump(sub_info, f, indent=4)
+            json.dump(output_data, f, indent=4)
+        # chown created files to user (Docker)
+        os.system(f"useradd {user}")
+        os.system(f"chown -R {user}:{user} {output_file}")
 
 
-# if __name__ == "__main__":
-#     # Args
-#     parser = argparse.ArgumentParser(description='BIDS participant handler.')
-#     parser.add_argument('-data_to_import', help="User data to import in the BIDS db.")
-#     parser.add_argument('-sub_to_delete', help="BIDS subject to delete from the BIDS db.")
-#     parser.add_argument('-get_sub_info', help="Get info of a BIDS subject.")
-#     cmd_args = parser.parse_args()
-#     data_to_import = cmd_args.data_to_import
-#     sub_to_delete = cmd_args.sub_to_delete
-#     get_sub_info = cmd_args.get_sub_info
-#     # Ins
-#     phdl = ParticipantHandler()
-#     if data_to_import:
-#         phdl.import_data(data_to_import=data_to_import)
-#     if sub_to_delete:
-#         phdl.del_sub(sub_to_delete=sub_to_delete)
-#     if get_sub_info:
-#         phdl.get_sub_info(get_sub_info=get_sub_info)
+if __name__ == "__main__":
+    if True:
+        phdl = ParticipantHandler()
+        # phdl.import_data(data_to_import=data_to_import)  # TO DEBUG / IMPROVE
+        phdl.sub_delete(input_data=r'../data/input/sub_delete.json',  database_path=r'../data/output')
+        phdl.sub_get(input_data=r'../data/input/sub_get.json', database_path=r'../data/output', output_file=r'../data/output/sub_get_out.json')
