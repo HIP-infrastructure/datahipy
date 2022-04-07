@@ -20,6 +20,8 @@ class DatabaseHandler:
 
     def db_create(self, input_data=None, database_path=None):
         """ Create a new BIDS database """
+        # Vars
+        database_path = os.path.abspath(database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Init a BIDS Manager DatasetDescJSON dict
@@ -68,12 +70,14 @@ class DatabaseHandler:
             self.dump_output_file(user=input_data['owner'], output_data=bids_definitions, output_file=output_file)
         print(SUCCESS)
 
-    def load_input_data(self, input_data):
+    @staticmethod
+    def load_input_data(input_data):
         """ Return input_data JSON file in a dict """
         with open(input_data, 'r') as f:
             return json.load(f)
 
-    def dump_output_file(self, user=None, output_data=None, output_file=None):
+    @staticmethod
+    def dump_output_file(user=None, output_data=None, output_file=None):
         """ Dump output_data dict in a JSON file """
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
@@ -85,5 +89,5 @@ class DatabaseHandler:
 if __name__ == "__main__":
     if True:
         dhdl = DatabaseHandler()
-        dhdl.db_create(input_data=r'../data/input/db_create.json', database_path=r'../data/output')
-        dhdl.db_get(input_data=r'../data/input/db_get.json', output_file=r'../data/output/db_get_out.json')
+        # dhdl.db_create(input_data=r'../data/input/db_create.json', database_path=r'../data/output')
+        # dhdl.db_get(input_data=r'../data/input/db_get.json', output_file=r'../data/output/db_get_out.json')

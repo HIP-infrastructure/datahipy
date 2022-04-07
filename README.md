@@ -75,7 +75,7 @@ docker run -it --rm \
     --output_file=/output/sub.get.json
 ```
 
-- sub.delete
+- sub.delete  
 Remove a participant from a given BIDS database
 
 ```
@@ -88,3 +88,6 @@ docker run -it --rm \
     --input_data=/input/get_sub_info.json \
     --database_path=/output/BIDS_DB 
 ```
+
+- sub.delete.file  
+Remove data file(s) from a BIDS database

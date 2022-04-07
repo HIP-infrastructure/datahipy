@@ -27,16 +27,16 @@ if __name__ == "__main__":
     if command == 'db.get':
         dhdl.db_get(input_data=input_data,
                     output_file=output_file)
-
-    # TO DEBUG / IMPROVE
-    #if command == 'sub.create':
-    #    phdl.import_data(input_data=input_data, database_path=database_path)
-
+    if command == 'sub.import':
+        phdl.sub_import(input_data=input_data,
+                        database_path=database_path)
     if command == 'sub.get':
         phdl.sub_get(input_data=input_data,
                      database_path=database_path,
                      output_file=output_file)
-
     if command == 'sub.delete':
         phdl.sub_delete(input_data=input_data,
                         database_path=database_path)
+    if command == 'sub.delete.file':
+        phdl.sub_delete_file(input_data=input_data,
+                             database_path=database_path)

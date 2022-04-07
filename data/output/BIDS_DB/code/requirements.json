@@ -19,13 +19,13 @@
     ".vmrk",
     ".eeg"
    ],
-   "path": "C:/AnyWave/AnyWave.exe"
+   "path": "/usr/bin/anywave"
   },
   "Imaging": {
    "ext": [
     ".nii"
    ],
-   "path": "C:/Users/anthony/Documents/GIN/Softs/dicm2nii/dicm2nii.exe"
+   "path": "/apps/dcm2niix/install/dcm2niix"
   }
  }
 }

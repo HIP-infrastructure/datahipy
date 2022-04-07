@@ -1,0 +1,10 @@
+{
+    "owner": "anthony",
+    "database": "BIDS_DB",
+    "files": [{
+            "subject": "carole",
+            "modality": "Ieeg",
+            "filename": "sub-carole_ses-postimp_task-stimulation_acq-1024hz_run-01_ieeg"
+        }
+    ]
+}
