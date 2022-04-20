@@ -3,6 +3,9 @@
 Docker container component to convert neuroimaging data to Brain Imaging Data Structure (BIDS)
 
 ## Step 1: 
+- Clone this repository 
+- Checkout submodules:
+  - `git submodule update --recursive --init`
 - build the image: `docker build . -t bids-converter`
 
 ## Test
