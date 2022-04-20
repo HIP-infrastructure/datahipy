@@ -16,19 +16,22 @@ setup() {
 
 @test "can create input file" {
     cat <<EOT >> test/sub_import.json 
-        {
+{
     "owner": "${USER}",
     "database": "${DATABASE_NAME}",
-    "subjects": [{
-        "sub": "carole",
-        "age": "25",
-        "sex": "M",
-        "hospital": "CHUV"
-    }],
-    "files": [{
+    "subjects": [
+        {
+            "sub": "carole",
+            "age": "25",
+            "sex": "M",
+            "hospital": "CHUV"
+        }
+    ],
+    "files": [
+        {
             "modality": "ieeg",
             "subject": "carole",
-            "path": "/home/anthony/Documents/GIT/bids-converter/data/input/sub-carole/SZ1.TRC",
+            "path": "/input/test_data/sub-carole/SZ1.TRC",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -39,7 +42,7 @@ setup() {
         {
             "modality": "ieeg",
             "subject": "carole",
-            "path": "/home/anthony/Documents/GIT/bids-converter/data/input/sub-carole/SZ2.TRC",
+            "path": "/input/test_data/sub-carole/SZ2.TRC",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -50,7 +53,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/home/anthony/Documents/GIT/bids-converter/data/input/sub-carole/3DT1post_deface.nii",
+            "path": "/input/test_data/sub-carole/3DT1post_deface.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -61,7 +64,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/home/anthony/Documents/GIT/bids-converter/data/input/sub-carole/3DT1post_deface_2.nii",
+            "path": "/input/test_data/sub-carole/3DT1post_deface_2.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -72,7 +75,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/home/anthony/Documents/GIT/bids-converter/data/input/sub-carole/3DT1pre_deface.nii",
+            "path": "/input/test_data/sub-carole/3DT1pre_deface.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "preimp",
@@ -88,31 +91,33 @@ EOT
 @test "can run docker sub.import" {
     run docker run -it --rm \
         -v $(pwd)/test:/input \
-        -v $(pwd)/test:/output \
+        -v $(pwd)/test/test_data:/output \
         -v $(pwd)/tmp:/importation_directory \
         -v $(pwd)/scripts:/scripts \
         bids-converter  \
         --command=sub.import \
         --input_data=/input/sub_import.json \
-        --database_path=/output/testdata/bidsdatabase/BIDS_DB
+        --database_path=/output/
 }
 
-# @test 'assert_db_files_exists()' {
-#     assert_dir_exists test/${DATABASE_NAME}
-#     assert_file_exists test/${DATABASE_NAME}/participants.tsv
-#     assert_file_exists test/${DATABASE_NAME}/dataset_description.json
-#     assert_dir_exists test/${DATABASE_NAME}/code
-#     assert_file_exists test/${DATABASE_NAME}/code/requirements.json
-# }
+@test 'assert_db_files_exists()' {
+    assert_dir_exists test/test_data/${DATABASE_NAME}
+    assert_dir_exists test/test_data/${DATABASE_NAME}/sub-carole
+    assert_file_exists test/test_data/${DATABASE_NAME}/participants.tsv
+    assert_file_exists test/test_data/${DATABASE_NAME}/dataset_description.json
+    assert_dir_exists test/test_data/${DATABASE_NAME}/code
+    assert_file_exists test/test_data/${DATABASE_NAME}/code/requirements.json
+}
 
-# @test 'assert_file_owner()' {
-#     assert_file_owner ${USER} test/${DATABASE_NAME} 
-#     assert_file_owner ${USER} test/${DATABASE_NAME}/participants.tsv
-#     assert_file_owner ${USER} test/${DATABASE_NAME}/code
-#     assert_file_owner ${USER} test/${DATABASE_NAME}/code/requirements.json
-# }
+@test 'assert_file_owner()' {
+    assert_file_owner ${USER} test/test_data/${DATABASE_NAME} 
+    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/sub-carole
+    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/participants.tsv
+    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code
+    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code/requirements.json
+}
 
-# @test 'delete files with user ${USER}' {
-#     rm test/db_create.json
-#     rm -rf test/${DATABASE_NAME}
-# }
+@test 'delete files with user ${USER}' {
+    rm test/sub_import.json
+    # rm -rf test/${DATABASE_NAME}
+}

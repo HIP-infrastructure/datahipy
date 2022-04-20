@@ -15,7 +15,7 @@ setup() {
 }
 
 @test "can create input file" {
-    cat <<EOT >> test/db_create.json 
+    cat <<EOT > test/db_create.json 
         {
             "owner": "${USER}",
             "database": "${DATABASE_NAME}",
