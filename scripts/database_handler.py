@@ -24,6 +24,7 @@ class DatabaseHandler:
         database_path = os.path.abspath(database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
+        user = input_data['owner']
         # Init a BIDS Manager DatasetDescJSON dict
         datasetdesc_dict = bidsmanager.DatasetDescJSON()
         # Populate datasetdesc_dict with the data extracted from the create_bids_db.json.
@@ -41,6 +42,10 @@ class DatabaseHandler:
             if db_obj:
                 print('INFO: The dataset_description.json file was updated. BIDS db successfully opened')
                 print(SUCCESS)
+        # Chown form root to user
+        if os.path.isdir(db_path):
+            os.system(f"useradd {user}")
+            os.system(f"chown -R {user}:{user} {db_path}")
 
     def db_get(self, input_data=None, output_file=None):
         """ Ask BIDS Manager for some BIDS definitions """

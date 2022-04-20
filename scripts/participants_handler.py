@@ -60,13 +60,18 @@ class ParticipantHandler:
         database_path = os.path.abspath(database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
+        user = input_data['owner']
+        os.system(f"useradd {user}")
+        os.system(f"chown -R {user}:{user} {database_path}")
         # Load the targeted BIDS db in BIDS Manager and check converters
         db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
         self.check_converters(db_obj=db_obj)
         # Init importation directory
         import_path = os.path.join(database_path, 'BIDS_import')
         if os.path.isdir(import_path): shutil.rmtree(import_path)  # /!\ BIDS importation dir is created in the same directory as the targeted BIDS database
-        if not os.path.isdir(import_path): os.makedirs(import_path)
+        if not os.path.isdir(import_path): 
+            os.makedirs(import_path)
+            os.system(f"chown -R {user}:{user} {import_path}")
         # Init a BIDS Manager data2import dict
         requirements_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
         data2import = bidsmanager.Data2Import(data2import_dir=import_path, requirements_fileloc=requirements_path)
@@ -117,6 +122,7 @@ class ParticipantHandler:
         db_obj.make_upload_issues(data2import, force_verif=True)
         db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
         db_obj.parse_bids()  # Refresh
+        os.system(f"chown -R {user}:{user} {output_file_path}")
         print(SUCCESS)
 
     @staticmethod
