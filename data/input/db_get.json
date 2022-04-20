@@ -1,5 +1,0 @@
-{
-    "owner": "anthony",
-    "database": "BIDS_DB",
-    "BIDS_definitions": ["Anat", "Ieeg", "DatasetDescJSON"]
-}
