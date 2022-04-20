@@ -47,7 +47,6 @@ RUN apt-get install --no-install-recommends -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN useradd toto  #temp fix for cwl params --user=1000:1000
 COPY ./scripts/ /scripts
 
 ENTRYPOINT ["python3", "/scripts/main.py"]
