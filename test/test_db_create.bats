@@ -1,13 +1,8 @@
 export DATABASE_NAME=NEW_BIDS_DB
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-    load 'test_helper/bats-file/load'
-
-    PATH=/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin
-    # Add BATS test directory to the PATH.
-    PATH="$(dirname "${BATS_TEST_DIRNAME}"):$PATH"
+    load 'test_helper/_common_setup'
+    _common_setup
 }
 
 @test "can build docker image" {
@@ -15,7 +10,7 @@ setup() {
 }
 
 @test "can create input file" {
-    cat <<EOT > test/db_create.json 
+    cat <<EOT > ${PROJET_TMP_FOLDER}/db_create.json 
         {
             "owner": "${USER}",
             "database": "${DATABASE_NAME}",
@@ -39,30 +34,30 @@ EOT
 
 @test "can run docker db.create" {
     run docker run -it --rm \
-        -v $(pwd)/test:/input \
-        -v $(pwd)/test:/output \
-        -v $(pwd)/scripts:/scripts \
+        -v ${PROJET_TMP_FOLDER}:/input \
+        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=db.create \
         --input_data=/input/db_create.json
 }
 
 @test 'assert_db_files_exists()' {
-    assert_dir_exists test/${DATABASE_NAME}
-    assert_file_exists test/${DATABASE_NAME}/participants.tsv
-    assert_file_exists test/${DATABASE_NAME}/dataset_description.json
-    assert_dir_exists test/${DATABASE_NAME}/code
-    assert_file_exists test/${DATABASE_NAME}/code/requirements.json
+    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/dataset_description.json
+    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} test/${DATABASE_NAME} 
-    assert_file_owner ${USER} test/${DATABASE_NAME}/participants.tsv
-    assert_file_owner ${USER} test/${DATABASE_NAME}/code
-    assert_file_owner ${USER} test/${DATABASE_NAME}/code/requirements.json
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME} 
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
 }
 
 @test 'delete files with user ${USER}' {
-    rm test/db_create.json
-    rm -rf test/${DATABASE_NAME}
+    # rm ${PROJET_TMP_FOLDER}/db_create.json
+    # rm -rf ${PROJET_TMP_FOLDER}/${DATABASE_NAME}
 }

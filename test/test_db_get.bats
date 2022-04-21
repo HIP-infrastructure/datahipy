@@ -1,13 +1,8 @@
 export DATABASE_NAME=NEW_BIDS_DB
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-    load 'test_helper/bats-file/load'
-
-    PATH=/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin
-    # Add BATS test directory to the PATH.
-    PATH="$(dirname "${BATS_TEST_DIRNAME}"):$PATH"
+    load 'test_helper/_common_setup'
+    _common_setup
 }
 
 @test "can build docker image" {
@@ -15,7 +10,7 @@ setup() {
 }
 
 @test "can create input file" {
-    cat <<EOT > test/db_get.json 
+    cat <<EOT > ${PROJET_TMP_FOLDER}/db_get.json 
         {
             "owner": "${USER}",
             "database": "${DATABASE_NAME}",
@@ -27,9 +22,9 @@ EOT
 
 @test "can run docker db.get" {
     run docker run -it --rm \
-        -v $(pwd)/test:/input \
-        -v $(pwd)/test:/output \
-        -v $(pwd)/scripts:/scripts \
+        -v ${PROJET_TMP_FOLDER}:/input \
+        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=db.get \
         --input_data=/input/db_get.json \
@@ -37,15 +32,15 @@ EOT
 }
 
 @test 'assert_file_contains()' {
-    assert_file_contains test/output.json 'BIDS_definitions'
-    assert_file_contains test/output.json 'DatasetDescJSON'
+    assert_file_contains ${PROJET_TMP_FOLDER}/output.json 'BIDS_definitions'
+    assert_file_contains ${PROJET_TMP_FOLDER}/output.json 'DatasetDescJSON'
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} test/output.json
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/output.json
 }
 
 @test 'delete files with user ${USER}' {
-    rm test/db_get.json
-    rm test/output.json
+    rm ${PROJET_TMP_FOLDER}/db_get.json
+    rm ${PROJET_TMP_FOLDER}/output.json
 }
