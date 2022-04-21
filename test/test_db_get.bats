@@ -6,7 +6,7 @@ setup() {
 }
 
 @test "can build docker image" {
-    run docker build $(pwd) -t bids-converter
+    run docker build ${PROJECT_ROOT} -t bids-converter
 }
 
 @test "can create input file" {
@@ -42,5 +42,4 @@ EOT
 
 @test 'delete files with user ${USER}' {
     rm ${PROJET_TMP_FOLDER}/db_get.json
-    rm ${PROJET_TMP_FOLDER}/output.json
 }

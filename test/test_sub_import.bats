@@ -1,21 +1,19 @@
 export DATABASE_NAME=BIDS_DB
 
 setup() {
-    load 'test_helper/bats-support/load'
-    load 'test_helper/bats-assert/load'
-    load 'test_helper/bats-file/load'
+    load 'test_helper/_common_setup'
+    _common_setup
 
-    PATH=/usr/bin:/usr/local/bin:/bin:/usr/sbin:/sbin
-    # Add BATS test directory to the PATH.
-    PATH="$(dirname "${BATS_TEST_DIRNAME}"):$PATH"
+    # copy existing database and subject to import
+    cp -r ${PROJET_TEST_FOLDER}/test_data/* $PROJET_TMP_FOLDER
 }
 
 @test "can build docker image" {
-    run docker build $(pwd) -t bids-converter
+    run docker build ${PROJECT_ROOT} -t bids-converter
 }
 
 @test "can create input file" {
-    cat <<EOT >> test/sub_import.json 
+    cat <<EOT > ${PROJET_TMP_FOLDER}/sub_import.json 
 {
     "owner": "${USER}",
     "database": "${DATABASE_NAME}",
@@ -31,7 +29,7 @@ setup() {
         {
             "modality": "ieeg",
             "subject": "carole",
-            "path": "/input/test_data/sub-carole/SZ1.TRC",
+            "path": "sub-carole/SZ1.TRC",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -42,7 +40,7 @@ setup() {
         {
             "modality": "ieeg",
             "subject": "carole",
-            "path": "/input/test_data/sub-carole/SZ2.TRC",
+            "path": "sub-carole/SZ2.TRC",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -53,7 +51,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/input/test_data/sub-carole/3DT1post_deface.nii",
+            "path": "sub-carole/3DT1post_deface.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -64,7 +62,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/input/test_data/sub-carole/3DT1post_deface_2.nii",
+            "path": "sub-carole/3DT1post_deface_2.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "postimp",
@@ -75,7 +73,7 @@ setup() {
         {
             "modality": "T1w",
             "subject": "carole",
-            "path": "/input/test_data/sub-carole/3DT1pre_deface.nii",
+            "path": "sub-carole/3DT1pre_deface.nii",
             "entities": {
                 "sub": "carole",
                 "ses": "preimp",
@@ -87,40 +85,42 @@ setup() {
 EOT
 }
 
+@test 'assert_dir_not_exists()' {
+    assert_dir_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}
+    assert_dir_not_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/sub-carole
+}
 
 @test "can run docker sub.import" {
     run docker run -it --rm \
-        -v $(pwd)/test:/input \
-        -v $(pwd)/test/test_data:/output \
-        -v $(pwd)/tmp:/importation_directory \
-        -v $(pwd)/scripts:/scripts \
+        -v ${PROJET_TMP_FOLDER}:/input \
+        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJET_TMP_FOLDER}/tmp:/importation_directory \
+        -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=sub.import \
         --input_data=/input/sub_import.json
 }
 
 @test 'assert_db_files_exists()' {
-    assert_dir_exists test/test_data/${DATABASE_NAME}
-    assert_dir_exists test/test_data/${DATABASE_NAME}/sub-carole
-    assert_file_exists test/test_data/${DATABASE_NAME}/participants.tsv
-    assert_file_exists test/test_data/${DATABASE_NAME}/dataset_description.json
-    assert_dir_exists test/test_data/${DATABASE_NAME}/code
-    assert_file_exists test/test_data/${DATABASE_NAME}/code/requirements.json
+    assert_dir_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/sub-carole
+    assert_file_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
+    assert_file_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/dataset_description.json
+    assert_dir_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
+    assert_file_exists  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
 }
 
 @test 'assert_file_contains()' {
-    assert_file_contains test/test_data/${DATABASE_NAME}/participants.tsv 'sub-carole'
+    assert_file_contains  ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'sub-carole'
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} test/test_data/${DATABASE_NAME} 
-    # assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/sub-carole
-    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/participants.tsv
-    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code
-    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code/requirements.json
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME} 
+    # assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/sub-carole
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
 }
 
 @test 'delete files with user ${USER}' {
-    rm test/sub_import.json
-    # rm -rf test/${DATABASE_NAME}
+    rm  ${PROJET_TMP_FOLDER}/sub_import.json
 }
