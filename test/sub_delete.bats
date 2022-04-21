@@ -36,8 +36,7 @@ EOT
         -v $(pwd)/scripts:/scripts \
         bids-converter  \
         --command=sub.delete \
-        --input_data=/input/sub_delete.json \
-        --database_path=/output/
+        --input_data=/input/sub_delete.json
 }
 
 # @test 'assert_dir_not_exists()' {

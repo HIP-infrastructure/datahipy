@@ -15,13 +15,13 @@ import bids_manager.ins_bids_class as bidsmanager
 
 class DatabaseHandler:
 
-    def __init__(self):
-        pass
+    def __init__(self, database_path=None):
+        self.database_path = database_path
 
-    def db_create(self, input_data=None, database_path=None):
+    def db_create(self, input_data=None):
         """ Create a new BIDS database """
         # Vars
-        database_path = os.path.abspath(database_path)
+        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         user = input_data['owner']

@@ -17,8 +17,8 @@ import bids_manager.ins_bids_class as bidsmanager
 
 class ParticipantHandler:
 
-    def __init__(self):
-        pass
+    def __init__(self, database_path = None):
+        self.database_path = database_path
 
     @staticmethod
     def check_converters(db_obj=None):
@@ -53,11 +53,11 @@ class ParticipantHandler:
         sub_dict = db_obj['Subject'][matched_sub[0]]
         return sub_dict
 
-    def sub_import(self, input_data=None, database_path=None):
+    def sub_import(self, input_data=None):
         """ Import subject(s) data into a BIDS database """
         # Vars
         runs = dict()  # Track the RUN number of files to import
-        database_path = os.path.abspath(database_path)
+        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         user = input_data['owner']
@@ -149,10 +149,10 @@ class ParticipantHandler:
         else:
             return 0
 
-    def sub_delete(self, input_data=None, database_path=None):
+    def sub_delete(self, input_data=None):
         """ Delete a subject from an already existing BIDS database """
         # Vars
-        database_path = os.path.abspath(database_path)
+        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
@@ -163,10 +163,10 @@ class ParticipantHandler:
         db_obj.remove(sub_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv. Not from derivatives
         db_obj.parse_bids()  # Refresh
 
-    def sub_delete_file(self, input_data=None, database_path=None):
+    def sub_delete_file(self, input_data=None):
         """ Delete data files from /raw and /source """
         # Vars
-        database_path = os.path.abspath(database_path)
+        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
@@ -178,10 +178,10 @@ class ParticipantHandler:
                     print('{} was deleted.'.format(file['filename']))
         print(SUCCESS)
 
-    def sub_get(self, input_data=None, database_path=None, output_file=None):
+    def sub_get(self, input_data=None, output_file=None):
         """ Get info of a subject """
         # Vars
-        database_path = os.path.abspath(database_path)
+        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager

@@ -37,7 +37,6 @@ setup() {
 EOT
 }
 
-
 @test "can run docker db.create" {
     run docker run -it --rm \
         -v $(pwd)/test:/input \
@@ -45,8 +44,7 @@ EOT
         -v $(pwd)/scripts:/scripts \
         bids-converter  \
         --command=db.create \
-        --input_data=/input/db_create.json \
-        --database_path=/output/   
+        --input_data=/input/db_create.json
 }
 
 @test 'assert_db_files_exists()' {

@@ -33,7 +33,6 @@ EOT
         bids-converter  \
         --command=sub.get \
         --input_data=/input/sub_get.json \
-        --database_path=/output/ \
         --output_file=/output/sub_info.json
 }
 

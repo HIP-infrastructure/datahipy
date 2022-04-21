@@ -96,8 +96,7 @@ EOT
         -v $(pwd)/scripts:/scripts \
         bids-converter  \
         --command=sub.import \
-        --input_data=/input/sub_import.json \
-        --database_path=/output/
+        --input_data=/input/sub_import.json
 }
 
 @test 'assert_db_files_exists()' {
@@ -109,9 +108,13 @@ EOT
     assert_file_exists test/test_data/${DATABASE_NAME}/code/requirements.json
 }
 
+@test 'assert_file_contains()' {
+    assert_file_contains test/test_data/${DATABASE_NAME}/participants.tsv 'sub-carole'
+}
+
 @test 'assert_file_owner()' {
     assert_file_owner ${USER} test/test_data/${DATABASE_NAME} 
-    assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/sub-carole
+    # assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/sub-carole
     assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/participants.tsv
     assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code
     assert_file_owner ${USER} test/test_data/${DATABASE_NAME}/code/requirements.json
