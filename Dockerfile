@@ -47,6 +47,8 @@ RUN apt-get install --no-install-recommends -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN useradd ${USER}
+USER ${USER}
 COPY ./scripts/ /scripts
 
 ENTRYPOINT ["python3", "/scripts/main.py"]
