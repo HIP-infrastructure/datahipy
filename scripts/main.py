@@ -5,8 +5,10 @@ import argparse
 from database_handler import DatabaseHandler
 from participants_handler import ParticipantHandler
 
+database_path = '/output'
+input_path='/input'
+
 if __name__ == "__main__":
-    database_path = '/output'    
     
     parser = argparse.ArgumentParser(description='BIDS database handler.')
     parser.add_argument('--command', help="Method to be run, db.create, db.get, sub.get, sub.create, sub.remove")
@@ -19,7 +21,7 @@ if __name__ == "__main__":
     output_file = cmd_args.output_file
 
     dhdl = DatabaseHandler(database_path=database_path)
-    phdl = ParticipantHandler(database_path=database_path)
+    phdl = ParticipantHandler(database_path=database_path, input_path=input_path)
 
     if command == 'db.create':
         dhdl.db_create(input_data=input_data)

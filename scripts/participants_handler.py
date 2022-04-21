@@ -17,8 +17,9 @@ import bids_manager.ins_bids_class as bidsmanager
 
 class ParticipantHandler:
 
-    def __init__(self, database_path = None):
+    def __init__(self, database_path=None, input_path=None):
         self.database_path = database_path
+        self.input_path = input_path
 
     @staticmethod
     def check_converters(db_obj=None):
@@ -89,10 +90,11 @@ class ParticipantHandler:
         for file in input_data['files']:
             # Copy the targeted file in a unique importation dir
             file_name = os.path.basename(file['path'])
+            file_path = os.path.join(self.input_path, file['path'])
             token_dir = str(datetime.timestamp(datetime.now())).replace('.', '')
             output_file_path = os.path.join(os.path.join(import_path, 'temp_bids'), token_dir, file_name)
             os.makedirs(os.path.dirname(output_file_path))
-            shutil.copyfile(file['path'], output_file_path)
+            shutil.copyfile(file_path, output_file_path)
             # Determine the BIDS data type to use and init a BIDS Manager modality dict
             bids_dtype = None
             bids_dtype_dict = dict()
