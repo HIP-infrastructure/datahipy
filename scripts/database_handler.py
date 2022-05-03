@@ -7,6 +7,7 @@ Manage BIDS database using BIDS Manager.
 
 import os
 import json
+import re
 from sre_constants import SUCCESS
 
 # BIDS Manager Python package has to be accessible.
@@ -76,6 +77,60 @@ class DatabaseHandler:
         print(SUCCESS)
 
     @staticmethod
+    def check_converters(db_obj=None):
+        """ Check if the converters are specified and (re)write the requirements.json if necessary """
+        # Converter paths in the docker image
+        dcm2niix_path = r'/apps/dcm2niix/install/dcm2niix'
+        anywave_path = r'/usr/bin/anywave'
+        def_converters = {'Electrophy': {'ext': ['.vhdr', '.vmrk', '.eeg'], 'path': anywave_path},
+                          'Imaging': {'ext': ['.nii'], 'path': dcm2niix_path}}
+        req_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
+        req_dict = bidsmanager.Requirements(req_path)  # Get the requirements.json dict
+        to_rewrite = False
+        if 'Converters' not in req_dict:
+            to_rewrite = True
+        elif req_dict['Converters'] != def_converters:
+            to_rewrite = True
+        if to_rewrite:
+            print('INFO: Updating the requirements.json converters.')
+            req_dict['Converters'] = def_converters
+            bidsmanager.BidsDataset.dirname = os.path.join(db_obj.dirname)
+            req_dict.save_as_json(req_path)  # Write the requirements.json
+            db_obj.get_requirements()
+
+    @staticmethod
+    def get_run(root_dir: str, bids_entities: dict, bids_modality: str):
+        """ Parse the BIDS database to get the max run for a set of BIDS entities """
+        # Generate regexp from entities
+        regexp_list = list()
+        for bids_key, bids_value in bids_entities.items():
+            if bids_value:
+                regexp_list.append('{}-{}'.format(bids_key, bids_value))
+        regexp_list.append('run-[0-9]{1,3}')
+        regexp_list.append(bids_modality)
+        regexp_filename = '_'.join(regexp_list)
+        # Get run number parsing BIDS
+        runs = list()
+        for path, directories, files in os.walk(root_dir):
+            for file in files:
+                if re.search(regexp_filename, file):
+                    matched_run = re.search('run-([0-9]{1,3})', file)
+                    runs.append(int(matched_run.group(1)))
+        runs = sorted(runs)
+        if runs:
+            return max(runs)
+        else:
+            return 0
+
+    @staticmethod
+    def add_keys_requirements(db_obj=None, clin_keys=None):
+        """ Update the requirements.json with new keys """
+        for clin_key in clin_keys:
+            if clin_key not in db_obj.requirements['Requirements']['Subject']['keys']:
+                db_obj.requirements['Requirements']['Subject']['keys'][clin_key] = str()
+        db_obj.requirements.save_as_json()
+
+    @staticmethod
     def load_input_data(input_data):
         """ Return input_data JSON file in a dict """
         with open(input_data, 'r') as f:
@@ -93,6 +148,6 @@ class DatabaseHandler:
 
 if __name__ == "__main__":
     if True:
-        dhdl = DatabaseHandler()
-        # dhdl.db_create(input_data=r'../data/input/db_create.json', database_path=r'../data/output')
+        dhdl = DatabaseHandler(database_path=r'../data/output')
+        dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
         # dhdl.db_get(input_data=r'../data/input/db_get.json', output_file=r'../data/output/db_get_out.json')

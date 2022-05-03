@@ -6,11 +6,12 @@ Manage BIDS participants using BIDS Manager.
 """
 
 import os
-import re
 import json
 import shutil
 from datetime import datetime
 from sre_constants import SUCCESS
+
+from database_handler import DatabaseHandler
 
 import bids_manager.ins_bids_class as bidsmanager
 
@@ -20,39 +21,6 @@ class ParticipantHandler:
     def __init__(self, database_path=None, input_path=None):
         self.database_path = database_path
         self.input_path = input_path
-
-    @staticmethod
-    def check_converters(db_obj=None):
-        """ Check if the converters are specified and (re)write the requirements.json if necessary """
-        # Converter paths in the docker image
-        dcm2niix_path = r'/apps/dcm2niix/install/dcm2niix'
-        anywave_path = r'/usr/bin/anywave'
-        def_converters = {'Electrophy': {'ext': ['.vhdr', '.vmrk', '.eeg'], 'path': anywave_path},
-                          'Imaging': {'ext': ['.nii'], 'path': dcm2niix_path}}
-        req_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
-        req_dict = bidsmanager.Requirements(req_path)  # Get the requirements.json dict
-        to_rewrite = False
-        if 'Converters' not in req_dict:
-            to_rewrite = True
-        elif req_dict['Converters'] != def_converters:
-            to_rewrite = True
-        if to_rewrite:
-            print('INFO: Updating the requirements.json converters.')
-            req_dict['Converters'] = def_converters
-            bidsmanager.BidsDataset.dirname = os.path.join(db_obj.dirname)
-            req_dict.save_as_json(req_path)  # Write the requirements.json
-            db_obj.get_requirements()
-
-    @staticmethod
-    def find_subject_dict(db_obj=None, subject=None):
-        """ Find the subject dict in the parsed BIDS db object """
-        matched_sub = [sub_idx for sub_idx, sub_dict in enumerate(db_obj['Subject']) if sub_dict['sub'] == subject]
-        if not matched_sub:
-            raise IndexError('Could not find the subject in the BIDS db.')
-        elif len(matched_sub) > 1:
-            raise IndexError('Several subjects with the same ID found in the BIDS db.')
-        sub_dict = db_obj['Subject'][matched_sub[0]]
-        return sub_dict
 
     def sub_import(self, input_data=None):
         """ Import subject(s) data into a BIDS database """
@@ -66,7 +34,15 @@ class ParticipantHandler:
         os.system(f"chown -R {user}:{user} {database_path}")
         # Load the targeted BIDS db in BIDS Manager and check converters
         db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
-        self.check_converters(db_obj=db_obj)
+        DatabaseHandler.check_converters(db_obj=db_obj)
+        # Add clinical keys to the requirements.json
+        clin_keys = list()
+        for subject in input_data['subjects']:
+            for key in subject:
+                if key != 'sub' and key not in clin_keys:
+                    clin_keys.append(key)
+        DatabaseHandler.add_keys_requirements(db_obj=db_obj, clin_keys=clin_keys)
+        db_obj.parse_bids()
         # Init importation directory
         import_path = os.path.join(database_path, 'BIDS_import')
         if os.path.isdir(import_path): shutil.rmtree(import_path)  # /!\ BIDS importation dir is created in the same directory as the targeted BIDS database
@@ -114,7 +90,7 @@ class ParticipantHandler:
             # Determine RUN
             bids_values = tuple(file['entities'].values())
             if bids_values not in runs:
-                runs[bids_values] = self.get_run(db_obj.dirname, file['entities'], file['modality'])
+                runs[bids_values] = DatabaseHandler.get_run(os.path.join(db_obj.dirname, 'sub-'+file['subject']), file['entities'], file['modality'])
             runs[bids_values] += 1
             bids_dtype_dict['run'] = runs[bids_values]
             data2import['Subject'][sub_idx[file['entities']['sub']]][bids_dtype].append(bids_dtype_dict)
@@ -124,32 +100,8 @@ class ParticipantHandler:
         db_obj.make_upload_issues(data2import, force_verif=True)
         db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
         db_obj.parse_bids()  # Refresh
-        os.system(f"chown -R {user}:{user} {output_file_path}")
+        os.system(f"chown -R {user}:{user} {database_path}")
         print(SUCCESS)
-
-    @staticmethod
-    def get_run(bids_dir: str, bids_entities: dict, bids_modality: str):
-        """ Parse the BIDS database to get the max run for a set of BIDS entities """
-        # Generate regexp from entities
-        regexp_list = list()
-        for bids_key, bids_value in bids_entities.items():
-            if bids_value:
-                regexp_list.append('{}-{}'.format(bids_key, bids_value))
-        regexp_list.append('run-[0-9]{1,3}')
-        regexp_list.append(bids_modality)
-        regexp_filename = '_'.join(regexp_list)
-        # Get run number parsing BIDS
-        runs = list()
-        for path, directories, files in os.walk(bids_dir):
-            for file in files:
-                if re.search(regexp_filename, file):
-                    matched_run = re.search('run-([0-9]{1,3})', file)
-                    runs.append(int(matched_run.group(1)))
-        runs = sorted(runs)
-        if runs:
-            return max(runs)
-        else:
-            return 0
 
     def sub_delete(self, input_data=None):
         """ Delete a subject from an already existing BIDS database """
@@ -171,6 +123,7 @@ class ParticipantHandler:
         database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
+        # Load the targeted BIDS db in BIDS Manager
         db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
         for file in input_data['files']:
             sub_dict = self.find_subject_dict(db_obj=db_obj, subject=file['subject'])
@@ -196,6 +149,28 @@ class ParticipantHandler:
             self.dump_output_file(user=input_data['owner'], output_data=sub_info, output_file=output_file)
         print(SUCCESS)
 
+    def sub_edit_clinical(self, input_data=None):
+        """ Update subject clinical info in BIDS database """
+        # Vars
+        database_path = os.path.abspath(self.database_path)
+        # Load the input_data json in a dict
+        input_data = self.load_input_data(input_data)
+        # Load the targeted BIDS db in BIDS Manager
+        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        # Edit subject clinical info
+        sub_exists, sub_info, sub_idx = db_obj['ParticipantsTSV'].is_subject_present(input_data['subject'])
+        if sub_exists:
+            DatabaseHandler.add_keys_requirements(db_obj=db_obj, clin_keys=input_data['clinical'].keys())
+            for clin_key, clin_value in input_data['clinical'].items():
+                if clin_value:
+                    sub_info[clin_key] = clin_value
+                else:
+                    sub_info[clin_key] = 'n/a'
+            del sub_info['sub']
+            db_obj.parse_bids()  # To update the participants.tsv with the new columns
+            db_obj['ParticipantsTSV'].update_subject(input_data['subject'], sub_info)
+            db_obj['ParticipantsTSV'].write_file()
+
     @staticmethod
     def load_input_data(input_data):
         """ Load the input_data JSON file """
@@ -211,11 +186,23 @@ class ParticipantHandler:
         os.system(f"useradd {user}")
         os.system(f"chown -R {user}:{user} {output_file}")
 
+    @staticmethod
+    def find_subject_dict(db_obj=None, subject=None):
+        """ Find the subject dict in the parsed BIDS db object """
+        matched_sub = [sub_idx for sub_idx, sub_dict in enumerate(db_obj['Subject']) if sub_dict['sub'] == subject]
+        if not matched_sub:
+            raise IndexError('Could not find the subject in the BIDS db.')
+        elif len(matched_sub) > 1:
+            raise IndexError('Several subjects with the same ID found in the BIDS db.')
+        sub_dict = db_obj['Subject'][matched_sub[0]]
+        return sub_dict
+
 
 if __name__ == "__main__":
     if True:
-        phdl = ParticipantHandler()
-        # phdl.sub_import(input_data=r'../data/input/sub_import.json', database_path=r'../data/output')
+        phdl = ParticipantHandler(database_path=r'../data/output', input_path='/home/anthony/Documents/GIT/bids-converter/data/input')  # Do we need input_path here instead of full input path in .json ?
+        phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
         # phdl.sub_delete(input_data=r'../data/input/sub_delete.json',  database_path=r'../data/output')
         # phdl.sub_get(input_data=r'../data/input/sub_get.json', database_path=r'../data/output', output_file=r'../data/output/sub_get_out.json')
         # phdl.sub_delete_file(input_data=r'../data/input/sub_delete_file.json', database_path=r'../data/output')
+        phdl.sub_edit_clinical(input_data=r'../input_json_examples/sub_edit_clinical.json')
