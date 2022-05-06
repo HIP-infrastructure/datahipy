@@ -30,6 +30,8 @@ if __name__ == "__main__":
                     output_file=output_file)
     if command == 'sub.import':
         phdl.sub_import(input_data=input_data)
+    if command == 'sub.edit.clinical':
+        phdl.sub_edit_clinical(input_data=input_data)
     if command == 'sub.get':
         phdl.sub_get(input_data=input_data,
                      output_file=output_file)
