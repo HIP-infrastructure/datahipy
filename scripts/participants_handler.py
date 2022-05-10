@@ -19,21 +19,20 @@ import bids_manager.ins_bids_class as bidsmanager
 class ParticipantHandler:
 
     def __init__(self, database_path=None, input_path=None):
-        self.database_path = database_path
+        self.database_path = os.path.abspath(database_path)
         self.input_path = input_path
 
     def sub_import(self, input_data=None):
         """ Import subject(s) data into a BIDS database """
         # Vars
         runs = dict()  # Track the RUN number of files to import
-        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         user = input_data['owner']
         os.system(f"useradd {user}")
-        os.system(f"chown -R {user}:{user} {database_path}")
+        os.system(f"chown -R {user}:{user} {self.database_path}")
         # Load the targeted BIDS db in BIDS Manager and check converters
-        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         DatabaseHandler.check_converters(db_obj=db_obj)
         # Add clinical keys to the requirements.json
         clin_keys = list()
@@ -44,7 +43,7 @@ class ParticipantHandler:
         DatabaseHandler.add_keys_requirements(db_obj=db_obj, clin_keys=clin_keys)
         db_obj.parse_bids()
         # Init importation directory
-        import_path = os.path.join(database_path, 'BIDS_import')
+        import_path = os.path.join('/tmp', 'BIDS_import')
         if os.path.isdir(import_path): shutil.rmtree(import_path)  # /!\ BIDS importation dir is created in the same directory as the targeted BIDS database
         if not os.path.isdir(import_path): 
             os.makedirs(import_path)
@@ -100,17 +99,15 @@ class ParticipantHandler:
         db_obj.make_upload_issues(data2import, force_verif=True)
         db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
         db_obj.parse_bids()  # Refresh
-        os.system(f"chown -R {user}:{user} {database_path}")
+        os.system(f"chown -R {user}:{user} {self.database_path}")
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
         """ Delete a subject from an already existing BIDS database """
-        # Vars
-        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['subject'])
         # Delete the subject from the BIDS db
@@ -119,12 +116,10 @@ class ParticipantHandler:
 
     def sub_delete_file(self, input_data=None):
         """ Delete data files from /raw and /source """
-        # Vars
-        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         for file in input_data['files']:
             sub_dict = self.find_subject_dict(db_obj=db_obj, subject=file['subject'])
             for file_dict in sub_dict[file['modality']]:
@@ -135,12 +130,10 @@ class ParticipantHandler:
 
     def sub_get(self, input_data=None, output_file=None):
         """ Get info of a subject """
-        # Vars
-        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the info in the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['info']['sub'])
         sub_info = sub_dict[input_data['info']['dtype']]
@@ -152,11 +145,11 @@ class ParticipantHandler:
     def sub_edit_clinical(self, input_data=None):
         """ Update subject clinical info in BIDS database """
         # Vars
-        database_path = os.path.abspath(self.database_path)
+        #database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(os.path.join(database_path, input_data['database']))
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Edit subject clinical info
         sub_exists, sub_info, sub_idx = db_obj['ParticipantsTSV'].is_subject_present(input_data['subject'])
         if sub_exists:

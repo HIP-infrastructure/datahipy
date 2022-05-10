@@ -93,8 +93,7 @@ EOT
 @test "can run docker sub.import" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}:/output \
-        -v ${PROJET_TMP_FOLDER}/tmp:/importation_directory \
+        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=sub.import \

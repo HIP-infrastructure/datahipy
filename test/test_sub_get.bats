@@ -23,7 +23,7 @@ EOT
 @test "can run docker sub.get" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=sub.get \
@@ -32,6 +32,7 @@ EOT
 }
 
 @test 'assert_dir_exists()' {
+    assert_file_exists ${PROJET_TMP_FOLDER}/sub_get.json
     assert_file_exists ${PROJET_TMP_FOLDER}/sub_info.json
 }
 
@@ -45,5 +46,5 @@ EOT
 }
 
 @test 'delete files with user ${USER}' {
-    rm ${PROJET_TMP_FOLDER}/sub_get.json
+    #rm ${PROJET_TMP_FOLDER}/sub_get.json
 }

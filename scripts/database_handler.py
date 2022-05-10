@@ -17,12 +17,11 @@ import bids_manager.ins_bids_class as bidsmanager
 class DatabaseHandler:
 
     def __init__(self, database_path=None):
-        self.database_path = database_path
+        self.database_path = os.path.abspath(database_path)
 
     def db_create(self, input_data=None):
         """ Create a new BIDS database """
         # Vars
-        database_path = os.path.abspath(self.database_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         user = input_data['owner']
@@ -32,7 +31,7 @@ class DatabaseHandler:
         for bids_key, bids_value in input_data['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        db_path = os.path.join(database_path, input_data['database'])
+        db_path = os.path.join(self.database_path, input_data['database'].replace(" ", ""))
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
         datasetdesc_path = os.path.join(db_path, 'dataset_description.json')
