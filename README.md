@@ -9,7 +9,8 @@ Docker container component to convert neuroimaging data to Brain Imaging Data St
 - build the image: `docker build . -t bids-converter`
 
 ## Test
-- run `./test.sh`
+- `cd test`
+- run `./run_tests.sh`
 
 ## Methods
 
