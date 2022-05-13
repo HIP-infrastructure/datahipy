@@ -15,7 +15,8 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_import.json 
 {
-    "owner": "${USER}",
+    "user": "${USER}",
+    "userId": $(id -u $USER),
     "database": "${DATABASE_NAME}",
     "subjects": [
         {

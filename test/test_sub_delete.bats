@@ -12,7 +12,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_delete.json 
 {
-    "owner": "${USER}",
     "database": "${DATABASE_NAME}",
     "subject": "carole"
 }
@@ -27,7 +26,7 @@ EOT
 @test "can run docker sub.delete" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=sub.delete \

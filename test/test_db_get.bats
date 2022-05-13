@@ -12,7 +12,8 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/db_get.json 
         {
-            "owner": "${USER}",
+            "user": "${USER}",
+            "userId": $(id -u $USER),
             "database": "${DATABASE_NAME}",
             "BIDS_definitions": ["Anat", "Ieeg", "DatasetDescJSON"]
         }

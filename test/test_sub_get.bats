@@ -12,7 +12,8 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_get.json 
 {
-    "owner": "${USER}",
+    "user": "${USER}",
+    "userId": $(id -u $USER),
     "database": "${DATABASE_NAME}",
     "info": { "sub": "carole", "dtype": "Anat" }
 }
@@ -28,7 +29,7 @@ EOT
         bids-converter  \
         --command=sub.get \
         --input_data=/input/sub_get.json \
-        --output_file=/output/sub_info.json
+        --output_file=/input/sub_info.json
 }
 
 @test 'assert_dir_exists()' {
