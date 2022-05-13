@@ -28,8 +28,9 @@ class ParticipantHandler:
         runs = dict()  # Track the RUN number of files to import
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        user = input_data['owner']
-        os.system(f"useradd {user}")
+        user = input_data['user']
+        user_id = input_data['userId']
+        os.system(f"useradd -u {user_id} {user}")
         os.system(f"chown -R {user}:{user} {self.database_path}")
         # Load the targeted BIDS db in BIDS Manager and check converters
         db_obj = bidsmanager.BidsDataset(self.database_path)
@@ -126,12 +127,15 @@ class ParticipantHandler:
                 if file['filename'] == os.path.splitext(os.path.basename(file_dict['fileLoc']))[0]:
                     db_obj.remove(file_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, source_data_trace.tsv. Not from derivatives
                     print('{} was deleted.'.format(file['filename']))
-        print(SUCCESS)
+                    print(SUCCESS)
 
     def sub_get(self, input_data=None, output_file=None):
         """ Get info of a subject """
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
+        user = input_data['user']
+        user_id = input_data['userId']
+        os.system(f"useradd -u {user_id} {user}")
         # Load the targeted BIDS db in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the info in the subject dict
@@ -139,8 +143,8 @@ class ParticipantHandler:
         sub_info = sub_dict[input_data['info']['dtype']]
         # Dump the sub_info dict in a .json file
         if output_file:
-            self.dump_output_file(user=input_data['owner'], output_data=sub_info, output_file=output_file)
-        print(SUCCESS)
+            self.dump_output_file(user=user, output_data=sub_info, output_file=output_file)
+            print(SUCCESS)
 
     def sub_edit_clinical(self, input_data=None):
         """ Update subject clinical info in BIDS database """
@@ -176,8 +180,7 @@ class ParticipantHandler:
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
         # chown created files to user (Docker)
-        os.system(f"useradd {user}")
-        os.system(f"chown -R {user}:{user} {output_file}")
+        os.system(f"chown {user}:{user} {output_file}")
 
     @staticmethod
     def find_subject_dict(db_obj=None, subject=None):
