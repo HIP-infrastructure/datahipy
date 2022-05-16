@@ -23,8 +23,6 @@ class DatabaseHandler:
         """ Create a new BIDS database """
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        user = input_data['user']
-        user_id = input_data['userId']
         # Init a BIDS Manager DatasetDescJSON dict
         datasetdesc_dict = bidsmanager.DatasetDescJSON()
         # Populate datasetdesc_dict with the data extracted from the create_bids_db.json.
@@ -41,11 +39,8 @@ class DatabaseHandler:
             db_obj = bidsmanager.BidsDataset(db_path)
             if db_obj:
                 print('INFO: The dataset_description.json file was updated. BIDS db successfully opened')
-                # Chown from root to user
                 if os.path.isdir(db_path):
-                    os.system(f"useradd -u {user_id} {user}")
-                    os.system(f"chown -R {user}:{user} {db_path}")
-                print(SUCCESS)
+                    print(SUCCESS)
 
     def db_get(self, input_data=None, output_file=None):
         """ Ask BIDS Manager for some BIDS definitions """
@@ -61,9 +56,6 @@ class DatabaseHandler:
 
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        user = input_data['user']
-        user_id = input_data['userId']
-        os.system(f"useradd -u {user_id} {user}")
         # Fetch the definitions in BIDS Manager classes and store in bids_definitions dict
         bids_definitions = {'BIDS_definitions': dict()}
         for bids_def in input_data['BIDS_definitions']:
@@ -75,7 +67,7 @@ class DatabaseHandler:
                 pass  # Ony a few definitions have a companion .json file.
         # Dump the bids_definitions dict in a .json file
         if output_file:
-            self.dump_output_file(user=user, output_data=bids_definitions, output_file=output_file)
+            self.dump_output_file(output_data=bids_definitions, output_file=output_file)
             print(SUCCESS)
 
     @staticmethod
@@ -139,12 +131,10 @@ class DatabaseHandler:
             return json.load(f)
 
     @staticmethod
-    def dump_output_file(user=None, output_data=None, output_file=None):
+    def dump_output_file(output_data=None, output_file=None):
         """ Dump output_data dict in a JSON file """
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
-        # chown created files to user (Docker)
-        os.system(f"chown -R {user}:{user} {output_file}")
 
 
 if __name__ == "__main__":

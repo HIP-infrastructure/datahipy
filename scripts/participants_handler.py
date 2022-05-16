@@ -28,10 +28,6 @@ class ParticipantHandler:
         runs = dict()  # Track the RUN number of files to import
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        user = input_data['user']
-        user_id = input_data['userId']
-        os.system(f"useradd -u {user_id} {user}")
-        os.system(f"chown -R {user}:{user} {self.database_path}")
         # Load the targeted BIDS db in BIDS Manager and check converters
         db_obj = bidsmanager.BidsDataset(self.database_path)
         DatabaseHandler.check_converters(db_obj=db_obj)
@@ -48,7 +44,6 @@ class ParticipantHandler:
         if os.path.isdir(import_path): shutil.rmtree(import_path)  # /!\ BIDS importation dir is created in the same directory as the targeted BIDS database
         if not os.path.isdir(import_path): 
             os.makedirs(import_path)
-            os.system(f"chown -R {user}:{user} {import_path}")
         # Init a BIDS Manager data2import dict
         requirements_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
         data2import = bidsmanager.Data2Import(data2import_dir=import_path, requirements_fileloc=requirements_path)
@@ -100,7 +95,6 @@ class ParticipantHandler:
         db_obj.make_upload_issues(data2import, force_verif=True)
         db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
         db_obj.parse_bids()  # Refresh
-        os.system(f"chown -R {user}:{user} {self.database_path}")
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
@@ -133,9 +127,6 @@ class ParticipantHandler:
         """ Get info of a subject """
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        user = input_data['user']
-        user_id = input_data['userId']
-        os.system(f"useradd -u {user_id} {user}")
         # Load the targeted BIDS db in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the info in the subject dict
@@ -143,7 +134,7 @@ class ParticipantHandler:
         sub_info = sub_dict[input_data['info']['dtype']]
         # Dump the sub_info dict in a .json file
         if output_file:
-            self.dump_output_file(user=user, output_data=sub_info, output_file=output_file)
+            self.dump_output_file(output_data=sub_info, output_file=output_file)
             print(SUCCESS)
 
     def sub_edit_clinical(self, input_data=None):
@@ -175,12 +166,10 @@ class ParticipantHandler:
             return json.load(f)
 
     @staticmethod
-    def dump_output_file(user=None, output_data=None, output_file=None):
+    def dump_output_file(output_data=None, output_file=None):
         """ Dump output_data dict in a JSON file """
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
-        # chown created files to user (Docker)
-        os.system(f"chown {user}:{user} {output_file}")
 
     @staticmethod
     def find_subject_dict(db_obj=None, subject=None):
