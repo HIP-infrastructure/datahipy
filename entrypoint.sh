@@ -7,7 +7,6 @@ echo -n "Creating user $USER... "
 egrep "^$USER" /etc/passwd >/dev/null
 if [ $? -eq 0 ]; then
     echo "$USER already exists."
-    exit 0
 else
     useradd --create-home --shell /bin/bash $USER --uid $USER_ID
     if [ $? -eq 0 ]; then

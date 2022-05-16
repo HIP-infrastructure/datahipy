@@ -26,6 +26,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/file \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=db.get \
         --input_data=/input/db_get.json \
         --output_file=/file/output.json      
