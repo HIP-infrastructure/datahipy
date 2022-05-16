@@ -34,6 +34,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=sub.delete.file \
         --input_data=/input/sub_delete_file.json
 }

@@ -12,8 +12,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/db_create.json 
         {
-            "user": "${USER}",
-            "userId": $(id -u $USER),
             "database": "${DATABASE_NAME}",
             "DatasetDescJSON": {
                 "Name": "My New BIDS db",
@@ -39,8 +37,10 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=db.create \
         --input_data=/input/db_create.json
+        
 }
 
 @test 'assert_db_files_exists()' {
@@ -59,5 +59,5 @@ EOT
 }
 
 @test 'delete files with user ${USER}' {
-    rm ${PROJET_TMP_FOLDER}/db_create.json
+    # rm ${PROJET_TMP_FOLDER}/db_create.json
 }

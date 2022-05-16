@@ -15,8 +15,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_import.json 
 {
-    "user": "${USER}",
-    "userId": $(id -u $USER),
     "database": "${DATABASE_NAME}",
     "subjects": [
         {
@@ -97,6 +95,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=sub.import \
         --input_data=/input/sub_import.json
 }

@@ -12,8 +12,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_edit_clinical.json 
 {
-    "user": "${USER}",
-    "userId": $(id -u $USER),
     "database": "${DATABASE_NAME}",
     "subject": "carole",
     "clinical" : {
@@ -33,6 +31,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=sub.edit.clinical \
         --input_data=/input/sub_get.json \
         --output_file=/output/sub_edit_clinical.json

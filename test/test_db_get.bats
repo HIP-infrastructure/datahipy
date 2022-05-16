@@ -12,8 +12,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/db_get.json 
         {
-            "user": "${USER}",
-            "userId": $(id -u $USER),
             "database": "${DATABASE_NAME}",
             "BIDS_definitions": ["Anat", "Ieeg", "DatasetDescJSON"]
         }
@@ -24,12 +22,13 @@ EOT
 @test "can run docker db.get" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
+        -v ${PROJET_TMP_FOLDER}:/file \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         --command=db.get \
         --input_data=/input/db_get.json \
-        --output_file=/output/output.json      
+        --output_file=/file/output.json      
 }
 
 @test 'assert_file_contains()' {

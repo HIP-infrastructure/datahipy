@@ -12,8 +12,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_get.json 
 {
-    "user": "${USER}",
-    "userId": $(id -u $USER),
     "database": "${DATABASE_NAME}",
     "info": { "sub": "carole", "dtype": "Anat" }
 }
@@ -27,6 +25,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
+        ${USER} $(id -u $USER) \
         --command=sub.get \
         --input_data=/input/sub_get.json \
         --output_file=/input/sub_info.json
