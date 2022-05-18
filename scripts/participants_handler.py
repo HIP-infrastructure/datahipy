@@ -158,6 +158,7 @@ class ParticipantHandler:
             db_obj.parse_bids()  # To update the participants.tsv with the new columns
             db_obj['ParticipantsTSV'].update_subject(input_data['subject'], sub_info)
             db_obj['ParticipantsTSV'].write_file()
+            print(SUCCESS)
 
     @staticmethod
     def load_input_data(input_data):
