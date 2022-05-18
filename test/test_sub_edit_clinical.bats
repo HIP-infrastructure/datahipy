@@ -1,4 +1,4 @@
-export DATABASE_NAME=BIDS_DB
+export DATABASE_NAME=NEW_BIDS_DB
 
 setup() {
     load 'test_helper/_common_setup'
@@ -25,16 +25,16 @@ EOT
 }
 
 
-@test "can run docker sub.get" {
-    run docker run -it --rm \
+@test "can run docker sub.edit.clinical" {
+    run docker run -it  \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-converter  \
         ${USER} $(id -u $USER) \
         --command=sub.edit.clinical \
-        --input_data=/input/sub_get.json \
-        --output_file=/output/sub_edit_clinical.json
+        --input_data=/input/sub_edit_clinical.json \
+        --output_file=/output/participants.tsv
 }
 
 @test 'assert_dir_exists()' {
@@ -42,12 +42,12 @@ EOT
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/sub_edit_clinical.json
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
 }
 
 @test 'assert_file_contains()' {
-    assert_file_contains ${PROJET_TMP_FOLDER}/sub_edit_clinical.json 'carole'
-    assert_file_contains ${PROJET_TMP_FOLDER}/sub_edit_clinical.json 'CHUGA'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'carole'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'CHUGA'
 }
 
 @test 'delete files with user ${USER}' {
