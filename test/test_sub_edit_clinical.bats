@@ -47,6 +47,7 @@ EOT
 
 @test 'assert_file_contains()' {
     assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'carole'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'handedness'
     assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'CHUGA'
 }
 
