@@ -1,0 +1,9 @@
+{
+    "database": "NEW_BIDS_DB",
+    "files": [{
+            "subject": "carole",
+            "modality": "Anat",
+            "fullpath": "sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii"
+        }
+    ]
+}
