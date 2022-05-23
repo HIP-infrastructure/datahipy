@@ -1,5 +1,3 @@
-export DATABASE_NAME=NEW_BIDS_DB
-
 setup() {
     load 'test_helper/_common_setup'
     _common_setup

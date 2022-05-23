@@ -1,10 +1,7 @@
 {
-    "user": "anthony",
-    "userId": "$(id -u anthony)",
-    "database": "NEW_BIDS_DB",
     "subject": "carole",
-    "clinical" : {
-    	"age": "30",
+    "clinical": {
+        "age": "30",
         "sex": "M",
         "handedness": "L",
         "hospital": "CHUGA"

@@ -1,5 +1,3 @@
-export DATABASE_NAME=NEW_BIDS_DB
-
 setup() {
     load 'test_helper/_common_setup'
     _common_setup
@@ -12,11 +10,10 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_delete_file.json 
 {
-    "database": "${DATABASE_NAME}",
     "files": [{
             "subject": "carole",
-            "modality": "anat",
-            "filename": "sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii"
+            "modality": "Anat",
+            "fullpath": "sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii"
         }
     ]
 }

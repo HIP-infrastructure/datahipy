@@ -1,5 +1,3 @@
-export DATABASE_NAME=NEW_BIDS_DB
-
 setup() {
     load 'test_helper/_common_setup'
     _common_setup
@@ -12,7 +10,6 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_edit_clinical.json 
 {
-    "database": "${DATABASE_NAME}",
     "subject": "carole",
     "clinical" : {
     	"age": "30",

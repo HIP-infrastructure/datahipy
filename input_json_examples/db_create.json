@@ -1,6 +1,4 @@
 {
-    "user": "anthony",
-    "userId": "$(id -u anthony)",
     "database": "NEW_BIDS_DB",
     "DatasetDescJSON": {
         "Name": "My New BIDS db",

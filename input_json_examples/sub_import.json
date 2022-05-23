@@ -1,7 +1,4 @@
 {
-    "user": "anthony",
-    "userId": "$(id -u anthony)",
-    "database": "NEW_BIDS_DB",
     "subjects": [{
         "sub": "carole",
         "age": "25",
