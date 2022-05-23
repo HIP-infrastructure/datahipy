@@ -29,8 +29,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager and check converters
-        db_path = os.path.join(self.database_path, input_data['database'])
-        db_obj = bidsmanager.BidsDataset(db_path)
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         DatabaseHandler.check_converters(db_obj=db_obj)
         # Add clinical keys to the requirements.json
         clin_keys = list()
@@ -103,8 +102,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_path = os.path.join(self.database_path, input_data['database'])
-        db_obj = bidsmanager.BidsDataset(db_path)
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['subject'])
         # Delete the subject from the BIDS db
@@ -116,8 +114,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_path = os.path.join(self.database_path, input_data['database'])
-        db_obj = bidsmanager.BidsDataset(db_path)
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         for file in input_data['files']:
             sub_dict = self.find_subject_dict(db_obj=db_obj, subject=file['subject'])
             for file_dict in sub_dict[file['modality']]:
@@ -131,8 +128,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_path = os.path.join(self.database_path, input_data['database'])
-        db_obj = bidsmanager.BidsDataset(db_path)
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the info in the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['info']['sub'])
         sub_info = sub_dict[input_data['info']['dtype']]
@@ -146,8 +142,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS db in BIDS Manager
-        db_path = os.path.join(self.database_path, input_data['database'])
-        db_obj = bidsmanager.BidsDataset(db_path)
+        db_obj = bidsmanager.BidsDataset(self.database_path)
         # Edit subject clinical info
         sub_exists, sub_info, sub_idx = db_obj['ParticipantsTSV'].is_subject_present(input_data['subject'])
         if sub_exists:
@@ -189,7 +184,7 @@ class ParticipantHandler:
 
 if __name__ == "__main__":
     if True:
-        phdl = ParticipantHandler(database_path=r'../data/output', input_path='/home/anthony/Documents/GIT/bids-converter/data/input')  # Do we need input_path here instead of full input path in .json ?
+        phdl = ParticipantHandler(database_path=r'../data/output/NEW_BIDS_DB', input_path='../test/test_data')  # Do we need input_path here instead of full input path in .json ?
         phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
         # phdl.sub_delete(input_data=r'../input_json_examples/sub_delete.json')
         # phdl.sub_get(input_data=r'../input_json_examples/sub_get.json', output_file=r'../data/output/sub_get_out.json')

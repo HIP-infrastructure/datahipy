@@ -29,7 +29,8 @@ class DatabaseHandler:
         for bids_key, bids_value in input_data['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        db_path = os.path.join(self.database_path, input_data['database'])
+        database_name = self.make_safe_filename(input_data['database'])
+        db_path = os.path.join(self.database_path, database_name)
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
         datasetdesc_path = os.path.join(db_path, 'dataset_description.json')
@@ -136,9 +137,18 @@ class DatabaseHandler:
         with open(output_file, 'w') as f:
             json.dump(output_data, f, indent=4)
 
+    @staticmethod
+    def make_safe_filename(s):
+        def safe_char(c):
+            if c.isalnum():
+                return c
+            else:
+                return "_"
+        return "".join(safe_char(c) for c in s).rstrip("_")
+
 
 if __name__ == "__main__":
     if True:
         dhdl = DatabaseHandler(database_path=r'../data/output')
         dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
-        # dhdl.db_get(input_data=r'../data/input/db_get.json', output_file=r'../data/output/db_get_out.json')
+        # dhdl.db_get(input_data=r'../input_json_examples/db_get.json', output_file=r'../data/output/db_get_out.json')
