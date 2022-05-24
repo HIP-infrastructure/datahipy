@@ -130,8 +130,8 @@ class ParticipantHandler:
         # Load the targeted BIDS db in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.database_path)
         # Find the info in the subject dict
-        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['info']['sub'])
-        sub_info = sub_dict[input_data['info']['dtype']]
+        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['sub'])
+        sub_info = sub_dict['Anat'] + sub_dict['Ieeg']
         # Dump the sub_info dict in a .json file
         if output_file:
             self.dump_output_file(output_data=sub_info, output_file=output_file)
@@ -185,8 +185,8 @@ class ParticipantHandler:
 if __name__ == "__main__":
     if True:
         phdl = ParticipantHandler(database_path=r'../data/output/NEW_BIDS_DB', input_path='../test/test_data')  # Do we need input_path here instead of full input path in .json ?
-        phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
+        #phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
         # phdl.sub_delete(input_data=r'../input_json_examples/sub_delete.json')
-        # phdl.sub_get(input_data=r'../input_json_examples/sub_get.json', output_file=r'../data/output/sub_get_out.json')
-        phdl.sub_delete_file(input_data=r'../input_json_examples/sub_delete_file.json')
+        phdl.sub_get(input_data=r'../input_json_examples/sub_get.json', output_file=r'../data/output/sub_get_out.json')
+        #phdl.sub_delete_file(input_data=r'../input_json_examples/sub_delete_file.json')
         # phdl.sub_edit_clinical(input_data=r'../input_json_examples/sub_edit_clinical.json')

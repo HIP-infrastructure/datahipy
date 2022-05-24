@@ -10,7 +10,7 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/sub_get.json 
 {
-    "info": { "sub": "carole", "dtype": "Anat" }
+    "sub": "carole"
 }
 EOT
 }

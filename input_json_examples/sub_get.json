@@ -1,6 +1,3 @@
 {
-    "info": {
-        "sub": "carole",
-        "dtype": "Anat"
-    }
+    "sub": "carole"
 }
