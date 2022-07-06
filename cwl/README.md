@@ -5,7 +5,7 @@
 
 `sudo apt-get install cwltool`  
 
-`docker build . -t bids-converter`  
+`docker build . -t bids-tools`  
 
 
 ### Database

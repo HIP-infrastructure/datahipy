@@ -6,7 +6,7 @@ baseCommand: --command=db.get
 stdout: db.get.status.txt
 hints:
   DockerRequirement:
-    dockerPull: bids-converter:latest
+    dockerPull: bids-tools:latest
 inputs:  
   input_data:
     type: File

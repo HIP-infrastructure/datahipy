@@ -6,7 +6,7 @@ Docker container component to convert neuroimaging data to Brain Imaging Data St
 - Clone this repository 
 - Checkout submodules:
   - `git submodule update --recursive --init`
-- build the image: `docker build . -t bids-converter`
+- build the image: `docker build . -t bids-tools`
 
 ## Test
 - `cd test`

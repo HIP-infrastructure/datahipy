@@ -6,7 +6,7 @@ baseCommand: --command=db.create
 stdout: db.create.status.txt
 hints:
   DockerRequirement:
-    dockerPull: bids-converter:latest
+    dockerPull: bids-tools:latest
   # This doesn't work anymore
   # https://github.com/common-workflow-language/cwltool/issues/993
   # Should allow the db to be edited in place

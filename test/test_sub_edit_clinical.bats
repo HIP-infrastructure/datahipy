@@ -4,7 +4,7 @@ setup() {
 }
 
 @test "can build docker image" {
-    run docker build ${PROJECT_ROOT} -t bids-converter
+    run docker build ${PROJECT_ROOT} -t bids-tools
 }
 
 @test "can create input file" {
@@ -27,8 +27,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/input \
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
-        bids-converter  \
-        ${USER} $(id -u $USER) \
+        bids-tools  \
         --command=sub.edit.clinical \
         --input_data=/input/sub_edit_clinical.json \
         --output_file=/output/participants.tsv

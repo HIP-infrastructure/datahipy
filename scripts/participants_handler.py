@@ -184,9 +184,9 @@ class ParticipantHandler:
 
 if __name__ == "__main__":
     if True:
-        phdl = ParticipantHandler(database_path=r'../data/output/NEW_BIDS_DB', input_path='../test/test_data')  # Do we need input_path here instead of full input path in .json ?
-        #phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
-        # phdl.sub_delete(input_data=r'../input_json_examples/sub_delete.json')
-        phdl.sub_get(input_data=r'../input_json_examples/sub_get.json', output_file=r'../data/output/sub_get_out.json')
-        #phdl.sub_delete_file(input_data=r'../input_json_examples/sub_delete_file.json')
-        # phdl.sub_edit_clinical(input_data=r'../input_json_examples/sub_edit_clinical.json')
+        phdl = ParticipantHandler(database_path=r'../data/output', input_path='/home/anthony/Documents/GIT/bids-tools/data/input')  # Do we need input_path here instead of full input path in .json ?
+        phdl.sub_import(input_data=r'../input_json_examples/sub_import.json')
+        # phdl.sub_delete(input_data=r'../data/input/sub_delete.json',  database_path=r'../data/output')
+        # phdl.sub_get(input_data=r'../data/input/sub_get.json', database_path=r'../data/output', output_file=r'../data/output/sub_get_out.json')
+        # phdl.sub_delete_file(input_data=r'../data/input/sub_delete_file.json', database_path=r'../data/output')
+        phdl.sub_edit_clinical(input_data=r'../input_json_examples/sub_edit_clinical.json')

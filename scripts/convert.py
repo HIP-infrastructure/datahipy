@@ -34,13 +34,13 @@ examples for docker, or run
 docker-compose up
 
 build:
-docker build . -t hip/bids-converter 
+docker build . -t hip/bids-tools 
 
 run: 
-docker run -it --rm -v $(pwd)/scripts:/scripts -v $(pwd)/data/input:/input -v $(pwd)/data/output:/output hip/bids-converter:latest /scripts/convert.py data.json
+docker run -it --rm -v $(pwd)/scripts:/scripts -v $(pwd)/data/input:/input -v $(pwd)/data/output:/output hip/bids-tools:latest /scripts/convert.py data.json
 
 run for nextcloud: 
-docker run -it --rm -v $(pwd)/scripts:/scripts -v /mnt/nextcloud-dp/nextcloud/data/mspuhler/temp/bids-converter/01/:/input -v /mnt/nextcloud-dp/nextcloud/data/mspuhler/files:/output hip/bids-converter:latest /scripts/convert.py data.json
+docker run -it --rm -v $(pwd)/scripts:/scripts -v /mnt/nextcloud-dp/nextcloud/data/mspuhler/temp/bids-tools/01/:/input -v /mnt/nextcloud-dp/nextcloud/data/mspuhler/files:/output hip/bids-tools:latest /scripts/convert.py data.json
 
 """
 

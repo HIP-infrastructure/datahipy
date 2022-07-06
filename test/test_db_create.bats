@@ -4,7 +4,7 @@ setup() {
 }
 
 @test "can build docker image" {
-    run docker build ${PROJECT_ROOT} -t bids-converter
+    run docker build ${PROJECT_ROOT} -t bids-tools
 }
 
 @test "can create input file" {
@@ -34,8 +34,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/input \
         -v ${PROJET_TMP_FOLDER}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
-        bids-converter  \
-        ${USER} $(id -u $USER) \
+        bids-tools  \
         --command=db.create \
         --input_data=/input/db_create.json
         
