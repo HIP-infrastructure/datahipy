@@ -8,6 +8,7 @@ Manage BIDS database using BIDS Manager.
 import os
 import json
 import re
+import pprint as pp
 from sre_constants import SUCCESS
 
 # BIDS Manager Python package has to be accessible.
@@ -44,7 +45,7 @@ class DatabaseHandler:
                     print(SUCCESS)
 
     def db_get(self, input_data=None, output_file=None):
-        """ Ask BIDS Manager for some BIDS definitions """
+        """ DEPRECIATED - Ask BIDS Manager for some BIDS definitions """
 
         def get_def_attr(cls):
             """ Local function to extract some info from BIDS Manager classes """
@@ -71,6 +72,34 @@ class DatabaseHandler:
             self.dump_output_file(output_data=bids_definitions, output_file=output_file)
             print(SUCCESS)
 
+    def db_get_definitions(self, output_file=None):
+        """ Extract BIDS definitions from BIDS Manager """
+        import_definitions = dict()
+        data_types = bidsmanager.Imaging.get_list_subclasses_names() + bidsmanager.Electrophy.get_list_subclasses_names() + bidsmanager.GlobalSidecars.get_list_subclasses_names()
+        nonbids_keys = bidsmanager.BidsJSON.get_list_subclasses_names() + bidsmanager.BidsTSV.get_list_subclasses_names() + bidsmanager.BidsFreeFile.get_list_subclasses_names() + bidsmanager.BidsBrick.required_keys + ['fileLoc'] + ['modality'] 
+        # For each BIDS data type we populate a dict() with corresponding modalities, input formats (target extension), (required) BIDS entities  
+        for data_type in data_types:
+            import_definitions[data_type] = dict()
+            import_definitions[data_type]['modalities'] = getattr(bidsmanager, data_type).allowed_modalities
+            try:
+                import_definitions[data_type]['input_format'] = getattr(bidsmanager, data_type).readable_file_formats
+            except AttributeError:
+                import_definitions[data_type]['input_format'] = getattr(bidsmanager, data_type).allowed_file_formats
+            bm_keys = getattr(bidsmanager, data_type).keylist            
+            all_bids_keys = list()
+            required_bids_keys = list()
+            for bm_key in bm_keys:
+                if bm_key not in nonbids_keys:
+                    all_bids_keys.append(bm_key)
+                    if bm_key in getattr(bidsmanager, data_type).required_keys:
+                        required_bids_keys.append(bm_key)  
+            import_definitions[data_type]['all_entities'] = all_bids_keys
+            import_definitions[data_type]['required_entities'] = required_bids_keys
+        # Dump the import_definitions dict in a .json file
+        if output_file:
+            self.dump_output_file(output_data=import_definitions, output_file=output_file)
+            print(SUCCESS)  
+    
     @staticmethod
     def check_converters(db_obj=None):
         """ Check if the converters are specified and (re)write the requirements.json if necessary """
@@ -150,5 +179,6 @@ class DatabaseHandler:
 if __name__ == "__main__":
     if True:
         dhdl = DatabaseHandler(database_path=r'../data/output')
-        dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
+        # dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
         # dhdl.db_get(input_data=r'../input_json_examples/db_get.json', output_file=r'../data/output/db_get_out.json')
+        dhdl.db_get_definitions(output_file=r'../data/output/db_get_definitions.json')
