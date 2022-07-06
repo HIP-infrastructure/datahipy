@@ -35,6 +35,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
+        ${USER} $(id -u $USER) \
         --command=db.create \
         --input_data=/input/db_create.json
         

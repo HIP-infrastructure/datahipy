@@ -28,6 +28,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
+        ${USER} $(id -u $USER) \
         --command=sub.edit.clinical \
         --input_data=/input/sub_edit_clinical.json \
         --output_file=/output/participants.tsv

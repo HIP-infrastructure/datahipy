@@ -92,6 +92,7 @@ EOT
         -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
+        ${USER} $(id -u $USER) \
         --command=sub.import \
         --input_data=/input/sub_import.json
 }

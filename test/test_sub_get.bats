@@ -23,6 +23,7 @@ EOT
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
         --command=sub.get \
+        ${USER} $(id -u $USER) \
         --input_data=/input/sub_get.json \
         --output_file=/input/sub_info.json
 }
