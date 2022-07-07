@@ -23,10 +23,3 @@ build:
   stage: build
   script:
     - make build
-
-# release:
-#   stage: release
-#   only:
-#     - master
-#   script:
-#     - make release
