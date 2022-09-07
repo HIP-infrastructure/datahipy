@@ -46,15 +46,21 @@ class ParticipantHandler:
             os.makedirs(import_path)
         # Init a BIDS Manager data2import dict
         requirements_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
-        data2import = bidsmanager.Data2Import(data2import_dir=import_path, requirements_fileloc=requirements_path)
-        # Populate the data2import with the data extracted from the dataset_description.json of the BIDS db.
+        data2import = bidsmanager.Data2Import(
+            data2import_dir=import_path,
+            requirements_fileloc=requirements_path
+        )
+        # Populate the data2import with the data extracted from the dataset_description.json of the BIDS dataset.
         data2import['DatasetDescJSON'] = db_obj['DatasetDescJSON']
         # Populate the data2import with the subjects found in the data_to_import dict
-        sub_idx = dict()  # Need to track subject indexes to populate their respective modality dict later
+        # Need to track subject indexes to populate their respective modality dict later
+        sub_idx = dict()
         for idx, subject in enumerate(input_data['subjects']):
-            new_sub = bidsmanager.Subject()  # Init a BIDS Manager subject dict used for clinical info
+            # Init a BIDS Manager subject dict used for clinical info
+            new_sub = bidsmanager.Subject()
+            # Populate the subject dict with the content of the data_to_import dict
             for bids_key, bids_value in subject.items():
-                new_sub[bids_key] = bids_value  # Populate the subject dict with the content of the data_to_import dict
+                new_sub[bids_key] = bids_value
             data2import['Subject'].append(new_sub)
             sub_idx[subject['sub']] = idx
         # Populate the data2import with the files found in the data_to_import dict
@@ -63,7 +69,9 @@ class ParticipantHandler:
             file_name = os.path.basename(file['path'])
             file_path = os.path.join(self.input_path, file['path'])
             token_dir = str(datetime.timestamp(datetime.now())).replace('.', '')
-            output_file_path = os.path.join(os.path.join(import_path, 'temp_bids'), token_dir, file_name)
+            output_file_path = os.path.join(
+                os.path.join(import_path, 'temp_bids'), token_dir, file_name
+            )
             os.makedirs(os.path.dirname(output_file_path))
             shutil.copyfile(file_path, output_file_path)
             # Determine the BIDS data type to use and init a BIDS Manager modality dict
@@ -95,10 +103,16 @@ class ParticipantHandler:
             data2import['Subject'][sub_idx[file['entities']['sub']]][bids_dtype].append(bids_dtype_dict)
         # Saving the data2import now it is populated. Note: subjects without data to import are ignored
         data2import.save_as_json()
-        # Importation of the data into the BIDS database using BIDS Manager
+        # Importation of the data into the BIDS dataset using BIDS Manager
         db_obj.make_upload_issues(data2import, force_verif=True)
-        db_obj.import_data(data2import=data2import, keep_sourcedata=True, keep_file_trace=True)  # Create a /sourcedata + source_data_trace.tsv
-        db_obj.parse_bids()  # Refresh
+        # Create a /sourcedata + source_data_trace.tsv
+        db_obj.import_data(
+            data2import=data2import,
+            keep_sourcedata=True,
+            keep_file_trace=True
+        )
+        # Refresh
+        db_obj.parse_bids()
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
@@ -109,9 +123,12 @@ class ParticipantHandler:
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         # Find the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['subject'])
-        db_obj.remove(sub_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv. Not from derivatives
-        db_obj.parse_bids()  # Refresh
         # Delete the subject from the BIDS dataset
+        # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv
+        # but not from derivatives
+        db_obj.remove(sub_dict, with_issues=True, in_deriv=None)
+        # Refresh
+        db_obj.parse_bids()
 
     def sub_delete_file(self, input_data=None):
         """ Delete data files from /raw and /source """
@@ -123,19 +140,27 @@ class ParticipantHandler:
             sub_dict = self.find_subject_dict(db_obj=db_obj, subject=file['subject'])
             for file_dict in sub_dict[file['modality']]:
                 if file['fullpath'] == file_dict['fileLoc']:
-                    db_obj.remove(file_dict, with_issues=True, in_deriv=None)  # Will remove from /raw, /source, source_data_trace.tsv. Not from derivatives
+                    # Delete the file from the BIDS dataset:
+                    # remove from /raw, /source, participants.tsv, source_data_trace.tsv
+                    # but not from derivatives
+                    db_obj.remove(file_dict, with_issues=True, in_deriv=None)
                     print('{} was deleted.'.format(file['fullpath']))
                     print(SUCCESS)
 
     def sub_get(self, input_data=None, output_file=None):
         """ Get info of a subject """
+        print("We are here!")
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
+        print(f'input_data: {input_data}')
+        # Load the targeted BIDS dataset in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         # Find the info in the subject dict
         sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data['sub'])
+        print(f'sub_dict: {sub_dict}')
         sub_info = sub_dict['Anat'] + sub_dict['Ieeg']
         # Dump the sub_info dict in a .json file
+        print(f'output_file: {output_file}')
         if output_file:
             self.dump_output_file(output_data=sub_info, output_file=output_file)
             print(SUCCESS)
@@ -178,12 +203,14 @@ class ParticipantHandler:
 
     @staticmethod
     def find_subject_dict(db_obj=None, subject=None):
-        """ Find the subject dict in the parsed BIDS db object """
-        matched_sub = [sub_idx for sub_idx, sub_dict in enumerate(db_obj['Subject']) if sub_dict['sub'] == subject]
+        """ Find the subject dict in the parsed BIDS dataset object """
+        matched_sub = [
+            sub_idx for sub_idx, sub_dict in enumerate(db_obj['Subject']) if sub_dict['sub'] == subject
+        ]
         if not matched_sub:
-            raise IndexError('Could not find the subject in the BIDS db.')
+            raise IndexError('Could not find the subject in the BIDS dataset.')
         elif len(matched_sub) > 1:
-            raise IndexError('Several subjects with the same ID found in the BIDS db.')
+            raise IndexError('Several subjects with the same ID found in the BIDS dataset.')
         sub_dict = db_obj['Subject'][matched_sub[0]]
         return sub_dict
 

@@ -10,10 +10,19 @@ input_path = '/input'
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(description='BIDS database handler.')
-    parser.add_argument('--command', help="Method to be run, db.create, db.get, sub.get, sub.create, sub.remove")
-    parser.add_argument('--input_data', help="Input JSON data")
-    parser.add_argument('--output_file', help="File location after processing")
+    parser = argparse.ArgumentParser(description='BIDS dataset handler.')
+    parser.add_argument(
+        '--command',
+        help="Method to be run, db.create, db.get, sub.get, sub.create, sub.remove"
+    )
+    parser.add_argument(
+        '--input_data',
+        help="Input JSON data"
+    )
+    parser.add_argument(
+        '--output_file',
+        help="File location after processing"
+    )
 
     cmd_args = parser.parse_args()
     command = cmd_args.command
