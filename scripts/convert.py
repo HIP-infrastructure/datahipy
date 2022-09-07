@@ -55,9 +55,6 @@ On nextcloud, you can run the script throughout the docker image as follows:
 
     ..  code-block:: bash
 
-def convert(data):
-    bids_database = data["databasePath"]
-    # help(bids_manager)
         $ docker run -it --rm \
             -v $(pwd)/scripts:/scripts \
             -v /mnt/nextcloud-dp/nextcloud/data/mspuhler/temp/bids-tools/01/:/input \
@@ -65,12 +62,8 @@ def convert(data):
             hip/bids-tools:latest \
             /scripts/convert.py data.json
 
-    f = open(f"/output/{bids_database}/output-test.txt", "a")
-    # f = open(f"./data/output/{bids_database}/output-test.txt", "a")
 """
 
-    f.write(json.dumps(data))
-    f.close()
 import json
 import argparse
 
@@ -78,6 +71,9 @@ import argparse
 def convert(p_data):
     bids_dataset = p_data["datasetPath"]
 
+    # with open(f"./data/output/{bids_dataset}/output-test.txt", "a") as f:
+    with open(f"/output/{bids_dataset}/output-test.txt", "a") as f:
+        f.write(json.dumps(p_data))
 
 
 if __name__ == '__main__':
@@ -87,8 +83,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # file = f"./data/input/{args.file}"
-    f = open(file)
-    data = json.load(f)
+    file = f"/input/{args.file}"
 
-    convert(data)
-    f.close()
+    with open(file) as json_file:
+        data = json.load(json_file)
+        convert(data)
