@@ -8,7 +8,7 @@
 `docker build . -t bids-tools`  
 
 
-### Database
+### Dataset
 - db.create 
 
 ```

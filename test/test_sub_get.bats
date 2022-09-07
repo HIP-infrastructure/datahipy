@@ -19,16 +19,19 @@ EOT
 @test "can run docker sub.get" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATASET_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
         --command=sub.get \
         ${USER} $(id -u $USER) \
         --input_data=/input/sub_get.json \
         --output_file=/input/sub_info.json
+    echo "status = ${status}"
+    echo "output = ${output}"
 }
 
 @test 'assert_dir_exists()' {
+    ls -la ${PROJET_TMP_FOLDER}
     assert_file_exists ${PROJET_TMP_FOLDER}/sub_get.json
     assert_file_exists ${PROJET_TMP_FOLDER}/sub_info.json
 }

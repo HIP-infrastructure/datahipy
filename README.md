@@ -14,7 +14,7 @@ Docker container component to convert neuroimaging data to Brain Imaging Data St
 
 ## Methods
 
-### Database
+### Dataset
 
 #### db.get  
 Get a database with all fields, participants, and existing entities 

@@ -2,11 +2,11 @@
 # -*-coding:Utf-8 -*
 
 import argparse
-from database_handler import DatabaseHandler
+from dataset_handler import DatasetHandler
 from participants_handler import ParticipantHandler
 
-database_path = '/output'
-input_path='/input'
+dataset_path = '/output'
+input_path = '/input'
 
 if __name__ == "__main__":
     
@@ -20,8 +20,8 @@ if __name__ == "__main__":
     input_data = cmd_args.input_data
     output_file = cmd_args.output_file
 
-    dhdl = DatabaseHandler(database_path=database_path)
-    phdl = ParticipantHandler(database_path=database_path, input_path=input_path)
+    dhdl = DatasetHandler(dataset_path=dataset_path)
+    phdl = ParticipantHandler(dataset_path=dataset_path, input_path=input_path)
 
     if command == 'db.create':
         dhdl.db_create(input_data=input_data)

@@ -1,7 +1,7 @@
 {
-    "database": "NEW_BIDS_DB",
+    "DatasetPath": "NEW_BIDS_DB",
     "DatasetDescJSON": {
-        "Name": "My New BIDS db",
+        "Name": "My New BIDS dataset",
         "BIDSVersion": "1.4.0",
         "License": "n/a",
         "Authors": [
