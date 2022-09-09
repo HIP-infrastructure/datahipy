@@ -30,7 +30,7 @@ class DatasetHandler:
         for bids_key, bids_value in input_data['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        dataset_name = self.make_safe_filename(input_data['DatasetPath'])
+        dataset_name = self.make_safe_filename(input_data['dataset'])
         db_path = os.path.join(self.dataset_path, dataset_name)
         if not os.path.isdir(db_path):
             os.makedirs(db_path)

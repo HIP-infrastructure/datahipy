@@ -10,7 +10,7 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/db_create.json 
         {
-            "DatasetPath": "${DATASET_NAME}",
+            "dataset": "${DATASET_NAME}",
             "DatasetDescJSON": {
                 "Name": "My New BIDS dataset",
                 "BIDSVersion": "1.4.0",

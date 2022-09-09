@@ -1,5 +1,5 @@
 {
-    "DatasetPath": "NEW_BIDS_DB",
+    "dataset": "NEW_BIDS_DB",
     "DatasetDescJSON": {
         "Name": "My New BIDS dataset",
         "BIDSVersion": "1.4.0",

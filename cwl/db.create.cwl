@@ -15,7 +15,7 @@ hints:
 requirements:
   InitialWorkDirRequirement:
     listing:
-      - entry: $(inputs.database_path)
+      - entry: $(inputs.dataset_path)
         writable: true
 inputs:  
   input_data:
@@ -25,10 +25,10 @@ inputs:
       position: 2
       separate: false
   
-  database_path:
+  dataset_path:
     type: Directory?
     inputBinding:
-      prefix: --database_path=
+      prefix: --dataset_path=
       position: 3
       separate: false
       

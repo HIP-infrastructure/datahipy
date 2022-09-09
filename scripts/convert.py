@@ -19,8 +19,8 @@ OUTPUTS
 
 Output folder, passed as a (local)/docker volume should point to the root file system
   - convert should update existing participants, demographic, clinical data and
-    files in DatasetPath/participants.tsv
-  - convert should create new participant in DatasetPath
+    files in dataset/participants.tsv
+  - convert should create new participant in dataset
   - convert should update existing participants in their origin folder
 
 EXAMPLES
@@ -69,7 +69,7 @@ import argparse
 
 
 def convert(p_data):
-    bids_dataset = p_data["datasetPath"]
+    bids_dataset = p_data["dataset"]
 
     # with open(f"./data/output/{bids_dataset}/output-test.txt", "a") as f:
     with open(f"/output/{bids_dataset}/output-test.txt", "a") as f:

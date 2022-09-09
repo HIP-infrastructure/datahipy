@@ -2,7 +2,7 @@ setup() {
     load 'test_helper/_common_setup'
     _common_setup
 
-    # copy existing database and subject to import
+    # copy existing dataset and subject to import
     cp -r ${PROJET_TEST_FOLDER}/test_data/* $PROJET_TMP_FOLDER
 }
 
