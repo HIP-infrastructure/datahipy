@@ -19,7 +19,7 @@ EOT
 @test "can run docker db.get" {
     run docker run -it --rm \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATASET_NAME}:/output \
         -v ${PROJET_TMP_FOLDER}:/file \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \

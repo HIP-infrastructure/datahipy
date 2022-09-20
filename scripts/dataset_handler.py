@@ -2,7 +2,7 @@
 # -*-coding:Utf-8 -*
 
 """
-Manage BIDS database using BIDS Manager.
+Manage BIDS dataset using BIDS Manager.
 """
 
 import os
@@ -15,13 +15,13 @@ from sre_constants import SUCCESS
 import bids_manager.ins_bids_class as bidsmanager
 
 
-class DatabaseHandler:
+class DatasetHandler:
 
-    def __init__(self, database_path=None):
-        self.database_path = os.path.abspath(database_path)
+    def __init__(self, dataset_path=None):
+        self.dataset_path = os.path.abspath(dataset_path)
 
     def db_create(self, input_data=None):
-        """ Create a new BIDS database """
+        """ Create a new BIDS dataset """
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Init a BIDS Manager DatasetDescJSON dict
@@ -30,17 +30,17 @@ class DatabaseHandler:
         for bids_key, bids_value in input_data['DatasetDescJSON'].items():
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
-        database_name = self.make_safe_filename(input_data['database'])
-        db_path = os.path.join(self.database_path, database_name)
+        dataset_name = self.make_safe_filename(input_data['dataset'])
+        db_path = os.path.join(self.dataset_path, dataset_name)
         if not os.path.isdir(db_path):
             os.makedirs(db_path)
         datasetdesc_path = os.path.join(db_path, 'dataset_description.json')
         if not os.path.isfile(datasetdesc_path):
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
-            # Load the created BIDS db in BIDS Manager (creates companion files)
+            # Load the created BIDS dataset in BIDS Manager (creates companion files)
             db_obj = bidsmanager.BidsDataset(db_path)
             if db_obj:
-                print('INFO: The dataset_description.json file was updated. BIDS db successfully opened')
+                print('INFO: The dataset_description.json file was updated. BIDS dataset successfully opened')
                 if os.path.isdir(db_path):
                     print(SUCCESS)
 
@@ -63,7 +63,7 @@ class DatabaseHandler:
         for bids_def in input_data['BIDS_definitions']:
             bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(eval('bidsmanager.'+bids_def))
             try:
-                bids_def = bids_def+'JSON'
+                bids_def = bids_def + 'JSON'
                 bids_definitions['BIDS_definitions'][bids_def] = get_def_attr(eval('bidsmanager.'+bids_def))
             except AttributeError:
                 pass  # Ony a few definitions have a companion .json file.
@@ -75,16 +75,28 @@ class DatabaseHandler:
     def db_get_definitions(self, output_file=None):
         """ Extract BIDS definitions from BIDS Manager """
         import_definitions = dict()
-        data_types = bidsmanager.Imaging.get_list_subclasses_names() + bidsmanager.Electrophy.get_list_subclasses_names() + bidsmanager.GlobalSidecars.get_list_subclasses_names()
-        nonbids_keys = bidsmanager.BidsJSON.get_list_subclasses_names() + bidsmanager.BidsTSV.get_list_subclasses_names() + bidsmanager.BidsFreeFile.get_list_subclasses_names() + bidsmanager.BidsBrick.required_keys + ['fileLoc'] + ['modality'] 
-        # For each BIDS data type we populate a dict() with corresponding modalities, input formats (target extension), (required) BIDS entities  
+        data_types = bidsmanager.Imaging.get_list_subclasses_names()\
+            + bidsmanager.Electrophy.get_list_subclasses_names()\
+            + bidsmanager.GlobalSidecars.get_list_subclasses_names()
+        nonbids_keys = bidsmanager.BidsJSON.get_list_subclasses_names()\
+            + bidsmanager.BidsTSV.get_list_subclasses_names()\
+            + bidsmanager.BidsFreeFile.get_list_subclasses_names()\
+            + bidsmanager.BidsBrick.required_keys + ['fileLoc'] + ['modality']
+        # For each BIDS' data type we populate a dict() with corresponding modalities,
+        # input formats (target extension), (required) BIDS entities
         for data_type in data_types:
             import_definitions[data_type] = dict()
-            import_definitions[data_type]['modalities'] = getattr(bidsmanager, data_type).allowed_modalities
+            import_definitions[data_type]['modalities'] = getattr(
+                bidsmanager, data_type
+            ).allowed_modalities
             try:
-                import_definitions[data_type]['input_format'] = getattr(bidsmanager, data_type).readable_file_formats
+                import_definitions[data_type]['input_format'] = getattr(
+                    bidsmanager, data_type
+                ).readable_file_formats
             except AttributeError:
-                import_definitions[data_type]['input_format'] = getattr(bidsmanager, data_type).allowed_file_formats
+                import_definitions[data_type]['input_format'] = getattr(
+                    bidsmanager, data_type
+                ).allowed_file_formats
             bm_keys = getattr(bidsmanager, data_type).keylist            
             all_bids_keys = list()
             required_bids_keys = list()
@@ -97,7 +109,10 @@ class DatabaseHandler:
             import_definitions[data_type]['required_entities'] = required_bids_keys
         # Dump the import_definitions dict in a .json file
         if output_file:
-            self.dump_output_file(output_data=import_definitions, output_file=output_file)
+            self.dump_output_file(
+                output_data=import_definitions,
+                output_file=output_file
+            )
             print(SUCCESS)  
     
     @staticmethod
@@ -106,30 +121,40 @@ class DatabaseHandler:
         # Converter paths in the docker image
         dcm2niix_path = r'/apps/dcm2niix/install/dcm2niix'
         anywave_path = r'/usr/bin/anywave'
-        def_converters = {'Electrophy': {'ext': ['.vhdr', '.vmrk', '.eeg'], 'path': anywave_path},
-                          'Imaging': {'ext': ['.nii'], 'path': dcm2niix_path}}
+        def_converters = {
+            'Electrophy': {
+                'ext': ['.vhdr', '.vmrk', '.eeg'],
+                'path': anywave_path
+            },
+            'Imaging': {
+                'ext': ['.nii'],
+                'path': dcm2niix_path
+            }
+        }
+        # Get the requirements.json dict
         req_path = os.path.join(db_obj.dirname, 'code', 'requirements.json')
-        req_dict = bidsmanager.Requirements(req_path)  # Get the requirements.json dict
+        req_dict = bidsmanager.Requirements(req_path)
         to_rewrite = False
         if 'Converters' not in req_dict:
             to_rewrite = True
         elif req_dict['Converters'] != def_converters:
             to_rewrite = True
         if to_rewrite:
+            # Write the requirements.json
             print('INFO: Updating the requirements.json converters.')
             req_dict['Converters'] = def_converters
             bidsmanager.BidsDataset.dirname = os.path.join(db_obj.dirname)
-            req_dict.save_as_json(req_path)  # Write the requirements.json
+            req_dict.save_as_json(req_path)
             db_obj.get_requirements()
 
     @staticmethod
     def get_run(root_dir: str, bids_entities: dict, bids_modality: str):
-        """ Parse the BIDS database to get the max run for a set of BIDS entities """
+        """ Parse the BIDS dataset to get the max run for a set of BIDS entities """
         # Generate regexp from entities
         regexp_list = list()
         for bids_key, bids_value in bids_entities.items():
             if bids_value:
-                regexp_list.append('{}-{}'.format(bids_key, bids_value))
+                regexp_list.append(f'{bids_key}-{bids_value}')
         regexp_list.append('run-[0-9]{1,3}')
         regexp_list.append(bids_modality)
         regexp_filename = '_'.join(regexp_list)
@@ -178,7 +203,7 @@ class DatabaseHandler:
 
 if __name__ == "__main__":
     if True:
-        dhdl = DatabaseHandler(database_path=r'../data/output')
+        dhdl = DatasetHandler(dataset_path=r'../data/output')
         # dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
         # dhdl.db_get(input_data=r'../input_json_examples/db_get.json', output_file=r'../data/output/db_get_out.json')
         dhdl.db_get_definitions(output_file=r'../data/output/db_get_definitions.json')

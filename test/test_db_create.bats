@@ -10,9 +10,9 @@ setup() {
 @test "can create input file" {
     cat <<EOT > ${PROJET_TMP_FOLDER}/db_create.json 
         {
-            "database": "${DATABASE_NAME}",
+            "dataset": "${DATASET_NAME}",
             "DatasetDescJSON": {
-                "Name": "My New BIDS db",
+                "Name": "My New BIDS dataset",
                 "BIDSVersion": "1.4.0",
                 "License": "n/a",
                 "Authors": [
@@ -42,18 +42,18 @@ EOT
 }
 
 @test 'assert_db_files_exists()' {
-    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}
-    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
-    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/dataset_description.json
-    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
-    assert_file_exists ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
+    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATASET_NAME}
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATASET_NAME}/dataset_description.json
+    assert_dir_exists ${PROJET_TMP_FOLDER}/${DATASET_NAME}/code
+    assert_file_exists ${PROJET_TMP_FOLDER}/${DATASET_NAME}/code/requirements.json
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME} 
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/code/requirements.json
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATASET_NAME}
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATASET_NAME}/code
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATASET_NAME}/code/requirements.json
 }
 
 @test 'delete files with user ${USER}' {

@@ -1,7 +1,5 @@
 FROM ubuntu:20.04
 
-LABEL maintainer=""
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG ANYWAVE_VERSION=2.1.3
@@ -10,7 +8,7 @@ ARG BIDSMANAGER_VERSION=latest
 
 WORKDIR /apps/
 
-#install anywave
+# Install anywave
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \ 
@@ -21,7 +19,7 @@ RUN apt-get update && \
     dpkg -i anywave-${ANYWAVE_VERSION}_amd64.deb && \
     rm anywave-${ANYWAVE_VERSION}_amd64.deb
 
-#install dcm2niix
+# Install dcm2niix
 RUN apt-get install --no-install-recommends -y unzip && \
     curl -O -L https://github.com/rordenlab/dcm2niix/releases/download/v${DCM2NIIX_VERSION}/dcm2niix_lnx.zip && \
     mkdir -p ./dcm2niix/install && \
@@ -30,7 +28,7 @@ RUN apt-get install --no-install-recommends -y unzip && \
     ln -s /apps/dcm2niix/install/dcm2niix /usr/bin/dcm2niix && \
     rm dcm2niix_lnx.zip
 
-#install bids-manager
+# Install bids-manager
 RUN apt-get install --no-install-recommends -y \ 
     python3-pip python3-tk python3-scipy && \
     pip3 install gdown setuptools PyQt5==5.15.4 nibabel xlrd \
@@ -47,7 +45,27 @@ RUN apt-get install --no-install-recommends -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+ENV QT_QPA_PLATFORM offscreen
+
 COPY ./scripts/ /scripts
 COPY ./entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+#######################################################################
+# Container Image Metadata (label schema: http://label-schema.org/rc1/)
+#######################################################################
+
+# LABEL maintainer=""
+
+LABEL org.label-schema.build-date=${BUILD_DATE} \
+      org.label-schema.name="BIDS tool" \
+      org.label-schema.description="Tool to import / update BIDS datasets in the HIP platform" \
+      org.label-schema.url="" \
+      org.label-schema.vcs-ref="" \
+      org.label-schema.vcs-url="https://github.com/..." \
+      org.label-schema.version="" \
+      org.label-schema.maintainer="" \
+      org.label-schema.vendor="" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.docker.cmd="docker run"

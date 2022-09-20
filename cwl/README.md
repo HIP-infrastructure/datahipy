@@ -8,11 +8,11 @@
 `docker build . -t bids-tools`  
 
 
-### Database
+### Dataset
 - db.create 
 
 ```
-cwl-runner --enable-ext cwl/db.create.cwl --input_data=data/input/db_create.json --database_path=data/output
+cwl-runner --enable-ext cwl/db.create.cwl --input_data=data/input/db_create.json --dataset_path=data/output
 ```
 
 - db.get 

@@ -5,7 +5,7 @@ _common_setup() {
     load 'test_helper/bats-assert/load'
     load 'test_helper/bats-file/load'
 
-    export DATABASE_NAME=NEW BIDS_DB
+    export DATASET_NAME=NEW_BIDS_DS
     
     # get the containing directory of this file
     # use $BATS_TEST_FILENAME instead of ${BASH_SOURCE[0]} or $0,

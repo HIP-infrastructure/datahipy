@@ -25,7 +25,7 @@ EOT
 @test "can run docker sub.edit.clinical" {
     run docker run -it  \
         -v ${PROJET_TMP_FOLDER}:/input \
-        -v ${PROJET_TMP_FOLDER}/${DATABASE_NAME}:/output \
+        -v ${PROJET_TMP_FOLDER}/${DATASET_NAME}:/output \
         -v ${PROJECT_ROOT}/scripts:/scripts \
         bids-tools  \
         ${USER} $(id -u $USER) \
@@ -39,13 +39,13 @@ EOT
 }
 
 @test 'assert_file_owner()' {
-    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv
+    assert_file_owner ${USER} ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv
 }
 
 @test 'assert_file_contains()' {
-    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'carole'
-    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'handedness'
-    assert_file_contains ${PROJET_TMP_FOLDER}/${DATABASE_NAME}/participants.tsv 'CHUGA'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv 'carole'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv 'handedness'
+    assert_file_contains ${PROJET_TMP_FOLDER}/${DATASET_NAME}/participants.tsv 'CHUGA'
 }
 
 @test 'delete files with user ${USER}' {
