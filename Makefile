@@ -9,8 +9,8 @@ test:
 
 #build: @ Builds the project
 build: 
-	docker build . -t bids-converter
-
+	docker build . -t bids-tools
+	docker tag bids-tools:latest bids-converter:latest
 
 #help:	@ List available tasks on this project
 help:
