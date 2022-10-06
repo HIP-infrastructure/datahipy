@@ -201,9 +201,11 @@ class DatasetHandler:
         return "".join(safe_char(c) for c in s).rstrip("_")
 
 
+def main():
+    dhdl = DatasetHandler(dataset_path=r'../data/output')
+    dhdl.dataset_get_definitions(output_file=r'../data/output/dataset_get_definitions.json')
+
+
 if __name__ == "__main__":
-    if True:
-        dhdl = DatasetHandler(dataset_path=r'../data/output')
-        # dhdl.db_create(input_data=r'../input_json_examples/db_create.json')
-        # dhdl.db_get(input_data=r'../input_json_examples/db_get.json', output_file=r'../data/output/db_get_out.json')
-        dhdl.db_get_definitions(output_file=r'../data/output/db_get_definitions.json')
+    main()
+    
