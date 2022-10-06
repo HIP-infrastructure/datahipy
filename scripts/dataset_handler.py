@@ -20,7 +20,7 @@ class DatasetHandler:
     def __init__(self, dataset_path=None):
         self.dataset_path = os.path.abspath(dataset_path)
 
-    def db_create(self, input_data=None):
+    def dataset_create(self, input_data=None):
         """ Create a new BIDS dataset """
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
@@ -44,7 +44,7 @@ class DatasetHandler:
                 if os.path.isdir(db_path):
                     print(SUCCESS)
 
-    def db_get(self, input_data=None, output_file=None):
+    def dataset_get(self, input_data=None, output_file=None):
         """ DEPRECIATED - Ask BIDS Manager for some BIDS definitions """
 
         def get_def_attr(cls):
@@ -72,7 +72,7 @@ class DatasetHandler:
             self.dump_output_file(output_data=bids_definitions, output_file=output_file)
             print(SUCCESS)
 
-    def db_get_definitions(self, output_file=None):
+    def dataset_get_definitions(self, output_file=None):
         """ Extract BIDS definitions from BIDS Manager """
         import_definitions = dict()
         data_types = bidsmanager.Imaging.get_list_subclasses_names()\

@@ -13,7 +13,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='BIDS dataset handler.')
     parser.add_argument(
         '--command',
-        help="Method to be run, db.create, db.get, sub.get, sub.create, sub.remove"
+        help="Method to be run, dataset.create, dataset.get, sub.get, sub.create, sub.remove"
     )
     parser.add_argument(
         '--input_data',
@@ -32,18 +32,22 @@ if __name__ == "__main__":
     dhdl = DatasetHandler(dataset_path=dataset_path)
     phdl = ParticipantHandler(dataset_path=dataset_path, input_path=input_path)
 
-    if command == 'db.create':
-        dhdl.db_create(input_data=input_data)
-    if command == 'db.get':
-        dhdl.db_get(input_data=input_data,
-                    output_file=output_file)
+    if command == 'dataset.create':
+        dhdl.dataset_create(input_data=input_data)
+    if command == 'dataset.get':
+        dhdl.dataset_get(
+            input_data=input_data,
+            output_file=output_file
+        )
     if command == 'sub.import':
         phdl.sub_import(input_data=input_data)
     if command == 'sub.edit.clinical':
         phdl.sub_edit_clinical(input_data=input_data)
     if command == 'sub.get':
-        phdl.sub_get(input_data=input_data,
-                     output_file=output_file)
+        phdl.sub_get(
+            input_data=input_data,
+            output_file=output_file
+        )
     if command == 'sub.delete':
         phdl.sub_delete(input_data=input_data)
     if command == 'sub.delete.file':
