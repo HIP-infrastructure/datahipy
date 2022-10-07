@@ -11,8 +11,11 @@ import re
 import pprint as pp
 from sre_constants import SUCCESS
 
+import pandas as pd
+
 # BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
+from bids_utils import create_hip_bidsdataset_description_dict
 
 
 class DatasetHandler:
@@ -113,11 +116,31 @@ class DatasetHandler:
                 output_data=import_definitions,
                 output_file=output_file
             )
-            print(SUCCESS)  
-    
+            print(SUCCESS)
+
+    def dataset_get_hip_description(self, input_data=None, output_file=None):
+        """Extract dataset information indexed by the HIP platform."""
+        # Load the input_data json in a dict
+        input_data = self.load_input_data(input_data)
+
+        # Create a disctionary storing the dataset information
+        # indexed by the HIP platform
+        dataset_desc = create_hip_bidsdataset_description_dict(
+            dataset_path=input_data['path'],
+            container_dataset_path=self.dataset_path
+        )
+
+        # Dump the dataset_desc dict in a .json file
+        if output_file:
+            self.dump_output_file(
+                output_data=dataset_desc,
+                output_file=output_file
+            )
+            print(SUCCESS)
+
     @staticmethod
     def check_converters(db_obj=None):
-        """ Check if the converters are specified and (re)write the requirements.json if necessary """
+        """Check if the converters are specified and (re)write the requirements.json if necessary."""
         # Converter paths in the docker image
         dcm2niix_path = r'/apps/dcm2niix/install/dcm2niix'
         anywave_path = r'/usr/bin/anywave'

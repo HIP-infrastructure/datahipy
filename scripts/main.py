@@ -2,6 +2,7 @@
 # -*-coding:Utf-8 -*
 
 import argparse
+from bids_utils import get_hip_bidsdataset_description_all
 from dataset_handler import DatasetHandler
 from participants_handler import ParticipantHandler
 
@@ -36,6 +37,12 @@ if __name__ == "__main__":
         dhdl.dataset_create(input_data=input_data)
     if command == 'dataset.get':
         dhdl.dataset_get(
+            input_data=input_data,
+            output_file=output_file
+        )
+    if command == 'datasets.get':
+        get_hip_bidsdataset_description_all(
+            datasets_root_dir=dataset_path,
             input_data=input_data,
             output_file=output_file
         )
