@@ -32,7 +32,8 @@ RUN apt-get install --no-install-recommends -y unzip && \
 RUN apt-get install --no-install-recommends -y \ 
     python3-pip python3-tk python3-scipy && \
     pip3 install gdown setuptools PyQt5==5.15.4 nibabel xlrd \
-    PySimpleGUI pydicom paramiko tkcalendar bids_validator && \
+    PySimpleGUI pydicom paramiko tkcalendar bids_validator \
+    pybids pandas==1.3.5 && \
     gdown --id 1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6 && \
     filename="bidsificator.zip" && \
     mkdir -p bidsmanager/install && \
