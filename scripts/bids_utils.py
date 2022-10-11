@@ -12,21 +12,23 @@ import pandas as pd
 from sre_constants import SUCCESS
 from bids import BIDSLayout
 
-# TODO: handle owner
 
-
-def create_hip_bidsdataset_description_dict(
-        dataset_path,
-        container_dataset_path=None):
-    """Create a disctionary storing the dataset information indexed by the HIP platform."""
+def get_bidsdataset_content(
+    dataset_path,
+    container_dataset_path=None
+):
+    """Create a dictionary storing dataset information indexed by the HIP platform."""
     # Create a pybids representation of the dataset
     layout = BIDSLayout(container_dataset_path)
 
     # Load the dataset_description.json as initial dictionary-based description
     with open(os.path.join(container_dataset_path, 'dataset_description.json'), 'r') as f:
         dataset_desc = json.load(f)
-    dataset_desc['Path'] = dataset_path
+    # TODO: Handle dataset owner
+    dataset_desc['User'] = 'N/A'
+    # TODO: Handle dataset creation date
     dataset_desc['CreationDate'] = 'N/A'
+    dataset_desc['Path'] = dataset_path
 
     # Add basic information retrieved with pybids
     dataset_desc['Modalities'] = ["mri"
@@ -63,9 +65,12 @@ def create_hip_bidsdataset_description_dict(
         sep='\t',
         header=0
     )
-    age_max = participants_df['age'].max()
-    age_min = participants_df['age'].min()
-    dataset_desc['AgeRange'] = [f'{age_min}', f'{age_max}'],
+    if 'age' in participants_df.keys():
+        age_max = participants_df['age'].max()
+        age_min = participants_df['age'].min()
+        dataset_desc['AgeRange'] = [f'{age_min}', f'{age_max}'],
+    else:
+        dataset_desc['AgeRange'] = ['N/A', 'N/A'],
     dataset_desc['ParticipantsCount'] = len(participants_df.index)
     dataset_desc['ParticipantsGroups'] = (participants_df['group'].unique()
                                           if 'group' in participants_df.keys()
@@ -74,29 +79,33 @@ def create_hip_bidsdataset_description_dict(
     del participants_df
 
     # Get total number of files and size
-    total_size_bytes = 0
-    files = layout.get_files()
-    for f in files:
-        total_size_bytes += os.path.getsize(f)
-    # Convert once from bytes to megabytes (getsize return bytes)
-    # total_size_megabytes = 1e-6 * total_size_bytes
-    # total_size_megabytes = f'{total_size_megabytes:.2f}'
     total_size_megabytes = subprocess.check_output(
-        ['du','-sh', container_dataset_path]
+        ['du', '-sh', container_dataset_path]
     ).split()[0].decode('utf-8')
     dataset_desc['Size'] = total_size_megabytes
-    dataset_desc['FileCount'] = len(files)
-    del files
+    dataset_desc['FileCount'] = len(layout.get_files())
+    # # Alternative: Count only files outside sourcedata/
+    # total_size_bytes = 0
+    # files = layout.get_files()
+    # for f in files:
+    #     total_size_bytes += os.path.getsize(f)
+    # # Convert once from bytes to megabytes (getsize return bytes)
+    # total_size_megabytes = 1e-6 * total_size_bytes
+    # total_size_megabytes = f'{total_size_megabytes:.2f}'  
+    # del files
 
     return dataset_desc
 
 
-def get_hip_bidsdataset_description_all(
-        datasets_root_dir=None, input_data=None, output_file=None):
-    """Return the list of dictionaries in a json file as a response to the HIP request."""
+def get_all_datasets_content(
+    datasets_root_dir=None,
+    input_data=None,
+    output_file=None
+):
+    """Return a JSON file containing a list of dataset dictionaries as response to HIP request."""
     # Load the HIP json request
     with open(input_data, 'r') as f:
-       input_content = json.load(f)
+        input_content = json.load(f)
 
     # Extract the list of dataset paths
     dataset_paths = input_content['paths']
@@ -107,7 +116,7 @@ def get_hip_bidsdataset_description_all(
     # Create a list of dictionaries storing the dataset information
     # indexed by the HIP platform
     datasets_desc = [
-        create_hip_bidsdataset_description_dict(
+        get_bidsdataset_content(
             dataset_path=ds_path,
             container_dataset_path=os.path.join(datasets_root_dir, ds_name)
         ) for ds_path, ds_name in zip(dataset_paths, dataset_names)

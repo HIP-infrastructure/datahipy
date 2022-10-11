@@ -15,7 +15,7 @@ import pandas as pd
 
 # BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
-from bids_utils import create_hip_bidsdataset_description_dict
+from bids_utils import get_bidsdataset_content
 
 
 class DatasetHandler:
@@ -118,14 +118,14 @@ class DatasetHandler:
             )
             print(SUCCESS)
 
-    def dataset_get_hip_description(self, input_data=None, output_file=None):
+    def dataset_get_content(self, input_data=None, output_file=None):
         """Extract dataset information indexed by the HIP platform."""
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
 
         # Create a disctionary storing the dataset information
         # indexed by the HIP platform
-        dataset_desc = create_hip_bidsdataset_description_dict(
+        dataset_desc = get_bidsdataset_content(
             dataset_path=input_data['path'],
             container_dataset_path=self.dataset_path
         )
