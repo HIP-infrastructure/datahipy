@@ -28,7 +28,13 @@ def get_bidsdataset_content(
     dataset_desc['User'] = 'N/A'
     # TODO: Handle dataset creation date
     dataset_desc['CreationDate'] = 'N/A'
-    dataset_desc['Path'] = dataset_path
+
+    # Make sure there is no trailing "/" in dataset_path
+
+    dataset_desc['Path'] = (dataset_path[:-1]
+                            if dataset_path[-1] == '/'
+                            else dataset_path)
+    dataset_desc['id'] = dataset_desc['Path'].split("/")[-1]
 
     # Add basic information retrieved with pybids
     dataset_desc['Modalities'] = ["mri"
