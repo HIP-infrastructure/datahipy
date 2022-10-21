@@ -9,12 +9,25 @@ from participants_handler import ParticipantHandler
 dataset_path = '/output'
 input_path = '/input'
 
+VALID_COMMANDS = [
+    'dataset.create',
+    'dataset.get',
+    'datasets.get',
+    'sub.get',
+    'sub.create',
+    'sub.edit.clinical',
+    'sub.delete',
+    'sub.delete.file'
+]
+
+
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='BIDS dataset handler.')
     parser.add_argument(
         '--command',
-        help="Method to be run, dataset.create, dataset.get, sub.get, sub.create, sub.remove"
+        choices=VALID_COMMANDS,
+        help="Method to be run."
     )
     parser.add_argument(
         '--input_data',
