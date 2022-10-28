@@ -13,83 +13,80 @@ from sre_constants import SUCCESS
 from bids import BIDSLayout
 
 
-def get_bidsdataset_content(
-    dataset_path,
-    container_dataset_path=None
-):
+def get_bidsdataset_content(dataset_path, container_dataset_path=None):
     """Create a dictionary storing dataset information indexed by the HIP platform."""
     # Create a pybids representation of the dataset
     layout = BIDSLayout(container_dataset_path)
 
     # Load the dataset_description.json as initial dictionary-based description
-    with open(os.path.join(container_dataset_path, 'dataset_description.json'), 'r') as f:
+    with open(
+        os.path.join(container_dataset_path, "dataset_description.json"), "r"
+    ) as f:
         dataset_desc = json.load(f)
     # TODO: Handle dataset owner
-    dataset_desc['User'] = 'N/A'
+    dataset_desc["User"] = "N/A"
     # TODO: Handle dataset creation date
-    dataset_desc['CreationDate'] = 'N/A'
+    dataset_desc["CreationDate"] = "N/A"
 
     # Make sure there is no trailing "/" in dataset_path
 
-    dataset_desc['Path'] = (dataset_path[:-1]
-                            if dataset_path[-1] == '/'
-                            else dataset_path)
-    dataset_desc['id'] = dataset_desc['Path'].split("/")[-1]
+    dataset_desc["Path"] = (
+        dataset_path[:-1] if dataset_path[-1] == "/" else dataset_path
+    )
+    dataset_desc["id"] = dataset_desc["Path"].split("/")[-1]
 
     # Add basic information retrieved with pybids
-    dataset_desc['Modalities'] = ["mri"
-                                  if mod in ['anat', 'dwi', 'func']
-                                  else mod
-                                  for mod in layout.get_datatypes()]
-    dataset_desc['Formats'] = layout.get_extensions()
-    dataset_desc['SessionsCount'] = len(layout.get_sessions())
-    dataset_desc['Tasks'] = layout.get_tasks()
-    dataset_desc['RunsCount'] = len(layout.get_runs())
+    dataset_desc["Modalities"] = [
+        "mri" if mod in ["anat", "dwi", "func"] else mod
+        for mod in layout.get_datatypes()
+    ]
+    dataset_desc["Formats"] = layout.get_extensions()
+    dataset_desc["SessionsCount"] = len(layout.get_sessions())
+    dataset_desc["Tasks"] = layout.get_tasks()
+    dataset_desc["RunsCount"] = len(layout.get_runs())
 
     # Get general info about ieeg recordings
-    seeg_info = {
-        "SEEGChannelCount": 0,
-        "SamplingFrequency": 0,
-        "RecordingDuration": 0
-    }
-    for f in layout.get(suffix='ieeg'):
+    seeg_info = {"SEEGChannelCount": 0, "SamplingFrequency": 0, "RecordingDuration": 0}
+    for f in layout.get(suffix="ieeg"):
         f_entities_keys = f.entities.keys()
         for info_key in seeg_info:
             if info_key in f_entities_keys:
                 # Keep the maximal number of channels in case it is heterogeneous
                 if f.entities[info_key] > seeg_info[info_key]:
                     seeg_info[info_key] = f.entities[info_key]
-    dataset_desc["SEEGChannelCount"] = seeg_info['SEEGChannelCount']
-    dataset_desc["SamplingFrequency"] = seeg_info['SamplingFrequency']
-    dataset_desc["RecordingDuration"] = seeg_info['RecordingDuration']
-    dataset_desc['EventsFileCount'] = len(layout.get(suffix='events'))
+    dataset_desc["SEEGChannelCount"] = seeg_info["SEEGChannelCount"]
+    dataset_desc["SamplingFrequency"] = seeg_info["SamplingFrequency"]
+    dataset_desc["RecordingDuration"] = seeg_info["RecordingDuration"]
+    dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
 
     # Get min and max age of participants
     print(f'Extract file {os.path.join(container_dataset_path, "participants.tsv")}')
     participants_df = pd.read_csv(
-        os.path.join(container_dataset_path, 'participants.tsv'),
-        sep='\t',
-        header=0
+        os.path.join(container_dataset_path, "participants.tsv"), sep="\t", header=0
     )
-    if 'age' in participants_df.keys():
-        age_max = participants_df['age'].max()
-        age_min = participants_df['age'].min()
-        dataset_desc['AgeRange'] = [f'{age_min}', f'{age_max}'],
+    if "age" in participants_df.keys():
+        age_max = participants_df["age"].max()
+        age_min = participants_df["age"].min()
+        dataset_desc["AgeRange"] = ([f"{age_min}", f"{age_max}"],)
     else:
-        dataset_desc['AgeRange'] = ['N/A', 'N/A'],
-    dataset_desc['ParticipantsCount'] = len(participants_df.index)
-    dataset_desc['ParticipantsGroups'] = (participants_df['group'].unique()
-                                          if 'group' in participants_df.keys()
-                                          else ['N/A'])
-    dataset_desc['Participants'] = participants_df.to_dict(orient='records')
+        dataset_desc["AgeRange"] = (["N/A", "N/A"],)
+    dataset_desc["ParticipantsCount"] = len(participants_df.index)
+    dataset_desc["ParticipantsGroups"] = (
+        participants_df["group"].unique()
+        if "group" in participants_df.keys()
+        else ["N/A"]
+    )
+    dataset_desc["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
 
     # Get total number of files and size
-    total_size_megabytes = subprocess.check_output(
-        ['du', '-sh', container_dataset_path]
-    ).split()[0].decode('utf-8')
-    dataset_desc['Size'] = total_size_megabytes
-    dataset_desc['FileCount'] = len(layout.get_files())
+    total_size_megabytes = (
+        subprocess.check_output(["du", "-sh", container_dataset_path])
+        .split()[0]
+        .decode("utf-8")
+    )
+    dataset_desc["Size"] = total_size_megabytes
+    dataset_desc["FileCount"] = len(layout.get_files())
     # # Alternative: Count only files outside sourcedata/
     # total_size_bytes = 0
     # files = layout.get_files()
@@ -97,7 +94,7 @@ def get_bidsdataset_content(
     #     total_size_bytes += os.path.getsize(f)
     # # Convert once from bytes to megabytes (getsize return bytes)
     # total_size_megabytes = 1e-6 * total_size_bytes
-    # total_size_megabytes = f'{total_size_megabytes:.2f}'  
+    # total_size_megabytes = f'{total_size_megabytes:.2f}'
     # del files
 
     return dataset_desc
@@ -131,6 +128,6 @@ def get_all_datasets_content(
 
     # Dump the dataset_desc dict in a .json file
     if output_file:
-        with open(output_file, 'w') as f:
+        with open(output_file, "w") as f:
             json.dump(datasets_desc, f, indent=4)
         print(SUCCESS)
