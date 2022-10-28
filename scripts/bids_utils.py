@@ -104,28 +104,29 @@ def get_bidsdataset_content(
 
 
 def get_all_datasets_content(
-    datasets_root_dir=None,
     input_data=None,
-    output_file=None
+    output_file=None,
 ):
     """Return a JSON file containing a list of dataset dictionaries as response to HIP request."""
     # Load the HIP json request
-    with open(input_data, 'r') as f:
+    with open(input_data, "r") as f:
         input_content = json.load(f)
 
     # Extract the list of dataset paths
-    dataset_paths = input_content['paths']
+    dataset_paths = [dataset["path"] for dataset in input_content["datasets"]]
 
     # Extract the name of the folder containing each dataset
-    dataset_names = [d.split("/")[-1] for d in dataset_paths]
+    # dataset_names = [d.split("/")[-1] for d in dataset_paths]
 
     # Create a list of dictionaries storing the dataset information
     # indexed by the HIP platform
     datasets_desc = [
         get_bidsdataset_content(
             dataset_path=ds_path,
-            container_dataset_path=os.path.join(datasets_root_dir, ds_name)
-        ) for ds_path, ds_name in zip(dataset_paths, dataset_names)
+            container_dataset_path=ds_path,
+        )
+        for ds_path in dataset_paths
+        # for ds_path, ds_name in zip(dataset_paths, dataset_names)
     ]
 
     # Dump the dataset_desc dict in a .json file
