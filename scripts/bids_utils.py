@@ -23,17 +23,6 @@ def get_bidsdataset_content(dataset_path, container_dataset_path=None):
         os.path.join(container_dataset_path, "dataset_description.json"), "r"
     ) as f:
         dataset_desc = json.load(f)
-    # TODO: Handle dataset owner
-    dataset_desc["User"] = "N/A"
-    # TODO: Handle dataset creation date
-    dataset_desc["CreationDate"] = "N/A"
-
-    # Make sure there is no trailing "/" in dataset_path
-
-    dataset_desc["Path"] = (
-        dataset_path[:-1] if dataset_path[-1] == "/" else dataset_path
-    )
-    dataset_desc["id"] = dataset_desc["Path"].split("/")[-1]
 
     # Add basic information retrieved with pybids
     dataset_desc["Modalities"] = [
