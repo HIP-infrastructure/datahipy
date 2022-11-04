@@ -13,7 +13,7 @@ from sre_constants import SUCCESS
 from bids import BIDSLayout
 
 
-def get_bidsdataset_content(dataset_path, container_dataset_path=None):
+def get_bidsdataset_content(container_dataset_path=None):
     """Create a dictionary storing dataset information indexed by the HIP platform."""
     # Create a pybids representation of the dataset
     layout = BIDSLayout(container_dataset_path)
@@ -108,7 +108,6 @@ def get_all_datasets_content(
     # indexed by the HIP platform
     datasets_desc = [
         get_bidsdataset_content(
-            dataset_path=ds_path,
             container_dataset_path=ds_path,
         )
         for ds_path in dataset_paths

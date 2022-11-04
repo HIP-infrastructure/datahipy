@@ -135,9 +135,7 @@ class DatasetHandler:
 
         # Create a disctionary storing the dataset information
         # indexed by the HIP platform
-        dataset_desc = get_bidsdataset_content(
-            dataset_path=input_data["path"], container_dataset_path=self.dataset_path
-        )
+        dataset_desc = get_bidsdataset_content(container_dataset_path=self.dataset_path)
 
         # Dump the dataset_desc dict in a .json file
         if output_file:
