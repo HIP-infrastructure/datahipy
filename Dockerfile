@@ -60,13 +60,13 @@ ENTRYPOINT ["/entrypoint.sh"]
 # LABEL maintainer=""
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-      org.label-schema.name="BIDS tool" \
-      org.label-schema.description="Tool to import / update BIDS datasets in the HIP platform" \
-      org.label-schema.url="" \
-      org.label-schema.vcs-ref="" \
-      org.label-schema.vcs-url="https://github.com/..." \
-      org.label-schema.version="" \
-      org.label-schema.maintainer="" \
-      org.label-schema.vendor="" \
-      org.label-schema.schema-version="1.0" \
-      org.label-schema.docker.cmd="docker run"
+    org.label-schema.name="BIDS tool" \
+    org.label-schema.description="Tool to import / update BIDS datasets in the HIP platform" \
+    org.label-schema.url="" \
+    org.label-schema.vcs-ref="" \
+    org.label-schema.vcs-url="https://github.com/..." \
+    org.label-schema.version="" \
+    org.label-schema.maintainer="" \
+    org.label-schema.vendor="" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.docker.cmd="docker run"
