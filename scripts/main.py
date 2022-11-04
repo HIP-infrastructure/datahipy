@@ -14,7 +14,7 @@ VALID_COMMANDS = [
     "dataset.get",
     "datasets.get",
     "sub.get",
-    "sub.create",
+    "sub.import",
     "sub.edit.clinical",
     "sub.delete",
     "sub.delete.file",
