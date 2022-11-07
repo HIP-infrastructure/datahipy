@@ -25,10 +25,7 @@ def get_bidsdataset_content(container_dataset_path=None):
         dataset_desc = json.load(f)
 
     # Add basic information retrieved with pybids
-    dataset_desc["Modalities"] = [
-        "mri" if mod in ["anat", "dwi", "func"] else mod
-        for mod in layout.get_datatypes()
-    ]
+    dataset_desc["DataTypes"] = layout.get_datatypes()
     dataset_desc["Formats"] = layout.get_extensions()
     dataset_desc["SessionsCount"] = len(layout.get_sessions())
     dataset_desc["Tasks"] = layout.get_tasks()
