@@ -60,9 +60,9 @@ def get_bidsdataset_content(container_dataset_path=None):
         dataset_desc["AgeRange"] = (["N/A", "N/A"],)
     dataset_desc["ParticipantsCount"] = len(participants_df.index)
     dataset_desc["ParticipantsGroups"] = (
-        participants_df["group"].unique()
+        list(participants_df["group"].unique())
         if "group" in participants_df.keys()
-        else ["N/A"]
+        else ["n/a"]
     )
     dataset_desc["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
