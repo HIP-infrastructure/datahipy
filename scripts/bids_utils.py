@@ -57,7 +57,7 @@ def get_bidsdataset_content(container_dataset_path=None):
         age_min = participants_df["age"].min()
         dataset_desc["AgeRange"] = ([f"{age_min}", f"{age_max}"],)
     else:
-        dataset_desc["AgeRange"] = (["N/A", "N/A"],)
+        dataset_desc["AgeRange"] = (["n/a", "n/a"],)
     dataset_desc["ParticipantsCount"] = len(participants_df.index)
     dataset_desc["ParticipantsGroups"] = (
         list(participants_df["group"].unique())
