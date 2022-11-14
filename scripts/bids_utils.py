@@ -45,10 +45,12 @@ def get_bidsdataset_content(container_dataset_path=None):
     dataset_desc["RecordingDuration"] = seeg_info["RecordingDuration"]
     dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
 
-    # Get min and max age of participants
     print(f'Extract file {os.path.join(container_dataset_path, "participants.tsv")}')
     participants_df = pd.read_csv(
-        os.path.join(container_dataset_path, "participants.tsv"), sep="\t", header=0
+        os.path.join(container_dataset_path, "participants.tsv"),
+        sep="\t",
+        header=0,
+        na_filter=False,
     )
     if "age" in participants_df.keys():
         age_max = participants_df["age"].max()
