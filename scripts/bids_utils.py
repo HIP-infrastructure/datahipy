@@ -32,17 +32,28 @@ def get_bidsdataset_content(container_dataset_path=None):
     dataset_desc["RunsCount"] = len(layout.get_runs())
 
     # Get general info about ieeg recordings
-    seeg_info = {"SEEGChannelCount": 0, "SamplingFrequency": 0, "RecordingDuration": 0}
+    seeg_info = {
+        "ECOGChannelCount": 0,
+        "SEEGChannelCount": 0,
+        "EEGChannelCount": 0,
+        "EOGChannelCount": 0,
+        "ECGChannelCount": 0,
+        "EMGChannelCount": 0,
+        "MiscChannelCount": 0,
+        "TriggerChannelCount": 0,
+        "SamplingFrequency": 0,
+        "RecordingDuration": 0,
+    }
     for f in layout.get(suffix="ieeg"):
         f_entities_keys = f.entities.keys()
         for info_key in seeg_info:
             if info_key in f_entities_keys:
-                # Keep the maximal number of channels in case it is heterogeneous
+                # Keep the maximal value in case it is heterogeneous
                 if f.entities[info_key] > seeg_info[info_key]:
                     seeg_info[info_key] = f.entities[info_key]
-    dataset_desc["SEEGChannelCount"] = seeg_info["SEEGChannelCount"]
-    dataset_desc["SamplingFrequency"] = seeg_info["SamplingFrequency"]
-    dataset_desc["RecordingDuration"] = seeg_info["RecordingDuration"]
+    for key, val in seeg_info.items():
+        dataset_desc[key] = val if (val > 0) else "n/a"
+
     dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
 
     print(f'Extract file {os.path.join(container_dataset_path, "participants.tsv")}')
