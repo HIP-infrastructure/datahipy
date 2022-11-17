@@ -60,7 +60,8 @@ def get_bidsdataset_content(container_dataset_path=None):
                 if f.entities[info_key] > seeg_info[info_key]:
                     seeg_info[info_key] = f.entities[info_key]
     for key, val in seeg_info.items():
-        dataset_desc[key] = val if (val > 0) else "n/a"
+        if val > 0:
+            dataset_desc[key] = val
 
     dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
 
