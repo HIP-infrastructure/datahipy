@@ -72,6 +72,7 @@ def get_bidsdataset_content(container_dataset_path=None):
         header=0,
         na_filter=False,
     )
+    # Get min and max age of participants
     if "age" in participants_df.keys():
         age_max = participants_df["age"].max()
         age_min = participants_df["age"].min()
@@ -95,7 +96,7 @@ def get_bidsdataset_content(container_dataset_path=None):
     )
     dataset_desc["Size"] = total_size_megabytes
     dataset_desc["FileCount"] = len(layout.get_files())
-    # # Alternative: Count only files outside sourcedata/
+    ## Alternative: Count only files outside sourcedata/
     # total_size_bytes = 0
     # files = layout.get_files()
     # for f in files:
