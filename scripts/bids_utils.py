@@ -77,13 +77,13 @@ def get_bidsdataset_content(container_dataset_path=None):
         dataset_desc["AgeMin"] = f'{participants_df["age"].min()}'
         dataset_desc["AgeMax"] = f'{participants_df["age"].max()}'
     else:
-        dataset_desc["AgeMin"] = "n/a"
-        dataset_desc["AgeMax"] = "n/a"
+        dataset_desc["AgeMin"] = None
+        dataset_desc["AgeMax"] = None
     dataset_desc["ParticipantsCount"] = len(participants_df.index)
     dataset_desc["ParticipantsGroups"] = (
         list(participants_df["group"].unique())
         if "group" in participants_df.keys()
-        else ["n/a"]
+        else [None]
     )
     dataset_desc["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
