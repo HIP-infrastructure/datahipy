@@ -64,7 +64,7 @@ def main():
             "Operating System :: POSIX",
             "Operating System :: Unix",
             "Operating System :: MacOS",
-            "Programming Language :: Python :: 3.7",
+            "Programming Language :: Python :: 3.8",
         ],
         maintainer="The HIP team",
         maintainer_email="support@hip.ch",
@@ -72,7 +72,7 @@ def main():
         include_package_data=True,
         package_data=package_data,
         requires=["pybids (>=0.15.3)"],
-        python_requires=">=3.7",
+        python_requires=">=3.8",
     )
 
 
