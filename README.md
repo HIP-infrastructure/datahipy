@@ -1,27 +1,58 @@
-# BIDS Converter
+# `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
 
-Docker container component to convert neuroimaging data to Brain Imaging Data Structure (BIDS)
+`bids_tools` is a docker container component to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
 
-## Step 1: 
+## Installation:
+This tool can be easily installed as follows:
 - Clone this repository 
 - Checkout submodules:
   - `git submodule update --recursive --init`
-- build the image: `docker build . -t bids-tools`
+- build the image: `docker build -t bids-tools .`
 
 ## Test
-- `cd test`
-- run `./run_tests.sh`
+- run `test/run_tests.sh`
+
+## Usage
+
+The tool can be easily run as follows:
+
+```output
+usage: bids_tools [-h]
+                  [--command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}]
+                  [--input_data INPUT_DATA]
+                  [--output_file OUTPUT_FILE]
+                  [--dataset_path DATASET_PATH]
+                  [--input_path INPUT_PATH] [-v]
+
+BIDS dataset handler.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}
+                        Method to be run.
+  --input_data INPUT_DATA
+                        Input JSON data
+  --output_file OUTPUT_FILE
+                        File location after processing
+  --dataset_path DATASET_PATH
+                        Path to the dataset
+  --input_path INPUT_PATH
+                        Path to the input data (e.g.
+                        input_data.json)
+  -v, --version         show program's version number and
+                        exit
+```
 
 ## Methods
 
 ### Dataset
 
-#### db.get  
+#### dataset.get  
 Get a dataset with all fields, participants, and existing entities 
 - [see test/db_get.bats](test/db_get.bats)
 
 
-#### db.create  
+#### dataset.create  
 Create a new BIDS dataset
 - [see test/db_create.bats](test/db_create.bats)
 
@@ -40,9 +71,5 @@ Get a participan data from a dataset
 #### sub.delete  
 Remove a participant from a given BIDS dataset
 
-- [see test/sub_delete.bats](test/sub_delete.bats)
-
 #### sub.delete.file  
 Remove data file(s) from a BIDS dataset
-
-- [see test/sub_delete_file.bats](test/sub_delete_file.bats)
