@@ -73,9 +73,7 @@ class DatasetHandler:
         req_path = os.path.join(db_obj.dirname, "code", "requirements.json")
         req_dict = bidsmanager.Requirements(req_path)
         to_rewrite = False
-        if "Converters" not in req_dict:
-            to_rewrite = True
-        elif req_dict["Converters"] != def_converters:
+        if ("Converters" not in req_dict) or (req_dict["Converters"] != def_converters):
             to_rewrite = True
         if to_rewrite:
             # Write the requirements.json
