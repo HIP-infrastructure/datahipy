@@ -9,7 +9,7 @@ test:
 
 #build: @ Builds the project
 build: 
-	docker build . -t bids-tools
+	docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t bids-tools .
 	docker tag bids-tools:latest bids-converter:latest
 
 #help:	@ List available tasks on this project

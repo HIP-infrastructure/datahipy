@@ -20,6 +20,49 @@ nest_asyncio.apply()
 
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
 
+'''
+def get_subject_info(
+    container_dataset_path=None,
+    subject_id=None,
+    session_id=None,
+    task_id=None,
+    run_id=None,
+):
+    """Return a dictionary with the subject information."""
+    # Create a pybids representation of the dataset
+    layout = BIDSLayout(
+        root=container_dataset_path,
+        validate=False,
+        config='./bids.json'
+    )
+
+    # Get the list of files for the given subject (and session, task and run if provided)
+    files = layout.get(
+        subject=subject_id,
+        session=session_id,
+        task=task_id,
+        run=run_id
+    )
+
+    for file in files:
+        modality = file.entities["suffix"]
+        del file.entities["suffix"]
+        del file.entities["extension"]
+        del file.entities["datatype"]
+
+
+    bidsfile_list = []
+
+    # Get the subject information
+    subject_info = {}
+    subject_info["subject_id"] = subject_id
+    subject_info["session_id"] = session_id
+    subject_info["task_id"] = task_id
+    subject_info["run_id"] = run_id
+    subject_info["subject_age"] = None
+    subject_info["subject
+'''
+
 
 def get_bidsdataset_content(container_dataset_path=None):
     """Create a dictionary storing dataset information indexed by the HIP platform."""

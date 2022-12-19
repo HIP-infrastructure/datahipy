@@ -8,12 +8,13 @@ Manage BIDS participants using BIDS Manager.
 import os
 import json
 import shutil
+import subprocess
 from datetime import datetime
 from sre_constants import SUCCESS
 
-from dataset_handler import DatasetHandler
-
+# BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
+from bids_tools.handlers.dataset import DatasetHandler
 
 
 class ParticipantHandler:
@@ -165,6 +166,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
+        print(subprocess.check_output(["ls", "-la", self.dataset_path]))
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         # Edit subject clinical info
         sub_exists, sub_info, sub_idx = db_obj["ParticipantsTSV"].is_subject_present(
@@ -180,6 +182,7 @@ class ParticipantHandler:
                 else:
                     sub_info[clin_key] = "n/a"
             del sub_info["sub"]
+            print(sub_info)
             db_obj.parse_bids()  # To update the participants.tsv with the new columns
             db_obj["ParticipantsTSV"].update_subject(input_data["subject"], sub_info)
             db_obj["ParticipantsTSV"].write_file()

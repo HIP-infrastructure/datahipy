@@ -8,14 +8,11 @@ Manage BIDS dataset using BIDS Manager.
 import os
 import json
 import re
-import pprint as pp
 from sre_constants import SUCCESS
-
-import pandas as pd
 
 # BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
-from bids_utils import get_bidsdataset_content
+from bids_tools.bids.utils import get_bidsdataset_content
 
 
 class DatasetHandler:
@@ -47,86 +44,6 @@ class DatasetHandler:
                 )
                 if os.path.isdir(db_path):
                     print(SUCCESS)
-
-    def dataset_get(self, input_data=None, output_file=None):
-        """DEPRECIATED - Ask BIDS Manager for some BIDS definitions"""
-
-        def get_def_attr(cls):
-            """Local function to extract some info from BIDS Manager classes"""
-            attr = dict()
-            for var, val in vars(cls).items():
-                if not var.startswith("_"):
-                    if isinstance(val, (str, dict, list)):
-                        attr[var] = val
-            return attr
-
-        # Load the input_data json in a dict
-        input_data = self.load_input_data(input_data)
-        # Fetch the definitions in BIDS Manager classes and store in bids_definitions dict
-        bids_definitions = {"BIDS_definitions": dict()}
-        for bids_def in input_data["BIDS_definitions"]:
-            bids_definitions["BIDS_definitions"][bids_def] = get_def_attr(
-                eval("bidsmanager." + bids_def)
-            )
-            try:
-                bids_def = bids_def + "JSON"
-                bids_definitions["BIDS_definitions"][bids_def] = get_def_attr(
-                    eval("bidsmanager." + bids_def)
-                )
-            except AttributeError:
-                pass  # Ony a few definitions have a companion .json file.
-        # Dump the bids_definitions dict in a .json file
-        if output_file:
-            self.dump_output_file(output_data=bids_definitions, output_file=output_file)
-            print(SUCCESS)
-
-    def dataset_get_definitions(self, output_file=None):
-        """Extract BIDS definitions from BIDS Manager"""
-        import_definitions = dict()
-        data_types = (
-            bidsmanager.Imaging.get_list_subclasses_names()
-            + bidsmanager.Electrophy.get_list_subclasses_names()
-            + bidsmanager.GlobalSidecars.get_list_subclasses_names()
-        )
-        nonbids_keys = (
-            bidsmanager.BidsJSON.get_list_subclasses_names()
-            + bidsmanager.BidsTSV.get_list_subclasses_names()
-            + bidsmanager.BidsFreeFile.get_list_subclasses_names()
-            + bidsmanager.BidsBrick.required_keys
-            + ["fileLoc"]
-            + ["modality"]
-        )
-        # For each BIDS' data type we populate a dict() with corresponding modalities,
-        # input formats (target extension), (required) BIDS entities
-        for data_type in data_types:
-            import_definitions[data_type] = dict()
-            import_definitions[data_type]["modalities"] = getattr(
-                bidsmanager, data_type
-            ).allowed_modalities
-            try:
-                import_definitions[data_type]["input_format"] = getattr(
-                    bidsmanager, data_type
-                ).readable_file_formats
-            except AttributeError:
-                import_definitions[data_type]["input_format"] = getattr(
-                    bidsmanager, data_type
-                ).allowed_file_formats
-            bm_keys = getattr(bidsmanager, data_type).keylist
-            all_bids_keys = list()
-            required_bids_keys = list()
-            for bm_key in bm_keys:
-                if bm_key not in nonbids_keys:
-                    all_bids_keys.append(bm_key)
-                    if bm_key in getattr(bidsmanager, data_type).required_keys:
-                        required_bids_keys.append(bm_key)
-            import_definitions[data_type]["all_entities"] = all_bids_keys
-            import_definitions[data_type]["required_entities"] = required_bids_keys
-        # Dump the import_definitions dict in a .json file
-        if output_file:
-            self.dump_output_file(
-                output_data=import_definitions, output_file=output_file
-            )
-            print(SUCCESS)
 
     def dataset_get_content(self, input_data=None, output_file=None):
         """Extract dataset information indexed by the HIP platform."""
