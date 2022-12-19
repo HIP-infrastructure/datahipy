@@ -1,13 +1,10 @@
 #!/bin/sh
 
-./bats/bin/bats test_db_cleanup.bats 
+# Get the directory of this script (e.g. bids-tools/test)
+TESTDIR=$(cd "$(dirname "$0")"; pwd)
+# Go to this directory (if script is called from another directory)
+cd $TESTDIR
 
-./bats/bin/bats test_db_create.bats 
-./bats/bin/bats test_db_get.bats 
-./bats/bin/bats test_sub_import.bats 
-./bats/bin/bats test_sub_edit_clinical.bats 
-./bats/bin/bats test_sub_get.bats
-./bats/bin/bats test_sub_delete_file.bats
-./bats/bin/bats test_sub_delete.bats
-
-./bats/bin/bats test_db_cleanup.bats
+# Run the tests
+./bats/bin/bats test_dataset_cleanup.bats
+./bats/bin/bats run_pytest_cli.bats
