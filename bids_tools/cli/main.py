@@ -1,5 +1,6 @@
-#!/usr/bin/python3
-# -*-coding:Utf-8 -*
+# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+#  This software is distributed under the open-source XXX license.
+"""Command line interface for bids_tools."""
 
 import argparse
 from bids_tools import __version__, __release_date__

@@ -1,9 +1,6 @@
-#!/usr/bin/python3
-# -*-coding:Utf-8 -*
-
-"""
-Manage BIDS dataset using BIDS Manager.
-"""
+# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+#  This software is distributed under the open-source XXX license.
+"""Manage BIDS dataset using BIDS Manager."""
 
 import os
 import json
@@ -136,14 +133,3 @@ class DatasetHandler:
                 return "_"
 
         return "".join(safe_char(c) for c in s).rstrip("_")
-
-
-def main():
-    dhdl = DatasetHandler(dataset_path=r"../data/output")
-    dhdl.dataset_get_definitions(
-        output_file=r"../data/output/dataset_get_definitions.json"
-    )
-
-
-if __name__ == "__main__":
-    main()

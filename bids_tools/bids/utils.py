@@ -1,9 +1,6 @@
-#!/usr/bin/python3
-# -*-coding:Utf-8 -*
-
-"""
-Utility function using pybids.
-"""
+# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+#  This software is distributed under the open-source XXX license.
+"""Utility function using pybids."""
 
 import os
 import subprocess

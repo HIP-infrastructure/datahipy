@@ -1,4 +1,4 @@
-# Copyright (C) 2022, The HIP team, All rights reserved.
+# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 """This file contains bids_tools package information."""
 
@@ -24,7 +24,7 @@ __author__ = "The HIP team"
 
 __copyright__ = (
     "Copyright (C) 2022"  # -{}, ".format(__current_year__)
-    + "the HIP team, All rights reserved."
+    + "the HIP team and Contributors, All rights reserved."
 )
 
 __credits__ = (

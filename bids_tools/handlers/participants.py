@@ -1,14 +1,10 @@
-#!/usr/bin/python3
-# -*-coding:Utf-8 -*
-
-"""
-Manage BIDS participants using BIDS Manager.
-"""
+# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+#  This software is distributed under the open-source XXX license.
+"""Manage BIDS participants using BIDS Manager."""
 
 import os
 import json
 import shutil
-import subprocess
 from datetime import datetime
 from sre_constants import SUCCESS
 
@@ -214,25 +210,3 @@ class ParticipantHandler:
             )
         sub_dict = db_obj["Subject"][matched_sub[0]]
         return sub_dict
-
-
-if __name__ == "__main__":
-    if True:
-        phdl = ParticipantHandler(
-            dataset_path=r"../data/output",
-            input_path="/home/anthony/Documents/GIT/bids-tools/data/input",
-        )  # Do we need input_path here instead of full input path in .json ?
-        phdl.sub_import(input_data=r"../input_json_examples/sub_import.json")
-        # phdl.sub_delete(input_data=r'../data/input/sub_delete.json',  dataset_path=r'../data/output')
-        # phdl.sub_get(
-        #   input_data=r'../data/input/sub_get.json',
-        #   dataset_path=r'../data/output',
-        #   output_file=r'../data/output/sub_get_out.json'
-        # )
-        # phdl.sub_delete_file(
-        #   input_data=r'../data/input/sub_delete_file.json',
-        #   dataset_path=r'../data/output'
-        # )
-        phdl.sub_edit_clinical(
-            input_data=r"../input_json_examples/sub_edit_clinical.json"
-        )
