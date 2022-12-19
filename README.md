@@ -43,33 +43,29 @@ optional arguments:
                         exit
 ```
 
-## Methods
+## Commands
 
 ### Dataset
 
 #### dataset.get  
-Get a dataset with all fields, participants, and existing entities 
-- [see test/db_get.bats](test/db_get.bats)
-
+Get a JSON summary of dataset consisting of all fields, participants, and existing entities.
 
 #### dataset.create  
-Create a new BIDS dataset
-- [see test/db_create.bats](test/db_create.bats)
-
+Create a new BIDS dataset.
 
 ## Participant
 
 #### sub.import  
-Import and update participant into an existing BIDS dataset  
-- [see test/sub_import.bats](test/sub_import.bats)
+Import and update files for a given participant into an existing BIDS dataset. An appropriate record is added/updated to the ``participants.tsv`` tabular file if needed.
 
 #### sub.get  
-Get a participan data from a dataset
+Get information about data available for a given participant of a dataset.
 
-- [see test/sub_get.bats](test/sub_get.bats)
+#### sub.edit.clinical
+Edit the participant's information stored in the ``participants.tsv`` tabular file.
 
 #### sub.delete  
-Remove a participant from a given BIDS dataset
+Remove a participant from a given BIDS dataset. The record will be deleted from the ``participants.tsv`` tabular file.
 
 #### sub.delete.file  
 Remove data file(s) from a BIDS dataset
