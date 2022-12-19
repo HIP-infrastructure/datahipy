@@ -18,4 +18,4 @@ else
     exit 1
 fi
 
-runuser -u $USER -- python3 /scripts/main.py "${@:3}"
+runuser -u $USER -- bids_tools "${@:3}"
