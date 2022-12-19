@@ -47,25 +47,25 @@ optional arguments:
 
 ### Dataset
 
-#### dataset.get  
+#### `dataset.get`  
 Get a JSON summary of dataset consisting of all fields, participants, and existing entities.
 
-#### dataset.create  
+#### `dataset.create ` 
 Create a new BIDS dataset.
 
 ## Participant
 
-#### sub.import  
+#### `sub.import`
 Import and update files for a given participant into an existing BIDS dataset. An appropriate record is added/updated to the ``participants.tsv`` tabular file if needed.
 
-#### sub.get  
+#### `sub.get`
 Get information about data available for a given participant of a dataset.
 
-#### sub.edit.clinical
+#### `sub.edit.clinical`
 Edit the participant's information stored in the ``participants.tsv`` tabular file.
 
-#### sub.delete  
+#### `sub.delete`
 Remove a participant from a given BIDS dataset. The record will be deleted from the ``participants.tsv`` tabular file.
 
-#### sub.delete.file  
-Remove data file(s) from a BIDS dataset
+#### `sub.delete.file`
+Remove data file(s) from a BIDS dataset.
