@@ -1,6 +1,11 @@
+# Setuptools
+build
+*.egg-info
+
 # Byte-compiled / optimized / DLL files
-__pycache__/
-.pytest_cache/
+__pycache__
+**/__pycache__
+.pytest_cache
 *.py[cod]
 
 # Mac DS_Store files
@@ -8,8 +13,9 @@ __pycache__/
 data/*
 
 # Ignore all PyCharm config files
+**/.idea
 .idea
 
 # Ignore all coverage files and datasets created by the pytest suite
 test/report
-*/tmp/*
+*/tmp
