@@ -10,7 +10,11 @@ This tool can be easily installed as follows:
 - build the image: `docker build -t bids-tools .`
 
 ## Test
-- run `test/run_tests.sh`
+Run `test/run_tests.sh` in a terminal:
+```bash
+$ sh test/run_tests.sh
+```
+After completion, coverage report in HTML format can be found in ``test/report/cov_html`` and be displayed by opening ``index.html`` in your favorite browser.
 
 ## Usage
 
