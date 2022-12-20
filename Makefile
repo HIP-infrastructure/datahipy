@@ -1,6 +1,5 @@
 .DEFAULT_GOAL := help
 
-
 #test: @ Run all tests
 .PHONY: test
 test:
@@ -8,11 +7,14 @@ test:
 	cd test && ./run_tests.sh
 
 #build: @ Builds the project
-build: 
-	docker build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t bids-tools .
+build:
+	docker build \
+		-t bids-tools \
+		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+        --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
+        --build-arg VERSION=$(shell python get_version.py) .
 	docker tag bids-tools:latest bids-converter:latest
 
 #help:	@ List available tasks on this project
 help:
 	@grep -E '[a-zA-Z\.\-]+:.*?@ .*$$' $(MAKEFILE_LIST)| tr -d '#'  | awk 'BEGIN {FS = ":.*?@ "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-

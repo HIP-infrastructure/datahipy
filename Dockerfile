@@ -35,9 +35,20 @@ RUN apt-get install --no-install-recommends -y unzip && \
 # Install bids-manager
 ###############################################################################
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    python3-pip python3-tk python3-scipy && \
-    pip3 install gdown setuptools PyQt5==5.15.4 nibabel xlrd \
-    PySimpleGUI pydicom paramiko tkcalendar bids_validator && \
+    python3-pip python3-tk && \
+    pip3 install \
+    numpy==1.21.2 \
+    scipy==1.9.1 \
+    gdown \
+    setuptools \
+    PyQt5==5.15.4 \
+    nibabel \
+    xlrd \
+    PySimpleGUI \
+    pydicom \
+    paramiko \
+    tkcalendar \
+    bids_validator && \
     gdown --id 1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6 && \
     filename="bidsificator.zip" && \
     mkdir -p bidsmanager/install && \
@@ -58,7 +69,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 WORKDIR /apps/bids_tools
 
 # Install Python dependencies of bids-tools
-RUN pip3 install pybids==0.15.3 pandas==1.3.5 asyncio nest-asyncio
+RUN pip3 install \
+    versioneer==0.28 \
+    pybids==0.15.3 \
+    pandas==1.3.5 \
+    asyncio==3.4.3 \
+    nest-asyncio==1.5.6
 
 # Install dependencies for testing
 RUN pip3 install pytest pytest-console-scripts pytest-cov
@@ -66,12 +82,15 @@ RUN pip3 install pytest pytest-console-scripts pytest-cov
 # Copy necessary contents of this repository.
 COPY ./.coveragerc ./.coveragerc
 COPY setup.py ./setup.py
+COPY setup.cfg ./setup.cfg
 COPY README.md ./README.md
 COPY bids_tools ./bids_tools
 # COPY LICENSE ./LICENSE
 
-# Install bids-tools
-RUN pip install -e .
+# Install bids-tools with static version taken from the argument
+ARG VERSION=unknown
+RUN echo "${VERSION}" > /apps/bids_tools/bids_tools/VERSION \
+    && pip install -e .
 
 ###############################################################################
 # Create initial folders for testing / code coverage with correct permissions
@@ -110,16 +129,29 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 ARG BUILD_DATE=today
 ARG VCS_REF=unknown
-ARG VERSION=0.0.1
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="BIDS tools" \
     org.label-schema.description="Tools to handle BIDS datasets in the HIP platform" \
-    org.label-schema.url="" \
+    org.label-schema.url="https://hip-infrastructure.github.io/" \
     org.label-schema.vcs-ref=${VCS_REF} \
-    org.label-schema.vcs-url="https://github.com/..." \
+    org.label-schema.vcs-url="https://github.com/HIP-infrastructure/bids-converter" \
     org.label-schema.version=${VERSION} \
     org.label-schema.maintainer="The HIP team" \
     org.label-schema.vendor="The HIP team" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.docker.cmd="docker run"
+    org.label-schema.docker.cmd="docker run --rm \
+    -v /path/to/dataset:/output \
+    -v /path/to/input:/input \
+    bids-tools \
+    USERNAME USERID \
+    [--command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}] \
+    [--input_data /input/input_data.json] [--output_file /input/output_data.json] \
+    [--dataset_path /output] [--input_path /input]" \
+    org.label-schema.docker.cmd.test="docker run --rm \
+    --entrypoint /entrypoint_pytest.sh \
+    -v /path/to/bids-tools/test:/test \
+    -v /path/to/bids-tools/bids_tools:/apps/bids_tools/bids_tools \
+    bids-tools \
+    USERNAME USERID \
+    /test"

@@ -14,3 +14,6 @@ from bids_tools.info import (
     DOWNLOAD_URL,
     DOCKER_HUB
 )
+
+from . import _version
+__version__ = _version.get_versions()['version']

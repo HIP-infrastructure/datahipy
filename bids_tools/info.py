@@ -1,21 +1,13 @@
 # Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 """This file contains bids_tools package information."""
+# import datetime
+from ._version import get_versions
 
-_version_major = 0
-_version_minor = 0
-_version_micro = 1
-_version_extra = ""
 __release_date__ = "DD.MM.2022"
 
-__minor_version__ = "%s.%s" % (_version_major, _version_minor)
-
-__version__ = "v%s.%s.%s%s" % (
-    _version_major,
-    _version_minor,
-    _version_micro,
-    _version_extra,
-)
+__version__ = get_versions()["version"]
+del get_versions
 
 # __current_year__ = datetime.datetime.now().strftime("%Y")
 __current_year__ = "2022"

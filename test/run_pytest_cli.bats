@@ -1,10 +1,12 @@
+#!/usr/bin/env bats
+
 setup() {
     load 'test_helper/_common_setup'
     _common_setup
 }
 
-@test "can build docker image" {
-    run docker build -t bids-tools ${PROJECT_ROOT}
+@test "can build docker image with Makefile" {
+    run bash -c "cd ${PROJECT_ROOT} && make -B build" 
 }
 
 @test "can successfully run all tests" {

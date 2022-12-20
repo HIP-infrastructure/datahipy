@@ -1,3 +1,4 @@
+#!/usr/bin/env bats
 
 setup() {
     load 'test_helper/_common_setup'

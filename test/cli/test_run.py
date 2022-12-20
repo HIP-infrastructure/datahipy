@@ -3,17 +3,16 @@ import os
 import pytest
 import json
 import shutil
-from bids_tools.cli.main import main
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_help(script_runner):
+def test_run_help(script_runner):
     ret = script_runner.run("bids_tools", "-h")
     assert ret.success
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_dataset_create(script_runner, dataset_path, io_path):
+def test_run_dataset_create(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "dataset_dirname": "NEW_BIDS_DS",
@@ -34,9 +33,6 @@ def test_main_dataset_create(script_runner, dataset_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Remove dataset if it already exists to avoid conflicts
-    if os.path.exists(dataset_path):
-        shutil.rmtree(dataset_path)
     # Run bids_tools dataset.create command
     ret = script_runner.run(
         "bids_tools",
@@ -54,7 +50,7 @@ def test_main_dataset_create(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_dataset_get(script_runner, dataset_path, io_path):
+def test_run_dataset_get(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {"owner": "hipadmin", "path": dataset_path}
     # Create JSON file path for input data
@@ -83,7 +79,7 @@ def test_main_dataset_get(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_datasets_get(script_runner, dataset_path, io_path):
+def test_run_datasets_get(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "owner": "hipadmin",
@@ -111,7 +107,7 @@ def test_main_datasets_get(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_sub_import(script_runner, input_path, dataset_path, io_path):
+def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     # Create input data
     input_data = {
         "subjects": [{"sub": "carole", "age": "25", "sex": "M", "hospital": "CHUV"}],
@@ -192,7 +188,7 @@ def test_main_sub_import(script_runner, input_path, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_sub_get(script_runner, dataset_path, io_path):
+def test_run_sub_get(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {"owner": "hipadmin", "path": dataset_path, "sub": "carole"}
     # Create JSON file path for input data
@@ -221,7 +217,7 @@ def test_main_sub_get(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_sub_edit_clinical(script_runner, dataset_path, io_path):
+def test_run_sub_edit_clinical(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "subject": "carole",
@@ -251,7 +247,7 @@ def test_main_sub_edit_clinical(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_sub_delete_file(script_runner, dataset_path, io_path):
+def test_run_sub_delete_file(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "files": [
@@ -294,7 +290,7 @@ def test_main_sub_delete_file(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_main_sub_delete(script_runner, dataset_path, io_path):
+def test_run_sub_delete(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {"subject": "carole"}
     # Create JSON file path for input data

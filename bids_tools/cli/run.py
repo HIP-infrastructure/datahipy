@@ -36,7 +36,7 @@ def get_parser():
         "-v",
         "--version",
         action="version",
-        version="bids_tools version {} \nRelease date: {}".format(
+        version="bids_tools version {} \n(release date: {})".format(
             __version__, __release_date__
         ),
     )
