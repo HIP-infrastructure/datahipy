@@ -50,63 +50,6 @@ def test_run_dataset_create(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_run_dataset_get(script_runner, dataset_path, io_path):
-    # Create input data
-    input_data = {"owner": "hipadmin", "path": dataset_path}
-    # Create JSON file path for input data
-    input_file = os.path.join(io_path, "get_dataset.json")
-    # Write input data to file
-    with open(input_file, "w") as f:
-        json.dump(input_data, f, indent=4)
-    # Output file path
-    output_file = os.path.join(io_path, "get_dataset_output.json")
-    # Run bids_tools dataset.get command
-    ret = script_runner.run(
-        "bids_tools",
-        "--command",
-        "dataset.get",
-        "--input_data",
-        input_file,
-        "--output_file",
-        output_file,
-        "--dataset_path",
-        dataset_path,
-    )
-    # Check that the command ran successfully
-    assert ret.success
-    # Check that the output file was created
-    assert os.path.exists(output_file)
-
-
-@pytest.mark.script_launch_mode("subprocess")
-def test_run_datasets_get(script_runner, dataset_path, io_path):
-    # Create input data
-    input_data = {
-        "owner": "hipadmin",
-        "datasets": [{"path": dataset_path}, {"path": dataset_path}],
-    }
-    # Create JSON file path for input data
-    input_file = os.path.join(io_path, "get_datasets.json")
-    # Write input data to file
-    with open(input_file, "w") as f:
-        json.dump(input_data, f, indent=4)
-    # Output file path
-    output_file = os.path.join(io_path, "get_datasets_output.json")
-    # Run bids_tools datasets.get command
-    ret = script_runner.run(
-        "bids_tools",
-        "--command",
-        "datasets.get",
-        "--input_data",
-        input_file,
-        "--output_file",
-        output_file,
-    )
-    # Check that the command ran successfully
-    assert ret.success
-
-
-@pytest.mark.script_launch_mode("subprocess")
 def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     # Create input data
     input_data = {
@@ -185,6 +128,63 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     assert ret.success
     # Check that the sub-carole folder was created
     assert os.path.exists(os.path.join(dataset_path, "sub-carole"))
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_dataset_get(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {"owner": "hipadmin", "path": dataset_path}
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "get_dataset.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "get_dataset_output.json")
+    # Run bids_tools dataset.get command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "dataset.get",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+        "--dataset_path",
+        dataset_path,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the output file was created
+    assert os.path.exists(output_file)
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_datasets_get(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "owner": "hipadmin",
+        "datasets": [{"path": dataset_path}, {"path": dataset_path}],
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "get_datasets.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "get_datasets_output.json")
+    # Run bids_tools datasets.get command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "datasets.get",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
 
 
 @pytest.mark.script_launch_mode("subprocess")
