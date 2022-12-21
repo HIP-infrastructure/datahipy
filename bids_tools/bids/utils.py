@@ -4,16 +4,13 @@
 
 import os
 import subprocess
-from concurrent.futures import ThreadPoolExecutor
-import asyncio
-import nest_asyncio
+from concurrent.futures import ProcessPoolExecutor
 
 import json
 import pandas as pd
 from sre_constants import SUCCESS
 from bids import BIDSLayout
 
-nest_asyncio.apply()
 
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
 
@@ -174,36 +171,16 @@ def get_all_datasets_content(
     # Load the HIP json request
     with open(input_data, "r") as f:
         input_content = json.load(f)
-
     # Extract the list of dataset paths
     dataset_paths = [dataset["path"] for dataset in input_content["datasets"]]
-
     # Create a list of dictionaries storing the dataset information
     # indexed by the HIP platform
-    with ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
-        # Run asyncio tasks in a limited thread pool.
-        # It should be equivalent to the following sequential code:
-        # datasets_desc = [
-        #     get_bidsdataset_content(
-        #         container_dataset_path=ds_path,
-        #     )
-        #     for ds_path in dataset_paths
-        #     # for ds_path, ds_name in zip(dataset_paths, dataset_names)
-        # ]
-        loop = asyncio.new_event_loop()
-
-        get_bidsdataset_content_tasks = [
-            loop.run_in_executor(executor, get_bidsdataset_content, ds_path)
+    with ProcessPoolExecutor(max_workers=NUM_THREADS) as executor:
+        datasets_desc = [
+            executor.submit(get_bidsdataset_content, ds_path)
             for ds_path in dataset_paths
         ]
-
-        try:
-            datasets_desc = loop.run_until_complete(
-                asyncio.gather(*get_bidsdataset_content_tasks)
-            )
-        finally:
-            loop.close()
-
+        datasets_desc = [f.result() for f in datasets_desc]
     # Dump the dataset_desc dict in a .json file
     if output_file:
         with open(output_file, "w") as f:
