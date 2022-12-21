@@ -5,6 +5,7 @@
 import os
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
+from pkg_resources import resource_filename
 
 import json
 import pandas as pd
