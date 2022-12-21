@@ -149,8 +149,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         sub_info = get_subject_bidsfile_info(
-            container_dataset_path=self.dataset_path,
-            subject=input_data["sub"]
+            container_dataset_path=self.dataset_path, subject=input_data["sub"]
         )
         if output_file:
             self.dump_output_file(output_data=sub_info, output_file=output_file)

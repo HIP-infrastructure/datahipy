@@ -136,7 +136,9 @@ def get_subject_bidsfile_info(container_dataset_path, **kwargs):
         # Extract the file metadata from the BIDS json sidecar file
         file_metadata = layout.get_metadata(file.path)
         if file_metadata:
-            file_info[BIDSJSONFILE_DATATYPE_KEY_MAP[file_info["datatype"]]] = file_metadata
+            file_info[
+                BIDSJSONFILE_DATATYPE_KEY_MAP[file_info["datatype"]]
+            ] = file_metadata
             del file_metadata
         # Extract the channel information from the channels tsv file for EEG, MEG and iEEG
         if file_info["datatype"] in ["eeg", "meg", "ieeg"]:
@@ -153,12 +155,12 @@ def get_subject_bidsfile_info(container_dataset_path, **kwargs):
 
 def extract_channels_tsv(channels_tsv_file):
     """Extract the content from a BIDS _channels.tsv file in JSON format.
-    
+
     Parameters
     ----------
     channels_tsv_file : str
         Path to the BIDS _channels.tsv file.
-    
+
     Returns
     -------
     channels_json : str
@@ -170,12 +172,12 @@ def extract_channels_tsv(channels_tsv_file):
 
 def get_bidsdataset_content(container_dataset_path=None):
     """Create a dictionary storing dataset information indexed by the HIP platform.
-    
+
     Parameters
     ----------
     container_dataset_path : str
         Path to the BIDS dataset.
-    
+
     Returns
     -------
     dataset_desc : dict
@@ -248,12 +250,12 @@ def get_bidsdataset_content(container_dataset_path=None):
 
 def get_dataset_size(container_dataset_path=None):
     """Return the size of the BIDS dataset in megabytes.
-    
+
     Parameters
     ----------
     container_dataset_path : str
         Path to the BIDS dataset.
-    
+
     Returns
     -------
     total_size_megabytes : str
@@ -282,12 +284,12 @@ def get_all_datasets_content(
     output_file=None,
 ):
     """Return a JSON file containing a list of dataset dictionaries as response to HIP request.
-    
+
     Parameters
     ----------
     input_data : str
         Path to the HIP json request.
-    
+
     output_file : str
         Path to the output JSON file.
     """

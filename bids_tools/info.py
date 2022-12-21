@@ -34,8 +34,10 @@ __url__ = "https://github.com/HIP-infrastructure/{name}/tree/{version}".format(
     name=__packagename__, version=__version__
 )
 
-DOWNLOAD_URL = "https://github.com/HIP-infrastructure{name}/archive/{ver}.tar.gz".format(
-    name=__packagename__, ver=__version__
+DOWNLOAD_URL = (
+    "https://github.com/HIP-infrastructure{name}/archive/{ver}.tar.gz".format(
+        name=__packagename__, ver=__version__
+    )
 )
 
 DOCKER_HUB = "TO_BE_COMPLETED_ONCE_IT_IS_DEPLOYED"
