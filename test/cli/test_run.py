@@ -2,7 +2,6 @@ from __future__ import absolute_import
 import os
 import pytest
 import json
-import shutil
 
 
 @pytest.mark.script_launch_mode("subprocess")
