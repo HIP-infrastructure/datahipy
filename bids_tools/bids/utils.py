@@ -217,10 +217,8 @@ def get_bidsdataset_content(container_dataset_path=None):
     for key, val in seeg_info.items():
         if val > 0:
             dataset_desc[key] = val
-
     dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
-
-    print(f'Extract file {os.path.join(container_dataset_path, "participants.tsv")}')
+    # Load the participants.tsv file to extract information about participants
     participants_df = pd.read_csv(
         os.path.join(container_dataset_path, "participants.tsv"),
         sep="\t",
