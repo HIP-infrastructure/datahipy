@@ -26,12 +26,30 @@ def get_subject_info(
     run_id=None,
 ):
     """Return a dictionary with the subject information."""
+def create_bids_layout(container_dataset_path=None, **kwargs):
+    """Create a pybids representation of a BIDS dataset.
+
+    Parameters
+    ----------
+    container_dataset_path : str
+        Path to the BIDS dataset.
+
+    kwargs : dict
+        Dictionary of arguments key/value to pass to the pybids BIDSLayout function.
+
+    Returns
+    -------
+    layout : pybids.BIDSLayout
+        Pybids representation of the BIDS dataset.
+    """
     # Create a pybids representation of the dataset
     layout = BIDSLayout(
         root=container_dataset_path,
         validate=False,
-        config='./bids.json'
+        config=resource_filename("bids_tools", "bids/config/bids.json"),
+        **kwargs,
     )
+    return layout
 
     # Get the list of files for the given subject (and session, task and run if provided)
     files = layout.get(
@@ -64,8 +82,7 @@ def get_subject_info(
 def get_bidsdataset_content(container_dataset_path=None):
     """Create a dictionary storing dataset information indexed by the HIP platform."""
     # Create a pybids representation of the dataset
-    layout = BIDSLayout(container_dataset_path)
-
+    layout = create_bids_layout(container_dataset_path)
     # Load the dataset_description.json as initial dictionary-based description
     with open(
         os.path.join(container_dataset_path, "dataset_description.json"), "r"
