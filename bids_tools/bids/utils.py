@@ -242,15 +242,31 @@ def get_bidsdataset_content(container_dataset_path=None):
     )
     dataset_desc["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
+    # Get total number of files and size
+    dataset_desc["Size"] = get_dataset_size(container_dataset_path)
+    dataset_desc["FileCount"] = len(layout.get_files())
+    return dataset_desc
 
+
+def get_dataset_size(container_dataset_path=None):
+    """Return the size of the BIDS dataset in megabytes.
+    
+    Parameters
+    ----------
+    container_dataset_path : str
+        Path to the BIDS dataset.
+    
+    Returns
+    -------
+    total_size_megabytes : str
+        Size of the BIDS dataset in megabytes.
+    """
     # Get total number of files and size
     total_size_megabytes = (
         subprocess.check_output(["du", "-sh", container_dataset_path])
         .split()[0]
         .decode("utf-8")
     )
-    dataset_desc["Size"] = total_size_megabytes
-    dataset_desc["FileCount"] = len(layout.get_files())
     ## Alternative: Count only files outside sourcedata/
     # total_size_bytes = 0
     # files = layout.get_files()
@@ -260,8 +276,7 @@ def get_bidsdataset_content(container_dataset_path=None):
     # total_size_megabytes = 1e-6 * total_size_bytes
     # total_size_megabytes = f'{total_size_megabytes:.2f}'
     # del files
-
-    return dataset_desc
+    return total_size_megabytes
 
 
 def get_all_datasets_content(
