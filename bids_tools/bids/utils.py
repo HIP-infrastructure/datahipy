@@ -169,7 +169,18 @@ def extract_channels_tsv(channels_tsv_file):
 
 
 def get_bidsdataset_content(container_dataset_path=None):
-    """Create a dictionary storing dataset information indexed by the HIP platform."""
+    """Create a dictionary storing dataset information indexed by the HIP platform.
+    
+    Parameters
+    ----------
+    container_dataset_path : str
+        Path to the BIDS dataset.
+    
+    Returns
+    -------
+    dataset_desc : dict
+        Dictionary storing dataset information indexed by the HIP platform.
+    """
     # Create a pybids representation of the dataset
     layout = create_bids_layout(container_dataset_path)
     # Load the dataset_description.json as initial dictionary-based description
@@ -177,14 +188,12 @@ def get_bidsdataset_content(container_dataset_path=None):
         os.path.join(container_dataset_path, "dataset_description.json"), "r"
     ) as f:
         dataset_desc = json.load(f)
-
     # Add basic information retrieved with pybids
     dataset_desc["DataTypes"] = layout.get_datatypes()
     dataset_desc["Formats"] = layout.get_extensions()
     dataset_desc["SessionsCount"] = len(layout.get_sessions())
     dataset_desc["Tasks"] = layout.get_tasks()
     dataset_desc["RunsCount"] = len(layout.get_runs())
-
     # Get general info about ieeg recordings
     seeg_info = {
         "ECOGChannelCount": 0,
@@ -259,7 +268,16 @@ def get_all_datasets_content(
     input_data=None,
     output_file=None,
 ):
-    """Return a JSON file containing a list of dataset dictionaries as response to HIP request."""
+    """Return a JSON file containing a list of dataset dictionaries as response to HIP request.
+    
+    Parameters
+    ----------
+    input_data : str
+        Path to the HIP json request.
+    
+    output_file : str
+        Path to the output JSON file.
+    """
     # Load the HIP json request
     with open(input_data, "r") as f:
         input_content = json.load(f)
