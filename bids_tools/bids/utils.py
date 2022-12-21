@@ -14,15 +14,56 @@ from bids import BIDSLayout
 
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
 
-'''
-def get_subject_info(
-    container_dataset_path=None,
-    subject_id=None,
-    session_id=None,
-    task_id=None,
-    run_id=None,
-):
-    """Return a dictionary with the subject information."""
+BIDS_ENTITY_MAP = {
+    "subject": "sub",
+    "session": "ses",
+    "task": "task",
+    "run": "run",
+    "acquisition": "acq",
+    "reconstruction": "rec",
+    "ceagent": "ce",
+    "direction": "dir",
+    "space": "space",
+    "proc": "proc",
+    "modality": "mod",
+    "recording": "recording",
+    "staining": "stain",
+    "tracer": "trc",
+    "sample": "sample",
+    "echo": "echo",
+    "flip": "flip",
+    "inv": "inv",
+    "mt": "mt",
+    "part": "part",
+    "chunk": "chunk",
+    "resolution": "res",
+}
+
+BIDSJSONFILE_DATATYPE_KEY_MAP = {
+    "anat": "AnatJSON",
+    "func": "FuncJSON",
+    "dwi": "DWIJSON",
+    "eeg": "EEGJSON",
+    "meg": "MEGJSON",
+    "ieeg": "IeegJSON",
+}
+
+BIDSTSVFILE_DATATYPE_KEY_MAP = {
+    "eeg": "EEGChannelsTSV",
+    "meg": "MEGChannelsTSV",
+    "ieeg": "IeegChannelsTSV",
+}
+
+VALID_EXTENSIONS = [
+    ".nii",
+    ".nii.gz",
+    ".edf",
+    ".eeg",
+    ".set",
+    ".mgz",
+]
+
+
 def create_bids_layout(container_dataset_path=None, **kwargs):
     """Create a pybids representation of a BIDS dataset.
 
@@ -48,32 +89,82 @@ def create_bids_layout(container_dataset_path=None, **kwargs):
     )
     return layout
 
+
+def get_subject_bidsfile_info(container_dataset_path, **kwargs):
+    """Return a list of dictionaries with BIDS file information for a given subject.
+
+    Parameters
+    ----------
+    container_dataset_path : str
+        Path to the BIDS dataset.
+
+    kwargs : dict
+        Dictionary of arguments key/value to pass to the pybids BIDSLayout.get() function.
+
+    Returns
+    -------
+    subject_info : list
+        List of dictionaries with BIDS file information for a given subject.
+    """
+    # Create a pybids representation of the dataset
+    layout = create_bids_layout(container_dataset_path)
     # Get the list of files for the given subject (and session, task and run if provided)
-    files = layout.get(
-        subject=subject_id,
-        session=session_id,
-        task=task_id,
-        run=run_id
-    )
-
+    files = layout.get(**kwargs)
+    # Initialize the dictionary to be returned
+    subject_bids_file_info = []
+    # Loop over the found files
     for file in files:
-        modality = file.entities["suffix"]
-        del file.entities["suffix"]
-        del file.entities["extension"]
-        del file.entities["datatype"]
+        # Initialize the dictionary with the file information
+        file_info = {}
+        # Skip the json and tsv files
+        if (file.entities["extension"] in [".json", ".tsv"]) or (
+            file.entities["extension"] not in VALID_EXTENSIONS
+        ):
+            continue
+        # Extract the datatype
+        file_info["datatype"] = file.entities["datatype"]
+        # Extract the modality from the suffix
+        file_info["modality"] = file.entities["suffix"]
+        file_info["extension"] = file.entities["extension"]
+        # Extract all the "proper" BIDS entities
+        for key in file.entities:
+            if key in BIDS_ENTITY_MAP.keys():
+                file_info[BIDS_ENTITY_MAP[key]] = file.entities[key]
+        # Extract the relative path of the file
+        file_info["fileLoc"] = file.relpath
+        # Extract the file metadata from the BIDS json sidecar file
+        file_metadata = layout.get_metadata(file.path)
+        if file_metadata:
+            file_info[BIDSJSONFILE_DATATYPE_KEY_MAP[file_info["datatype"]]] = file_metadata
+            del file_metadata
+        # Extract the channel information from the channels tsv file for EEG, MEG and iEEG
+        if file_info["datatype"] in ["eeg", "meg", "ieeg"]:
+            file_info[
+                BIDSTSVFILE_DATATYPE_KEY_MAP[file_info["datatype"]]
+            ] = extract_channels_tsv(
+                file.path.split(f'_{file_info["datatype"]}')[0] + "_channels.tsv"
+            )
+        # Add the file information to the list
+        subject_bids_file_info.append(file_info)
+    # Return the list of dictionaries
+    return subject_bids_file_info
 
 
-    bidsfile_list = []
-
-    # Get the subject information
-    subject_info = {}
-    subject_info["subject_id"] = subject_id
-    subject_info["session_id"] = session_id
-    subject_info["task_id"] = task_id
-    subject_info["run_id"] = run_id
-    subject_info["subject_age"] = None
-    subject_info["subject
-'''
+def extract_channels_tsv(channels_tsv_file):
+    """Extract the content from a BIDS _channels.tsv file in JSON format.
+    
+    Parameters
+    ----------
+    channels_tsv_file : str
+        Path to the BIDS _channels.tsv file.
+    
+    Returns
+    -------
+    channels_json : str
+        JSON representation of the content of the BIDS _channels.tsv file.
+    """
+    channels_df = pd.read_csv(channels_tsv_file, sep="\t")
+    return channels_df.to_json(orient="records")
 
 
 def get_bidsdataset_content(container_dataset_path=None):
