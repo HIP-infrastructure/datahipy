@@ -11,6 +11,7 @@ from sre_constants import SUCCESS
 # BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
 from bids_tools.handlers.dataset import DatasetHandler
+from bids_tools.bids.utils import get_subject_bidsfile_info
 
 
 class ParticipantHandler:
@@ -147,12 +148,10 @@ class ParticipantHandler:
         """Get info of a subject"""
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
-        # Load the targeted BIDS dataset in BIDS Manager
-        db_obj = bidsmanager.BidsDataset(self.dataset_path)
-        # Find the info in the subject dict
-        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data["sub"])
-        sub_info = sub_dict["Anat"] + sub_dict["Ieeg"]
-        # Dump the sub_info dict in a .json file
+        sub_info = get_subject_bidsfile_info(
+            container_dataset_path=self.dataset_path,
+            subject=input_data["sub"]
+        )
         if output_file:
             self.dump_output_file(output_data=sub_info, output_file=output_file)
             print(SUCCESS)
