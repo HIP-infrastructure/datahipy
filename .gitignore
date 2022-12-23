@@ -14,6 +14,7 @@ data/*
 
 # Ignore all PyCharm config files
 **/.idea
+tmp/**
 .idea
 
 # Ignore all coverage files and datasets created by the pytest suite
