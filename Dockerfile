@@ -72,9 +72,7 @@ WORKDIR /apps/bids_tools
 RUN pip3 install \
     versioneer==0.28 \
     pybids==0.15.3 \
-    pandas==1.3.5 \
-    asyncio==3.4.3 \
-    nest-asyncio==1.5.6
+    pandas==1.3.5 
 
 # Install dependencies for testing
 RUN pip3 install pytest pytest-console-scripts pytest-cov
