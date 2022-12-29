@@ -81,12 +81,15 @@ class ParticipantHandler:
             # Determine the BIDS data type to use and init a BIDS Manager modality dict
             bids_dtype = None
             bids_dtype_dict = dict()
-            if file["modality"] in ["T1w", "T2w", "CT", "FLAIR"]:
+            if file["modality"] in ["T1w", "T2w", "FLAIR"]:
                 bids_dtype = "Anat"
                 bids_dtype_dict = bidsmanager.Anat()
             elif file["modality"] in ["ieeg"]:
                 bids_dtype = "Ieeg"
                 bids_dtype_dict = bidsmanager.Ieeg()
+            elif file["modality"] in ["ct"]:
+                bids_dtype = "CT"
+                bids_dtype_dict = bidsmanager.CT()
             else:
                 pass  # Add other BIDS data types here
             # Populate the modality dict with the BIDS entities found in the input_data dict
