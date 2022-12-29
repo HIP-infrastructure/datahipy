@@ -34,6 +34,8 @@ RUN apt-get install --no-install-recommends -y unzip && \
 ###############################################################################
 # Install bids-manager
 ###############################################################################
+ARG BIDSMANAGER_BRANCH=dev
+# Install system and Python dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-pip python3-tk && \
     pip3 install \
@@ -49,17 +51,24 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     paramiko \
     tkcalendar \
     bids_validator && \
-    gdown --id 1lwAgqS6fXKqWRzZhBntdLGGF4AIsWZx6 && \
-    filename="bidsificator.zip" && \
-    mkdir -p bidsmanager/install && \
-    unzip -q -d bidsmanager/install ${filename} && \
-    rm ${filename} && \
-    cd bidsmanager/install/$(basename $filename .zip)/ && \
-    python3 setup.py install && \
-    apt-get remove -y --purge curl unzip && \
     apt-get autoremove -y --purge && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+# Clone and install the latest version of a specific branch of bids-manager
+ADD https://api.github.com/repos/HIP-infrastructure/BIDS_Manager/git/refs/heads/$BIDSMANAGER_BRANCH version.json
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    git && \
+    mkdir -p bidsmanager/install && \
+    cd bidsmanager/install && \
+    git clone https://github.com/HIP-infrastructure/BIDS_Manager.git bidsificator && \
+    cd bidsificator && \
+    git checkout $BIDSMANAGER_BRANCH && \
+    python3 setup.py install && \
+    apt-get remove -y --purge git && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf bidsmanager/install/bidsificator
 
 ###############################################################################
 # Install bids-tools
