@@ -96,7 +96,9 @@ class ParticipantHandler:
             for bids_key, bids_value in file["entities"].items():
                 bids_dtype_dict[bids_key] = bids_value
             bids_dtype_dict["modality"] = file["modality"]
-            bids_dtype_dict["fileLoc"] = os.path.join("temp_bids", token_dir, file_name)
+            bids_dtype_dict["fileLoc"] = os.path.join(
+                "temp_bids", token_dir, file_name
+            )
             # Determine RUN
             bids_values = tuple(file["entities"].values())
             if bids_values not in runs:
