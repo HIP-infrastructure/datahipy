@@ -45,19 +45,23 @@ def test_run_dataset_create(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the dataset was created by checking for the dataset_description.json file
-    assert os.path.exists(os.path.join(dataset_path, "dataset_description.json"))
+    assert os.path.exists(
+        os.path.join(dataset_path, "dataset_description.json")
+    )
 
 
 @pytest.mark.script_launch_mode("subprocess")
 def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     # Create input data
     input_data = {
-        "subjects": [{"sub": "carole", "age": "25", "sex": "M", "hospital": "CHUV"}],
+        "subjects": [
+            {"sub": "carole", "age": "25", "sex": "M", "hospital": "CHUV"}
+        ],
         "files": [
             {
                 "modality": "ieeg",
                 "subject": "carole",
-                "path": "sub-carole/SZ1.TRC",
+                "path": f"{input_path}/sub-carole/SZ1.TRC",
                 "entities": {
                     "sub": "carole",
                     "ses": "postimp",
@@ -68,7 +72,7 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
             {
                 "modality": "ieeg",
                 "subject": "carole",
-                "path": "sub-carole/SZ2.TRC",
+                "path": f"{input_path}/sub-carole/SZ2.TRC",
                 "entities": {
                     "sub": "carole",
                     "ses": "postimp",
@@ -79,7 +83,7 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
             {
                 "modality": "T1w",
                 "subject": "carole",
-                "path": "sub-carole/3DT1post_deface.nii",
+                "path": f"{input_path}/sub-carole/3DT1post_deface.nii",
                 "entities": {
                     "sub": "carole",
                     "ses": "postimp",
@@ -90,7 +94,7 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
             {
                 "modality": "T1w",
                 "subject": "carole",
-                "path": "sub-carole/3DT1post_deface_2.nii",
+                "path": f"{input_path}/sub-carole/3DT1post_deface_2.nii",
                 "entities": {
                     "sub": "carole",
                     "ses": "postimp",
@@ -101,8 +105,13 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
             {
                 "modality": "T1w",
                 "subject": "carole",
-                "path": "sub-carole/3DT1pre_deface.nii",
-                "entities": {"sub": "carole", "ses": "preimp", "acq": "lowres"},
+                "path": f"{input_path}/sub-carole/3DT1pre_deface.nii",
+                "entities": {
+                    "sub": "carole",
+                    "ses": "preimp",
+                    "acq": "lowres",
+                },
+            },
             },
         ],
     }
@@ -220,7 +229,12 @@ def test_run_sub_edit_clinical(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "subject": "carole",
-        "clinical": {"age": "30", "sex": "M", "handedness": "L", "hospital": "CHUGA"},
+        "clinical": {
+            "age": "30",
+            "sex": "M",
+            "handedness": "L",
+            "hospital": "CHUGA",
+        },
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "sub_edit_clinical.json")
