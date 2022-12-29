@@ -34,7 +34,9 @@ class ParticipantHandler:
             for key in subject:
                 if key != "sub" and key not in clin_keys:
                     clin_keys.append(key)
-        DatasetHandler.add_keys_requirements(db_obj=db_obj, clin_keys=clin_keys)
+        DatasetHandler.add_keys_requirements(
+            db_obj=db_obj, clin_keys=clin_keys
+        )
         db_obj.parse_bids()
         # Init importation directory
         import_path = os.path.join("/tmp", "BIDS_import")
@@ -43,7 +45,9 @@ class ParticipantHandler:
         if not os.path.isdir(import_path):
             os.makedirs(import_path)
         # Init a BIDS Manager data2import dict
-        requirements_path = os.path.join(db_obj.dirname, "code", "requirements.json")
+        requirements_path = os.path.join(
+            db_obj.dirname, "code", "requirements.json"
+        )
         data2import = bidsmanager.Data2Import(
             data2import_dir=import_path, requirements_fileloc=requirements_path
         )
@@ -64,8 +68,11 @@ class ParticipantHandler:
         for file in input_data["files"]:
             # Copy the targeted file in a unique importation dir
             file_name = os.path.basename(file["path"])
-            file_path = os.path.join(self.input_path, file["path"])
-            token_dir = str(datetime.timestamp(datetime.now())).replace(".", "")
+            # file_path = os.path.join(self.input_path, file["path"])
+            file_path = file["path"]
+            token_dir = str(datetime.timestamp(datetime.now())).replace(
+                ".", ""
+            )
             output_file_path = os.path.join(
                 os.path.join(import_path, "temp_bids"), token_dir, file_name
             )
@@ -74,19 +81,24 @@ class ParticipantHandler:
             # Determine the BIDS data type to use and init a BIDS Manager modality dict
             bids_dtype = None
             bids_dtype_dict = dict()
-            if file["modality"] in ["T1w", "T2w", "CT", "FLAIR"]:
+            if file["modality"] in ["T1w", "T2w", "FLAIR"]:
                 bids_dtype = "Anat"
                 bids_dtype_dict = bidsmanager.Anat()
             elif file["modality"] in ["ieeg"]:
                 bids_dtype = "Ieeg"
                 bids_dtype_dict = bidsmanager.Ieeg()
+            elif file["modality"] in ["ct"]:
+                bids_dtype = "CT"
+                bids_dtype_dict = bidsmanager.CT()
             else:
                 pass  # Add other BIDS data types here
             # Populate the modality dict with the BIDS entities found in the input_data dict
             for bids_key, bids_value in file["entities"].items():
                 bids_dtype_dict[bids_key] = bids_value
             bids_dtype_dict["modality"] = file["modality"]
-            bids_dtype_dict["fileLoc"] = os.path.join("temp_bids", token_dir, file_name)
+            bids_dtype_dict["fileLoc"] = os.path.join(
+                "temp_bids", token_dir, file_name
+            )
             # Determine RUN
             bids_values = tuple(file["entities"].values())
             if bids_values not in runs:
@@ -97,9 +109,9 @@ class ParticipantHandler:
                 )
             runs[bids_values] += 1
             bids_dtype_dict["run"] = runs[bids_values]
-            data2import["Subject"][sub_idx[file["entities"]["sub"]]][bids_dtype].append(
-                bids_dtype_dict
-            )
+            data2import["Subject"][sub_idx[file["entities"]["sub"]]][
+                bids_dtype
+            ].append(bids_dtype_dict)
         # Saving the data2import now it is populated. Note: subjects without data to import are ignored
         data2import.save_as_json()
         # Importation of the data into the BIDS dataset using BIDS Manager
@@ -119,7 +131,9 @@ class ParticipantHandler:
         # Load the targeted BIDS dataset in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         # Find the subject dict
-        sub_dict = self.find_subject_dict(db_obj=db_obj, subject=input_data["subject"])
+        sub_dict = self.find_subject_dict(
+            db_obj=db_obj, subject=input_data["subject"]
+        )
         # Delete the subject from the BIDS dataset
         # Will remove from /raw, /source, participants.tsv, source_data_trace.tsv
         # but not from derivatives
@@ -134,7 +148,9 @@ class ParticipantHandler:
         # Load the targeted BIDS dataset in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         for file in input_data["files"]:
-            sub_dict = self.find_subject_dict(db_obj=db_obj, subject=file["subject"])
+            sub_dict = self.find_subject_dict(
+                db_obj=db_obj, subject=file["subject"]
+            )
             for file_dict in sub_dict[file["modality"]]:
                 if file["fullpath"] == file_dict["fileLoc"]:
                     # Delete the file from the BIDS dataset:
@@ -152,7 +168,9 @@ class ParticipantHandler:
             container_dataset_path=self.dataset_path, subject=input_data["sub"]
         )
         if output_file:
-            self.dump_output_file(output_data=sub_info, output_file=output_file)
+            self.dump_output_file(
+                output_data=sub_info, output_file=output_file
+            )
             print(SUCCESS)
 
     def sub_edit_clinical(self, input_data=None):
@@ -162,9 +180,9 @@ class ParticipantHandler:
         # Load the targeted BIDS dataset in BIDS Manager
         db_obj = bidsmanager.BidsDataset(self.dataset_path)
         # Edit subject clinical info
-        sub_exists, sub_info, sub_idx = db_obj["ParticipantsTSV"].is_subject_present(
-            input_data["subject"]
-        )
+        sub_exists, sub_info, sub_idx = db_obj[
+            "ParticipantsTSV"
+        ].is_subject_present(input_data["subject"])
         if sub_exists:
             DatasetHandler.add_keys_requirements(
                 db_obj=db_obj, clin_keys=input_data["clinical"].keys()
@@ -176,7 +194,9 @@ class ParticipantHandler:
                     sub_info[clin_key] = "n/a"
             del sub_info["sub"]
             db_obj.parse_bids()  # To update the participants.tsv with the new columns
-            db_obj["ParticipantsTSV"].update_subject(input_data["subject"], sub_info)
+            db_obj["ParticipantsTSV"].update_subject(
+                input_data["subject"], sub_info
+            )
             db_obj["ParticipantsTSV"].write_file()
             print(SUCCESS)
 
