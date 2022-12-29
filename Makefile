@@ -10,6 +10,7 @@ test:
 build:
 	docker build \
 		-t bids-tools \
+		--build-arg BIDSMANAGER_BRANCH=dev \
 		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
         --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
         --build-arg VERSION=$(shell python get_version.py) .
