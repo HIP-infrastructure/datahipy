@@ -112,6 +112,15 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
                     "acq": "lowres",
                 },
             },
+            {
+                "modality": "ct",
+                "subject": "carole",
+                "path": f"{input_path}/sub-carole/3DCTpost_deface.nii",
+                "entities": {
+                    "sub": "carole",
+                    "ses": "postimp",
+                    "acq": "electrodes",
+                },
             },
         ],
     }
