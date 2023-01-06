@@ -11,58 +11,16 @@ import json
 import pandas as pd
 from sre_constants import SUCCESS
 from bids import BIDSLayout
+from bids_tools.bids.const import (
+    BIDS_VERSION,
+    BIDS_ENTITY_MAP,
+    BIDSJSONFILE_DATATYPE_KEY_MAP,
+    BIDSTSVFILE_DATATYPE_KEY_MAP,
+    VALID_EXTENSIONS,
+)
 
 
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
-
-BIDS_ENTITY_MAP = {
-    "subject": "sub",
-    "session": "ses",
-    "task": "task",
-    "run": "run",
-    "acquisition": "acq",
-    "reconstruction": "rec",
-    "ceagent": "ce",
-    "direction": "dir",
-    "space": "space",
-    "proc": "proc",
-    "modality": "mod",
-    "recording": "recording",
-    "staining": "stain",
-    "tracer": "trc",
-    "sample": "sample",
-    "echo": "echo",
-    "flip": "flip",
-    "inv": "inv",
-    "mt": "mt",
-    "part": "part",
-    "chunk": "chunk",
-    "resolution": "res",
-}
-
-BIDSJSONFILE_DATATYPE_KEY_MAP = {
-    "anat": "AnatJSON",
-    "func": "FuncJSON",
-    "dwi": "DWIJSON",
-    "eeg": "EEGJSON",
-    "meg": "MEGJSON",
-    "ieeg": "IeegJSON",
-}
-
-BIDSTSVFILE_DATATYPE_KEY_MAP = {
-    "eeg": "EEGChannelsTSV",
-    "meg": "MEGChannelsTSV",
-    "ieeg": "IeegChannelsTSV",
-}
-
-VALID_EXTENSIONS = [
-    ".nii",
-    ".nii.gz",
-    ".edf",
-    ".eeg",
-    ".set",
-    ".mgz",
-]
 
 
 def create_bids_layout(container_dataset_path=None, **kwargs):
