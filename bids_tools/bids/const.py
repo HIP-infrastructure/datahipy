@@ -3,6 +3,8 @@
 
 """Define constants used in `bids_tools.bids.utils`."""
 
+BIDS_VERSION = "v1.7.0"
+
 BIDS_ENTITY_MAP = {
     "subject": "sub",
     "session": "ses",
