@@ -1,15 +1,12 @@
 FROM ubuntu:20.04
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-ARG ANYWAVE_VERSION=2.1.3
-ARG DCM2NIIX_VERSION=1.0.20211006
-ARG BIDSMANAGER_VERSION=latest
-
 WORKDIR /apps/
+
 ###############################################################################
 # Install anywave
 ###############################################################################
+ARG ANYWAVE_VERSION=2.1.3
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \ 
@@ -23,6 +20,11 @@ RUN apt-get update && \
 ###############################################################################
 # Install dcm2niix
 ###############################################################################
+
+# Set the version of dcm2niix to install
+ARG DCM2NIIX_VERSION=1.0.20211006
+
+# Install dcm2niix and dependencies
 RUN apt-get install --no-install-recommends -y unzip && \
     curl -O -L https://github.com/rordenlab/dcm2niix/releases/download/v${DCM2NIIX_VERSION}/dcm2niix_lnx.zip && \
     mkdir -p ./dcm2niix/install && \
@@ -35,6 +37,8 @@ RUN apt-get install --no-install-recommends -y unzip && \
 # Install bids-manager
 ###############################################################################
 ARG BIDSMANAGER_BRANCH=dev
+# TODO: use this to install a specific version of bids-manager
+# ARG BIDSMANAGER_VERSION=latest
 # Install system and Python dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-pip python3-tk && \
