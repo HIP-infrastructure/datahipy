@@ -1,3 +1,8 @@
+# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
+#  This software is distributed under the open-source XXX license.
+
+"""Test the bids_tools CLI."""
+
 from __future__ import absolute_import
 import os
 import pytest
