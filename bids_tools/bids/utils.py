@@ -1,6 +1,7 @@
 # Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
-"""Utility function using pybids."""
+
+"""Utility functions to retrieve BIDS dataset content to be indexed with validation using pybids` and `bids-validator`."""
 
 import os
 import subprocess
