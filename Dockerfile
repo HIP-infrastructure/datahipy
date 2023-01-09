@@ -1,15 +1,12 @@
 FROM ubuntu:20.04
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-ARG ANYWAVE_VERSION=2.1.3
-ARG DCM2NIIX_VERSION=1.0.20211006
-ARG BIDSMANAGER_VERSION=latest
-
 WORKDIR /apps/
+
 ###############################################################################
 # Install anywave
 ###############################################################################
+ARG ANYWAVE_VERSION=2.1.3
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \ 
@@ -23,6 +20,11 @@ RUN apt-get update && \
 ###############################################################################
 # Install dcm2niix
 ###############################################################################
+
+# Set the version of dcm2niix to install
+ARG DCM2NIIX_VERSION=1.0.20211006
+
+# Install dcm2niix and dependencies
 RUN apt-get install --no-install-recommends -y unzip && \
     curl -O -L https://github.com/rordenlab/dcm2niix/releases/download/v${DCM2NIIX_VERSION}/dcm2niix_lnx.zip && \
     mkdir -p ./dcm2niix/install && \
@@ -32,9 +34,59 @@ RUN apt-get install --no-install-recommends -y unzip && \
     rm dcm2niix_lnx.zip
 
 ###############################################################################
+# Install bids-validator
+###############################################################################
+
+# TODO: use this to install a specific version of bids-validator from the original repo
+# once the schema option is fixed and schema >= v1.8.0 is supported
+
+# Set the version of bids-validator to install
+# ARG BIDSVALIDATOR_VERSION=1.9.9
+
+# Install bids-validator and dependencies
+# RUN apt-get update && curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+#     apt-get update && apt-get install --no-install-recommends -y \
+#     nodejs && \
+#     npm install -g npm && \
+#     npm install -g bids-validator@${BIDSVALIDATOR_VERSION} && \
+#     apt-get autoremove -y --purge && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
+
+# Use our oen fork of bids-validator with the schema option fixed
+# Set the version of bids-validator to install
+ARG BIDSVALIDATOR_BRANCH=dev-hip
+
+# Clone and install the latest version of a specific branch of bids-manager
+ADD https://api.github.com/repos/HIP-infrastructure/bids-validator/git/refs/heads/$BIDSVALIDATOR_BRANCH version.json
+RUN apt-get update && curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get update && apt-get install --no-install-recommends -y \
+    git nodejs && \
+    mkdir -p bids-validator/install && \
+    cd bids-validator/install && \
+    git clone https://github.com/HIP-infrastructure/bids-validator.git bids-validator && \
+    cd bids-validator && \
+    git checkout $BIDSVALIDATOR_BRANCH && \
+    npm install -g npm && \
+    npm install && \
+    npm -w bids-validator run build && \
+    npm -w bids-validator pack && \
+    npm install -g bids-validator-*.tgz && \
+    apt-get remove -y --purge git && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf bidsmanager/install/bidsificator
+
+###############################################################################
 # Install bids-manager
 ###############################################################################
+
+# Set the branch of bids-manager to install
 ARG BIDSMANAGER_BRANCH=dev
+# TODO: use this to install a specific version of bids-manager
+# ARG BIDSMANAGER_VERSION=latest
+
 # Install system and Python dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-pip python3-tk && \
@@ -54,6 +106,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-get autoremove -y --purge && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 # Clone and install the latest version of a specific branch of bids-manager
 ADD https://api.github.com/repos/HIP-infrastructure/BIDS_Manager/git/refs/heads/$BIDSMANAGER_BRANCH version.json
 RUN apt-get update && apt-get install --no-install-recommends -y \

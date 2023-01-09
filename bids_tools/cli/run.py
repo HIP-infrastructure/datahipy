@@ -1,5 +1,6 @@
-# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
+
 """Command line interface for bids_tools."""
 
 import argparse
@@ -23,10 +24,14 @@ VALID_COMMANDS = [
 def get_parser():
     """Get parser object for command line interface."""
     parser = argparse.ArgumentParser(description="BIDS dataset handler.")
-    parser.add_argument("--command", choices=VALID_COMMANDS, help="Method to be run.")
+    parser.add_argument(
+        "--command", choices=VALID_COMMANDS, help="Method to be run."
+    )
     parser.add_argument("--input_data", help="Input JSON data")
     parser.add_argument("--output_file", help="File location after processing")
-    parser.add_argument("--dataset_path", help="Path to the dataset", default="/output")
+    parser.add_argument(
+        "--dataset_path", help="Path to the dataset", default="/output"
+    )
     parser.add_argument(
         "--input_path",
         help="Path to the input data (e.g. input_data.json)",
@@ -59,7 +64,9 @@ def main():
     if command == "dataset.create":
         return dhdl.dataset_create(input_data=input_data)
     if command == "dataset.get":
-        dhdl.dataset_get_content(input_data=input_data, output_file=output_file)
+        dhdl.dataset_get_content(
+            input_data=input_data, output_file=output_file
+        )
     if command == "datasets.get":
         return get_all_datasets_content(
             input_data=input_data,

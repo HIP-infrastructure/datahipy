@@ -1,6 +1,8 @@
-# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
+
 """This file contains bids_tools package information."""
+
 # import datetime
 from ._version import get_versions
 

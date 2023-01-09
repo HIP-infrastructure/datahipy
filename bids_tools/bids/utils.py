@@ -1,6 +1,7 @@
-# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
-"""Utility function using pybids."""
+
+"""Utility functions to retrieve BIDS dataset content to be indexed with validation using pybids` and `bids-validator`."""
 
 import os
 import subprocess
@@ -11,58 +12,17 @@ import json
 import pandas as pd
 from sre_constants import SUCCESS
 from bids import BIDSLayout
+from bids_tools.bids.const import (
+    BIDS_VERSION,
+    BIDS_ENTITY_MAP,
+    BIDSJSONFILE_DATATYPE_KEY_MAP,
+    BIDSTSVFILE_DATATYPE_KEY_MAP,
+    VALID_EXTENSIONS,
+)
+from bids_tools.bids.validation import validate_bids_dataset
 
 
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
-
-BIDS_ENTITY_MAP = {
-    "subject": "sub",
-    "session": "ses",
-    "task": "task",
-    "run": "run",
-    "acquisition": "acq",
-    "reconstruction": "rec",
-    "ceagent": "ce",
-    "direction": "dir",
-    "space": "space",
-    "proc": "proc",
-    "modality": "mod",
-    "recording": "recording",
-    "staining": "stain",
-    "tracer": "trc",
-    "sample": "sample",
-    "echo": "echo",
-    "flip": "flip",
-    "inv": "inv",
-    "mt": "mt",
-    "part": "part",
-    "chunk": "chunk",
-    "resolution": "res",
-}
-
-BIDSJSONFILE_DATATYPE_KEY_MAP = {
-    "anat": "AnatJSON",
-    "func": "FuncJSON",
-    "dwi": "DWIJSON",
-    "eeg": "EEGJSON",
-    "meg": "MEGJSON",
-    "ieeg": "IeegJSON",
-}
-
-BIDSTSVFILE_DATATYPE_KEY_MAP = {
-    "eeg": "EEGChannelsTSV",
-    "meg": "MEGChannelsTSV",
-    "ieeg": "IeegChannelsTSV",
-}
-
-VALID_EXTENSIONS = [
-    ".nii",
-    ".nii.gz",
-    ".edf",
-    ".eeg",
-    ".set",
-    ".mgz",
-]
 
 
 def create_bids_layout(container_dataset_path=None, **kwargs):
@@ -145,7 +105,8 @@ def get_subject_bidsfile_info(container_dataset_path, **kwargs):
             file_info[
                 BIDSTSVFILE_DATATYPE_KEY_MAP[file_info["datatype"]]
             ] = extract_channels_tsv(
-                file.path.split(f'_{file_info["datatype"]}')[0] + "_channels.tsv"
+                file.path.split(f'_{file_info["datatype"]}')[0]
+                + "_channels.tsv"
             )
         # Add the file information to the list
         subject_bids_file_info.append(file_info)
@@ -170,33 +131,22 @@ def extract_channels_tsv(channels_tsv_file):
     return channels_df.to_json(orient="records")
 
 
-def get_bidsdataset_content(container_dataset_path=None):
-    """Create a dictionary storing dataset information indexed by the HIP platform.
+def update_with_ieeg_info(dataset_desc, layout):
+    """Update the input `dataset_desc` dictionary with iEEG information.
 
     Parameters
     ----------
-    container_dataset_path : str
-        Path to the BIDS dataset.
+    dataset_desc : dict
+        Input dictionary with the dataset content to be indexed.
+
+    layout : BIDSLayout
+        BIDSLayout object for the dataset.
 
     Returns
     -------
     dataset_desc : dict
-        Dictionary storing dataset information indexed by the HIP platform.
+        Updated dictionary with the dataset content to be indexed.
     """
-    # Create a pybids representation of the dataset
-    layout = create_bids_layout(container_dataset_path)
-    # Load the dataset_description.json as initial dictionary-based description
-    with open(
-        os.path.join(container_dataset_path, "dataset_description.json"), "r"
-    ) as f:
-        dataset_desc = json.load(f)
-    # Add basic information retrieved with pybids
-    dataset_desc["DataTypes"] = layout.get_datatypes()
-    dataset_desc["Formats"] = layout.get_extensions()
-    dataset_desc["SessionsCount"] = len(layout.get_sessions())
-    dataset_desc["Tasks"] = layout.get_tasks()
-    dataset_desc["RunsCount"] = len(layout.get_runs())
-    # Get general info about ieeg recordings
     seeg_info = {
         "ECOGChannelCount": 0,
         "SEEGChannelCount": 0,
@@ -219,8 +169,24 @@ def get_bidsdataset_content(container_dataset_path=None):
     for key, val in seeg_info.items():
         if val > 0:
             dataset_desc[key] = val
-    dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
-    # Load the participants.tsv file to extract information about participants
+    return dataset_desc
+
+
+def update_with_participants_info(dataset_desc, container_dataset_path):
+    """Update the input `dataset_desc` dictionary with information from the `participants.tsv` file.
+
+    Parameters
+    ----------
+    dataset_desc : dict
+        Input dictionary with the dataset content to be indexed.
+
+    container_dataset_path : str
+        Path to the BIDS dataset.
+
+    Returns
+    -------
+    dataset_desc : dict
+        Updated dictionary with the dataset content to be indexed."""
     participants_df = pd.read_csv(
         os.path.join(container_dataset_path, "participants.tsv"),
         sep="\t",
@@ -242,9 +208,94 @@ def get_bidsdataset_content(container_dataset_path=None):
     )
     dataset_desc["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
-    # Get total number of files and size
+    return dataset_desc
+
+
+def get_bidsdataset_content(container_dataset_path=None):
+    """Create a dictionary storing dataset information indexed by the HIP platform.
+
+    Parameters
+    ----------
+    container_dataset_path : str
+        Path to the BIDS dataset.
+
+    Returns
+    -------
+    dataset_desc : dict
+        Dictionary storing dataset information indexed by the HIP platform.
+    """
+    # Load the dataset_description.json as initial dictionary-based description
+    with open(
+        os.path.join(container_dataset_path, "dataset_description.json"), "r"
+    ) as f:
+        dataset_desc = json.load(f)
+    # Load the participants.tsv file to extract information about participants
+    dataset_desc = update_with_participants_info(
+        dataset_desc=dataset_desc,
+        container_dataset_path=container_dataset_path,
+    )
+    # Get the dataset size
     dataset_desc["Size"] = get_dataset_size(container_dataset_path)
-    dataset_desc["FileCount"] = len(layout.get_files())
+    # Check if the field BIDSVersion is present in the dataset_description.json.
+    # If not, use the default BIDS_VERSION. If present, add 'v' to match the
+    # schema version expected by the validator
+    if "BIDSVersion" in dataset_desc.keys():
+        bids_schema_version = "v" + dataset_desc["BIDSVersion"]
+    else:
+        bids_schema_version = BIDS_VERSION
+    # Run the bids-validator on the dataset with the specified schema version and
+    # the option to ignore subject consistency
+    validator_opts = [
+        "--ignoreWarnings",
+        "--ignoreSubjectConsistency",
+        "-s",
+        bids_schema_version,
+    ]
+    validator_output, validator_returncode = validate_bids_dataset(
+        container_dataset_path, *validator_opts
+    )
+    # Add some validator output to dataset_desc
+    dataset_desc["BIDSSchemaVersion"] = bids_schema_version
+    dataset_desc["BIDSErrors"] = validator_output["issues"]["errors"]
+    dataset_desc["BIDSWarnings"] = validator_output["issues"]["warnings"]
+    dataset_desc["BIDSIgnored"] = validator_output["issues"]["ignored"]
+    dataset_desc["BIDSValid"] = validator_returncode == 0
+    if dataset_desc["BIDSValid"]:
+        # Create a pybids representation of the dataset if it is valid
+        layout = create_bids_layout(container_dataset_path)
+    # Add basic information retrieved with pybids to dataset_desc if
+    # the dataset is valid. If not, add None values to the fields.
+    dataset_desc["DataTypes"] = (
+        None if not dataset_desc["BIDSValid"] else layout.get_datatypes()
+    )
+    dataset_desc["Formats"] = (
+        None if not dataset_desc["BIDSValid"] else layout.get_extensions()
+    )
+    dataset_desc["SessionsCount"] = (
+        None if not dataset_desc["BIDSValid"] else len(layout.get_sessions())
+    )
+    dataset_desc["Tasks"] = (
+        None if not dataset_desc["BIDSValid"] else layout.get_tasks()
+    )
+    dataset_desc["RunsCount"] = (
+        None if not dataset_desc["BIDSValid"] else len(layout.get_runs())
+    )
+    # Get general info about ieeg recordings
+    dataset_desc = (
+        None
+        if not dataset_desc["BIDSValid"]
+        else update_with_ieeg_info(dataset_desc, layout)
+    )
+    # Get the number of events files
+    dataset_desc["EventsFileCount"] = (
+        None
+        if not dataset_desc["BIDSValid"]
+        else len(layout.get(suffix="events"))
+    )
+    # Get the number of files
+    dataset_desc["FileCount"] = (
+        None if not dataset_desc["BIDSValid"] else len(layout.get_files())
+    )
     return dataset_desc
 
 

@@ -1,5 +1,6 @@
-# Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
+# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
+
 """Manage BIDS dataset using BIDS Manager."""
 
 import os
@@ -49,11 +50,15 @@ class DatasetHandler:
 
         # Create a disctionary storing the dataset information
         # indexed by the HIP platform
-        dataset_desc = get_bidsdataset_content(container_dataset_path=self.dataset_path)
+        dataset_desc = get_bidsdataset_content(
+            container_dataset_path=self.dataset_path
+        )
 
         # Dump the dataset_desc dict in a .json file
         if output_file:
-            self.dump_output_file(output_data=dataset_desc, output_file=output_file)
+            self.dump_output_file(
+                output_data=dataset_desc, output_file=output_file
+            )
             print(SUCCESS)
 
     @staticmethod
@@ -63,14 +68,19 @@ class DatasetHandler:
         dcm2niix_path = r"/apps/dcm2niix/install/dcm2niix"
         anywave_path = r"/usr/bin/anywave"
         def_converters = {
-            "Electrophy": {"ext": [".vhdr", ".vmrk", ".eeg"], "path": anywave_path},
+            "Electrophy": {
+                "ext": [".vhdr", ".vmrk", ".eeg"],
+                "path": anywave_path,
+            },
             "Imaging": {"ext": [".nii"], "path": dcm2niix_path},
         }
         # Get the requirements.json dict
         req_path = os.path.join(db_obj.dirname, "code", "requirements.json")
         req_dict = bidsmanager.Requirements(req_path)
         to_rewrite = False
-        if ("Converters" not in req_dict) or (req_dict["Converters"] != def_converters):
+        if ("Converters" not in req_dict) or (
+            req_dict["Converters"] != def_converters
+        ):
             to_rewrite = True
         if to_rewrite:
             # Write the requirements.json
@@ -108,8 +118,13 @@ class DatasetHandler:
     def add_keys_requirements(db_obj=None, clin_keys=None):
         """Update the requirements.json with new keys"""
         for clin_key in clin_keys:
-            if clin_key not in db_obj.requirements["Requirements"]["Subject"]["keys"]:
-                db_obj.requirements["Requirements"]["Subject"]["keys"][clin_key] = str()
+            if (
+                clin_key
+                not in db_obj.requirements["Requirements"]["Subject"]["keys"]
+            ):
+                db_obj.requirements["Requirements"]["Subject"]["keys"][
+                    clin_key
+                ] = str()
         db_obj.requirements.save_as_json()
 
     @staticmethod
