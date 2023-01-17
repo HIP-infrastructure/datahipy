@@ -240,6 +240,7 @@ def get_bidsdataset_content(container_dataset_path=None):
     # Check if the field BIDSVersion is present in the dataset_description.json.
     # If not, use the default BIDS_VERSION. If present, add 'v' to match the
     # schema version expected by the validator
+    # fmt: off
     if "BIDSVersion" in dataset_desc.keys():
         try:
             if version.parse(dataset_desc["BIDSVersion"]) < version.parse("1.6.0"):
@@ -256,6 +257,7 @@ def get_bidsdataset_content(container_dataset_path=None):
             bids_schema_version = BIDS_VERSION
     else:
         bids_schema_version = BIDS_VERSION
+    # fmt: on
     # Run the bids-validator on the dataset with the specified schema version and
     # the option to ignore subject consistency
     validator_opts = [
@@ -278,6 +280,7 @@ def get_bidsdataset_content(container_dataset_path=None):
         layout = create_bids_layout(container_dataset_path)
     # Add basic information retrieved with pybids to dataset_desc if
     # the dataset is valid. If not, add None values to the fields.
+    # fmt: off
     dataset_desc["DataTypes"] = layout.get_datatypes() if dataset_desc["BIDSValid"] else None
     dataset_desc["Formats"] = layout.get_extensions() if dataset_desc["BIDSValid"] else None
     dataset_desc["SessionsCount"] = len(layout.get_sessions()) if dataset_desc["BIDSValid"] else None
@@ -289,6 +292,7 @@ def get_bidsdataset_content(container_dataset_path=None):
     dataset_desc["EventsFileCount"] = len(layout.get(suffix="events")) if dataset_desc["BIDSValid"] else None 
     # Get the number of files
     dataset_desc["FileCount"] = len(layout.get_files()) if dataset_desc["BIDSValid"] else None
+    # fmt: on
     return dataset_desc
 
 
