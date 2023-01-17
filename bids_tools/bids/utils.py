@@ -7,6 +7,7 @@ import os
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
 from pkg_resources import resource_filename
+from packaging import version
 
 import json
 import pandas as pd
@@ -240,7 +241,19 @@ def get_bidsdataset_content(container_dataset_path=None):
     # If not, use the default BIDS_VERSION. If present, add 'v' to match the
     # schema version expected by the validator
     if "BIDSVersion" in dataset_desc.keys():
-        bids_schema_version = "v" + dataset_desc["BIDSVersion"]
+        try:
+            if version.parse(dataset_desc["BIDSVersion"]) < version.parse("1.6.0"):
+                bids_schema_version = "v1.6.0"
+            elif dataset_desc["BIDSVersion"] in ["1.6.0", "1.7.0"]:
+                bids_schema_version = "v" + dataset_desc["BIDSVersion"]
+            elif version.parse(dataset_desc["BIDSVersion"]) > version.parse("1.7.0"):
+                bids_schema_version = "v1.7.0"
+        except Exception as e:
+            print(
+                f'Error parsing BIDSVersion: {e}'
+                f'Using default BIDS version: {BIDS_VERSION}'
+            )
+            bids_schema_version = BIDS_VERSION
     else:
         bids_schema_version = BIDS_VERSION
     # Run the bids-validator on the dataset with the specified schema version and
