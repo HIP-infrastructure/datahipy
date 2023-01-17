@@ -278,37 +278,17 @@ def get_bidsdataset_content(container_dataset_path=None):
         layout = create_bids_layout(container_dataset_path)
     # Add basic information retrieved with pybids to dataset_desc if
     # the dataset is valid. If not, add None values to the fields.
-    dataset_desc["DataTypes"] = (
-        None if not dataset_desc["BIDSValid"] else layout.get_datatypes()
-    )
-    dataset_desc["Formats"] = (
-        None if not dataset_desc["BIDSValid"] else layout.get_extensions()
-    )
-    dataset_desc["SessionsCount"] = (
-        None if not dataset_desc["BIDSValid"] else len(layout.get_sessions())
-    )
-    dataset_desc["Tasks"] = (
-        None if not dataset_desc["BIDSValid"] else layout.get_tasks()
-    )
-    dataset_desc["RunsCount"] = (
-        None if not dataset_desc["BIDSValid"] else len(layout.get_runs())
-    )
+    dataset_desc["DataTypes"] = layout.get_datatypes() if dataset_desc["BIDSValid"] else None
+    dataset_desc["Formats"] = layout.get_extensions() if dataset_desc["BIDSValid"] else None
+    dataset_desc["SessionsCount"] = len(layout.get_sessions()) if dataset_desc["BIDSValid"] else None
+    dataset_desc["Tasks"] = layout.get_tasks() if dataset_desc["BIDSValid"] else None
+    dataset_desc["RunsCount"] = len(layout.get_runs()) if dataset_desc["BIDSValid"] else None
     # Get general info about ieeg recordings
-    dataset_desc = (
-        None
-        if not dataset_desc["BIDSValid"]
-        else update_with_ieeg_info(dataset_desc, layout)
-    )
+    dataset_desc = update_with_ieeg_info(dataset_desc, layout) if dataset_desc["BIDSValid"] else dataset_desc
     # Get the number of events files
-    dataset_desc["EventsFileCount"] = (
-        None
-        if not dataset_desc["BIDSValid"]
-        else len(layout.get(suffix="events"))
-    )
+    dataset_desc["EventsFileCount"] = len(layout.get(suffix="events")) if dataset_desc["BIDSValid"] else None 
     # Get the number of files
-    dataset_desc["FileCount"] = (
-        None if not dataset_desc["BIDSValid"] else len(layout.get_files())
-    )
+    dataset_desc["FileCount"] = len(layout.get_files()) if dataset_desc["BIDSValid"] else None
     return dataset_desc
 
 
