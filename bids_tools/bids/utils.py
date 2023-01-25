@@ -241,10 +241,10 @@ def get_bidsdataset_content(container_dataset_path=None):
     )
     # Get the dataset size
     dataset_desc["Size"] = get_dataset_size(container_dataset_path)
+    # fmt: off
     # Check if the field BIDSVersion is present in the dataset_description.json.
     # If not, use the default BIDS_VERSION. If present, add 'v' to match the
     # schema version expected by the validator
-    # fmt: off
     if "BIDSVersion" in dataset_desc.keys():
         try:
             if version.parse(dataset_desc["BIDSVersion"]) < version.parse("1.6.0"):
@@ -279,23 +279,24 @@ def get_bidsdataset_content(container_dataset_path=None):
     dataset_desc["BIDSWarnings"] = validator_output["issues"]["warnings"]
     dataset_desc["BIDSIgnored"] = validator_output["issues"]["ignored"]
     dataset_desc["BIDSValid"] = validator_returncode == 0
-    if dataset_desc["BIDSValid"]:
-        # Create a pybids representation of the dataset if it is valid
-        layout = create_bids_layout(container_dataset_path)
-    # Add basic information retrieved with pybids to dataset_desc if
-    # the dataset is valid. If not, add None values to the fields.
+
     # fmt: off
-    dataset_desc["DataTypes"] = layout.get_datatypes() if dataset_desc["BIDSValid"] else None
-    dataset_desc["Formats"] = layout.get_extensions() if dataset_desc["BIDSValid"] else None
-    dataset_desc["SessionsCount"] = len(layout.get_sessions()) if dataset_desc["BIDSValid"] else None
-    dataset_desc["Tasks"] = layout.get_tasks() if dataset_desc["BIDSValid"] else None
-    dataset_desc["RunsCount"] = len(layout.get_runs()) if dataset_desc["BIDSValid"] else None
+    # Create a pybids representation of the dataset
+    layout = create_bids_layout(container_dataset_path)
+    # Add basic information retrieved with pybids to dataset_desc
+    dataset_desc["DataTypes"] = layout.get_datatypes()
+    dataset_desc["Formats"] = layout.get_extensions()
+    dataset_desc["SessionsCount"] = len(layout.get_sessions())
+    dataset_desc["Tasks"] = layout.get_tasks()
+    dataset_desc["RunsCount"] = len(layout.get_runs())
     # Get general info about ieeg recordings
-    dataset_desc = update_with_ieeg_info(dataset_desc, layout) if dataset_desc["BIDSValid"] else dataset_desc
+    dataset_desc = (update_with_ieeg_info(dataset_desc, layout)
+                    if "ieeg" in dataset_desc["DataTypes"]
+                    else dataset_desc)
     # Get the number of events files
-    dataset_desc["EventsFileCount"] = len(layout.get(suffix="events")) if dataset_desc["BIDSValid"] else None 
+    dataset_desc["EventsFileCount"] = len(layout.get(suffix="events"))
     # Get the number of files
-    dataset_desc["FileCount"] = len(layout.get_files()) if dataset_desc["BIDSValid"] else None
+    dataset_desc["FileCount"] = len(layout.get_files())
     # fmt: on
     return dataset_desc
 
