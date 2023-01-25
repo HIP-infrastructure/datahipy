@@ -188,12 +188,16 @@ def update_with_participants_info(dataset_desc, container_dataset_path):
     -------
     dataset_desc : dict
         Updated dictionary with the dataset content to be indexed."""
-    participants_df = pd.read_csv(
-        os.path.join(container_dataset_path, "participants.tsv"),
-        sep="\t",
-        header=0,
-        na_filter=False,
-    )
+    # Load the participants.tsv file to extract information about participants
+    try:
+        participants_df = pd.read_csv(
+            os.path.join(container_dataset_path, "participants.tsv"),
+            sep="\t",
+            header=0,
+            na_filter=False,
+        )
+    except pd.errors.EmptyDataError:
+        participants_df = pd.DataFrame()
     # Get min and max age of participants
     if "age" in participants_df.keys():
         dataset_desc["AgeMin"] = f'{participants_df["age"].min()}'
