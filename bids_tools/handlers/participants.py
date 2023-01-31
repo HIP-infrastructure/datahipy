@@ -12,7 +12,8 @@ from sre_constants import SUCCESS
 # BIDS Manager Python package has to be accessible.
 import bids_manager.ins_bids_class as bidsmanager
 from bids_tools.handlers.dataset import DatasetHandler
-from bids_tools.bids.utils import get_subject_bidsfile_info
+from bids_tools.bids.utils import get_subject_bidsfile_info, create_bids_layout
+from bids_tools.bids.bids_manager import correct_bids_ieeg_json
 
 
 class ParticipantHandler:
@@ -123,6 +124,15 @@ class ParticipantHandler:
         )
         # Refresh
         db_obj.parse_bids()
+        # Post-importation BIDS Manager output refinements
+        layout = create_bids_layout(db_obj.dirname)
+        ieeg_json_files = layout.get(suffix="ieeg", extension="json")
+        for ieeg_json_file in ieeg_json_files:
+            print(f"> Correcting {ieeg_json_file.path}...")
+            correct_bids_ieeg_json_content = correct_bids_ieeg_json(
+                ieeg_json_file.path
+            )
+            print(f"  .. New content: {correct_bids_ieeg_json_content}")
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
