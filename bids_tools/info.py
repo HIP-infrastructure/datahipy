@@ -3,21 +3,21 @@
 
 """This file contains bids_tools package information."""
 
-# import datetime
+import datetime
 from ._version import get_versions
 
-__release_date__ = "DD.MM.2022"
 
 __version__ = get_versions()["version"]
 del get_versions
 
-# __current_year__ = datetime.datetime.now().strftime("%Y")
-__current_year__ = "2022"
+__current_year__ = datetime.datetime.now().strftime("%Y")
+
+__release_date__ = f"DD.MM.{__current_year__}"
 
 __author__ = "The HIP team"
 
 __copyright__ = (
-    "Copyright (C) 2022"  # -{}, ".format(__current_year__)
+    "Copyright (C) 2022-{}, ".format(__current_year__)
     + "the HIP team and Contributors, All rights reserved."
 )
 
