@@ -1,4 +1,4 @@
-# Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
+# Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 
 """Utility functions to retrieve BIDS dataset content to be indexed by the Elasticsearch engine of the HIP."""
