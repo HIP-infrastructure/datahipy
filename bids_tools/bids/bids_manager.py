@@ -46,11 +46,6 @@ def post_import_bids_refinement(bids_dir):
     ----------
     bids_dir : str
         Path to the BIDS dataset.
-
-    Returns
-    -------
-    None
-
     """
     # Correct BIDS iEEG json files
     layout = create_bids_layout(bids_dir)
