@@ -5,7 +5,7 @@
 
 import argparse
 from bids_tools import __version__, __release_date__
-from bids_tools.bids.utils import get_all_datasets_content
+from bids_tools.bids.dataset import get_all_datasets_content
 from bids_tools.handlers.dataset import DatasetHandler
 from bids_tools.handlers.participants import ParticipantHandler
 

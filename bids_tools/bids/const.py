@@ -1,7 +1,7 @@
 # Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 
-"""Define constants used in `bids_tools.bids.utils`."""
+"""Define constants used by packages of `bids_tools.bids`."""
 
 BIDS_VERSION = "v1.7.0"
 
