@@ -98,8 +98,8 @@ def get_bids_validator_output_info(bids_dir, bids_schema_version=None):
     validator_opts = [
         "--ignoreWarnings",
         "--ignoreSubjectConsistency",
-        "-s",
-        bids_schema_version,
+        # "-s",
+        # bids_schema_version,
     ]
     validator_output, validator_returncode = validate_bids_dataset(
         bids_dir, *validator_opts
