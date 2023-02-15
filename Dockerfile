@@ -78,23 +78,19 @@ RUN apt-get update && curl -sL https://deb.nodesource.com/setup_14.x | bash - &&
     rm -rf /var/lib/apt/lists/* && \
     rm -rf bidsmanager/install/bidsificator
 
-###############################################################################
-# Install bids-manager
-###############################################################################
-
-# Set the branch of bids-manager to install
-ARG BIDSMANAGER_BRANCH=dev
-# TODO: use this to install a specific version of bids-manager
-# ARG BIDSMANAGER_VERSION=latest
+# ###############################################################################
+# # Install System and BIDS_Manager/BIDS_Pipelines Python dependencies
+# ###############################################################################
 
 # Install system and Python dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    python3-pip python3-tk && \
-    pip3 install \
-    numpy==1.21.2 \
-    scipy==1.9.1 \
-    gdown \
-    setuptools \
+    git python3-pip python3-tk && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install BIDS_Manager/BIDS_Pipelines Python dependencies
+RUN pip3 install \
     PyQt5==5.15.4 \
     nibabel \
     xlrd \
@@ -107,37 +103,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Clone and install the latest version of a specific branch of bids-manager
-ADD https://api.github.com/repos/HIP-infrastructure/BIDS_Manager/git/refs/heads/$BIDSMANAGER_BRANCH version.json
-RUN apt-get update && apt-get install --no-install-recommends -y \
-    git && \
-    mkdir -p bidsmanager/install && \
-    cd bidsmanager/install && \
-    git clone https://github.com/HIP-infrastructure/BIDS_Manager.git bidsificator && \
-    cd bidsificator && \
-    git checkout $BIDSMANAGER_BRANCH && \
-    python3 setup.py install && \
-    apt-get remove -y --purge git && \
-    apt-get autoremove -y --purge && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf bidsmanager/install/bidsificator
-
 ###############################################################################
 # Install bids-tools
 ###############################################################################
 
 # Set the working directory to /app/bids_tools
 WORKDIR /apps/bids_tools
-
-# Install Python dependencies of bids-tools
-RUN pip3 install \
-    versioneer==0.28 \
-    pybids==0.15.3 \
-    pandas==1.3.5 
-
-# Install dependencies for testing
-RUN pip3 install pytest pytest-console-scripts pytest-cov
 
 # Copy necessary contents of this repository.
 COPY ./.coveragerc ./.coveragerc
@@ -150,7 +121,8 @@ COPY bids_tools ./bids_tools
 # Install bids-tools with static version taken from the argument
 ARG VERSION=unknown
 RUN echo "${VERSION}" > /apps/bids_tools/bids_tools/VERSION \
-    && pip install -e .
+    && pip install versioneer==0.28 \
+    && pip install -e ".[test]"
 
 ###############################################################################
 # Create initial folders for testing / code coverage with correct permissions
