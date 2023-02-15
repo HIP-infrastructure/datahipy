@@ -9,7 +9,15 @@ import re
 from sre_constants import SUCCESS
 
 # BIDS Manager Python package has to be accessible.
-import bids_manager.ins_bids_class as bidsmanager
+try:
+    from bids_manager.ins_bids_class import (
+        BidsDataset,
+        Requirements,
+        DatasetDescJSON,
+    )
+except ImportError:
+    print("WARNING: BIDS Manager Python package is not accessible.")
+
 from bids_tools.bids.dataset import get_bidsdataset_content
 
 
@@ -22,7 +30,7 @@ class DatasetHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Init a BIDS Manager DatasetDescJSON dict
-        datasetdesc_dict = bidsmanager.DatasetDescJSON()
+        datasetdesc_dict = DatasetDescJSON()
         # Populate datasetdesc_dict with the data extracted from the create_bids_db.json.
         for bids_key, bids_value in input_data["DatasetDescJSON"].items():
             datasetdesc_dict[bids_key] = bids_value
@@ -35,7 +43,7 @@ class DatasetHandler:
         if not os.path.isfile(datasetdesc_path):
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
             # Load the created BIDS dataset in BIDS Manager (creates companion files)
-            ds_obj = bidsmanager.BidsDataset(ds_path)
+            ds_obj = BidsDataset(ds_path)
             if ds_obj:
                 print(
                     "INFO: The dataset_description.json file was updated. "
@@ -75,7 +83,7 @@ class DatasetHandler:
         }
         # Get the requirements.json dict
         req_path = os.path.join(ds_obj.dirname, "code", "requirements.json")
-        req_dict = bidsmanager.Requirements(req_path)
+        req_dict = Requirements(req_path)
         to_rewrite = False
         if ("Converters" not in req_dict) or (
             req_dict["Converters"] != def_converters
@@ -85,7 +93,7 @@ class DatasetHandler:
             # Write the requirements.json
             print("INFO: Updating the requirements.json converters.")
             req_dict["Converters"] = def_converters
-            bidsmanager.BidsDataset.dirname = os.path.join(ds_obj.dirname)
+            BidsDataset.dirname = os.path.join(ds_obj.dirname)
             req_dict.save_as_json(req_path)
             ds_obj.get_requirements()
 

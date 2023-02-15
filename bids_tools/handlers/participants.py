@@ -10,7 +10,18 @@ from datetime import datetime
 from sre_constants import SUCCESS
 
 # BIDS Manager Python package has to be accessible.
-import bids_manager.ins_bids_class as bidsmanager
+try:
+    from bids_manager.ins_bids_class import (
+        BidsDataset,
+        Data2Import,
+        Subject,
+        Anat,
+        Ieeg,
+        CT,
+    )
+except ImportError:
+    print("WARNING: BIDS Manager Python package is not accessible.")
+
 from bids_tools.handlers.dataset import DatasetHandler
 from bids_tools.bids.participant import get_subject_bidsfile_info
 from bids_tools.bids.bids_manager import post_import_bids_refinement
@@ -26,7 +37,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager and check converters
-        ds_obj = bidsmanager.BidsDataset(self.dataset_path)
+        ds_obj = BidsDataset(self.dataset_path)
         DatasetHandler.check_converters(ds_obj=ds_obj)
         # Add clinical keys to the requirements.json
         clin_keys = list()
@@ -62,7 +73,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
-        ds_obj = bidsmanager.BidsDataset(self.dataset_path)
+        ds_obj = BidsDataset(self.dataset_path)
         # Find the subject dict
         sub_dict = self.find_subject_dict(
             ds_obj=ds_obj, subject=input_data["subject"]
@@ -79,7 +90,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
-        ds_obj = bidsmanager.BidsDataset(self.dataset_path)
+        ds_obj = BidsDataset(self.dataset_path)
         for file in input_data["files"]:
             sub_dict = self.find_subject_dict(
                 ds_obj=ds_obj, subject=file["subject"]
@@ -111,7 +122,7 @@ class ParticipantHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
-        ds_obj = bidsmanager.BidsDataset(self.dataset_path)
+        ds_obj = BidsDataset(self.dataset_path)
         # Edit subject clinical info
         sub_exists, sub_info, sub_idx = ds_obj[
             "ParticipantsTSV"
@@ -191,7 +202,7 @@ class ParticipantHandler:
         requirements_path = os.path.join(
             ds_obj.dirname, "code", "requirements.json"
         )
-        data2import = bidsmanager.Data2Import(
+        data2import = Data2Import(
             data2import_dir=import_path, requirements_fileloc=requirements_path
         )
         # Populate the data2import with the data extracted from the dataset_description.json of the BIDS dataset.
@@ -201,7 +212,7 @@ class ParticipantHandler:
         sub_idx = dict()
         for idx, subject in enumerate(input_data["subjects"]):
             # Init a BIDS Manager subject dict used for clinical info
-            new_sub = bidsmanager.Subject()
+            new_sub = Subject()
             # Populate the subject dict with the content of the data_to_import dict
             for bids_key, bids_value in subject.items():
                 new_sub[bids_key] = bids_value
@@ -227,13 +238,13 @@ class ParticipantHandler:
             bids_dtype_dict = dict()
             if file["modality"] in ["T1w", "T2w", "FLAIR"]:
                 bids_dtype = "Anat"
-                bids_dtype_dict = bidsmanager.Anat()
+                bids_dtype_dict = Anat()
             elif file["modality"] in ["ieeg"]:
                 bids_dtype = "Ieeg"
-                bids_dtype_dict = bidsmanager.Ieeg()
+                bids_dtype_dict = Ieeg()
             elif file["modality"] in ["ct"]:
                 bids_dtype = "CT"
-                bids_dtype_dict = bidsmanager.CT()
+                bids_dtype_dict = CT()
             else:
                 pass  # Add other BIDS data types here
             # Populate the modality dict with the BIDS entities found in the input_data dict
