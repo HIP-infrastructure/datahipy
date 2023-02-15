@@ -1,3 +1,4 @@
+versioneer==0.28
 future
 scipy
 numpy
