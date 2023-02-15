@@ -1,0 +1,7 @@
+.. _LICENSE:
+
+*******
+License
+*******
+
+TBC

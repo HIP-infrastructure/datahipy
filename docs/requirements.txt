@@ -1,0 +1,4 @@
+future
+scipy
+numpy
+git+https://github.com/HIP-infrastructure/BIDS_Manager.git@dev
