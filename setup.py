@@ -15,8 +15,8 @@ def main():
 
     version = None
     cmdclass = {}
-    if op.isfile(op.join(root_dir, 'bids_tools', 'VERSION')):
-        with open(op.join(root_dir, 'bids_tools', 'VERSION')) as vfile:
+    if op.isfile(op.join(root_dir, "bids_tools", "VERSION")):
+        with open(op.join(root_dir, "bids_tools", "VERSION")) as vfile:
             version = vfile.readline().strip()
 
     if version is None:
