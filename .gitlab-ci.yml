@@ -26,13 +26,19 @@ before_script:
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
 stages:
-  - test
+  - test-python-install
   - build
+  - test
 
-test_:
+test:
   stage: test
   script:
     - make test
+
+test-python-install:
+  stage: test-python-install
+  script:
+    - make test-python-install
 
 build:
   stage: build
