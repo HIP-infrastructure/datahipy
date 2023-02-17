@@ -4,12 +4,11 @@
 .PHONY: test
 test:
 	@echo "Running pytest tests..."
-	VERSION=$(shell python get_version.py)
 	docker run -t --rm \
 		--entrypoint "/entrypoint_pytest.sh" \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/test:/test \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/bids_tools:/apps/bids_tools/bids_tools \
-		bids-tools:latest \
+		$(if $(CI_REGISTRY_IMAGE),$(CI_REGISTRY_IMAGE)/bids-tools:latest,bids-tools:latest) \
 		${USER} \
 		$(shell id -u $(USER)) \
 		/test
@@ -17,10 +16,10 @@ test:
 #build: @ Builds the Docker image
 build:
 	docker build \
-		-t bids-tools \
-		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
-        --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-        --build-arg VERSION=$(shell python get_version.py) .
+	-t $(if $(CI_REGISTRY_IMAGE),$(CI_REGISTRY_IMAGE)/bids-tools:latest,bids-tools:latest) \
+	--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+	--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
+	--build-arg VERSION=$(shell python get_version.py) .
 
 #build-release: @ Release the new Docker image with the new version tag
 build-release:
@@ -28,7 +27,7 @@ build-release:
 		-t bids-tools \
 		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
         --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-        --build-arg VERSION=$(shell python get_version.py) .
+        --build-arg VERSION=$(shell python get_version.py)
 	docker tag bids-tools:latest bids-tools:$(shell python get_version.py)
 
 #python-install: @ Installs the python package
