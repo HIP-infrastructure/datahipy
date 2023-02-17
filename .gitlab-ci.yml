@@ -15,7 +15,7 @@ services:
     # to an empty string, and I would call that beyond mildly infuriating.
     command: ["--tls=false", "--mtu=1450"]
 before_script:
-  - apk add build-base
+  - apk add --no-cache gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
   - apk add --no-cache bash
   - apk add --no-cache openssh-client
   - apk add --no-cache git
