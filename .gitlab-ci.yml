@@ -51,4 +51,4 @@ test-python-install:
 build:
   stage: build
   script:
-    - make build
+    - make build TAG=$(python get_version.py)
