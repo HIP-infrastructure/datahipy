@@ -52,3 +52,4 @@ build:
   stage: build
   script:
     - make build TAG=$(python get_version.py)
+    - make push-ci TAG=$(python get_version.py)

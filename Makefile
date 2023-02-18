@@ -27,6 +27,10 @@ build:
 	--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
 	--build-arg VERSION=$(TAG) .
 
+#push-ci: @ Push the Docker image with TAG to the CI registry
+push-ci:
+	docker push $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
+
 #build-release: @ Release the new Docker image with the new version tag
 build-release:
 	docker build \
