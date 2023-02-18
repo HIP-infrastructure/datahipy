@@ -37,6 +37,11 @@ test:
   stage: test
   script:
     - make test
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: test/report/cov.xml
 
 test-python-install:
   stage: test-python-install
