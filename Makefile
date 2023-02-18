@@ -8,7 +8,7 @@ test:
 		--entrypoint "/entrypoint_pytest.sh" \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/test:/test \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/bids_tools:/apps/bids_tools/bids_tools \
-		$(if $(CI_REGISTRY_IMAGE),$(CI_REGISTRY_IMAGE)/bids-tools:latest,bids-tools:latest) \
+		$(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:latest,bids-tools:latest) \
 		${USER} \
 		$(shell id -u $(USER)) \
 		/test
@@ -16,7 +16,7 @@ test:
 #build: @ Builds the Docker image
 build:
 	docker build \
-	-t $(if $(CI_REGISTRY_IMAGE),$(CI_REGISTRY_IMAGE)/bids-tools:latest,bids-tools:latest) \
+	-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:latest,bids-tools:latest) \
 	--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 	--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
 	--build-arg VERSION=$(shell python get_version.py) .
@@ -24,7 +24,7 @@ build:
 #build-release: @ Release the new Docker image with the new version tag
 build-release:
 	docker build \
-		-t bids-tools \
+		-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:latest,bids-tools:latest) \
 		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
         --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
         --build-arg VERSION=$(shell python get_version.py)
