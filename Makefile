@@ -1,5 +1,11 @@
 .DEFAULT_GOAL := help
 
+# Define the version tag for the python package
+# and the docker image
+TAG = $(shell python get_version.py)
+# Replace + with - for docker tags
+MODIFIED_TAG = $(subst +,-,$(TAG))
+
 #test: @ Run all tests
 .PHONY: test
 test:
@@ -8,7 +14,7 @@ test:
 		--entrypoint "/entrypoint_pytest.sh" \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/test:/test \
 		-v $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))/bids_tools:/apps/bids_tools/bids_tools \
-		$(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(shell python get_version.py),bids-tools:$(shell python get_version.py)) \
+		$(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) \
 		${USER} \
 		$(shell id -u $(USER)) \
 		/test
@@ -16,19 +22,18 @@ test:
 #build: @ Builds the Docker image
 build:
 	docker build \
-	-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(shell python get_version.py),bids-tools:$(shell python get_version.py)) \
+	-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) \
 	--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
 	--build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-	--build-arg VERSION=$(shell python get_version.py) .
+	--build-arg VERSION=$(TAG) .
 
 #build-release: @ Release the new Docker image with the new version tag
 build-release:
 	docker build \
-		-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(shell python get_version.py),bids-tools:$(shell python get_version.py)) \
+		-t $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) \
 		--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
         --build-arg VCS_REF=$(shell git rev-parse --short HEAD) \
-        --build-arg VERSION=$(shell python get_version.py)
-	docker tag bids-tools:latest bids-tools:$(shell python get_version.py)
+        --build-arg VERSION=$(TAG) .
 
 #python-install: @ Installs the python package
 install-python:
