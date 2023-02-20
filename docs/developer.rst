@@ -72,8 +72,8 @@ How to run the tests via the Docker image
         /test
     
     where:
-    - PROJECT_ROOT is the path to the root of the cloned repository.
-    - version is the version of the Docker image (see :ref:`instructions_docker_build`).
+    - `${PROJECT_ROOT}` is the path to the root of the cloned repository.
+    - `<version>` is the version of the Docker image (see :ref:`instructions_docker_build`).
 
 .. note::
     The tests are run in a temporary `tmp` directory in the `test` directory, so that the original data are not modified. After completion, coverage report in HTML format can be found in ``test/report/cov_html`` and be displayed by opening ``index.html`` in your favorite browser.
