@@ -32,6 +32,10 @@ test:
 		$(USER) \
 		$(USER_ID) \
 		/test
+	@echo "Fix path in coverage xml report..."
+	sed -i -r  \
+		"s|/apps/bids_tools/bids_tools|$(PROJECT_DIR)/bids_tools|g" \
+		$(PROJECT_DIR)/test/report/cov.xml
 
 #build: @ Builds the Docker image
 build:
