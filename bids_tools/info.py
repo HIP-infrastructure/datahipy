@@ -4,11 +4,9 @@
 """This file contains bids_tools package information."""
 
 import datetime
-from ._version import get_versions
 
 
-__version__ = get_versions()["version"]
-del get_versions
+__version__ = "0.0.0"
 
 __current_year__ = datetime.datetime.now().strftime("%Y")
 

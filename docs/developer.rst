@@ -22,14 +22,10 @@ How to build the Docker image locally
 How to install `bids_tools` locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Install `versioneer 0.28`, the version manager of `bids_tools` in your Python environment::
-
-    pip install versioneer==0.28
-
-.. note::
+.. important::
     `bids_tools` requires a Python environment with `python>=3.8`.
 
-2. Install `bids_manager` dependencies::
+1. Install `bids_manager` dependencies::
 
     pip install \
         PyQt5==5.15.4 \
