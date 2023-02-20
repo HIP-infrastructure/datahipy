@@ -37,7 +37,7 @@ test:
   stage: test
   script:
     - make test
-    - sed -i 's|/apps/bids_tools/bids_tools|${CI_PROJECT_DIR}/bids_tools|g' test/report/cov.xml
+    - sed -i "s|/apps/bids_tools/bids_tools|${CI_PROJECT_DIR}/bids_tools|g" test/report/cov.xml
   artifacts:
     reports:
       coverage_report:
