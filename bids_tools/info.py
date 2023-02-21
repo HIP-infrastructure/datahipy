@@ -1,14 +1,12 @@
 # Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
-#  This software is distributed under the open-source XXX license.
+#  This software is distributed under the open-source Apache 2.0 license.
 
 """This file contains bids_tools package information."""
 
 import datetime
-from ._version import get_versions
 
 
-__version__ = get_versions()["version"]
-del get_versions
+__version__ = "0.0.0"
 
 __current_year__ = datetime.datetime.now().strftime("%Y")
 
