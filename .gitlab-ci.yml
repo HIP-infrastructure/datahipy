@@ -61,7 +61,7 @@ build:
 
 clean:
   stage: clean
-  needs: ["build"]
+  needs: ["test"]
   script:
     - make clean-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
