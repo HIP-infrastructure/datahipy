@@ -1,4 +1,5 @@
 # Setuptools
+dist
 build
 *.egg-info
 
