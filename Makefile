@@ -6,8 +6,10 @@ PROJECT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 # Define the version tag for the python package
 # and the docker image
 TAG = $(shell python get_version.py)
-# Replace + with - for docker tags
+# Replace +, /, _ with - for docker tags
 MODIFIED_TAG = $(subst +,-,$(TAG))
+MODIFIED_TAG = $(subst /,-,$(MODIFED_TAG))
+MODIFIED_TAG = $(subst _,-,$(MODIFED_TAG))
 
 # Define the complete docker image tag 
 IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) 
