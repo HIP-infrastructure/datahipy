@@ -16,11 +16,11 @@ services:
     command: ["--tls=false", "--mtu=1450"]
 before_script:
   - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
-  - apk add --no-cache bash
-  - apk add --no-cache openssh-client
-  - apk add --no-cache git
+  - apk add --no-cache bash git openssh-client
+  - apk add --no-cache nodejs npm
+  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 -D
   - apk add --no-cache python3 python3-dev py3-pip
-  - pip install versioneer==0.28 wheel twine
+  - pip install wheel twine
   # - eval $(ssh-agent -s)
   # - echo "$GITHUB_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   # - mkdir -p ~/.ssh
@@ -32,9 +32,12 @@ stages:
   - test-python-install
   - build
   - test
+  - clean
+  - release
 
 test:
   stage: test
+  needs: ["build"]
   script:
     - make test
   artifacts:
@@ -50,6 +53,24 @@ test-python-install:
 
 build:
   stage: build
+  needs: ["test-python-install"]
   script:
-    - make build TAG=$(python get_version.py)
-    - make push-ci TAG=$(python get_version.py)
+    - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+
+clean:
+  stage: clean
+  needs: ["build"]
+  script:
+    - make clean-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+
+release:
+  stage: release
+  needs: ["test"]
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+    - if: '$CI_COMMIT_REF_NAME == "dev"'
+  script:
+    - npx semantic-release
+    - make build-docker TAG=$(python get_version.py)
+    - make push-docker-ci TAG=$(python get_version.py)

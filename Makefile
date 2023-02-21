@@ -37,25 +37,21 @@ test:
 		"s|/apps/bids_tools/bids_tools|$(PROJECT_DIR)/bids_tools|g" \
 		$(PROJECT_DIR)/test/report/cov.xml
 
-#build: @ Builds the Docker image
-build:
+#build-docker: @ Builds the Docker image
+build-docker:
 	docker build \
 	-t $(IMAGE_TAG) \
 	--build-arg BUILD_DATE=$(BUILD_DATE) \
 	--build-arg VCS_REF=$(VCS_REF) \
 	--build-arg VERSION=$(TAG) .
 
-#push-ci: @ Push the Docker image with TAG to the CI registry
-push-ci:
+#push-docker-ci: @ Push the Docker image with TAG to the CI registry
+push-docker-ci:
 	docker push $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
 
-#build-release: @ Release the new Docker image with the new version tag
-build-release:
-	docker build \
-		-t $(IMAGE_TAG) \
-		--build-arg BUILD_DATE=$(BUILD_DATE) \
-        --build-arg VCS_REF=$(VCS_REF) \
-        --build-arg VERSION=$(TAG) .
+#clean-docker-ci: @ Remove the Docker image from the CI registry
+clean-docker-ci:
+	docker rmi $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
 
 #python-install: @ Installs the python package
 install-python:
@@ -65,7 +61,7 @@ install-python:
 install-python-wheel: build-python-wheel
 	pip install bids_tools
 
-#python-wheel: @ Builds the python wheel
+#build-python-wheel: @ Builds the python wheel
 build-python-wheel:
 	python setup.py sdist bdist_wheel
 
