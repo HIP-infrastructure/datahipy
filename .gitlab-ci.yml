@@ -1,25 +1,77 @@
 image: docker:20
 variables:
+  # using "docker" as the host is only possible if you alias the service below
   DOCKER_HOST: tcp://docker:2375 
+  # could be wrong here but although Docker defaults to overlay2, 
+  # Docker-in-Docker (DIND) does not according to the following GitLab doc: 
+  # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
 services:
   - name: docker:20-dind
     alias: docker
+    # in our experience although you'd assume this would be sufficient, this did 
+    # nothing to prevent connection errors without `DOCKER_TLS_CERTDIR` being set 
+    # to an empty string, and I would call that beyond mildly infuriating.
     command: ["--tls=false", "--mtu=1450"]
 before_script:
-  - docker info
+  - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
+  - apk add --no-cache bash git openssh-client
+  - apk add --no-cache nodejs npm
+  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 -D
+  - apk add --no-cache python3 python3-dev py3-pip
+  - pip install wheel twine
+  # - eval $(ssh-agent -s)
+  # - echo "$GITHUB_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  # - mkdir -p ~/.ssh
+  # - chmod 700 ~/.ssh
+  # - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+  - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
 stages:
-  - test
+  - test-python-install
   - build
+  - test
+  - clean
+  - release
 
-test_:
+test:
   stage: test
+  needs: ["build"]
   script:
     - make test
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: test/report/cov.xml
+
+test-python-install:
+  stage: test-python-install
+  script:
+    - make test-python-install
 
 build:
   stage: build
+  needs: ["test-python-install"]
   script:
-    - make build
+    - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+
+clean:
+  stage: clean
+  needs: ["build"]
+  script:
+    - make clean-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+
+release:
+  stage: release
+  needs: ["test"]
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+    - if: '$CI_COMMIT_REF_NAME == "dev"'
+  script:
+    - npx semantic-release
+    - make build-docker TAG=$(python get_version.py)
+    - make push-docker-ci TAG=$(python get_version.py)
