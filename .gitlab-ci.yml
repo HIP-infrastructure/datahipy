@@ -51,6 +51,7 @@ test-python-install:
   stage: test-python-install
   script:
     - make test-python-install
+  interruptible: true
 
 build:
   stage: build
