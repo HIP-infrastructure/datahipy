@@ -24,6 +24,9 @@ VCS_REF = $(shell git rev-parse --short HEAD)
 USER = $(shell whoami)
 USER_ID = $(shell id -u $(USER))
 
+# Force to use buildkit for building the Docker image
+export DOCKER_BUILDKIT=1
+
 #test: @ Run all tests
 .PHONY: test
 test:
