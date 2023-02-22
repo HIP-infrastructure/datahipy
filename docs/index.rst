@@ -19,7 +19,7 @@ If your are using `bids_tools` in your work, please acknowledge this software an
 License information
 --------------------
 
-This software is distributed under the open-source Apache 2.0 license. See :ref:`license <LICENSE>` for more details.
+This software is distributed under the open-source license Modified BSD. See :ref:`license <LICENSE>` for more details.
 
 All trademarks referenced herein are property of their respective holders.
 
