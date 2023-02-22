@@ -39,7 +39,7 @@ test:
   stage: test
   needs: ["build"]
   script:
-    - make test
+    - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     reports:
