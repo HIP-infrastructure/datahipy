@@ -27,22 +27,11 @@ USER_ID = $(shell id -u $(USER))
 #test: @ Run all tests
 .PHONY: test
 test:
-	@echo "Running pytest tests..."
-	docker run -t --rm \
-		--entrypoint "/entrypoint_pytest.sh" \
-		-v $(PROJECT_DIR)/test:/test \
-		-v $(PROJECT_DIR)/bids_tools:/apps/bids_tools/bids_tools \
-		$(IMAGE_TAG) \
-		$(USER) \
-		$(USER_ID) \
-		/test
-	@echo "Fix path in coverage xml report..."
-	sed -i -r  \
-		"s|/apps/bids_tools/bids_tools|$(PROJECT_DIR)/bids_tools|g" \
-		$(PROJECT_DIR)/test/report/cov.xml
+	git submodule update --recursive
+	cd test && ./run_tests.sh
 
-#build-docker: @ Builds the Docker image
-build-docker:
+#build: @ Builds the project
+build:
 	docker build \
 	-t $(IMAGE_TAG) \
 	--build-arg BUILD_DATE=$(BUILD_DATE) \

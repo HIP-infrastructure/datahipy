@@ -1,5 +1,5 @@
 # Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
-#  This software is distributed under the open-source Apache 2.0 license.
+#  This software is distributed under the open-source XXX license.
 
 """Utility functions to modify BIDS datasets created using `BIDS_Manager`."""
 

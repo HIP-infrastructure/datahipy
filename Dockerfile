@@ -121,6 +121,7 @@ COPY bids_tools ./bids_tools
 # Install bids-tools with static version taken from the argument
 ARG VERSION=unknown
 RUN echo "${VERSION}" > /apps/bids_tools/bids_tools/VERSION \
+    && pip install versioneer==0.28 \
     && pip install -e ".[test]"
 
 ###############################################################################
