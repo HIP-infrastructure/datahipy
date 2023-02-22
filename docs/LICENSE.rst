@@ -4,4 +4,4 @@
 License
 *******
 
-TBC
+.. include:: ../LICENSE

@@ -22,14 +22,10 @@ How to build the Docker image locally
 How to install `bids_tools` locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Install `versioneer 0.28`, the version manager of `bids_tools` in your Python environment::
-
-    pip install versioneer==0.28
-
-.. note::
+.. important::
     `bids_tools` requires a Python environment with `python>=3.8`.
 
-2. Install `bids_manager` dependencies::
+1. Install `bids_manager` dependencies::
 
     pip install \
         PyQt5==5.15.4 \
@@ -76,8 +72,8 @@ How to run the tests via the Docker image
         /test
     
     where:
-    - PROJECT_ROOT is the path to the root of the cloned repository.
-    - version is the version of the Docker image (see :ref:`instructions_docker_build`).
+    - `${PROJECT_ROOT}` is the path to the root of the cloned repository.
+    - `<version>` is the version of the Docker image (see :ref:`instructions_docker_build`).
 
 .. note::
     The tests are run in a temporary `tmp` directory in the `test` directory, so that the original data are not modified. After completion, coverage report in HTML format can be found in ``test/report/cov_html`` and be displayed by opening ``index.html`` in your favorite browser.

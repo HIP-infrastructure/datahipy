@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 # Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
-#  This software is distributed under the open-source XXX license.
+#  This software is distributed under the open-source Apache 2.0 license.
 
 """`Setup.py` for bids_tools."""
 from os import path as op
 from setuptools import setup
-import versioneer
+from bids_tools.info import __version__
 
 
 def main():
@@ -20,8 +20,7 @@ def main():
             version = vfile.readline().strip()
 
     if version is None:
-        version = versioneer.get_version()
-        cmdclass = versioneer.get_cmdclass()
+        version = __version__
 
     # Setup configuration
     setup(
