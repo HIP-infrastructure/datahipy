@@ -3,16 +3,18 @@
 # Define the project directory
 PROJECT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-# Define the version tag for the python package
-# and the docker image
+# Define the version tag 
 TAG = $(shell python get_version.py)
-# Replace +, /, _ with - for docker tags
-MODIFIED_TAG = $(subst +,-,$(TAG))
-MODIFIED_TAG = $(subst /,-,$(MODIFED_TAG))
-MODIFIED_TAG = $(subst _,-,$(MODIFED_TAG))
+$(info TAG = $(TAG))
+# Replace +, /, _ with - to normalize the tag
+# in case the tag includes a branch name
+override TAG := $(subst +,-,$(TAG))
+override TAG := $(subst /,-,$(TAG))
+override TAG := $(subst _,-,$(TAG))
+$(info TAG (Normalized) = $(TAG))
 
 # Define the complete docker image tag 
-IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) 
+IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(TAG),bids-tools:$(TAG)) 
 
 # Define the build date and vcs reference
 BUILD_DATE = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -49,11 +51,11 @@ build-docker:
 
 #push-docker-ci: @ Push the Docker image with TAG to the CI registry
 push-docker-ci:
-	docker push $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
+	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
 #clean-docker-ci: @ Remove the Docker image from the CI registry
 clean-docker-ci:
-	docker rmi $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
+	docker rmi $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
 #python-install: @ Installs the python package
 install-python:
