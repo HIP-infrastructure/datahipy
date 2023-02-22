@@ -63,6 +63,7 @@ build:
 # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
 clean:
   before_script:
+    - apk add --no-cache python3
     - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
     - echo "$REG_SHA256  ./reg" | sha256sum -c -
     - chmod a+x ./reg
