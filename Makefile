@@ -53,10 +53,6 @@ build-docker:
 push-docker-ci:
 	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
-#clean-docker-ci: @ Remove the Docker image from the CI registry
-clean-docker-ci:
-	docker rmi $(CI_REGISTRY)/hip/bids-tools:$(TAG)
-
 #python-install: @ Installs the python package
 install-python:
 	pip install -e .[all]
