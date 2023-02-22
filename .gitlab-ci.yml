@@ -67,10 +67,9 @@ clean:
     - chmod a+x ./reg
   image: curlimages/curl:7.86.0
   script:
-    - ./reg rm -d --auth-url $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $IMAGE_TAG
+    - ./reg rm -d --auth-url $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_PROJECT_PATH:"$(python get_version.py)"-dev.${CI_COMMIT_REF_NAME}
   stage: clean
   variables:
-    IMAGE_TAG: $CI_PROJECT_PATH:$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
     REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
     REG_VERSION: 0.16.1
   only:
