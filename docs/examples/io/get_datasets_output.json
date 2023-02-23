@@ -1,0 +1,130 @@
+[
+    {
+        "Name": "My New BIDS dataset",
+        "BIDSVersion": "1.4.0",
+        "License": "n/a",
+        "Authors": [
+            "Tom",
+            "Jerry"
+        ],
+        "Acknowledgements": "Overwrite test",
+        "HowToAcknowledge": "n/a",
+        "Funding": [
+            "Picsou"
+        ],
+        "ReferencesAndLinks": [
+            "n/a"
+        ],
+        "DatasetDOI": "n/a",
+        "AgeMin": "25",
+        "AgeMax": "25",
+        "ParticipantsCount": 1,
+        "ParticipantsGroups": [
+            null
+        ],
+        "Participants": [
+            {
+                "participant_id": "sub-carole",
+                "age": 25,
+                "sex": "M",
+                "hospital": "CHUV",
+                "handedness": "n/a",
+                "Subject_ready": true
+            }
+        ],
+        "Size": "281M",
+        "BIDSSchemaVersion": "v1.6.0",
+        "BIDSErrors": [],
+        "BIDSWarnings": [],
+        "BIDSIgnored": [],
+        "BIDSValid": true,
+        "DataTypes": [
+            "anat",
+            "ct",
+            "ieeg"
+        ],
+        "Formats": [
+            ".json",
+            ".vmrk",
+            ".eeg",
+            ".vhdr",
+            ".bidsignore",
+            ".tsv",
+            ".nii"
+        ],
+        "SessionsCount": 2,
+        "Tasks": [
+            "stimulation"
+        ],
+        "RunsCount": 2,
+        "SEEGChannelCount": 128,
+        "SamplingFrequency": 512,
+        "RecordingDuration": 255,
+        "EventsFileCount": 2,
+        "FileCount": 19
+    },
+    {
+        "Name": "My New BIDS dataset",
+        "BIDSVersion": "1.4.0",
+        "License": "n/a",
+        "Authors": [
+            "Tom",
+            "Jerry"
+        ],
+        "Acknowledgements": "Overwrite test",
+        "HowToAcknowledge": "n/a",
+        "Funding": [
+            "Picsou"
+        ],
+        "ReferencesAndLinks": [
+            "n/a"
+        ],
+        "DatasetDOI": "n/a",
+        "AgeMin": "25",
+        "AgeMax": "25",
+        "ParticipantsCount": 1,
+        "ParticipantsGroups": [
+            null
+        ],
+        "Participants": [
+            {
+                "participant_id": "sub-carole",
+                "age": 25,
+                "sex": "M",
+                "hospital": "CHUV",
+                "handedness": "n/a",
+                "Subject_ready": true
+            }
+        ],
+        "Size": "281M",
+        "BIDSSchemaVersion": "v1.6.0",
+        "BIDSErrors": [],
+        "BIDSWarnings": [],
+        "BIDSIgnored": [],
+        "BIDSValid": true,
+        "DataTypes": [
+            "anat",
+            "ct",
+            "ieeg"
+        ],
+        "Formats": [
+            ".json",
+            ".vmrk",
+            ".eeg",
+            ".vhdr",
+            ".bidsignore",
+            ".tsv",
+            ".nii"
+        ],
+        "SessionsCount": 2,
+        "Tasks": [
+            "stimulation"
+        ],
+        "RunsCount": 2,
+        "SEEGChannelCount": 128,
+        "SamplingFrequency": 512,
+        "RecordingDuration": 255,
+        "EventsFileCount": 2,
+        "FileCount": 19
+    }
+]

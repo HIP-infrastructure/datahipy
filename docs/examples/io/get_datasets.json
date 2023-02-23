@@ -1,0 +1,11 @@
+{
+    "owner": "hipadmin",
+    "datasets": [
+        {
+            "path": "/test/tmp/NEW_BIDS_DS"
+        },
+        {
+            "path": "/test/tmp/NEW_BIDS_DS"
+        }
+    ]
+}
