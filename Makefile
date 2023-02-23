@@ -57,6 +57,7 @@ push-docker-ci:
 	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
 #rm-docker-ci: @ Remove the Docker image with TAG to the CI registry
+# from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
 rm-docker-ci:
 	./reg rm -d \
 		--auth-url $(CI_REGISTRY) \
