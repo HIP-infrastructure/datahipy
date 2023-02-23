@@ -33,11 +33,6 @@ before_script:
   - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
   - echo "$REG_SHA256  ./reg" | sha256sum -c -
   - chmod a+x ./reg
-  # - eval $(ssh-agent -s)
-  # - echo "$GITHUB_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  # - mkdir -p ~/.ssh
-  # - chmod 700 ~/.ssh
-  # - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
   # login the gitlab container registry
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
@@ -75,7 +70,7 @@ build:
 
 clean:
   stage: clean
-  needs: ["build"]
+  needs: ["test"]
   script:
     - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
