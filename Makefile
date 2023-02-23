@@ -3,14 +3,18 @@
 # Define the project directory
 PROJECT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-# Define the version tag for the python package
-# and the docker image
+# Define the version tag 
 TAG = $(shell python get_version.py)
-# Replace + with - for docker tags
-MODIFIED_TAG = $(subst +,-,$(TAG))
+$(info TAG = $(TAG))
+# Replace +, /, _ with - to normalize the tag
+# in case the tag includes a branch name
+override TAG := $(subst +,-,$(TAG))
+override TAG := $(subst /,-,$(TAG))
+override TAG := $(subst _,-,$(TAG))
+$(info TAG (Normalized) = $(TAG))
 
 # Define the complete docker image tag 
-IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG),bids-tools:$(MODIFIED_TAG)) 
+IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(TAG),bids-tools:$(TAG)) 
 
 # Define the build date and vcs reference
 BUILD_DATE = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -19,6 +23,9 @@ VCS_REF = $(shell git rev-parse --short HEAD)
 # Define the user and user id for the docker container
 USER = $(shell whoami)
 USER_ID = $(shell id -u $(USER))
+
+# Force to use buildkit for building the Docker image
+export DOCKER_BUILDKIT=1
 
 #test: @ Run all tests
 .PHONY: test
@@ -47,11 +54,16 @@ build-docker:
 
 #push-docker-ci: @ Push the Docker image with TAG to the CI registry
 push-docker-ci:
-	docker push $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
+	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
-#clean-docker-ci: @ Remove the Docker image from the CI registry
-clean-docker-ci:
-	docker rmi $(CI_REGISTRY)/hip/bids-tools:$(MODIFIED_TAG)
+#rm-docker-ci: @ Remove the Docker image with TAG to the CI registry
+# from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
+rm-docker-ci:
+	./reg rm -d \
+		--auth-url $(CI_REGISTRY) \
+		-u $(CI_REGISTRY_USER) \
+		-p $(CI_REGISTRY_PASSWORD) \
+		$(CI_PROJECT_PATH):$(TAG)
 
 #python-install: @ Installs the python package
 install-python:

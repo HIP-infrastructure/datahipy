@@ -7,6 +7,8 @@ variables:
   # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
+  REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
+  REG_VERSION: 0.16.1
 services:
   - name: docker:20-dind
     alias: docker
@@ -15,17 +17,28 @@ services:
     # to an empty string, and I would call that beyond mildly infuriating.
     command: ["--tls=false", "--mtu=1450"]
 before_script:
+  # system dependencies to build external package that are required by wheel
   - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
+  # system tools
   - apk add --no-cache bash git openssh-client
+  # install Node.js/npm and semantic release packages
   - apk add --no-cache nodejs npm
-  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 -D
+  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
+  # install python environment with wheel and twine
   - apk add --no-cache python3 python3-dev py3-pip
   - pip install wheel twine
+  # install script to delete container from gitlab container registry
+  # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
+  - apk add --no-cache curl
+  - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
+  - echo "$REG_SHA256  ./reg" | sha256sum -c -
+  - chmod a+x ./reg
   # - eval $(ssh-agent -s)
   # - echo "$GITHUB_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   # - mkdir -p ~/.ssh
   # - chmod 700 ~/.ssh
   # - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+  # login the gitlab container registry
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
 stages:
@@ -39,7 +52,7 @@ test:
   stage: test
   needs: ["build"]
   script:
-    - make test
+    - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     reports:
@@ -51,6 +64,7 @@ test-python-install:
   stage: test-python-install
   script:
     - make test-python-install
+  interruptible: true
 
 build:
   stage: build
@@ -61,9 +75,13 @@ build:
 
 clean:
   stage: clean
-  needs: ["build"]
   script:
-    - make clean-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+  only:
+    - branches
+  except:
+    - master
+    - dev
 
 release:
   stage: release
