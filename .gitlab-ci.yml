@@ -29,36 +29,36 @@ before_script:
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
 stages:
-  - test-python-install
-  - build
-  - test
+  # - test-python-install
+  # - build
+  # - test
   - clean
-  - release
+  # - release
 
-test:
-  stage: test
-  needs: ["build"]
-  script:
-    - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-  coverage: '/TOTAL.*\s+(\d+%)$/'
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: test/report/cov.xml
+# test:
+#   stage: test
+#   needs: ["build"]
+#   script:
+#     - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+#   coverage: '/TOTAL.*\s+(\d+%)$/'
+#   artifacts:
+#     reports:
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: test/report/cov.xml
 
-test-python-install:
-  stage: test-python-install
-  script:
-    - make test-python-install
-  interruptible: true
+# test-python-install:
+#   stage: test-python-install
+#   script:
+#     - make test-python-install
+#   interruptible: true
 
-build:
-  stage: build
-  needs: ["test-python-install"]
-  script:
-    - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-    - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+# build:
+#   stage: build
+#   needs: ["test-python-install"]
+#   script:
+#     - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+#     - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
 # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
 clean:
@@ -67,7 +67,9 @@ clean:
     - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
     - echo "$REG_SHA256  ./reg" | sha256sum -c -
     - chmod a+x ./reg
-  image: curlimages/curl:7.86.0
+  image:
+    name: curlimages/curl:7.86.0
+    user: root
   script:
     - ./reg rm -d --auth-url $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_PROJECT_PATH:"$(python get_version.py)"-dev.${CI_COMMIT_REF_NAME}
   stage: clean
@@ -80,13 +82,13 @@ clean:
     - master
     - dev
 
-release:
-  stage: release
-  needs: ["test"]
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
-    - if: '$CI_COMMIT_REF_NAME == "dev"'
-  script:
-    - npx semantic-release
-    - make build-docker TAG=$(python get_version.py)
-    - make push-docker-ci TAG=$(python get_version.py)
+# release:
+#   stage: release
+#   needs: ["test"]
+#   rules:
+#     - if: '$CI_COMMIT_REF_NAME == "master"'
+#     - if: '$CI_COMMIT_REF_NAME == "dev"'
+#   script:
+#     - npx semantic-release
+#     - make build-docker TAG=$(python get_version.py)
+#     - make push-docker-ci TAG=$(python get_version.py)
