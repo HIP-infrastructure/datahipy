@@ -75,13 +75,9 @@ build:
 
 clean:
   stage: clean
+  needs: ["build"]
   script:
     - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-  only:
-    - branches
-  except:
-    - master
-    - dev
 
 release:
   stage: release
