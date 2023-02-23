@@ -7,6 +7,8 @@ variables:
   # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
+  REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
+  REG_VERSION: 0.16.1
 services:
   - name: docker:20-dind
     alias: docker
@@ -73,11 +75,8 @@ stages:
 # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
 clean:
   stage: clean
-  variables:
-    REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
-    REG_VERSION: 0.16.1
   script:
-    - ./reg rm -d --auth-url $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_PROJECT_PATH:"$(python get_version.py)"-dev.${CI_COMMIT_REF_NAME}
+    - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
   only:
     - branches
   except:

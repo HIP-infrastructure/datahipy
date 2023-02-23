@@ -56,6 +56,14 @@ build-docker:
 push-docker-ci:
 	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
 
+#rm-docker-ci: @ Remove the Docker image with TAG to the CI registry
+rm-docker-ci:
+	./reg rm -d \
+		--auth-url $(CI_REGISTRY) \
+		-u $(CI_REGISTRY_USER) \
+		-p $(CI_REGISTRY_PASSWORD) \
+		$(CI_PROJECT_PATH):$(TAG)
+
 #python-install: @ Installs the python package
 install-python:
 	pip install -e .[all]
