@@ -1,0 +1,31 @@
+{
+    "Requirements": {
+        "Subject": {
+            "keys": {
+                "age": "",
+                "sex": "",
+                "hospital": ""
+            },
+            "required_keys": [
+                "age",
+                "sex"
+            ]
+        }
+    },
+    "Converters": {
+        "Imaging": {
+            "path": "/apps/dcm2niix/install/dcm2niix",
+            "ext": [
+                ".nii"
+            ]
+        },
+        "Electrophy": {
+            "path": "/usr/bin/anywave",
+            "ext": [
+                ".vhdr",
+                ".vmrk",
+                ".eeg"
+            ]
+        }
+    }
+}
