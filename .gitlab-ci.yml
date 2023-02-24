@@ -88,6 +88,8 @@ release:
     - export GL_TOKEN=${GL_TOKEN}
     - export GH_TOKEN=${GH_TOKEN}
     - export GH_URL=${GH_URL}
+    - git config --global user.name ${GH_USER}
+    - git config --global user.email ${GH_EMAIL}
     - git config --list
     - npx semantic-release -r ${GH_URL}
     - make build-docker TAG=$(python get_version.py)
