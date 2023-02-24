@@ -88,6 +88,7 @@ release:
     - export GL_TOKEN=${GL_TOKEN}
     - export GH_TOKEN=${GH_TOKEN}
     - export GH_URL=${GH_URL}
+    - git config --list
     - npx semantic-release -r ${GH_URL}
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
