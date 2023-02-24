@@ -19,8 +19,10 @@ services:
 before_script:
   # system dependencies to build external package that are required by wheel
   - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
-  # system tools
-  - apk add --no-cache bash git openssh-client
+  # install and setup git
+  - apk add --no-cache bash git
+  - git config --global user.name ${GH_USER}
+  - git config --global user.email ${GH_EMAIL}
   # install Node.js/npm and semantic release packages
   - apk add --no-cache nodejs npm
   - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
@@ -88,8 +90,6 @@ release:
     - export GL_TOKEN=${GL_TOKEN}
     - export GH_TOKEN=${GH_TOKEN}
     - export GH_URL=${GH_URL}
-    - git config --global user.name ${GH_USER}
-    - git config --global user.email ${GH_EMAIL}
     - git config --list
     - npx semantic-release -r ${GH_URL}
     - make build-docker TAG=$(python get_version.py)
