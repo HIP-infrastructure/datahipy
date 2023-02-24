@@ -81,10 +81,12 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   variables:
-    GL
-  script:
-    - export GL_TOKEN=${CI_JOB_TOKEN}
-    - export GH_URL=https://github.com/HIP-infrastructure/bids-converter
+    GL_TOKEN: ${CI_JOB_TOKEN}
+    GH_URL: https://github.com/HIP-infrastructure/bids-converter
+  script: 
+    - export GL_TOKEN=${GL_TOKEN}
+    - export GH_TOKEN=${GH_TOKEN}
+    - export GH_URL=${GH_URL}
     - npx semantic-release 
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
