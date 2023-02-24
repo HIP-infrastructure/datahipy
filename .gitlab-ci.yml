@@ -81,7 +81,8 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   variables:
-    GL_TOKEN: ${CI_JOB_TOKEN}
+    GL_TOKEN: ${GL_TOKEN}
+    GH_TOKEN: ${GH_TOKEN}
     GH_URL: https://github.com/HIP-infrastructure/bids-converter
   script: 
     - export GL_TOKEN=${GL_TOKEN}
