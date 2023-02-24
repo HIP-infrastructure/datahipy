@@ -76,7 +76,7 @@ stages:
 
 release:
   stage: release
-  needs: ["test"]
+  # needs: ["test"]
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
