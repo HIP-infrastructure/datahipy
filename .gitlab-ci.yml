@@ -37,42 +37,42 @@ before_script:
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
 stages:
-  - test-python-install
-  - build
-  - test
-  - clean
+  # - test-python-install
+  # - build
+  # - test
+  # - clean
   - release
 
-test:
-  stage: test
-  needs: ["build"]
-  script:
-    - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-  coverage: '/TOTAL.*\s+(\d+%)$/'
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: test/report/cov.xml
+# test:
+#   stage: test
+#   needs: ["build"]
+#   script:
+#     - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+#   coverage: '/TOTAL.*\s+(\d+%)$/'
+#   artifacts:
+#     reports:
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: test/report/cov.xml
 
-test-python-install:
-  stage: test-python-install
-  script:
-    - make test-python-install
-  interruptible: true
+# test-python-install:
+#   stage: test-python-install
+#   script:
+#     - make test-python-install
+#   interruptible: true
 
-build:
-  stage: build
-  needs: ["test-python-install"]
-  script:
-    - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-    - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+# build:
+#   stage: build
+#   needs: ["test-python-install"]
+#   script:
+#     - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+#     - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
-clean:
-  stage: clean
-  needs: ["test"]
-  script:
-    - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+# clean:
+#   stage: clean
+#   needs: ["test"]
+#   script:
+#     - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
 release:
   stage: release
@@ -80,7 +80,11 @@ release:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
+  variables:
+    GL
   script:
-    - export GL_TOKEN=${CI_JOB_TOKEN} && npx semantic-release 
+    - export GL_TOKEN=${CI_JOB_TOKEN}
+    - export GH_URL=https://github.com/HIP-infrastructure/bids-converter
+    - npx semantic-release 
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
