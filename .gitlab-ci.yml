@@ -22,7 +22,7 @@ before_script:
   # install and setup git
   - apk add --no-cache bash git
   - git config --global user.name "${GH_USER}"
-  - git config --global user.email ${GH_EMAIL}
+  - git config --global user.email "${GH_EMAIL}"
   # install Node.js/npm and semantic release packages
   - apk add --no-cache nodejs npm
   - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
