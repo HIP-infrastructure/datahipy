@@ -9,6 +9,10 @@ variables:
   DOCKER_TLS_CERTDIR: ""
   REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
   REG_VERSION: 0.16.1
+  GH_TOKEN: $GH_TOKEN
+  GH_USER: $GH_USER
+  GH_EMAIL: $GH_EMAIL
+  GL_TOKEN: $GL_TOKEN
 services:
   - name: docker:20-dind
     alias: docker
@@ -81,13 +85,8 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   variables:
-    GL_TOKEN: ${GL_TOKEN}
-    GH_TOKEN: ${GH_TOKEN}
     GH_URL: https://github.com/HIP-infrastructure/bids-converter
-  script: 
-    - export GL_TOKEN=${GL_TOKEN}
-    - export GH_TOKEN=${GH_TOKEN}
-    - export GH_URL=${GH_URL}
+  script:
     - git config --global user.name "${GH_USER}"
     - git config --global user.email "${GH_EMAIL}"
     - git config --list
