@@ -89,8 +89,10 @@ release:
     - GL_TOKEN=$GL_TOKEN npx semantic-release
     - echo "$GH_TOKEN"
     # make sure we refresh github remote url and token
+    - git remote -v
     - git ls-remote --exit-code github && git remote rm github
-    - git remote add github "https://$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
+    - git remote set-url github "https://$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
     - git push github $CI_COMMIT_REF_NAME
+    - git push --tags github $CI_COMMIT_REF_NAME
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
