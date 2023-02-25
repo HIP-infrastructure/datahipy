@@ -98,6 +98,6 @@ release:
     - git config --global user.email "${GH_EMAIL}"
     - git config --list
     - export
-    - npx semantic-release -r "${GH_URL}"
+    - GL_TOKEN=$GL_TOKEN npx semantic-release
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
