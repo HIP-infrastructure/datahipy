@@ -37,6 +37,13 @@ before_script:
   - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
   - echo "$REG_SHA256  ./reg" | sha256sum -c -
   - chmod a+x ./reg
+  # install ssh deploy key
+  - apk add --no-cache openssh-client
+  - eval $(ssh-agent -s)
+  - echo "$GITLAB_DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan -H gitlab.hbp.link >> ~/.ssh/known_hosts
   # login the gitlab container registry
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
@@ -85,12 +92,12 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   variables:
-    GH_URL: https://github.com/HIP-infrastructure/bids-converter
+    GH_URL: git@gitlab.hbp.link:hip/bids-tools.git
   script:
     - git config --global user.name "${GH_USER}"
     - git config --global user.email "${GH_EMAIL}"
     - git config --list
     - export
-    - npx semantic-release -r "https://gitlab-ci-token:${GL_TOKEN}@gitlab.hbp.link/hip/bids-tools.git"
+    - npx semantic-release -r "${GH_URL}"
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
