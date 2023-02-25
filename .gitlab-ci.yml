@@ -1,5 +1,6 @@
 image: docker:20
 variables:
+  GIT_STRATEGY: fetch
   # using "docker" as the host is only possible if you alias the service below
   DOCKER_HOST: tcp://docker:2375 
   # could be wrong here but although Docker defaults to overlay2, 
@@ -44,6 +45,7 @@ stages:
   # - test
   # - clean
   - release
+  - github-sync
 
 # test:
 #   stage: test
@@ -89,11 +91,22 @@ release:
     - GL_TOKEN=$GL_TOKEN npx semantic-release
     - echo "$GH_TOKEN"
     # make sure we refresh github remote url and token
-    - git remote -v
-    - git ls-remote --exit-code github && git remote rm github
-    - git remote add github "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
-    - git fetch origin $CI_COMMIT_REF_NAME && git merge origin/$CI_COMMIT_REF_NAME
-    - git push github $CI_COMMIT_REF_NAME
-    - git push --tags github $CI_COMMIT_REF_NAME
+    # - git remote -v
+    # - git ls-remote --exit-code github && git remote rm github
+    # - git remote add github "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
+    # - git fetch origin $CI_COMMIT_REF_NAME && git merge origin/$CI_COMMIT_REF_NAME
+    # - git push github $CI_COMMIT_REF_NAME
+    # - git push --tags github $CI_COMMIT_REF_NAME
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
+
+github-sync:
+  stage: github-sync
+  needs: ["release"]
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+    - if: '$CI_COMMIT_REF_NAME == "dev"'
+  script:
+    - git remote add github_origin "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
+    - git push github_origin $CI_COMMIT_REF_NAME
+    - git push --tags github_origin $CI_COMMIT_REF_NAME
