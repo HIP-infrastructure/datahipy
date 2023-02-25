@@ -83,7 +83,9 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   script:
-    - git merge "origin/$CI_COMMIT_REF_NAME"
+    # from https://stackoverflow.com/questions/66047044/deleted-tags-are-present-in-gitlab-ci
+    - git tag --delete $(git tag) # delete all local tags  
+    - git fetch --all
     - GL_TOKEN=$GL_TOKEN npx semantic-release
     - echo "$GH_TOKEN"
     - git remote add github "https://$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
