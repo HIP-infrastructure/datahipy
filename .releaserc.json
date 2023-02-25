@@ -6,6 +6,7 @@
       "prerelease": true
     }
   ],
+  "repositoryUrl": "https://github.com/HIP-infrastructure/bids-converter",
   "plugins": [
     "@semantic-release/commit-analyzer",
     [
@@ -59,7 +60,6 @@
     [
       "@semantic-release/github",
       {
-        "githubUrl": "https://github.com/HIP-infrastructure/bids-converter",
         "assets": [
           {
             "path": "dist/*.tar.gz",
