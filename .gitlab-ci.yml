@@ -83,6 +83,7 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   script:
+    - git merge "origin/$CI_COMMIT_REF_NAME"
     - GL_TOKEN=$GL_TOKEN npx semantic-release
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
