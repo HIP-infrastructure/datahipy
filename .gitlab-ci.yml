@@ -85,8 +85,8 @@ release:
   script:
     - git merge "origin/$CI_COMMIT_REF_NAME"
     - GL_TOKEN=$GL_TOKEN npx semantic-release
-    - make build-docker TAG=$(python get_version.py)
-    - make push-docker-ci TAG=$(python get_version.py)
     - echo "$GH_TOKEN"
     - git remote add github "https://$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
     - git push github
+    - make build-docker TAG=$(python get_version.py)
+    - make push-docker-ci TAG=$(python get_version.py)
