@@ -91,6 +91,6 @@ release:
     - git config --global user.email "${GH_EMAIL}"
     - git config --list
     - export
-    - npx semantic-release
+    - npx semantic-release -r https://gitlab-ci-token:${GL_TOKEN}@gitlab.hbp.link/hip/bids-tools.git
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
