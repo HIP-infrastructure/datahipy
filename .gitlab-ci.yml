@@ -92,7 +92,7 @@ release:
     - git remote -v
     - git ls-remote --exit-code github && git remote rm github
     - git remote add github "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
-    - git fetch -all origin && git merge origin/$CI_COMMIT_REF_NAME
+    - git fetch origin $CI_COMMIT_REF_NAME && git merge origin/$CI_COMMIT_REF_NAME
     - git push github $CI_COMMIT_REF_NAME
     - git push --tags github $CI_COMMIT_REF_NAME
     - make build-docker TAG=$(python get_version.py)
