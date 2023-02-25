@@ -10,6 +10,7 @@ variables:
   REG_SHA256: ade837fc5224acd8c34732bf54a94f579b47851cc6a7fd5899a98386b782e228
   REG_VERSION: 0.16.1
   GL_TOKEN: $GL_TOKEN
+  GH_TOKEN: $GH_TOKEN
 services:
   - name: docker:20-dind
     alias: docker
@@ -82,6 +83,6 @@ release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   script:
-    - GL_TOKEN=$GL_TOKEN npx semantic-release
+    - GL_TOKEN=$GL_TOKEN GH_TOKEN=$GH_TOKEN npx semantic-release
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)

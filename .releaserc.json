@@ -55,6 +55,22 @@
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "githubUrl": "https://github.com/HIP-infrastructure/bids-converter",
+        "assets": [
+          {
+            "path": "dist/*.tar.gz",
+            "label": "Source code"
+          },
+          {
+            "path": "dist/*.whl",
+            "label": "Python wheel"
+          }
+        ]
+      }
     ]
   ],
   "dryRun": false,
