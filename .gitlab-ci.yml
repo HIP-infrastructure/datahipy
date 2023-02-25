@@ -85,10 +85,10 @@ release:
   script:
     # from https://stackoverflow.com/questions/66047044/deleted-tags-are-present-in-gitlab-ci
     - git tag --delete $(git tag) # delete all local tags  
-    - git fetch --all
+    - git fetch --tags origin
     - GL_TOKEN=$GL_TOKEN npx semantic-release
     - echo "$GH_TOKEN"
     - git remote add github "https://$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
-    - git push github
+    - git push github $CI_COMMIT_REF_NAME
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
