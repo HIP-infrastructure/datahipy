@@ -98,8 +98,12 @@ deploy-release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   variables:
-    # Re-clone the repo to make sure new commits are part of the history to push to github
-    GIT_STRATEGY: clone
+    # Prevent normal checkout
+    GIT_STRATEGY: none
+  before_script:
+    # Clone the repo to make sure new commits are part of the history to push to github
+    - git clone "https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH_SLUG}.git" .
+    - git checkout --track origin/$CI_COMMIT_REF_NAME
   script:
     # Build the Docker image with prerelease/release version tag
     - make build-docker TAG=$(python get_version.py)
