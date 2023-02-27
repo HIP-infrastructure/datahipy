@@ -83,4 +83,5 @@ Contents
 
    LICENSE
    citing
+   CHANGES
    contributing
