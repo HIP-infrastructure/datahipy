@@ -1,13 +1,39 @@
 # `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
+---
 
-`bids_tools` is a docker container component to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
+Copyright © 2012-2023 The HIP team and Contributors, All rights reserved.
 
-## Installation:
-This tool can be easily installed as follows:
-- Clone this repository 
-- Checkout submodules:
-  - `git submodule update --recursive --init`
-- build the image: `docker build -t bids-tools .`
+This software is distributed under the open-source Apache 2.0 license. See [LICENSE](LICENSE.txt) file for details.
+
+---
+[![CI/CD](https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master) [![Coverage](https://gitlab.hbp.link/hip/bids-tools/badges/master/coverage.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master)
+
+`bids_tools` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
+
+### Resources
+
+*   **Documentation:** https://hip-infrastructure.github.io/bids-converter/
+*   **Source:** https://github.com/HIP-infrastructure/bids-converter
+*   **Bug reports:** https://github.com/HIP-infrastructure/bids-converter/issues
+
+## Installation
+
+*   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-converter/installation.html#installation-of-docker-engine))
+
+*   Clone this repository:
+
+    ```bash
+    $ git clone https://github.com/HIP-infrastructure/bids-converter.git bids-tools
+    ```
+
+*   Go to your local clone folder and build the Docker image:
+
+     ```bash
+    $ cd bids-tools
+    $ make -B build-docker
+    ```
+
+*   You are ready to use `bids_tools` :rocket:!
 
 ## Test
 Run `test/run_tests.sh` in a terminal:

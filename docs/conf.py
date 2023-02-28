@@ -50,8 +50,8 @@ extensions = [
     "sphinxarg.ext",
     "sphinx.ext.inheritance_diagram",
     "sphinxcontrib.apidoc",
-    "nbsphinx",
     "sphinxemoji.sphinxemoji",
+    "m2r2",
 ]
 
 # autodoc_default_options = {
@@ -109,9 +109,9 @@ sphinxemoji_style = "twemoji"
 templates_path = ["_templates"]
 
 # Use Markdown and reStructuredText in the same Sphinx project
-source_parsers = {
-    ".md": CustomCommonMarkParser,
-}
+# source_parsers = {
+#     ".md": CustomCommonMarkParser,
+# }
 # The suffix of source filenames.
 source_suffix = [".rst", ".md"]
 
