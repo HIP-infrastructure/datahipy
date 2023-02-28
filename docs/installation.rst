@@ -64,7 +64,7 @@ The Docker image can be built from the Makefile provided in the `bids_tools` rep
     $ # Go to the bids_tools directory
     $ cd bids-tools
     $ # Build the docker image
-    $ make -B build
+    $ make -B build-docker
 
 You can then inspect the Docker image version tag with the following command:
 
