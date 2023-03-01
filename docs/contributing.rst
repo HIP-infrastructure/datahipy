@@ -12,7 +12,7 @@ Contribution Types
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/HIP-infrastructure/bids-converter/issues.
+Report bugs at https://github.com/HIP-infrastructure/bids-tools/issues.
 
 If you are reporting a bug, please include:
 
@@ -38,7 +38,7 @@ Write Documentation
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to create an issue at https://github.com/HIP-infrastructure/bids-converter/issues.
+The best way to send feedback is to create an issue at https://github.com/HIP-infrastructure/bids-tools/issues.
 
 If you are proposing a feature:
 
@@ -52,12 +52,12 @@ Get Started!
 
 Ready to contribute? Here's how to set up `bids_tools` for local development.
 
-1. Fork the `bids_tools` (bids-converter) repo on GitHub.
+1. Fork the `bids_tools` (bids-tools) repo on GitHub.
 
 2. Clone your fork locally::
 
-    git clone git@github.com:your_name_here/bids-converter.git
-    cd bids-converter
+    git clone git@github.com:your_name_here/bids-tools.git
+    cd bids-tools
 
 3. Create a branch for local development::
 

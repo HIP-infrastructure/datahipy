@@ -60,7 +60,7 @@ The Docker image can be built from the Makefile provided in the `bids_tools` rep
 .. code-block:: bash
 
     $ # Clone locally the bids_tools repository
-    $ git clone https://github.com/HIP-infrastructure/bids-converter.git bids-tools
+    $ git clone https://github.com/HIP-infrastructure/bids-tools.git bids-tools
     $ # Go to the bids_tools directory
     $ cd bids-tools
     $ # Build the docker image

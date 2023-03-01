@@ -11,7 +11,7 @@ How to build the Docker image locally
 
 1. Go to the clone directory of your fork and run the following command in the terminal ::
 
-    cd bids-converter
+    cd bids-tools
     make -B build
 
 .. note::

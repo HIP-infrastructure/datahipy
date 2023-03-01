@@ -37,7 +37,7 @@ All trademarks referenced herein are property of their respective holders.
 Help/Questions
 ---------------
 
-If you run into any problems or have any code bugs or questions, please create a new `GitHub Issue <https://github.com/HIP-infrastructure/bids-converter/issues>`_.
+If you run into any problems or have any code bugs or questions, please create a new `GitHub Issue <https://github.com/HIP-infrastructure/bids-tools/issues>`_.
 
 Eager to contribute?
 ---------------------
