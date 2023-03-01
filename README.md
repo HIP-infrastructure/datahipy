@@ -1,11 +1,11 @@
 # `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
----
 
 Copyright © 2012-2023 The HIP team and Contributors, All rights reserved.
 
 This software is distributed under the open-source Apache 2.0 license. See [LICENSE](LICENSE.txt) file for details.
 
 ---
+
 [![CI/CD](https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master) [![Coverage](https://gitlab.hbp.link/hip/bids-tools/badges/master/coverage.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master)
 
 `bids_tools` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
