@@ -10,7 +10,7 @@ __version__ = "1.0.0-dev.1"
 
 __current_year__ = datetime.datetime.now().strftime("%Y")
 
-__release_date__ = f"DD.MM.{__current_year__}"
+__release_date__ = "DD.MM.{}".format(__current_year__)
 
 __author__ = "The HIP team"
 
@@ -23,7 +23,7 @@ __credits__ = (
     "Contributors: please check the ``.zenodo.json`` file at the top-level folder"
     "of the repository"
 )
-__license__ = "TO BE DETERMINED"
+__license__ = "Apache 2.0"
 __maintainer__ = "The HIP team"
 __email__ = "support@hip.ch"
 __status__ = "Prototype"

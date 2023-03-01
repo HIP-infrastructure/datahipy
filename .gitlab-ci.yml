@@ -107,7 +107,7 @@ deploy-release:
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
     # Add our Github remote repository and fined-grained token authentication
-    - git remote add github_origin "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-converter"
+    - git remote add github_origin "https://oauth2:$GH_TOKEN@github.com/HIP-infrastructure/bids-tools"
     # Push commits created by semantic-release for version change and changelog
     - git push github_origin $CI_COMMIT_REF_NAME
     # Push the new tag created by semantic-release
