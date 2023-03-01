@@ -28,7 +28,7 @@ __maintainer__ = "The HIP team"
 __email__ = "support@hip.ch"
 __status__ = "Prototype"
 
-__packagename__ = "bids-converter"
+__packagename__ = "bids-tools"
 
 __url__ = "https://github.com/HIP-infrastructure/{name}/tree/{version}".format(
     name=__packagename__, version=__version__

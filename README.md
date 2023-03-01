@@ -12,18 +12,18 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 ### Resources
 
-*   **Documentation:** https://hip-infrastructure.github.io/bids-converter/
-*   **Source:** https://github.com/HIP-infrastructure/bids-converter
-*   **Bug reports:** https://github.com/HIP-infrastructure/bids-converter/issues
+*   **Documentation:** https://hip-infrastructure.github.io/bids-tools/
+*   **Source:** https://github.com/HIP-infrastructure/bids-tools
+*   **Bug reports:** https://github.com/HIP-infrastructure/bids-tools/issues
 
 ## Installation
 
-*   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-converter/installation.html#installation-of-docker-engine))
+*   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-tools/installation.html#installation-of-docker-engine))
 
 *   Clone this repository:
 
     ```bash
-    $ git clone https://github.com/HIP-infrastructure/bids-converter.git bids-tools
+    $ git clone https://github.com/HIP-infrastructure/bids-tools.git bids-tools
     ```
 
 *   Go to your local clone folder and build the Docker image:
