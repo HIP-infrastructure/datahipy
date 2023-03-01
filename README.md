@@ -20,16 +20,22 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 *   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-tools/installation.html#installation-of-docker-engine))
 
-*   Clone this repository:
+*   Clone this repository and go to the `bids-tools` directory:
 
     ```bash
-    $ git clone https://github.com/HIP-infrastructure/bids-tools.git bids-tools
+    $ git clone https://github.com/HIP-infrastructure/bids-tools.git
+    $ cd bids-tools
     ```
 
-*   Go to your local clone folder and build the Docker image:
+*   Checkout submodules:
+
+    ```bash
+    $ git submodule update --recursive --init
+    ```
+
+*   Build the Docker image:
 
      ```bash
-    $ cd bids-tools
     $ make -B build-docker
     ```
 
