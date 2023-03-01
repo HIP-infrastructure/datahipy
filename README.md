@@ -105,3 +105,7 @@ Remove a participant from a given BIDS dataset. The record will be deleted from 
 
 #### `sub.delete.file`
 Remove data file(s) from a BIDS dataset.
+
+## Funding
+
+This project received funding from the European Union's H2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3, as part the Human Intracerebral EEG Platform (HIP)).

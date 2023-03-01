@@ -47,7 +47,7 @@ See :ref:`Contributing <contributing>` for more details.
 Funding
 --------
 
-Originally supported by TBC.
+This project received funding from the European Union's H2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3, as part the Human Intracerebral EEG Platform (HIP)).
 
 Contents
 =========
