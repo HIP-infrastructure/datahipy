@@ -16,7 +16,7 @@
             "files": [
               "bids_tools/info.py"
             ],
-            "from": "__version__ = \".*\"",
+            "from": "__version__ = \"v?(\d+\.\d+\.\d+(-(alpha|beta|rc|dev)\.\d+)?)\"",
             "to": "__version__ = \"${nextRelease.version}\"",
             "results": [
               {
