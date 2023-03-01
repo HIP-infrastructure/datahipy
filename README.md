@@ -20,16 +20,22 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 *   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-tools/installation.html#installation-of-docker-engine))
 
-*   Clone this repository:
+*   Clone this repository and go to the `bids-tools` directory:
 
     ```bash
-    $ git clone https://github.com/HIP-infrastructure/bids-tools.git bids-tools
+    $ git clone https://github.com/HIP-infrastructure/bids-tools.git
+    $ cd bids-tools
     ```
 
-*   Go to your local clone folder and build the Docker image:
+*   Checkout submodules:
+
+    ```bash
+    $ git submodule update --recursive --init
+    ```
+
+*   Build the Docker image:
 
      ```bash
-    $ cd bids-tools
     $ make -B build-docker
     ```
 
@@ -99,3 +105,7 @@ Remove a participant from a given BIDS dataset. The record will be deleted from 
 
 #### `sub.delete.file`
 Remove data file(s) from a BIDS dataset.
+
+## Funding
+
+This project received funding from the European Union's H2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3, as part the Human Intracerebral EEG Platform (HIP)).
