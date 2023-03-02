@@ -1,0 +1,44 @@
+{
+  "license": "Apache-2.0",
+  "keywords": [
+    "ieeg-data",
+    "mri-data",
+    "ct-data",
+    "bids",
+    "yoda",
+    "docker"
+  ],
+  "creators": [
+    {
+      "name": "Tourbier, Sebastien",
+      "affiliation": "Centre Hospitalier Universitaire Vaudois and University of Lausanne (CHUV-UNIL), Switzerland",
+      "orcid": "0000-0002-4441-899X"
+    },
+    {
+      "name": "Spuhler, Manuel",
+      "affiliation": "Centre Hospitalier Universitaire Vaudois and University of Lausanne (CHUV-UNIL), Switzerland",
+      "orcid": "0009-0007-0315-2578"
+    },
+    {
+      "name": "Boyer, Anthony",
+      "affiliation": "Aix Marseille Université, Inserm, INS, Institut de Neurosciences des Systèmes, Marseille, France",
+      "orcid": "0000-0002-6466-2121"
+    },
+    {
+      "name": "Casati, Nathalie",
+      "affiliation": "Centre Hospitalier Universitaire Vaudois and University of Lausanne (CHUV-UNIL), Switzerland"
+    },
+    {
+      "name": "Schaffhauser, Birgit",
+      "affiliation": "Centre Hospitalier Universitaire Vaudois and University of Lausanne (CHUV-UNIL), Switzerland",
+      "orcid": "0000-0002-7863-0542"
+    },
+    {
+      "name": "Ryvlin, Philippe",
+      "affiliation": "Centre Hospitalier Universitaire Vaudois and University of Lausanne (CHUV-UNIL), Switzerland",
+      "orcid": "0000-0001-7775-6576"
+    }
+  ],
+  "access_right": "open",
+  "upload_type": "software"
+}
