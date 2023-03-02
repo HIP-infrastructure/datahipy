@@ -1,3 +1,18 @@
+# [1.0.0-dev.2](https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2023-03-02)
+
+
+### Bug Fixes
+
+* change regex in from field of semantic release replace plugin ([8f843be](https://gitlab.hbp.link/hip/bids-tools/commit/8f843bea8c925eecd5296473f501382aa16ce4e5))
+* review how to insert the year __release_date__ that was causing troubles in get_version.py ([cc9852e](https://gitlab.hbp.link/hip/bids-tools/commit/cc9852ecdc75874ee9ec62164b01ecc3b894a3bf))
+* update main doc only if master and dev branches are updated ([c52af1d](https://gitlab.hbp.link/hip/bids-tools/commit/c52af1d1ccb5047958aa3f43d89967b223ceaeb1))
+* update regex for replacement of __version__ ([96c1128](https://gitlab.hbp.link/hip/bids-tools/commit/96c112890ab740395c4af9c811bc9e7cb421c529))
+
+
+### Reverts
+
+* change back to from: __version__ = ".*" for semrel replace plugin ([ea516e1](https://gitlab.hbp.link/hip/bids-tools/commit/ea516e10b64409e6b6461e97d6978a548da29583))
+
 # 1.0.0-dev.1 (2023-02-26)
 
 
