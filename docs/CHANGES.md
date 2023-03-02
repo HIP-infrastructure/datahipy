@@ -1,3 +1,10 @@
+## [1.0.1](https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.0...v1.0.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* remove orcid from .zenodo.json ([865335e](https://gitlab.hbp.link/hip/bids-tools/commit/865335e9a66f1fc0290fcd1e6bdc556255b51cd3))
+
 # 1.0.0 (2023-03-02)
 
 
