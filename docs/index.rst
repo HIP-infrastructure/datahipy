@@ -8,6 +8,10 @@ Welcome to `bids_tools`'s documentation!
 
 This data management software is developed by the HIP team at the University Hospital of Lausanne (CHUV) for use within the lab, as well as for open-source software distribution.
 
+.. image:: https://img.shields.io/github/v/release/HIP-infrastructure/bids-tools?include_prereleases
+   :alt: Latest GitHub Release
+.. image:: https://img.shields.io/github/release-date-pre/HIP-infrastructure/bids-tools
+   :alt: GitHub Release Date
 .. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg
   :target: https://gitlab.hbp.link/hip/bids-tools/-/commits/master
   :alt: CI/CD
