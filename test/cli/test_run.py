@@ -50,18 +50,14 @@ def test_run_dataset_create(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the dataset was created by checking for the dataset_description.json file
-    assert os.path.exists(
-        os.path.join(dataset_path, "dataset_description.json")
-    )
+    assert os.path.exists(os.path.join(dataset_path, "dataset_description.json"))
 
 
 @pytest.mark.script_launch_mode("subprocess")
 def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     # Create input data
     input_data = {
-        "subjects": [
-            {"sub": "carole", "age": "25", "sex": "M", "hospital": "CHUV"}
-        ],
+        "subjects": [{"sub": "carole", "age": "25", "sex": "M", "hospital": "CHUV"}],
         "files": [
             {
                 "modality": "ieeg",
