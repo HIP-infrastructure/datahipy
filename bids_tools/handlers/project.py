@@ -107,17 +107,41 @@ def import_subject(input_data: dict):
         Path(input_data["sourceDatasetPath"] / input_data["subject"]).absolute(),
         Path(input_data["targetDatasetPath"] / input_data["subject"]).absolute(),
     )
-    # Extract subject line from participants.tsv file of source dataset as dataframe
-    source_participants_df = pd.read_csv(
-        Path(input_data["sourceDatasetPath"] / "participants.tsv"), sep="\t"
+    # Update participants.tsv file of target dataset with subject row from source dataset
+    transfer_subject_participants_tsv_row(
+        participant_id=input_data["subject"],
+        source_participant_tsv=Path(
+            input_data["sourceDatasetPath"] / "participants.tsv"
+        ).absolute(),
+        target_participants_tsv=Path(
+            input_data["targetDatasetPath"] / "participants.tsv"
+        ).absolute(),
     )
+
+
+def transfer_subject_participants_tsv_row(
+    participant_id: str, source_participant_tsv: str, target_participants_tsv: str
+):
+    """Transfer subject row from the participants.tsv file of the source to the participants.tsv file of the target BIDS dataset.
+
+    Parameters
+    ----------
+    participant_id : str
+        ID of the participant to transfer (e.g. "sub-01").
+
+    source_participant_tsv : str
+        Path to the participants.tsv file of the source BIDS dataset.
+
+    target_participants_tsv : str
+        Path to the participants.tsv file of the target BIDS dataset.
+    """
+    # Extract subject line from participants.tsv file of source dataset as dataframe
+    source_participants_df = pd.read_csv(source_participant_tsv, sep="\t")
     source_subject_df = source_participants_df[
-        source_participants_df["participant_id"] == input_data["subject"]
+        source_participants_df["participant_id"] == participant_id
     ]
     # Extract participants.tsv file of target dataset as dataframe
-    target_participants_df = pd.read_csv(
-        Path(input_data["targetDatasetPath"] / "participants.tsv"), sep="\t"
-    )
+    target_participants_df = pd.read_csv(target_participants_tsv, sep="\t")
     # Append subject row dataframe to target dataframe
     target_participants_df = pd.concat(
         [target_participants_df, source_subject_df], join="outer"
@@ -125,11 +149,7 @@ def import_subject(input_data: dict):
     # Replace any NaN values with 'n/a' following BIDS convention
     target_participants_df = target_participants_df.fillna("n/a")
     # Write updated participants.tsv file of target dataset
-    target_participants_df.to_csv(
-        Path(input_data["targetDatasetPath"] / "participants.tsv"),
-        sep="\t",
-        index=False,
-    )
+    target_participants_df.to_csv(target_participants_tsv, sep="\t", index=False)
 
 
 def import_document(input_data: dict):
