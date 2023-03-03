@@ -8,6 +8,7 @@ import shutil
 import json
 import pandas as pd
 from pathlib import Path
+from sre_constants import SUCCESS
 
 from bids_tools.bids.dataset import create_empty_bids_dataset
 
@@ -74,6 +75,7 @@ def create_project(input_data: dict):
                 }
             }
     """
+    print(f"Creating new collaborative project at {input_data['path']}...")
     # Extract input data
     project_dir = Path(input_data["path"])
     project_title = input_data["title"]
@@ -85,6 +87,7 @@ def create_project(input_data: dict):
         bids_dir=(project_dir / "inputs" / "bids-dataset").absolute(),
         dataset_desc=input_data["createBidsDatasetDto"],
     )
+    print(SUCCESS)
 
 
 def import_subject(input_data: dict):
@@ -102,6 +105,11 @@ def import_subject(input_data: dict):
                 "targetDatasetPath": "/path/to/target/bids/dataset/directory",
             }
     """
+    print(
+        f"Importing subject {input_data['subject']} "
+        f"from {input_data['sourceDatasetPath']} "
+        f"to {input_data['targetDatasetPath']}..."
+    )
     # Copy subject directory from source to target
     shutil.copytree(
         Path(input_data["sourceDatasetPath"] / input_data["subject"]).absolute(),
@@ -117,6 +125,7 @@ def import_subject(input_data: dict):
             input_data["targetDatasetPath"] / "participants.tsv"
         ).absolute(),
     )
+    print(SUCCESS)
 
 
 def transfer_subject_participants_tsv_row(
@@ -166,7 +175,12 @@ def import_document(input_data: dict):
                 "targetDocumentPath": "/path/to/target/document/file",
             }
     """
+    print(
+        f'Importing document {input_data["sourceDocumentPath"]} from HIP Center space '
+        f'to HIP Collaborative Project at {input_data["targetDocumentPath"]}... '
+    )
     source_document_path = Path(input_data["sourceDocumentPath"])
     target_document_path = Path(input_data["targetDocumentPath"])
     # Copy document from source to target
     shutil.copyfile(source_document_path, target_document_path)
+    print(SUCCESS)
