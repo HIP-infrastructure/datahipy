@@ -9,6 +9,7 @@ import subprocess
 from concurrent.futures import ProcessPoolExecutor
 from pkg_resources import resource_filename
 from sre_constants import SUCCESS
+from datetime import date
 
 from bids import BIDSLayout
 
@@ -181,9 +182,7 @@ def get_dataset_size(bids_dir=None):
     """
     # Get total number of files and size
     total_size_megabytes = (
-        subprocess.check_output(["du", "-sh", bids_dir])
-        .split()[0]
-        .decode("utf-8")
+        subprocess.check_output(["du", "-sh", bids_dir]).split()[0].decode("utf-8")
     )
     ## Alternative: Count only files outside sourcedata/
     # total_size_bytes = 0
@@ -226,9 +225,7 @@ def get_bidsdataset_content(bids_dir=None):
     add_bidsignore_validation_rule(bids_dir, "**/*_ct.*")
     # Run the bids-validator on the dataset with the specified schema version and
     # update dataset_desc with the execution dictionary output
-    dataset_desc.update(
-        get_bids_validator_output_info(bids_dir, bids_schema_version)
-    )
+    dataset_desc.update(get_bids_validator_output_info(bids_dir, bids_schema_version))
     # Add information retrieved with pybids to dataset_desc
     dataset_desc.update(get_bids_layout_info(bids_dir))
     # Return the created dataset_desc dictionary to be indexed
