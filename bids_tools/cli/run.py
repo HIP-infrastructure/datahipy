@@ -8,6 +8,7 @@ from bids_tools import __version__, __release_date__
 from bids_tools.bids.dataset import get_all_datasets_content
 from bids_tools.handlers.dataset import DatasetHandler
 from bids_tools.handlers.participants import ParticipantHandler
+from bids_tools.handlers.project import create_project, import_subject, import_document
 
 VALID_COMMANDS = [
     "dataset.create",
@@ -18,6 +19,9 @@ VALID_COMMANDS = [
     "sub.edit.clinical",
     "sub.delete",
     "sub.delete.file",
+    "project.create",
+    "project.sub.import",
+    "project.doc.import",
 ]
 
 
@@ -82,6 +86,12 @@ def main():
         return phdl.sub_delete(input_data=input_data)
     if command == "sub.delete.file":
         return phdl.sub_delete_file(input_data=input_data)
+    if command == "project.create":
+        create_project(input_data=input_data)
+    if command == "project.sub.import":
+        import_subject(input_data=input_data)
+    if command == "project.doc.import":
+        import_document(input_data=input_data)
 
 
 if __name__ == "__main__":
