@@ -27,6 +27,86 @@ from bids_tools.bids.version import determine_bids_schema_version
 NUM_THREADS = os.cpu_count() - 1 if os.cpu_count() > 1 else 1
 
 
+def create_initial_bids_readme(bids_dir, dataset_desc):
+    """Create an initial `README` file for a BIDS dataset.
+
+    Parameters
+    ----------
+    bids_dir : str
+        Path to the BIDS dataset.
+
+    dataset_desc : dict
+        Dictionary with the content of the dataset_description.json file.
+    """
+    with open(os.path.join(bids_dir, "README"), "w") as f:
+        f.writelines(
+            [
+                f'# {dataset_desc["Name"]}\n\n',
+                f"To be completed...\n\n",
+                f"Use it as the dataset landing page, "
+                "which should provide enough information "
+                "about the dataset and its creation context.",
+            ]
+        )
+
+
+def create_initial_bids_changes(bids_dir):
+    """Create an initial `CHANGES` file for a BIDS dataset.
+
+    Parameters
+    ----------
+    bids_dir : str
+        Path to the BIDS dataset.
+    """
+    with open(os.path.join(bids_dir, "CHANGES"), "w") as f:
+        f.writelines(
+            [
+                f"0.0.0 {date.today().strftime('%Y-%m-%d')}\n",
+                "\t- Creation of the dataset.",
+            ]
+        )
+
+
+def create_initial_participants_tsv(bids_dir):
+    """Create an initial `participants.tsv` file for a BIDS dataset.
+
+    Parameters
+    ----------
+    bids_dir : str
+        Path to the BIDS dataset.
+    """
+    with open(os.path.join(bids_dir, "participants.tsv"), "w") as f:
+        f.write("participant_id\tage\tsex\tgroup")
+
+
+def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
+    """Create an empty BIDS dataset.
+
+    Parameters
+    ----------
+    bids_dir : str
+        Path to the BIDS dataset.
+
+    dataset_desc : dict
+        Dictionary with the content of the dataset_description.json file.
+    """
+    print("> Creating an empty BIDS dataset at: ", bids_dir, "...")
+    # Create the BIDS dataset directory
+    os.makedirs(bids_dir, exist_ok=True)
+    # Create the dataset_description.json file
+    with open(os.path.join(bids_dir, "dataset_description.json"), "w") as f:
+        json.dump(dataset_desc, f, indent=4)
+    # Create initial README file
+    create_initial_bids_readme(bids_dir, dataset_desc)
+    # Create initial CHANGES file
+    create_initial_bids_changes(bids_dir)
+    # Create the .bidsignore file and add the line to ignore CT files
+    # (not yet supported by the validator)
+    add_bidsignore_validation_rule(bids_dir, "**/*_ct.*")
+    # Create an initial participants.tsv file
+    create_initial_participants_tsv(bids_dir)
+
+
 def create_bids_layout(bids_dir=None, **kwargs):
     """Create a pybids representation of a BIDS dataset.
 
