@@ -274,6 +274,128 @@ def test_run_sub_edit_clinical(script_runner, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
+def test_run_project_create(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {
+        "path": project_path,
+        "title": "New Project Title",
+        "description": "Project Description that would be put in the README.md file",
+        "createBidsDatasetDto": {
+            "owner": "hipadmin",
+            "parent_path": f"{project_path}/inputs",
+            "dataset_dirname": "bids-dataset",
+            "DatasetDescJSON": {
+                "Name": "BIDS Dataset Title",
+                "BIDSVersion": "1.6.0",
+                "License": "CC-BY-4.0",
+                "Authors": ["Author 1", "Author 2"],
+                "Acknowledgements": "Acknowledgement 1",
+                "Funding": ["Funding 1"],
+                "ReferencesAndLinks": ["Reference 1", "Reference 2"],
+                "DatasetDOI": "",
+            },
+        },
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "create_project.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run bids_tools project.create command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "project.create",
+        "--input_data",
+        input_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    assert os.path.exists(project_path)
+    assert os.path.exists(os.path.join(project_path, "README.md"))
+    assert os.path.exists(os.path.join(project_path, "inputs"))
+    assert os.path.exists(os.path.join(project_path, "outputs"))
+    assert os.path.exists(os.path.join(project_path, "code"))
+    assert os.path.exists(os.path.join(project_path, "environments"))
+    assert os.path.exists(os.path.join(project_path, "inputs", "bids-dataset"))
+    assert os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", "dataset_description.json")
+    )
+    assert os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", "participants.tsv")
+    )
+    assert os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", "CHANGES")
+    )
+    assert os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", "README")
+    )
+    assert os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", ".bidsignore")
+    )
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_project_sub_import(script_runner, dataset_path, project_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDatasetPath": dataset_path,
+        "subject": "sub-carole",
+        "targetDatasetPath": os.path.join(project_path, "inputs", "bids-dataset"),
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "import_project_sub.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run bids_tools project.sub.import command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "project.sub.import",
+        "--input_data",
+        input_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    assert os.path.exists(
+        os.path.join(
+            project_path,
+            "inputs",
+            "bids-dataset",
+            "sub-carole",
+            "ses-postimp",
+            "anat",
+            "sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-2_T1w.nii",
+        )
+    )
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_project_doc_import(script_runner, dataset_path, project_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDocumentPath": os.path.join(dataset_path, "participants.tsv"),
+        "targetDocumentPath": os.path.join(
+            project_path, "documents", "other", "participants.tsv"
+        ),
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "import_project_doc.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run bids_tools project.doc.import command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "project.doc.import",
+        "--input_data",
+        input_file,
+    )
+
+
+@pytest.mark.script_launch_mode("subprocess")
 def test_run_sub_delete_file(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
@@ -339,3 +461,30 @@ def test_run_sub_delete(script_runner, dataset_path, io_path):
     assert ret.success
     # Check that the sub-carole folder was deleted
     assert not os.path.exists(os.path.join(dataset_path, "sub-carole"))
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_project_sub_delete(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {"subject": "carole"}
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "delete_sub.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run bids_tools sub.delete command
+    ret = script_runner.run(
+        "bids_tools",
+        "--command",
+        "sub.delete",
+        "--input_data",
+        input_file,
+        "--dataset_path",
+        os.path.join(project_path, "inputs", "bids-dataset"),
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the sub-carole folder was deleted
+    assert not os.path.exists(
+        os.path.join(project_path, "inputs", "bids-dataset", "sub-carole")
+    )
