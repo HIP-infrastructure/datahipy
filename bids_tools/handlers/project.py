@@ -13,7 +13,13 @@ from sre_constants import SUCCESS
 from bids_tools.bids.dataset import create_empty_bids_dataset
 
 
-PROJECT_FOLDERS = ["code", "documents", "inputs/bids-dataset", "outputs"]
+PROJECT_FOLDERS = [
+    "code",
+    "documents",
+    "environments",
+    "inputs/bids-dataset",
+    "outputs",
+]
 DOCUMENTS_FOLDERS = ["clinical", "reports", "protocols", "other"]
 
 
