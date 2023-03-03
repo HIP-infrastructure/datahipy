@@ -14,10 +14,7 @@ from bids_tools.bids.dataset import create_empty_bids_dataset
 
 
 PROJECT_FOLDERS = ["code", "documents", "inputs/bids-dataset", "outputs"]
-
-PROJECT_DOCUMENTS = [
-    "README.md",
-]
+DOCUMENTS_FOLDERS = ["clinical", "reports", "protocols", "other"]
 
 
 def initialize_project_structure(
@@ -39,6 +36,10 @@ def initialize_project_structure(
     # Create initial project directory structure
     for folder in PROJECT_FOLDERS:
         os.makedirs(project_dir / folder, exist_ok=True)
+
+    # Create initial documents directory structure
+    for folder in DOCUMENTS_FOLDERS:
+        os.makedirs(project_dir / "documents" / folder, exist_ok=True)
 
     # Create initial project README.md file
     with open(project_dir / "README.md", "w") as f:
