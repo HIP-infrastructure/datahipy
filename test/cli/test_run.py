@@ -403,7 +403,7 @@ def test_run_sub_delete_file(script_runner, dataset_path, io_path):
             {
                 "subject": "carole",
                 "modality": "Anat",
-                "fullpath": "sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii",
+                "fullpath": "sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-2_T1w.nii",
             }
         ]
     }
@@ -432,7 +432,7 @@ def test_run_sub_delete_file(script_runner, dataset_path, io_path):
                 "sub-carole",
                 "ses-postimp",
                 "anat",
-                "sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii",
+                "sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-2_T1w.nii",
             ),
         )
     )
