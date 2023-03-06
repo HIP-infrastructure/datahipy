@@ -60,7 +60,7 @@ test:
     - chmod +x codecov
     - ./codecov -t ${CODECOV_TOKEN} \
       --source /builds/hip/bids-tools/bids_tools \
-      --file test/report/cov.xml
+      --file /builds/hip/bids-tools/test/report/cov.xml
   # artifacts:
   #   reports:
   #     coverage_report:
