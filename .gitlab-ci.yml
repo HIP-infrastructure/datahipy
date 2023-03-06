@@ -56,12 +56,16 @@ test:
   needs: ["build"]
   script:
     - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: test/report/cov.xml
+    - curl -Os https://uploader.codecov.io/latest/linux/codecov
+    - chmod +x codecov
+    - ./codecov -t ${CODECOV_TOKEN} \
+      --source /builds/hip/bids-tools/bids_tools \
+      --file test/report/cov.xml
+  # artifacts:
+  #   reports:
+  #     coverage_report:
+  #       coverage_format: cobertura
+  #       path: test/report/cov.xml
 
 test-python-install:
   stage: test-python-install
