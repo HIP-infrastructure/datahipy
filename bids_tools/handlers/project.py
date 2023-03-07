@@ -192,12 +192,18 @@ def import_document(input_data: str):
     # Load input data
     with open(input_data, "r") as f:
         input_data = json.load(f)
-    print(
-        f'Importing document {input_data["sourceDocumentPath"]} from HIP Center space '
-        f'to HIP Collaborative Project at {input_data["targetDocumentPath"]}... '
+    # Extract input data
+    source_document_path = Path(input_data["sourceDocumentAbsPath"])
+    target_document_path = (
+        Path(input_data["targetProjectAbsPath"]) / input_data["targetDocumentRelPath"]
     )
-    source_document_path = Path(input_data["sourceDocumentPath"])
-    target_document_path = Path(input_data["targetDocumentPath"])
+    # Print information
+    print(
+        f"Importing document {source_document_path} from HIP Center space "
+        f"to HIP Collaborative Project at {target_document_path}... "
+    )
+    # Create intermediate directories if they don't exist
+    os.makedirs(target_document_path.parent, exist_ok=True)
     # Remove target document if it already exists
     if target_document_path.exists():
         print(f"WARNING: Overwriting target document at {target_document_path}...")
