@@ -276,20 +276,15 @@ def test_run_project_create(script_runner, project_path, io_path):
         "path": project_path,
         "title": "New Project Title",
         "description": "Project Description that would be put in the README.md file",
-        "createBidsDatasetDto": {
-            "owner": "hipadmin",
-            "parent_path": f"{project_path}/inputs",
-            "dataset_dirname": "bids-dataset",
-            "DatasetDescJSON": {
-                "Name": "BIDS Dataset Title",
-                "BIDSVersion": "1.6.0",
-                "License": "CC-BY-4.0",
-                "Authors": ["Author 1", "Author 2"],
-                "Acknowledgements": "Acknowledgement 1",
-                "Funding": ["Funding 1"],
-                "ReferencesAndLinks": ["Reference 1", "Reference 2"],
-                "DatasetDOI": "",
-            },
+        "datasetDescription": {
+            "Name": "BIDS Dataset Title",
+            "BIDSVersion": "1.6.0",
+            "License": "CC-BY-4.0",
+            "Authors": ["Author 1", "Author 2"],
+            "Acknowledgements": "Acknowledgement 1",
+            "Funding": ["Funding 1"],
+            "ReferencesAndLinks": ["Reference 1", "Reference 2"],
+            "DatasetDOI": "",
         },
     }
     # Create JSON file path for input data

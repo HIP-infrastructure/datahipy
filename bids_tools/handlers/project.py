@@ -65,20 +65,15 @@ def create_project(input_data: str):
                 "path": "/path/to/project/directory",
                 "title": "Project Title",
                 "description": "Project Description that would be put in the README.md file",
-                "createBidsDatasetDto": {
-                    "owner": "username",
-                    "parent_path": "/path/to/project/directory/inputs",
-                    "dataset_dirname": "bids-dataset",
-                    "DatasetDescJSON": {
-                        "Name": "BIDS Dataset Title",
-                        "BIDSVersion": "1.6.0",
-                        "License": "CC-BY-4.0",
-                        "Authors": ["Author 1", "Author 2"],
-                        "Acknowledgements": "Acknowledgement 1",
-                        "Funding": ["Funding 1"],
-                        "ReferencesAndLinks": ["Reference 1", "Reference 2"],
-                        "DatasetDOI": "10.18112/openneuro.ds000000.v1.0.0"
-                    }
+                "datasetDescription": {
+                    "Name": "BIDS Dataset Title",
+                    "BIDSVersion": "1.6.0",
+                    "License": "CC-BY-4.0",
+                    "Authors": ["Author 1", "Author 2"],
+                    "Acknowledgements": "Acknowledgement 1",
+                    "Funding": ["Funding 1"],
+                    "ReferencesAndLinks": ["Reference 1", "Reference 2"],
+                    "DatasetDOI": "10.18112/openneuro.ds000000.v1.0.0"
                 }
             }
     """
@@ -95,7 +90,7 @@ def create_project(input_data: str):
     # Create initial BIDS dataset
     create_empty_bids_dataset(
         bids_dir=(project_dir / "inputs" / "bids-dataset").absolute(),
-        dataset_desc=input_data["createBidsDatasetDto"]["DatasetDescJSON"],
+        dataset_desc=input_data["datasetDescription"],
     )
     print(SUCCESS)
 
