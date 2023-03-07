@@ -18,9 +18,9 @@ This data management software is developed by the HIP team at the University Hos
 .. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg
   :target: https://gitlab.hbp.link/hip/bids-tools/-/commits/master
   :alt: CI/CD
-.. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/coverage.svg
-  :target: https://gitlab.hbp.link/hip/bids-tools/-/commits/master
-  :alt: Coverage
+.. image:: https://codecov.io/github/HIP-infrastructure/bids-tools/branch/master/graph/badge.svg?token=F1CWBIGXJN 
+  :target: https://codecov.io/github/HIP-infrastructure/bids-tools
+  :alt: Code Coverage
 
 .. TODO add badge for maybe docs 
 
