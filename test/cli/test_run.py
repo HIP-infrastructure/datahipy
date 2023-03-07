@@ -371,10 +371,9 @@ def test_run_project_sub_import(script_runner, dataset_path, project_path, io_pa
 def test_run_project_doc_import(script_runner, dataset_path, project_path, io_path):
     # Create input data
     input_data = {
-        "sourceDocumentPath": os.path.join(dataset_path, "participants.tsv"),
-        "targetDocumentPath": os.path.join(
-            project_path, "documents", "other", "participants.tsv"
-        ),
+        "sourceDocumentAbsPath": os.path.join(dataset_path, "participants.tsv"),
+        "targetProjectAbsPath": project_path,
+        "targetDocumentRelPath": os.path.join("documents", "other", "participants.tsv"),
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "import_project_doc.json")
@@ -388,6 +387,11 @@ def test_run_project_doc_import(script_runner, dataset_path, project_path, io_pa
         "project.doc.import",
         "--input_data",
         input_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    assert os.path.exists(
+        os.path.join(project_path, "documents", "other", "participants.tsv")
     )
 
 
