@@ -1,6 +1,6 @@
 # `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
 
-Copyright © 2012-2023 The HIP team and Contributors, All rights reserved.
+Copyright © 2022-2023 The HIP team, University Hospital of Lausanne (CHUV), Switzerland & Contributors, All rights reserved.
 
 This software is distributed under the open-source Apache 2.0 license. See [LICENSE](LICENSE.txt) file for details.
 
