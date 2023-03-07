@@ -58,9 +58,8 @@ test:
     - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
     - curl -Os https://uploader.codecov.io/latest/linux/codecov
     - chmod +x codecov
-    - ./codecov -t ${CODECOV_TOKEN} \
-      --source /builds/hip/bids-tools/bids_tools \
-      --file /builds/hip/bids-tools/test/report/cov.xml
+    - ./codecov -t ${CODECOV_TOKEN} --file test/report/cov.xml
+      
   # artifacts:
   #   reports:
   #     coverage_report:
