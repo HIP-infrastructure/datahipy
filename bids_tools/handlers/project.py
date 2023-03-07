@@ -184,13 +184,14 @@ def import_document(input_data: str):
 
     Parameters
     ----------
-    iinput_data : str
+    input_data : str
         Path to input data JSON file sent by the HIP that contains all information
         about the document to import in the form::
 
             {
-                "sourceDocumentPath": "/path/to/source/document/file",
-                "targetDocumentPath": "/path/to/target/document/file",
+                "sourceDocumentAbsPath": "/path/to/source/document/file",
+                "targetProjectAbsPath": "/path/to/target/project/directory",
+                "sourceDocumentRelPath": "/project/relative/path/to/target/document/file",
             }
     """
     # Load input data
