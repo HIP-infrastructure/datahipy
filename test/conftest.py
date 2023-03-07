@@ -5,6 +5,7 @@
 
 import os
 import pytest
+import shutil
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -22,12 +23,16 @@ def dataset_path(dataset_name):
     dataset_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "tmp", dataset_name)
     )
+    if os.path.exists(dataset_path):
+        shutil.rmtree(dataset_path)
     return dataset_path
 
 
 @pytest.fixture(scope="session", autouse=True)
 def io_path():
     io_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp", "io"))
+    if os.path.exists(io_path):
+        shutil.rmtree(io_path)
     os.makedirs(io_path, exist_ok=True)
     return io_path
 
@@ -42,4 +47,6 @@ def project_path(project_name):
     project_path = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "tmp", project_name)
     )
+    if os.path.exists(project_path):
+        shutil.rmtree(project_path)
     return project_path
