@@ -336,7 +336,7 @@ def test_run_project_sub_import(script_runner, dataset_path, project_path, io_pa
     # Create input data
     input_data = {
         "sourceDatasetPath": dataset_path,
-        "subject": "sub-carole",
+        "participant_id": "sub-carole",
         "targetDatasetPath": os.path.join(project_path, "inputs", "bids-dataset"),
     }
     # Create JSON file path for input data

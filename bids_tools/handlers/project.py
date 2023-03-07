@@ -111,7 +111,7 @@ def import_subject(input_data: str):
 
             {
                 "sourceDatasetPath": "/path/to/source/bids/dataset/directory",
-                "subject": "sub-01",
+                "participant_id": "sub-01",
                 "targetDatasetPath": "/path/to/target/bids/dataset/directory",
             }
     """
@@ -119,19 +119,23 @@ def import_subject(input_data: str):
     with open(input_data, "r") as f:
         input_data = json.load(f)
     print(
-        f"Importing subject {input_data['subject']} "
+        f"Importing subject {input_data['participant_id']} "
         f"from {input_data['sourceDatasetPath']} "
         f"to {input_data['targetDatasetPath']}..."
     )
     # Copy subject directory from source to target
     shutil.copytree(
-        (Path(input_data["sourceDatasetPath"]) / input_data["subject"]).absolute(),
-        (Path(input_data["targetDatasetPath"]) / input_data["subject"]).absolute(),
+        (
+            Path(input_data["sourceDatasetPath"]) / input_data["participant_id"]
+        ).absolute(),
+        (
+            Path(input_data["targetDatasetPath"]) / input_data["participant_id"]
+        ).absolute(),
         dirs_exist_ok=True,
     )
     # Update participants.tsv file of target dataset with subject row from source dataset
     transfer_subject_participants_tsv_row(
-        participant_id=input_data["subject"],
+        participant_id=input_data["participant_id"],
         source_participant_tsv=(
             Path(input_data["sourceDatasetPath"]) / "participants.tsv"
         ).absolute(),
