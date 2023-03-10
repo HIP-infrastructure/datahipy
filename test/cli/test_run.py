@@ -292,6 +292,8 @@ def test_run_project_create(script_runner, project_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "create_project_output.json")
     # Run bids_tools project.create command
     ret = script_runner.run(
         "bids_tools",
@@ -299,9 +301,12 @@ def test_run_project_create(script_runner, project_path, io_path):
         "project.create",
         "--input_data",
         input_file,
+        "--output_file",
+        output_file,
     )
     # Check that the command ran successfully
     assert ret.success
+    assert os.path.exists(output_file)
     assert os.path.exists(project_path)
     assert os.path.exists(os.path.join(project_path, "README.md"))
     assert os.path.exists(os.path.join(project_path, "inputs"))
@@ -339,6 +344,8 @@ def test_run_project_sub_import(script_runner, dataset_path, project_path, io_pa
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "import_project_sub_output.json")
     # Run bids_tools project.sub.import command
     ret = script_runner.run(
         "bids_tools",
@@ -346,9 +353,12 @@ def test_run_project_sub_import(script_runner, dataset_path, project_path, io_pa
         "project.sub.import",
         "--input_data",
         input_file,
+        "--output_file",
+        output_file,
     )
     # Check that the command ran successfully
     assert ret.success
+    assert os.path.exists(output_file)
     assert os.path.exists(
         os.path.join(
             project_path,
