@@ -65,7 +65,6 @@ test:
     - curl -Os https://uploader.codecov.io/latest/alpine/codecov.SHA256SUM
     - curl -Os https://uploader.codecov.io/latest/alpine/codecov.SHA256SUM.sig
     - gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
-    - shasum -a 256 -c codecov.SHA256SUM
     - chmod +x codecov
     # Upload the coverage report to codecov
     - ./codecov -t ${CODECOV_TOKEN} --file test/report/cov.xml
