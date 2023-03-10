@@ -1,3 +1,23 @@
+# [1.1.0-dev.1](https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.1...v1.1.0-dev.1) (2023-03-10)
+
+
+### Bug Fixes
+
+* **handlers.project:** changes to make all tests passed ([4d6a126](https://gitlab.hbp.link/hip/bids-tools/commit/4d6a1265e23010d16899844f27958f1d89bb34dd))
+* **handlers.project:** correct way to extract input paths and create intermediate dirs for doc import ([c44fb70](https://gitlab.hbp.link/hip/bids-tools/commit/c44fb700b716732cb9e68cbbba7a7b8ef6aa23f6))
+
+
+### Features
+
+* add new `project` module with draft of methods supporting the HIP collab space ([0aa717b](https://gitlab.hbp.link/hip/bids-tools/commit/0aa717b89872d6a57fc4be4d9803f5e1500f3926))
+* **bids.dataset:** add methods to support the creation of an initial BIDS dataset ([8b95bcc](https://gitlab.hbp.link/hip/bids-tools/commit/8b95bcc0b7d61845e3900fde38b5994980537c9a))
+* **cli.run:** add new commands to the commandline interface ([47e9702](https://gitlab.hbp.link/hip/bids-tools/commit/47e97029786f130a891dd8b9ee339f7beb421c73))
+* **handlers.project:** add environments folder to project structure ([d387507](https://gitlab.hbp.link/hip/bids-tools/commit/d387507b0358fac4768f4f190eef7e790b3def35))
+* **handlers.project:** create initial documents directory structure with "clinical", "reports", "protocols", "other" folders ([e9feeae](https://gitlab.hbp.link/hip/bids-tools/commit/e9feeae26d93b66a505ce8bad1a376a199586358))
+* **handlers.project:** implement methods supporting the creation and population of collab projects ([71d79bf](https://gitlab.hbp.link/hip/bids-tools/commit/71d79bfab9a2ede39aedc8efed8eb802df734d0d))
+* **handlers.project:** print info at start and end with "SUCCESS" message in main methods ([c35a49a](https://gitlab.hbp.link/hip/bids-tools/commit/c35a49adec80d014ff874c5fa5b53992b7c06637))
+* write JSON dataset summary in project methods ([17b96a3](https://gitlab.hbp.link/hip/bids-tools/commit/17b96a30cc9517aad97608dee74be324137a2fc0))
+
 ## [1.0.1](https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.0...v1.0.1) (2023-03-02)
 
 
