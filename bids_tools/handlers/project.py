@@ -11,6 +11,7 @@ from pathlib import Path
 from sre_constants import SUCCESS
 
 from bids_tools.bids.dataset import create_empty_bids_dataset
+from bids_tools.bids.dataset import get_bidsdataset_content
 
 
 PROJECT_FOLDERS = [
@@ -52,7 +53,7 @@ def initialize_project_structure(
         f.writelines([f"# {project_title}\n\n", f"{project_description}"])
 
 
-def create_project(input_data: str):
+def create_project(input_data: str, output_file: str):
     """Create a new Collaborative Project on the HIP initialized with directory/file structure.
 
     Parameters
@@ -76,6 +77,9 @@ def create_project(input_data: str):
                     "DatasetDOI": "10.18112/openneuro.ds000000.v1.0.0"
                 }
             }
+
+    output_file : str
+        Path to output file that will contain the JSON summary of the BIDS dataset of the project.
     """
     # Load input data
     with open(input_data, "r") as f:
@@ -92,10 +96,16 @@ def create_project(input_data: str):
         bids_dir=(project_dir / "inputs" / "bids-dataset").absolute(),
         dataset_desc=input_data["datasetDescription"],
     )
+    # Create output file with summary of BIDS dataset
+    dataset_content = get_bidsdataset_content(
+        bids_dir=str((project_dir / "inputs" / "bids-dataset").absolute()),
+    )
+    with open(output_file, "w") as f:
+        json.dump(dataset_content, f, indent=4)
     print(SUCCESS)
 
 
-def import_subject(input_data: str):
+def import_subject(input_data: str, output_file: str):
     """Import a new subject from a BIDS dataset of the HIP Center space to the BIDS dataset of the HIP Collaborative Project.
 
     Parameters
@@ -109,6 +119,9 @@ def import_subject(input_data: str):
                 "participantId": "sub-01",
                 "targetDatasetPath": "/path/to/target/bids/dataset/directory",
             }
+
+    output_file : str
+        Path to output file that will contain the JSON summary of the BIDS dataset of the project.
     """
     # Load input data
     with open(input_data, "r") as f:
@@ -138,6 +151,12 @@ def import_subject(input_data: str):
             Path(input_data["targetDatasetPath"]) / "participants.tsv"
         ).absolute(),
     )
+    # Create output file with summary of BIDS dataset
+    dataset_content = get_bidsdataset_content(
+        bids_dir=str((Path(input_data["targetDatasetPath"])).absolute()),
+    )
+    with open(output_file, "w") as f:
+        json.dump(dataset_content, f, indent=4)
     print(SUCCESS)
 
 

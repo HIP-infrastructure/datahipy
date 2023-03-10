@@ -81,9 +81,9 @@ def main():
     if command == "sub.delete.file":
         return phdl.sub_delete_file(input_data=input_data)
     if command == "project.create":
-        create_project(input_data=input_data)
+        create_project(input_data=input_data, output_file=output_file)
     if command == "project.sub.import":
-        import_subject(input_data=input_data)
+        import_subject(input_data=input_data, output_file=output_file)
     if command == "project.doc.import":
         import_document(input_data=input_data)
 
