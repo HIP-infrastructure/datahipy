@@ -15,12 +15,12 @@ This data management software is developed by the HIP team at the University Hos
 .. image:: https://zenodo.org/badge/428721094.svg
   :target: https://zenodo.org/badge/latestdoi/428721094
   :alt: Digital Object Identifier (DOI)
-.. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg
+.. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg?private_token=glpat-5cJTQmAsz3as-x3xzx47
   :target: https://gitlab.hbp.link/hip/bids-tools/-/commits/master
   :alt: CI/CD
-.. image:: https://gitlab.hbp.link/hip/bids-tools/badges/master/coverage.svg
-  :target: https://gitlab.hbp.link/hip/bids-tools/-/commits/master
-  :alt: Coverage
+.. image:: https://codecov.io/github/HIP-infrastructure/bids-tools/branch/master/graph/badge.svg?token=F1CWBIGXJN 
+  :target: https://codecov.io/github/HIP-infrastructure/bids-tools
+  :alt: Code Coverage
 
 .. TODO add badge for maybe docs 
 

@@ -1,12 +1,12 @@
 # `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
 
-Copyright © 2012-2023 The HIP team and Contributors, All rights reserved.
+Copyright © 2022-2023 The HIP team, University Hospital of Lausanne (CHUV), Switzerland & Contributors, All rights reserved.
 
 This software is distributed under the open-source Apache 2.0 license. See [LICENSE](LICENSE.txt) file for details.
 
 ---
 
-![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/bids-tools?include_prereleases) ![Latest GitHub Release Date](https://img.shields.io/github/release-date-pre/HIP-infrastructure/bids-tools) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master) [![Coverage](https://gitlab.hbp.link/hip/bids-tools/badges/master/coverage.svg)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master)
+![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/bids-tools?include_prereleases) ![Latest GitHub Release Date](https://img.shields.io/github/release-date-pre/HIP-infrastructure/bids-tools) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg?private_token=glpat-5cJTQmAsz3as-x3xzx47)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/bids-tools/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/bids-tools)
 
 `bids_tools` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
 

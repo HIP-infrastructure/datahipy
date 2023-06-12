@@ -40,6 +40,8 @@ before_script:
   - curl --fail --show-error --location "https://github.com/genuinetools/reg/releases/download/v$REG_VERSION/reg-linux-amd64" --output ./reg
   - echo "$REG_SHA256  ./reg" | sha256sum -c -
   - chmod a+x ./reg
+  # install additional dependencies required by codecov uploader
+  - apk add --no-cache gnupg coreutils
   # login the gitlab container registry
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
 
@@ -55,13 +57,23 @@ test:
   stage: test
   needs: ["build"]
   script:
+    # Run tests
     - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: test/report/cov.xml
+    # Download codecov uploader with integrity check
+    - curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+    - curl -Os https://uploader.codecov.io/latest/alpine/codecov
+    - curl -Os https://uploader.codecov.io/latest/alpine/codecov.SHA256SUM
+    - curl -Os https://uploader.codecov.io/latest/alpine/codecov.SHA256SUM.sig
+    - gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+    - chmod +x codecov
+    # Upload the coverage report to codecov
+    - ./codecov -t ${CODECOV_TOKEN} --file test/report/cov.xml
+      
+  # artifacts:
+  #   reports:
+  #     coverage_report:
+  #       coverage_format: cobertura
+  #       path: test/report/cov.xml
 
 test-python-install:
   stage: test-python-install
