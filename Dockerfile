@@ -104,23 +104,23 @@ RUN pip3 install \
     rm -rf /var/lib/apt/lists/*
 
 ###############################################################################
-# Install bids-tools
+# Install datahipy
 ###############################################################################
 
-# Set the working directory to /app/bids_tools
-WORKDIR /apps/bids_tools
+# Set the working directory to /app/datahipy
+WORKDIR /apps/datahipy
 
 # Copy necessary contents of this repository.
 COPY ./.coveragerc ./.coveragerc
 COPY setup.py ./setup.py
 COPY setup.cfg ./setup.cfg
 COPY README.md ./README.md
-COPY bids_tools ./bids_tools
+COPY datahipy ./datahipy
 # COPY LICENSE ./LICENSE
 
-# Install bids-tools with static version taken from the argument
+# Install datahipy with static version taken from the argument
 ARG VERSION=unknown
-RUN echo "${VERSION}" > /apps/bids_tools/bids_tools/VERSION \
+RUN echo "${VERSION}" > /apps/datahipy/datahipy/VERSION \
     && pip install -e ".[test]"
 
 ###############################################################################
@@ -182,7 +182,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.cmd.test="docker run --rm \
     --entrypoint /entrypoint_pytest.sh \
     -v /path/to/bids-tools/test:/test \
-    -v /path/to/bids-tools/bids_tools:/apps/bids_tools/bids_tools \
+    -v /path/to/bids-tools/datahipy:/apps/datahipy/datahipy \
     bids-tools \
     USERNAME USERID \
     /test"

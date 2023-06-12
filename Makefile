@@ -34,14 +34,14 @@ test:
 	docker run -t --rm \
 		--entrypoint "/entrypoint_pytest.sh" \
 		-v $(PROJECT_DIR)/test:/test \
-		-v $(PROJECT_DIR)/bids_tools:/apps/bids_tools/bids_tools \
+		-v $(PROJECT_DIR)/datahipy:/apps/datahipy/datahipy \
 		$(IMAGE_TAG) \
 		$(USER) \
 		$(USER_ID) \
 		/test
 	@echo "Fix path in coverage xml report..."
 	sed -i -r  \
-		"s|/apps/bids_tools/bids_tools|$(PROJECT_DIR)/bids_tools|g" \
+		"s|/apps/datahipy/datahipy|$(PROJECT_DIR)/datahipy|g" \
 		$(PROJECT_DIR)/test/report/cov.xml
 
 #build-docker: @ Builds the Docker image
@@ -71,7 +71,7 @@ install-python:
 
 #install-python-wheel: @ Installs the python wheel
 install-python-wheel: build-python-wheel
-	pip install bids_tools
+	pip install datahipy
 
 #build-python-wheel: @ Builds the python wheel
 build-python-wheel:
@@ -79,7 +79,7 @@ build-python-wheel:
 
 #test-python-install: @ Tests the python package installation
 test-python-install: install-python install-python-wheel	
-	bids_tools --version
+	datahipy --version
 
 #help:	@ List available tasks on this project
 help:
