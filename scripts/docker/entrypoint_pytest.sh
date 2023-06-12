@@ -23,11 +23,11 @@ else
 fi
 
 runuser -u $USER -- pytest \
-    --cov-config "/apps/bids_tools/.coveragerc" \
+    --cov-config "/apps/datahipy/.coveragerc" \
     --cov-report html:"/test/report/cov_html" \
     --cov-report xml:"/test/report/cov.xml" \
     --cov-report lcov:"/test/report/cov.info" \
-    --cov=bids_tools \
+    --cov=datahipy \
     -p no:cacheprovider \
     -s \
     "${@:3}"
