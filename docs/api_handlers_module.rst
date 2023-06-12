@@ -1,24 +1,24 @@
 .. _apidoc_handlers:
 
 **********************
-``bids_tools.handlers``
+``datahipy.handlers``
 **********************
 
-The ``bids_tools.handlers`` module contains submodules that define classes and functions that handle the reading and writing of BIDS data. The classes are also designed to be used with the ``bids_tools`` command line interface.
+The ``datahipy.handlers`` module contains submodules that define classes and functions that handle the reading and writing of BIDS data. The classes are also designed to be used with the ``datahipy`` command line interface.
 
-`bids_tools.handlers.dataset`
+`datahipy.handlers.dataset`
 ================================
 
-.. automodule:: bids_tools.handlers.dataset
+.. automodule:: datahipy.handlers.dataset
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.handlers.participants`
+`datahipy.handlers.participants`
 ====================================
 
-.. automodule:: bids_tools.handlers.participants
+.. automodule:: datahipy.handlers.participants
    :members:
    :undoc-members:
    :show-inheritance:

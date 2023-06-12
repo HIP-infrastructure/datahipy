@@ -7,16 +7,16 @@ Commandline Usage
 Commandline Arguments
 =============================
 
-The command to run the main `bids_tools` commandline interface is as follows.
+The command to run the main `DataHIPy` commandline interface is as follows.
 
 .. argparse::
-		:ref: bids_tools.cli.run.get_parser
-		:prog: bids_tools
+		:ref: datahipy.cli.run.get_parser
+		:prog: datahipy
 
 Commands
 --------
 
-Here is a list of all the commands available in the ``--command`` argument of the `bids_tools` commandline interface with an example of input JSON file (``--input_data`` argument) generated and used by the ``test/cli/test_run.py`` script for testing each command.
+Here is a list of all the commands available in the ``--command`` argument of the `datahipy` commandline interface with an example of input JSON file (``--input_data`` argument) generated and used by the ``test/cli/test_run.py`` script for testing each command.
 
 .. tip::
 
@@ -100,7 +100,7 @@ Example of content of input JSON data for the ``--input_data`` argument when usi
 
 .. _cmdusage-docker:
 
-Running `bids_tools` in Docker
+Running `DataHIPy` in Docker
 ================================
 
 TBC

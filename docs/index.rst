@@ -1,9 +1,9 @@
-.. bids_tools documentation master file, created by
+.. DataHIPy documentation master file, created by
    sphinx-quickstart on Tue Feb 14 11:46:23 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to `bids_tools`'s documentation!
+Welcome to `DataHIPy`'s documentation!
 ========================================
 
 This data management software is developed by the HIP team at the University Hospital of Lausanne (CHUV) for use within the lab, as well as for open-source software distribution.
@@ -27,12 +27,12 @@ This data management software is developed by the HIP team at the University Hos
 Introduction
 -------------
 
-`bids_tools` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure (`BIDS <https://bids-specification.readthedocs.io>`__).
+`DataHIPy` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure (`BIDS <https://bids-specification.readthedocs.io>`__).
 
 Aknowledgment
 --------------
 
-If your are using `bids_tools` in your work, please acknowledge this software and its dependencies. See :ref:`Citing <citing>` for more details.
+If your are using `DataHIPy` in your work, please acknowledge this software and its dependencies. See :ref:`Citing <citing>` for more details.
 
 License information
 --------------------
@@ -97,7 +97,7 @@ Contents
 
 .. toctree::
    :maxdepth: 1
-   :caption: About bids_tools
+   :caption: About DataHIPy
 
    LICENSE
    citing

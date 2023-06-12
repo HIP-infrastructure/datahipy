@@ -1,15 +1,15 @@
 .. _apidoc_cli:
 
 ******************
-``bids_tools.cli``
+``datahipy.cli``
 ******************
 
-The ``bids_tools.cli`` module contains the `run` submodule that define the command line interface (CLI) for the ``bids_tools`` package.
+The ``datahipy.cli`` module contains the `run` submodule that define the command line interface (CLI) for the ``datahipy`` package.
 
-`bids_tools.cli.run`
+`datahipy.cli.run`
 ======================
 
-.. automodule:: bids_tools.cli.run
+.. automodule:: datahipy.cli.run
    :members:
    :undoc-members:
    :show-inheritance:
