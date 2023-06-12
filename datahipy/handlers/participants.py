@@ -22,9 +22,9 @@ try:
 except ImportError:
     print("WARNING: BIDS Manager Python package is not accessible.")
 
-from bids_tools.handlers.dataset import DatasetHandler
-from bids_tools.bids.participant import get_subject_bidsfile_info
-from bids_tools.bids.bids_manager import post_import_bids_refinement
+from datahipy.handlers.dataset import DatasetHandler
+from datahipy.bids.participant import get_subject_bidsfile_info
+from datahipy.bids.bids_manager import post_import_bids_refinement
 
 
 class ParticipantHandler:

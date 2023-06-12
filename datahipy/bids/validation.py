@@ -6,7 +6,7 @@
 import json
 import subprocess
 from os import path as op
-from bids_tools.bids.const import BIDS_VERSION
+from datahipy.bids.const import BIDS_VERSION
 
 
 def validate_bids_dataset(container_dataset_path, *args):

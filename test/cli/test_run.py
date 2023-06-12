@@ -1,7 +1,7 @@
 # Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 
-"""Test the bids_tools CLI."""
+"""Test the datahipy CLI."""
 
 from __future__ import absolute_import
 import os
@@ -11,7 +11,7 @@ import json
 
 @pytest.mark.script_launch_mode("subprocess")
 def test_run_help(script_runner):
-    ret = script_runner.run("bids_tools", "-h")
+    ret = script_runner.run("datahipy", "-h")
     assert ret.success
 
 
@@ -37,9 +37,9 @@ def test_run_dataset_create(script_runner, dataset_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools dataset.create command
+    # Run datahipy dataset.create command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "dataset.create",
         "--input_data",
@@ -130,9 +130,9 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools sub.import command
+    # Run datahipy sub.import command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.import",
         "--input_data",
@@ -159,9 +159,9 @@ def test_run_dataset_get(script_runner, dataset_path, io_path):
         json.dump(input_data, f, indent=4)
     # Output file path
     output_file = os.path.join(io_path, "get_dataset_output.json")
-    # Run bids_tools dataset.get command
+    # Run datahipy dataset.get command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "dataset.get",
         "--input_data",
@@ -191,9 +191,9 @@ def test_run_datasets_get(script_runner, dataset_path, io_path):
         json.dump(input_data, f, indent=4)
     # Output file path
     output_file = os.path.join(io_path, "get_datasets_output.json")
-    # Run bids_tools datasets.get command
+    # Run datahipy datasets.get command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "datasets.get",
         "--input_data",
@@ -216,9 +216,9 @@ def test_run_sub_get(script_runner, dataset_path, io_path):
         json.dump(input_data, f, indent=4)
     # Output file path
     output_file = os.path.join(io_path, "get_sub_output.json")
-    # Run bids_tools sub.get command
+    # Run datahipy sub.get command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.get",
         "--input_data",
@@ -253,9 +253,9 @@ def test_run_sub_edit_clinical(script_runner, dataset_path, io_path):
         json.dump(input_data, f, indent=4)
     # Output updated participants.tsv file
     output_file = os.path.join(dataset_path, "participants.tsv")
-    # Run bids_tools sub.edit.clinical command
+    # Run datahipy sub.edit.clinical command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.edit.clinical",
         "--input_data",
@@ -294,9 +294,9 @@ def test_run_project_create(script_runner, project_path, io_path):
         json.dump(input_data, f, indent=4)
     # Output file path
     output_file = os.path.join(io_path, "create_project_output.json")
-    # Run bids_tools project.create command
+    # Run datahipy project.create command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "project.create",
         "--input_data",
@@ -346,9 +346,9 @@ def test_run_project_sub_import(script_runner, dataset_path, project_path, io_pa
         json.dump(input_data, f, indent=4)
     # Output file path
     output_file = os.path.join(io_path, "import_project_sub_output.json")
-    # Run bids_tools project.sub.import command
+    # Run datahipy project.sub.import command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "project.sub.import",
         "--input_data",
@@ -385,9 +385,9 @@ def test_run_project_doc_import(script_runner, dataset_path, project_path, io_pa
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools project.doc.import command
+    # Run datahipy project.doc.import command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "project.doc.import",
         "--input_data",
@@ -417,9 +417,9 @@ def test_run_sub_delete_file(script_runner, dataset_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools sub.delete.file command
+    # Run datahipy sub.delete.file command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.delete.file",
         "--input_data",
@@ -452,9 +452,9 @@ def test_run_sub_delete(script_runner, dataset_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools sub.delete command
+    # Run datahipy sub.delete command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.delete",
         "--input_data",
@@ -477,9 +477,9 @@ def test_run_project_sub_delete(script_runner, project_path, io_path):
     # Write input data to file
     with open(input_file, "w") as f:
         json.dump(input_data, f, indent=4)
-    # Run bids_tools sub.delete command
+    # Run datahipy sub.delete command
     ret = script_runner.run(
-        "bids_tools",
+        "datahipy",
         "--command",
         "sub.delete",
         "--input_data",

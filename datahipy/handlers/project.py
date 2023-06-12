@@ -10,8 +10,8 @@ import pandas as pd
 from pathlib import Path
 from sre_constants import SUCCESS
 
-from bids_tools.bids.dataset import create_empty_bids_dataset
-from bids_tools.bids.dataset import get_bidsdataset_content
+from datahipy.bids.dataset import create_empty_bids_dataset
+from datahipy.bids.dataset import get_bidsdataset_content
 
 
 PROJECT_FOLDERS = [

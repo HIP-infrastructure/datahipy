@@ -4,7 +4,7 @@
 """Utility functions to retrieve version related information from a BIDS dataset."""
 
 from packaging import version
-from bids_tools.bids.const import BIDS_VERSION
+from datahipy.bids.const import BIDS_VERSION
 
 
 def determine_bids_schema_version(dataset_desc):

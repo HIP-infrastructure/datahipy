@@ -1,7 +1,7 @@
 # Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source Apache 2.0 license.
 
-"""Define constants used by packages of `bids_tools.bids`."""
+"""Define constants used by packages of `datahipy.bids`."""
 
 BIDS_VERSION = "v1.7.0"
 
