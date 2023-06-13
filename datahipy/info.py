@@ -1,7 +1,7 @@
 # Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source Apache 2.0 license.
 
-"""This file contains bids_tools package information."""
+"""This file contains datahipy package information."""
 
 import datetime
 
@@ -28,7 +28,7 @@ __maintainer__ = "The HIP team"
 __email__ = "support@hip.ch"
 __status__ = "Prototype"
 
-__packagename__ = "bids-tools"
+__packagename__ = "datahipy"
 
 __url__ = "https://github.com/HIP-infrastructure/{name}/tree/{version}".format(
     name=__packagename__, version=__version__

@@ -18,7 +18,7 @@ try:
 except ImportError:
     print("WARNING: BIDS Manager Python package is not accessible.")
 
-from bids_tools.bids.dataset import get_bidsdataset_content
+from datahipy.bids.dataset import get_bidsdataset_content
 
 
 class DatasetHandler:

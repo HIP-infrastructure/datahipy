@@ -1,4 +1,4 @@
-from bids_tools.info import (
+from datahipy.info import (
     __version__,
     __author__,
     __email__,

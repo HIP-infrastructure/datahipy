@@ -13,8 +13,8 @@ setup() {
     run docker run -it --rm \
         --entrypoint "/entrypoint_pytest.sh" \
         -v "${PROJECT_ROOT}/test":/test \
-        -v "${PROJECT_ROOT}/bids_tools":/apps/bids_tools/bids_tools \
-        bids-tools \
+        -v "${PROJECT_ROOT}/datahipy":/apps/datahipy/datahipy \
+        datahipy \
         ${USER} $(id -u $USER)  \
         /test
 }

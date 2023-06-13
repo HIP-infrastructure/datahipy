@@ -13,13 +13,13 @@ from datetime import date
 
 from bids import BIDSLayout
 
-from bids_tools.bids.electrophy import get_ieeg_info
-from bids_tools.bids.participant import get_participants_info
-from bids_tools.bids.validation import (
+from datahipy.bids.electrophy import get_ieeg_info
+from datahipy.bids.participant import get_participants_info
+from datahipy.bids.validation import (
     add_bidsignore_validation_rule,
     get_bids_validator_output_info,
 )
-from bids_tools.bids.version import determine_bids_schema_version
+from datahipy.bids.version import determine_bids_schema_version
 
 
 # Set the number of threads to use for parallel processing
@@ -128,7 +128,7 @@ def create_bids_layout(bids_dir=None, **kwargs):
     layout = BIDSLayout(
         root=bids_dir,
         validate=False,
-        config=resource_filename("bids_tools", "bids/config/bids.json"),
+        config=resource_filename("datahipy", "bids/config/bids.json"),
         **kwargs,
     )
     return layout
