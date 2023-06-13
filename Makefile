@@ -14,7 +14,7 @@ override TAG := $(subst _,-,$(TAG))
 $(info TAG (Normalized) = $(TAG))
 
 # Define the complete docker image tag 
-IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/bids-tools:$(TAG),bids-tools:$(TAG)) 
+IMAGE_TAG = $(if $(CI_REGISTRY),$(CI_REGISTRY)/hip/datahipy:$(TAG),datahipy:$(TAG)) 
 
 # Define the build date and vcs reference
 BUILD_DATE = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
