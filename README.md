@@ -1,4 +1,4 @@
-# ![DataHIPy logo](https://raw.githubusercontent.com/https://github.com/HIP-infrastructure/DataHIPy/chore-update-tool-name-and-logo/docs/logos/datahipy-logo-text.png)
+# ![DataHIPy logo](https://raw.githubusercontent.com/HIP-infrastructure/bids-tools/chore/update-tool-name-and-logo/docs/logos/datahipy-logo-text.png)
 
 Copyright © 2022-2023 The HIP team, University Hospital of Lausanne (CHUV), Switzerland & Contributors, All rights reserved.
 
