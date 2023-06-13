@@ -174,15 +174,15 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.cmd="docker run --rm \
     -v /path/to/dataset:/output \
     -v /path/to/input:/input \
-    bids-tools \
+    datahipy \
     USERNAME USERID \
     [--command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}] \
     [--input_data /input/input_data.json] [--output_file /input/output_data.json] \
     [--dataset_path /output] [--input_path /input]" \
     org.label-schema.docker.cmd.test="docker run --rm \
     --entrypoint /entrypoint_pytest.sh \
-    -v /path/to/bids-tools/test:/test \
-    -v /path/to/bids-tools/datahipy:/apps/datahipy/datahipy \
-    bids-tools \
+    -v /path/to/datahipy/test:/test \
+    -v /path/to/datahipy/datahipy:/apps/datahipy/datahipy \
+    datahipy \
     USERNAME USERID \
     /test"
