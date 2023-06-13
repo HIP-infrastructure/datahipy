@@ -54,7 +54,7 @@ build-docker:
 
 #push-docker-ci: @ Push the Docker image with TAG to the CI registry
 push-docker-ci:
-	docker push $(CI_REGISTRY)/hip/bids-tools:$(TAG)
+	docker push $(CI_REGISTRY)/hip/datahipy:$(TAG)
 
 #rm-docker-ci: @ Remove the Docker image with TAG to the CI registry
 # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
