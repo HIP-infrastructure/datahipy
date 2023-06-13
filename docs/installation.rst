@@ -72,7 +72,7 @@ You can then inspect the Docker image version tag with the following command:
 
     $ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    bids-tools          <version>           0e0b0b0b0b0b        1 minute ago        2.94GB
+    datahipy          <version>           0e0b0b0b0b0b        1 minute ago        2.94GB
 
 Once you know the image tag, you can test the built image by running the command which returns the version installed in the Docker image as follows:
 

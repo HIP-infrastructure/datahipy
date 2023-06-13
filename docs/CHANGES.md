@@ -136,5 +136,5 @@
 * install pybids and pandas in docker ([8d3f7e0](https://gitlab.hbp.link/hip/bids-tools/commit/8d3f7e043ad25260d7792f7becfc97ed9c23fd39))
 * make adjustment of bids dataset content ([15008ad](https://gitlab.hbp.link/hip/bids-tools/commit/15008ada069dc210b36d02ea7d18d5a3f9511947))
 * **Makefile:** use BuildKit for docker build ([fa0b55b](https://gitlab.hbp.link/hip/bids-tools/commit/fa0b55bcb8a3ba2b8bc8988f1e6c7d00348e0ab5))
-* perform test and code coverage with pytest and pytest-cov ([8a89db1](https://gitlab.hbp.link/hip/bids-tools/commit/8a89db1b1ede9ca9d3e7d0bb3c0087f6b8191d71))
+* perform test and code coverage with pytest and pytest-cov ([8a89db1](https://gitlab.hbp.link/hip/datahipy/commit/8a89db1b1ede9ca9d3e7d0bb3c0087f6b8191d71))
 * validate with bids-validator and put outputs into the dataset's JSON to be indexed ([c1bcd79](https://gitlab.hbp.link/hip/bids-tools/commit/c1bcd792adb5c71b4340981d7af406dd7d0e60e8))

@@ -14,7 +14,7 @@ setup() {
         --entrypoint "/entrypoint_pytest.sh" \
         -v "${PROJECT_ROOT}/test":/test \
         -v "${PROJECT_ROOT}/datahipy":/apps/datahipy/datahipy \
-        bids-tools \
+        datahipy \
         ${USER} $(id -u $USER)  \
         /test
 }

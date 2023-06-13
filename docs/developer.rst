@@ -66,7 +66,7 @@ How to run the tests via the Docker image
         --entrypoint "/entrypoint_pytest.sh" \
         -v "${PROJECT_ROOT}/test":/test \
         -v "${PROJECT_ROOT}/datahipy":/apps/datahipy/datahipy \
-        bids-tools:<version> \
+        datahipy:<version> \
         ${USER} \
         $(id -u $USER) \
         /test

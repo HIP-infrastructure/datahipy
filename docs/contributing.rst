@@ -12,7 +12,7 @@ Contribution Types
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/HIP-infrastructure/bids-tools/issues.
+Report bugs at https://github.com/HIP-infrastructure/datahipy/issues.
 
 If you are reporting a bug, please include:
 
@@ -38,7 +38,7 @@ Write Documentation
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to create an issue at https://github.com/HIP-infrastructure/bids-tools/issues.
+The best way to send feedback is to create an issue at https://github.com/HIP-infrastructure/datahipy/issues.
 
 If you are proposing a feature:
 
@@ -57,7 +57,7 @@ Ready to contribute? Here's how to set up `DataHIPy` for local development.
 2. Clone your fork locally::
 
     git clone git@github.com:your_name_here/datahipy.git
-    cd bids-tools
+    cd datahipy
 
 3. Create a branch for local development::
 
