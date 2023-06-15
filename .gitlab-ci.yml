@@ -130,12 +130,15 @@ deploy-release:
     - if: '$CI_COMMIT_REF_NAME == "master"'
     - if: '$CI_COMMIT_REF_NAME == "dev"'
   script:
-    # Build the Docker image with prerelease/release version tag
-    - make build-docker TAG=$(python get_version.py)
-    - make push-docker-ci TAG=$(python get_version.py)
     # Add our Github remote repository with ssh
     - git remote add github_origin git@github.com:HIP-infrastructure/datahipy.git
     # Push commits created by semantic-release for version change and changelog
+    - git fetch origin $CI_COMMIT_REF_NAME
+    - git checkout $CI_COMMIT_REF_NAME
     - git push github_origin $CI_COMMIT_REF_NAME
     # Push the new tag created by semantic-release
     - git push --tags github_origin $CI_COMMIT_REF_NAME
+    # Build the Docker image with prerelease/release version tag
+    - make build-docker TAG=$(python get_version.py)
+    - make push-docker-ci TAG=$(python get_version.py)
+    
