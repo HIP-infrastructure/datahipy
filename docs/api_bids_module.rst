@@ -1,69 +1,69 @@
 .. _apidoc_bids:
 
 *******************
-``bids_tools.bids``
+``datahipy.bids``
 *******************
 
-The ``bids_tools.bids`` module contains submodules that define utility functions to interact with BIDS datasets.
+The ``datahipy.bids`` module contains submodules that define utility functions to interact with BIDS datasets.
 
-`bids_tools.bids.const`
+`datahipy.bids.const`
 =========================
 
-.. automodule:: bids_tools.bids.const
+.. automodule:: datahipy.bids.const
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.dataset`
+`datahipy.bids.dataset`
 ===========================
 
-.. automodule:: bids_tools.bids.dataset
+.. automodule:: datahipy.bids.dataset
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.participant`
+`datahipy.bids.participant`
 ===============================
 
-.. automodule:: bids_tools.bids.participant
+.. automodule:: datahipy.bids.participant
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.electrophy`
+`datahipy.bids.electrophy`
 ==============================
 
-.. automodule:: bids_tools.bids.electrophy
+.. automodule:: datahipy.bids.electrophy
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.validation`
+`datahipy.bids.validation`
 ==============================
 
-.. automodule:: bids_tools.bids.validation
+.. automodule:: datahipy.bids.validation
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.version`
+`datahipy.bids.version`
 ===========================
 
-.. automodule:: bids_tools.bids.version
+.. automodule:: datahipy.bids.version
    :members:
    :undoc-members:
    :show-inheritance:
    :noindex:
 
-`bids_tools.bids.bids_manager`
+`datahipy.bids.bids_manager`
 ================================
 
-.. automodule:: bids_tools.bids.bids_manager
+.. automodule:: datahipy.bids.bids_manager
    :members:
    :undoc-members:
    :show-inheritance:

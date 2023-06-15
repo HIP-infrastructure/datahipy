@@ -3,14 +3,14 @@
 # Copyright (C) 2022, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source Apache 2.0 license.
 
-"""Utility script to get the version of `bids_tools`."""
+"""Utility script to get the version of `datahipy`."""
 import sys
 import os.path as op
 
 
 def main():
     sys.path.insert(0, op.abspath("."))
-    from bids_tools import __version__
+    from datahipy import __version__
 
     print(__version__)
     return __version__

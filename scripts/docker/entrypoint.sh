@@ -22,4 +22,4 @@ else
     echo "Running as root."
 fi
 
-runuser -u $USER -- bids_tools "${@:3}"
+runuser -u $USER -- datahipy "${@:3}"

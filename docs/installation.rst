@@ -8,14 +8,14 @@ Installation Instructions for Users
 Prerequisites
 ==============
 
-Installation and use of the `bids_tools` and dependencies have been facilitated through the use of `Docker <https://www.docker.com/>`_ software containerization. If you adopt this approach, which is recommended, you need to have Docker engine installed (see instructions in :ref:`manual-install-docker`).
+Installation and use of the `DataHIPy` and dependencies have been facilitated through the use of `Docker <https://www.docker.com/>`_ software containerization. If you adopt this approach, which is recommended, you need to have Docker engine installed (see instructions in :ref:`manual-install-docker`).
 
-While Docker enables `bids_tools` to be run on all major operating systems where you have root privileges. A Docker image can be easily converted to a Singularity image to run `bids_tools` on Linux systems where you might not have root privileges such as a High Performance Computing cluster (See `examples <https://docs.sylabs.io/guides/3.7/user-guide/cli/singularity_pull.html#examples>`_).
+While Docker enables `DataHIPy` to be run on all major operating systems where you have root privileges. A Docker image can be easily converted to a Singularity image to run `DataHIPy` on Linux systems where you might not have root privileges such as a High Performance Computing cluster (See `examples <https://docs.sylabs.io/guides/3.7/user-guide/cli/singularity_pull.html#examples>`_).
 
 Please check https://docs.docker.com/get-started/overview/ if you want to learn more about Docker.
 
 .. note::
-    If you do not want to use Docker, `bids_tools` can also be installed locally (see :ref:`instructions_bids_tools_install`).
+    If you do not want to use Docker, `DataHIPy` can also be installed locally (see :ref:`instructions_datahipy_install`).
 
 
 .. _manual-install-docker:
@@ -55,14 +55,14 @@ Installation of Docker Engine
 Building the Docker Image
 =========================
 
-The Docker image can be built from the Makefile provided in the `bids_tools` repository as follows:
+The Docker image can be built from the Makefile provided in the `DataHIPy` repository as follows:
 
 .. code-block:: bash
 
-    $ # Clone locally the bids_tools repository
-    $ git clone https://github.com/HIP-infrastructure/bids-tools.git bids-tools
-    $ # Go to the bids_tools directory
-    $ cd bids-tools
+    $ # Clone locally the datahipy repository
+    $ git clone https://github.com/HIP-infrastructure/DataHIPy.git DataHIPy
+    $ # Go to the DataHIPy directory
+    $ cd DataHIPy
     $ # Build the docker image
     $ make -B build-docker
 
@@ -72,15 +72,14 @@ You can then inspect the Docker image version tag with the following command:
 
     $ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    bids-tools          <version>           0e0b0b0b0b0b        1 minute ago        2.94GB
+    datahipy          <version>           0e0b0b0b0b0b        1 minute ago        2.94GB
 
 Once you know the image tag, you can test the built image by running the command which returns the version installed in the Docker image as follows:
 
 .. code-block:: bash
 
     $ docker run -it --rm \
-        bids-tools:<version> \
-        bids-tools \
+        datahipy:<version> \
         ${USER} \
         $(id -u $USER) \
         --version

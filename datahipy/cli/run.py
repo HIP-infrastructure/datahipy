@@ -1,14 +1,14 @@
 # Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source Apache 2.0 license.
 
-"""Command line interface for bids_tools."""
+"""Command line interface for datahipy."""
 
 import argparse
-from bids_tools import __version__, __release_date__
-from bids_tools.bids.dataset import get_all_datasets_content
-from bids_tools.handlers.dataset import DatasetHandler
-from bids_tools.handlers.participants import ParticipantHandler
-from bids_tools.handlers.project import create_project, import_subject, import_document
+from datahipy import __version__, __release_date__
+from datahipy.bids.dataset import get_all_datasets_content
+from datahipy.handlers.dataset import DatasetHandler
+from datahipy.handlers.participants import ParticipantHandler
+from datahipy.handlers.project import create_project, import_subject, import_document
 
 VALID_COMMANDS = [
     "dataset.create",
@@ -41,7 +41,7 @@ def get_parser():
         "-v",
         "--version",
         action="version",
-        version="bids_tools version {} \n(release date: {})".format(
+        version="datahipy version {} \n(release date: {})".format(
             __version__, __release_date__
         ),
     )

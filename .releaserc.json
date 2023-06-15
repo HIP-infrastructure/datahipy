@@ -14,18 +14,10 @@
         "replacements": [
           {
             "files": [
-              "bids_tools/info.py"
+              "datahipy/info.py"
             ],
             "from": "__version__ = \".*\"",
             "to": "__version__ = \"${nextRelease.version}\"",
-            "results": [
-              {
-                "file": "bids_tools/info.py",
-                "hasChanged": true,
-                "numMatches": 1,
-                "numReplacements": 1
-              }
-            ],
             "countMatches": true
           }
         ]
@@ -50,7 +42,7 @@
       "@semantic-release/git",
       {
         "assets": [
-          "bids_tools/info.py",
+          "datahipy/info.py",
           "docs/CHANGES.md"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"

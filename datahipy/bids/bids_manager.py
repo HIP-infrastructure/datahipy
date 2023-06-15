@@ -7,7 +7,7 @@ import os
 import re
 import json
 
-from bids_tools.bids.dataset import create_bids_layout
+from datahipy.bids.dataset import create_bids_layout
 
 
 def post_import_bids_refinement(bids_dir):

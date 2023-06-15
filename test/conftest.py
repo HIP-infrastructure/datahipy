@@ -1,7 +1,7 @@
 # Copyright (C) 2023, The HIP team and Contributors, All rights reserved.
 #  This software is distributed under the open-source XXX license.
 
-"""Define fixtures for testing bids_tools package."""
+"""Define fixtures for testing datahipy package."""
 
 import os
 import pytest

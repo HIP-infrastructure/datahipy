@@ -1,4 +1,4 @@
-# `bids_tools`: Tools to manage BIDS datasets in the Human intracranial EEG platform
+# ![DataHIPy logo](https://raw.githubusercontent.com/HIP-infrastructure/datahipy/chore/update-tool-name-and-logo/docs/logos/datahipy-logo-text.png)
 
 Copyright © 2022-2023 The HIP team, University Hospital of Lausanne (CHUV), Switzerland & Contributors, All rights reserved.
 
@@ -6,25 +6,25 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 ---
 
-![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/bids-tools?include_prereleases) ![Latest GitHub Release Date](https://img.shields.io/github/release-date-pre/HIP-infrastructure/bids-tools) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/bids-tools/badges/master/pipeline.svg?private_token=glpat-5cJTQmAsz3as-x3xzx47)](https://gitlab.hbp.link/hip/bids-tools/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/bids-tools/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/bids-tools)
+![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/datahipy?include_prereleases) ![Latest GitHub Release Date](https://img.shields.io/github/release-date-pre/HIP-infrastructure/datahipy) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/datahipy/badges/master/pipeline.svg?private_token=glpat-a_qxRwZSNcAq9CMoK2tA)](https://gitlab.hbp.link/hip/datahipy/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/datahipy)
 
-`bids_tools` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
+`DataHIPy` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
 
 ### Resources
 
-*   **Documentation:** https://hip-infrastructure.github.io/bids-tools/
-*   **Source:** https://github.com/HIP-infrastructure/bids-tools
-*   **Bug reports:** https://github.com/HIP-infrastructure/bids-tools/issues
+*   **Documentation:** https://hip-infrastructure.github.io/datahipy/
+*   **Source:** https://github.com/HIP-infrastructure/datahipy
+*   **Bug reports:** https://github.com/HIP-infrastructure/datahipy/issues
 
 ## Installation
 
-*   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/bids-tools/installation.html#installation-of-docker-engine))
+*   Install Docker engine (See [instructions](https://hip-infrastructure.github.io/datahipy/installation.html#installation-of-docker-engine))
 
-*   Clone this repository and go to the `bids-tools` directory:
+*   Clone this repository and go to the `datahipy` directory:
 
     ```bash
-    $ git clone https://github.com/HIP-infrastructure/bids-tools.git
-    $ cd bids-tools
+    $ git clone https://github.com/HIP-infrastructure/DataHIPy.git
+    $ cd DataHIPy
     ```
 
 *   Checkout submodules:
@@ -39,7 +39,7 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
     $ make -B build-docker
     ```
 
-*   You are ready to use `bids_tools` :rocket:!
+*   You are ready to use `DataHIPy` :rocket:!
 
 ## Test
 Run `test/run_tests.sh` in a terminal:
@@ -53,7 +53,7 @@ After completion, coverage report in HTML format can be found in ``test/report/c
 The tool can be easily run as follows:
 
 ```output
-usage: bids_tools [-h]
+usage: datahipy [-h]
                   [--command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}]
                   [--input_data INPUT_DATA]
                   [--output_file OUTPUT_FILE]

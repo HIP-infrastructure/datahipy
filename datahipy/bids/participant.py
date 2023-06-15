@@ -5,7 +5,7 @@
 
 import pandas as pd
 from os import path as op
-from bids_tools.bids.const import (
+from datahipy.bids.const import (
     VALID_EXTENSIONS,
     BIDS_ENTITY_MAP,
     BIDSJSONFILE_DATATYPE_KEY_MAP,
@@ -30,8 +30,8 @@ def get_subject_bidsfile_info(bids_dir, **kwargs):
         List of dictionaries with BIDS file information for a given subject.
     """
     # Import the required functions
-    from bids_tools.bids.dataset import create_bids_layout
-    from bids_tools.bids.electrophy import get_channels_info
+    from datahipy.bids.dataset import create_bids_layout
+    from datahipy.bids.electrophy import get_channels_info
 
     # Create a pybids representation of the dataset
     layout = create_bids_layout(bids_dir)
