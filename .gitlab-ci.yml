@@ -13,6 +13,7 @@ variables:
   REG_VERSION: 0.16.1
   GL_TOKEN: $GL_TOKEN
   GH_TOKEN: $GH_TOKEN
+  SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
 services:
   - name: docker:20-dind
     alias: docker
@@ -44,6 +45,17 @@ before_script:
   - apk add --no-cache gnupg coreutils
   # login the gitlab container registry
   - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+  # install ssh-agent if not already installed, it is required by Docker
+  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+  # run ssh-agent (inside the build environment)
+  - eval $(ssh-agent -s)
+  # give the right permissions, otherwise ssh-add will refuse to add files
+  - chmod 400 "$SSH_PRIVATE_KEY"
+  # add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
+  - ssh-add "$SSH_PRIVATE_KEY"
+  # create the SSH directory and give it the right permissions
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
 
 stages:
   - test-python-install
@@ -120,7 +132,7 @@ deploy-release:
     - make push-docker-ci TAG=$(python get_version.py)
     # Add our Github remote repository and fined-grained token authentication
     - echo "GH_TOKEN=${GH_TOKEN}"
-    - GH_TOKEN=${GH_TOKEN} git remote add github_origin https://oauth2:${GH_TOKEN}@github.com/HIP-infrastructure/datahipy
+    - GH_TOKEN=${GH_TOKEN} git remote add github_origin git@github.com:HIP-infrastructure/datahipy.git
     # Push commits created by semantic-release for version change and changelog
     - git push github_origin $CI_COMMIT_REF_NAME
     # Push the new tag created by semantic-release
