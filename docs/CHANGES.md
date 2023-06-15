@@ -1,3 +1,10 @@
+## [1.1.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.1.0...v1.1.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **docs/CHANGES.md:** clean duplicated version change logs ([35e33f4](https://gitlab.hbp.link/hip/datahipy/commit/35e33f4c33cc1cac722f90e7fa9cf9735c3b33f2))
+
 # [1.1.0](https://gitlab.hbp.link/hip/datahipy/compare/v1.0.1...v1.1.0) (2023-06-15)
 
 
