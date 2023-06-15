@@ -49,13 +49,14 @@ before_script:
   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
   # run ssh-agent (inside the build environment)
   - eval $(ssh-agent -s)
-  # give the right permissions, otherwise ssh-add will refuse to add files
-  - chmod 400 "$SSH_PRIVATE_KEY"
-  # add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
-  - ssh-add "$SSH_PRIVATE_KEY"
   # create the SSH directory and give it the right permissions
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
+  # give the right permissions, otherwise ssh-add will refuse to add files
+  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_gitlab_rsa
+  - chmod 400 ~/.ssh/id_gitlab_rsa
+  # add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
+  - ssh-add ~/.ssh/id_gitlab_rsa
 
 stages:
   - test-python-install
