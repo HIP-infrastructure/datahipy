@@ -55,6 +55,8 @@ before_script:
   # give the right permissions, otherwise ssh-add will refuse to add files
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_gitlab_rsa
   - chmod 400 ~/.ssh/id_gitlab_rsa
+  # add github to the list of known host
+  - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
   # add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
   - ssh-add ~/.ssh/id_gitlab_rsa
 
