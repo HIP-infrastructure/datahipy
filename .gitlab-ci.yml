@@ -55,10 +55,10 @@ before_script:
   # give the right permissions, otherwise ssh-add will refuse to add files
   - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_gitlab_rsa
   - chmod 400 ~/.ssh/id_gitlab_rsa
-  # add github to the list of known host
-  - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
   # add the SSH key stored in SSH_PRIVATE_KEY file type CI/CD variable to the agent store
   - ssh-add ~/.ssh/id_gitlab_rsa
+  # add github to the list of known host
+  - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
 stages:
   - test-python-install
@@ -133,9 +133,8 @@ deploy-release:
     # Build the Docker image with prerelease/release version tag
     - make build-docker TAG=$(python get_version.py)
     - make push-docker-ci TAG=$(python get_version.py)
-    # Add our Github remote repository and fined-grained token authentication
-    - echo "GH_TOKEN=${GH_TOKEN}"
-    - GH_TOKEN=${GH_TOKEN} git remote add github_origin git@github.com:HIP-infrastructure/datahipy.git
+    # Add our Github remote repository with ssh
+    - git remote add github_origin git@github.com:HIP-infrastructure/datahipy.git
     # Push commits created by semantic-release for version change and changelog
     - git push github_origin $CI_COMMIT_REF_NAME
     # Push the new tag created by semantic-release
