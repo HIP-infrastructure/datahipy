@@ -46,7 +46,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
-    # "sphinx.ext.viewcode",
+    "sphinx.ext.viewcode",
     "sphinxarg.ext",
     "sphinx.ext.inheritance_diagram",
     "sphinxcontrib.apidoc",
