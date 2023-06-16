@@ -6,7 +6,7 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 ---
 
-![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/datahipy?include_prereleases) ![Latest GitHub Release Date](https://img.shields.io/github/release-date-pre/HIP-infrastructure/datahipy) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/datahipy/badges/master/pipeline.svg?private_token=glpat-a_qxRwZSNcAq9CMoK2tA)](https://gitlab.hbp.link/hip/datahipy/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/datahipy)
+![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/datahipy) ![Latest GitHub Release Date](https://img.shields.io/github/release-date/HIP-infrastructure/datahipy) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/datahipy/badges/master/pipeline.svg?private_token=glpat-a_qxRwZSNcAq9CMoK2tA)](https://gitlab.hbp.link/hip/datahipy/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/datahipy)
 
 `DataHIPy` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
 

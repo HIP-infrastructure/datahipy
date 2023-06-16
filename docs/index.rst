@@ -8,9 +8,9 @@ Welcome to `DataHIPy`'s documentation!
 
 This data management software is developed by the HIP team at the University Hospital of Lausanne (CHUV) for use within the lab, as well as for open-source software distribution.
 
-.. image:: https://img.shields.io/github/v/release/HIP-infrastructure/datahipy?include_prereleases
+.. image:: https://img.shields.io/github/v/release/HIP-infrastructure/datahipy
   :alt: Latest GitHub Release
-.. image:: https://img.shields.io/github/release-date-pre/HIP-infrastructure/datahipy
+.. image:: https://img.shields.io/github/release-date/HIP-infrastructure/datahipy
   :alt: GitHub Release Date
 .. image:: https://zenodo.org/badge/428721094.svg
   :target: https://zenodo.org/badge/latestdoi/428721094
