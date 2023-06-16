@@ -104,6 +104,7 @@ nbsphinx_allow_errors = True
 
 # Consistent emoticon style
 sphinxemoji_style = "twemoji"
+sphinxemoji_source = 'https://unpkg.com/twemoji@latest/dist/twemoji.min.js'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
