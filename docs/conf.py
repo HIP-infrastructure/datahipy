@@ -104,7 +104,7 @@ nbsphinx_allow_errors = True
 
 # Consistent emoticon style
 sphinxemoji_style = "twemoji"
-sphinxemoji_source = 'https://unpkg.com/twemoji@latest/dist/twemoji.min.js'
+sphinxemoji_source = "https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -209,12 +209,12 @@ html_short_title = "DataHIPy"
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = "logos/datahipy-logo-flower.png"
+html_logo = "logos/datahipy-logo-text.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-# html_favicon = None
+html_favicon = "datahipy-logo-flower-32x32.png"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
