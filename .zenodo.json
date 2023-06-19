@@ -35,5 +35,24 @@
     }
   ],
   "access_right": "open",
-  "upload_type": "software"
+  "upload_type": "software",
+  "grants": [
+    {
+      "code": "945539", 
+      "links": {
+        "self": "https://zenodo.org/api/grants/10.13039/501100000780::945539"
+      }, 
+      "title": "Human Brain Project Specific Grant Agreement 3", 
+      "acronym": "HBP SGA3", 
+      "program": "H2020", 
+      "funder": {
+        "doi": "10.13039/501100000780", 
+        "acronyms": [], 
+        "name": "European Commission", 
+        "links": {
+          "self": "https://zenodo.org/api/funders/10.13039/501100000780"
+        }
+      }
+    }
+  ]
 }
