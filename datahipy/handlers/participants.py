@@ -9,6 +9,8 @@ import shutil
 from datetime import datetime
 from sre_constants import SUCCESS
 
+import datalad.api
+
 # BIDS Manager Python package has to be accessible.
 try:
     from bids_manager.ins_bids_class import (
@@ -66,6 +68,13 @@ class ParticipantHandler:
         # Post-importation BIDS Manager output refinements
         # to make BIDS Validator happy
         post_import_bids_refinement(ds_obj.dirname)
+        # Save dataset state with Datalad
+        save_msg = f'Add files for subject(s): {input_data["subjects"]}'
+        datalad.api.save(
+            dataset=ds_obj.dirname,
+            message=save_msg,
+            recursive=True
+        )
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
@@ -84,6 +93,14 @@ class ParticipantHandler:
         ds_obj.remove(sub_dict, with_issues=True, in_deriv=None)
         # Refresh
         ds_obj.parse_bids()
+        # Save dataset state with Datalad
+        save_msg = f'Remove files for subject {input_data["subject"]}'
+        datalad.api.save(
+            dataset=ds_obj.dirname,
+            message=save_msg,
+            recursive=True
+        )
+        print(SUCCESS)
 
     def sub_delete_file(self, input_data=None):
         """Delete data files from /raw and /source."""
@@ -91,6 +108,7 @@ class ParticipantHandler:
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
         ds_obj = BidsDataset(self.dataset_path)
+        subjects = list()
         for file in input_data["files"]:
             sub_dict = self.find_subject_dict(
                 ds_obj=ds_obj, subject=file["subject"]
@@ -102,7 +120,16 @@ class ParticipantHandler:
                     # but not from derivatives
                     ds_obj.remove(file_dict, with_issues=True, in_deriv=None)
                     print("{} was deleted.".format(file["fullpath"]))
-                    print(SUCCESS)
+                    if file["subject"] not in subjects:
+                        subjects.append(file["subject"])
+        # Save dataset state with Datalad
+        save_msg = f'Remove files for subjects {subjects}'
+        datalad.api.save(
+            dataset=ds_obj.dirname,
+            message=save_msg,
+            recursive=True
+        )
+        print(SUCCESS)
 
     def sub_get(self, input_data=None, output_file=None):
         """Get info of a subject."""
@@ -115,7 +142,7 @@ class ParticipantHandler:
             self.dump_output_file(
                 output_data=sub_info, output_file=output_file
             )
-            print(SUCCESS)
+        print(SUCCESS)
 
     def sub_edit_clinical(self, input_data=None):
         """Update subject clinical info in BIDS dataset."""
@@ -142,7 +169,14 @@ class ParticipantHandler:
                 input_data["subject"], sub_info
             )
             ds_obj["ParticipantsTSV"].write_file()
-            print(SUCCESS)
+            # Save dataset state with Datalad
+            save_msg = f'Update participants.tsv file for subject {input_data["subject"]}'
+            datalad.api.save(
+                dataset=ds_obj.dirname,
+                message=save_msg,
+                recursive=True
+            )
+        print(SUCCESS)
 
     @staticmethod
     def load_input_data(input_data):
