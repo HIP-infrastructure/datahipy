@@ -10,6 +10,8 @@ import pandas as pd
 from pathlib import Path
 from sre_constants import SUCCESS
 
+import datalad.api
+
 from datahipy.bids.dataset import create_empty_bids_dataset
 from datahipy.bids.dataset import get_bidsdataset_content
 
@@ -47,6 +49,12 @@ def initialize_project_structure(
     # Create initial documents directory structure
     for folder in DOCUMENTS_FOLDERS:
         os.makedirs(project_dir / "documents" / folder, exist_ok=True)
+
+    # Initialize the project dataset as a Datalad-managed dataset
+    datalad.api.create(
+        dataset=str(project_dir.absolute()),
+        cfg_proc=['text2git']
+    )
 
     # Create initial project README.md file
     with open(project_dir / "README.md", "w") as f:
@@ -102,6 +110,12 @@ def create_project(input_data: str, output_file: str):
     )
     with open(output_file, "w") as f:
         json.dump(dataset_content, f, indent=4)
+    # Save the state of the dataset with Datalad
+    datalad.api.save(
+        dataset=str(project_dir.absolute()),
+        message='Initial dataset state of collaborative project',
+        recursive=False  # Do not save the nested Datalad-BIDS dataset
+    )
     print(SUCCESS)
 
 
@@ -157,6 +171,13 @@ def import_subject(input_data: str, output_file: str):
     )
     with open(output_file, "w") as f:
         json.dump(dataset_content, f, indent=4)
+    # Save dataset state with Datalad
+    save_msg = f'Import subject {input_data["participantId"]} from {input_data["sourceDatasetPath"]}'
+    datalad.api.save(
+        dataset=input_data["targetDatasetPath"],
+        message=save_msg,
+        recursive=True
+    )
     print(SUCCESS)
 
 
@@ -229,4 +250,14 @@ def import_document(input_data: str):
         os.remove(target_document_path)
     # Copy document from source to target
     shutil.copyfile(source_document_path, target_document_path)
+    # Save dataset state with Datalad
+    save_msg = (
+        f'Add document {input_data["sourceDocumentAbsPath"]} '
+        f"in project\'s documents/ folder"
+    )
+    datalad.api.save(
+        dataset=input_data["targetDatasetPath"],
+        message=save_msg,
+        recursive=True
+    )
     print(SUCCESS)
