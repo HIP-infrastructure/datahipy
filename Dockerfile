@@ -104,6 +104,14 @@ RUN pip3 install \
     rm -rf /var/lib/apt/lists/*
 
 ###############################################################################
+# Install git and git-annex for Datalad
+###############################################################################
+RUN apt-get update && apt-get install -y git git-annex && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+###############################################################################
 # Install datahipy
 ###############################################################################
 
