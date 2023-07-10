@@ -13,6 +13,8 @@ from datetime import date
 
 from bids import BIDSLayout
 
+import datalad.api
+
 from datahipy.bids.electrophy import get_ieeg_info
 from datahipy.bids.participant import get_participants_info
 from datahipy.bids.validation import (
@@ -92,8 +94,14 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
         Dictionary with the content of the dataset_description.json file.
     """
     print("> Creating an empty BIDS dataset at: ", bids_dir, "...")
-    # Create the BIDS dataset directory
-    os.makedirs(bids_dir, exist_ok=True)
+    # Create the BIDS dataset directory if it does not exist
+    if not os.path.exists(os.path.dirname(bids_dir)):
+        os.makedirs(bids_dir, exist_ok=True)
+    # Initialize the BIDS dataset as a Datalad-managed dataset
+    datalad.api.create(
+        dataset=bids_dir,
+        cfg_proc=['text2git', 'bids']
+    )
     # Create the dataset_description.json file
     with open(os.path.join(bids_dir, "dataset_description.json"), "w") as f:
         json.dump(dataset_desc, f, indent=4)
@@ -106,6 +114,12 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
     add_bidsignore_validation_rule(bids_dir, "**/*_ct.*")
     # Create an initial participants.tsv file
     create_initial_participants_tsv(bids_dir)
+    # Save the state of the initial dataset
+    datalad.api.save(
+        dataset=bids_dir,
+        message='Initial blank BIDS dataset',
+        recursive=True
+    )
 
 
 def create_bids_layout(bids_dir=None, **kwargs):
@@ -263,4 +277,4 @@ def get_all_datasets_content(
     if output_file:
         with open(output_file, "w") as f:
             json.dump(datasets_desc, f, indent=4)
-        print(SUCCESS)
+    print(SUCCESS)
