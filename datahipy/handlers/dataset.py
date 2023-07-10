@@ -24,6 +24,7 @@ from datahipy.bids.dataset import get_bidsdataset_content
 
 
 class DatasetHandler:
+    """Class to represent the handler of a dataset with utility functions."""
     def __init__(self, dataset_path=None):
         self.dataset_path = os.path.abspath(dataset_path)
 
@@ -72,7 +73,7 @@ class DatasetHandler:
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
 
-        # Create a disctionary storing the dataset information
+        # Create a dictionary storing the dataset information
         # indexed by the HIP platform
         dataset_desc = get_bidsdataset_content(bids_dir=self.dataset_path)
 
@@ -168,7 +169,22 @@ class DatasetHandler:
 
     @staticmethod
     def make_safe_filename(s):
+        """Return a modified version of the string that contains only alphanumeric characters (letters and numbers).
+
+        Any other character in the original string is replaced by an underscore (`_`).
+        The function also removes any trailing underscores from the end of the modified string.
+
+        Parameters
+        ----------
+        s: str
+            Input string
+
+        Return
+        ------
+        String that contains only alphanumeric characters.
+        """
         def safe_char(c):
+            """Return the character if alpha numeric, otherwise return underscore (`_`)"""
             if c.isalnum():
                 return c
             else:
