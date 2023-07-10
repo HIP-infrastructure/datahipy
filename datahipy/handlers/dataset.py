@@ -8,6 +8,8 @@ import json
 import re
 from sre_constants import SUCCESS
 
+import datalad.api
+
 # BIDS Manager Python package has to be accessible.
 try:
     from bids_manager.ins_bids_class import (
@@ -36,21 +38,34 @@ class DatasetHandler:
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
         dataset_name = self.make_safe_filename(input_data["dataset_dirname"])
+        # Create the BIDS dataset directory if it does not exist
         ds_path = os.path.join(self.dataset_path, dataset_name)
         if not os.path.isdir(ds_path):
             os.makedirs(ds_path)
+        # Initialize the BIDS dataset as a Datalad-managed dataset
+        datalad.api.create(
+            dataset=ds_path,
+            cfg_proc=['text2git', 'bids']
+        )
         datasetdesc_path = os.path.join(ds_path, "dataset_description.json")
         if not os.path.isfile(datasetdesc_path):
+            # Write the dataset_description.json file
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
-            # Load the created BIDS dataset in BIDS Manager (creates companion files)
-            ds_obj = BidsDataset(ds_path)
-            if ds_obj:
-                print(
-                    "INFO: The dataset_description.json file was updated. "
-                    "BIDS dataset successfully opened"
-                )
-                if os.path.isdir(ds_path):
-                    print(SUCCESS)
+            # Save the state of the dataset with Datalad
+            datalad.api.save(
+                dataset=ds_path,
+                message='Initial BIDS dataset state',
+                recursive=True
+            )
+        # Load the created BIDS dataset in BIDS Manager (creates companion files)
+        ds_obj = BidsDataset(ds_path)
+        if ds_obj:
+            print(
+                "INFO: The dataset_description.json file was updated. "
+                "BIDS dataset successfully opened"
+            )
+        if os.path.isdir(ds_path):
+            print(SUCCESS)
 
     def dataset_get_content(self, input_data=None, output_file=None):
         """Extract dataset information indexed by the HIP platform."""
@@ -66,7 +81,7 @@ class DatasetHandler:
             self.dump_output_file(
                 output_data=dataset_desc, output_file=output_file
             )
-            print(SUCCESS)
+        print(SUCCESS)
 
     @staticmethod
     def check_converters(ds_obj=None):
@@ -96,6 +111,11 @@ class DatasetHandler:
             BidsDataset.dirname = os.path.join(ds_obj.dirname)
             req_dict.save_as_json(req_path)
             ds_obj.get_requirements()
+            # Save state of dataset with Datalad
+            datalad.api.save(
+                dataset=BidsDataset.dirname,
+                message='Overwrite the converters in the BIDS Manager requirements.json file'
+            )
 
     @staticmethod
     def get_run(root_dir: str, bids_entities: dict, bids_modality: str):
