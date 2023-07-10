@@ -30,6 +30,7 @@ from datahipy.bids.bids_manager import post_import_bids_refinement
 
 
 class ParticipantHandler:
+    """Class to represent the handler of a dataset's participant with utility functions."""
     def __init__(self, dataset_path=None, input_path=None):
         self.dataset_path = os.path.abspath(dataset_path)
         self.input_path = input_path
