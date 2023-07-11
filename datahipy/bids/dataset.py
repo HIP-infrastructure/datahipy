@@ -98,10 +98,7 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
     if not os.path.exists(os.path.dirname(bids_dir)):
         os.makedirs(bids_dir, exist_ok=True)
     # Initialize the BIDS dataset as a Datalad-managed dataset
-    datalad.api.create(
-        dataset=bids_dir,
-        cfg_proc=['text2git', 'bids']
-    )
+    datalad.api.create(dataset=bids_dir, cfg_proc=["text2git", "bids"])
     # Create the dataset_description.json file
     with open(os.path.join(bids_dir, "dataset_description.json"), "w") as f:
         json.dump(dataset_desc, f, indent=4)
@@ -116,9 +113,7 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
     create_initial_participants_tsv(bids_dir)
     # Save the state of the initial dataset
     datalad.api.save(
-        dataset=bids_dir,
-        message='Initial blank BIDS dataset',
-        recursive=True
+        dataset=bids_dir, message="Initial blank BIDS dataset", recursive=True
     )
 
 

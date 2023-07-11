@@ -106,15 +106,9 @@ def get_bids_validator_output_info(bids_dir, bids_schema_version=None):
     )
     # Extract validator output to the bids_validator_output_info dictionary
     bids_validator_output_info["BIDSSchemaVersion"] = bids_schema_version
-    bids_validator_output_info["BIDSErrors"] = validator_output["issues"][
-        "errors"
-    ]
-    bids_validator_output_info["BIDSWarnings"] = validator_output["issues"][
-        "warnings"
-    ]
-    bids_validator_output_info["BIDSIgnored"] = validator_output["issues"][
-        "ignored"
-    ]
+    bids_validator_output_info["BIDSErrors"] = validator_output["issues"]["errors"]
+    bids_validator_output_info["BIDSWarnings"] = validator_output["issues"]["warnings"]
+    bids_validator_output_info["BIDSIgnored"] = validator_output["issues"]["ignored"]
     bids_validator_output_info["BIDSValid"] = validator_returncode == 0
     # Return the bids-validator output dictionary to be integrated
     # in the dataset content to be indexed

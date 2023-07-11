@@ -147,15 +147,11 @@ def correct_run_index_filename(layout):
     for filename in layout.get(return_type="file"):
         if re.search(r"_run-0[0-9]_", os.path.basename(filename)):
             run_num = int(
-                re.search(r"_run-0([0-9])_", os.path.basename(filename)).group(
-                    1
-                )
+                re.search(r"_run-0([0-9])_", os.path.basename(filename)).group(1)
             )
             new_filename = os.path.join(
                 os.path.dirname(filename),
-                os.path.basename(filename).replace(
-                    f"run-0{run_num}", f"run-{run_num}"
-                ),
+                os.path.basename(filename).replace(f"run-0{run_num}", f"run-{run_num}"),
             )
             print(f"> Renaming {filename} to {new_filename}...")
             os.rename(filename, new_filename)

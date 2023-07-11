@@ -22,15 +22,11 @@ def determine_bids_schema_version(dataset_desc):
     """
     if "BIDSVersion" in dataset_desc.keys():
         try:
-            if version.parse(dataset_desc["BIDSVersion"]) < version.parse(
-                "1.6.0"
-            ):
+            if version.parse(dataset_desc["BIDSVersion"]) < version.parse("1.6.0"):
                 bids_schema_version = "v1.6.0"
             elif dataset_desc["BIDSVersion"] in ["1.6.0", "1.7.0"]:
                 bids_schema_version = "v" + dataset_desc["BIDSVersion"]
-            elif version.parse(dataset_desc["BIDSVersion"]) > version.parse(
-                "1.7.0"
-            ):
+            elif version.parse(dataset_desc["BIDSVersion"]) > version.parse("1.7.0"):
                 bids_schema_version = "v1.7.0"
         except Exception as e:
             print(
