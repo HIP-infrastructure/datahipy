@@ -45,8 +45,8 @@ def create_initial_bids_readme(bids_dir, dataset_desc):
         f.writelines(
             [
                 f'# {dataset_desc["Name"]}\n\n',
-                f"To be completed...\n\n",
-                f"Use it as the dataset landing page, "
+                "To be completed...\n\n",
+                "Use it as the dataset landing page, "
                 "which should provide enough information "
                 "about the dataset and its creation context.",
             ]
