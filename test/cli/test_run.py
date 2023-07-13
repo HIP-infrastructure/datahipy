@@ -7,6 +7,8 @@ from __future__ import absolute_import
 import os
 import pytest
 import json
+import datalad
+from datalad.support.gitrepo import GitRepo
 
 
 @pytest.mark.script_launch_mode("subprocess")
@@ -51,6 +53,31 @@ def test_run_dataset_create(script_runner, dataset_path, io_path):
     assert ret.success
     # Check that the dataset was created by checking for the dataset_description.json file
     assert os.path.exists(os.path.join(dataset_path, "dataset_description.json"))
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_dataset_create_init_tag(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "path": dataset_path,
+        "tag": "0.0.0",
+        "message": "- Initial tag at dataset creation",
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_create_init_tag.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run datahipy dataset.create_tag command
+    ret = script_runner.run(
+        "datahipy", "--command", "dataset.create_tag", "--input_data", input_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the tag was created
+    assert "0.0.0" in [
+        tag_dict["name"] for tag_dict in GitRepo(dataset_path).get_tags()
+    ]
 
 
 @pytest.mark.script_launch_mode("subprocess")
@@ -146,6 +173,65 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
     assert ret.success
     # Check that the sub-carole folder was created
     assert os.path.exists(os.path.join(dataset_path, "sub-carole"))
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_dataset_create_tag(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "path": dataset_path,
+        "tag": "1.0.0",
+        "message": "- Import sub-carole data",
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_create_tag.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run datahipy dataset.create_tag command
+    ret = script_runner.run(
+        "datahipy", "--command", "dataset.create_tag", "--input_data", input_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the tag was created
+    assert "1.0.0" in [
+        tag_dict["name"] for tag_dict in GitRepo(dataset_path).get_tags()
+    ]
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_dataset_get_tags(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "path": dataset_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_get_tags.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_get_tags_output.json")
+    # Run datahipy dataset.get_tags command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.get_tags",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the output file was created
+    assert os.path.exists(output_file)
+    # Load the output json file and check the tag
+    with open(output_file, "r") as f:
+        output_data = json.load(f)
+    assert "1.0.0" in output_data["tags"]
+    assert output_data["path"] == dataset_path
 
 
 @pytest.mark.script_launch_mode("subprocess")
@@ -332,6 +418,31 @@ def test_run_project_create(script_runner, project_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
+def test_run_project_create_init_tag(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {
+        "path": project_path,
+        "tag": "0.0.0",
+        "message": "- Initial project",
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "project_create_init_tag.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run datahipy dataset.create_tag command
+    ret = script_runner.run(
+        "datahipy", "--command", "project.create_tag", "--input_data", input_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the tag was created
+    assert "0.0.0" in [
+        tag_dict["name"] for tag_dict in GitRepo(project_path).get_tags()
+    ]
+
+
+@pytest.mark.script_launch_mode("subprocess")
 def test_run_project_sub_import(script_runner, dataset_path, project_path, io_path):
     # Create input data
     input_data = {
@@ -398,6 +509,65 @@ def test_run_project_doc_import(script_runner, dataset_path, project_path, io_pa
     assert os.path.exists(
         os.path.join(project_path, "documents", "other", "participants.tsv")
     )
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_project_create_tag(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {
+        "path": project_path,
+        "tag": "1.0.0",
+        "message": "- Import sub-carole data from existing dataset",
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "project_create_tag.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run datahipy dataset.create_tag command
+    ret = script_runner.run(
+        "datahipy", "--command", "project.create_tag", "--input_data", input_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the tag was created
+    assert "1.0.0" in [
+        tag_dict["name"] for tag_dict in GitRepo(project_path).get_tags()
+    ]
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_project_get_tags(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {
+        "path": project_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "project_get_tags.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "project_get_tags_output.json")
+    # Run datahipy dataset.get_tags command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.get_tags",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the output file was created
+    assert os.path.exists(output_file)
+    # Load the output json file and check the tag
+    with open(output_file, "r") as f:
+        output_data = json.load(f)
+    assert "1.0.0" in output_data["tags"]
+    assert output_data["path"] == project_path
 
 
 @pytest.mark.script_launch_mode("subprocess")
@@ -493,3 +663,20 @@ def test_run_project_sub_delete(script_runner, project_path, io_path):
     assert not os.path.exists(
         os.path.join(project_path, "inputs", "bids-dataset", "sub-carole")
     )
+
+
+@pytest.mark.script_launch_mode("subprocess")
+def test_run_dataset_checkout_tag(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {"path": dataset_path, "tag": "0.0.0"}
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_checkout_tag.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Run datahipy dataset.checkout.tag command
+    ret = script_runner.run(
+        "datahipy", "--command", "dataset.checkout_tag", "--input_data", input_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
