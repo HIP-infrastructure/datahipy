@@ -83,11 +83,23 @@ optional arguments:
 
 ### Dataset
 
-#### `dataset.get`  
-Get a JSON summary of dataset consisting of all fields, participants, and existing entities.
+#### `dataset.create` 
+Create a new Datalad-controlled BIDS dataset.
 
-#### `dataset.create ` 
-Create a new BIDS dataset.
+#### `dataset.create_tag` 
+Create a version tag in a Datalad-controlled BIDS dataset.
+
+#### `dataset.get_tags` 
+Get the list of existing version tags for a Datalad-controlled BIDS dataset.
+
+#### `dataset.checkout_tag` 
+Checkout a Datalad-controlled BIDS dataset at a specific tag, the master branch, or the HEAD.
+
+#### `dataset.get`  
+Get a JSON summary of the BIDS dataset consisting of all fields, participants, and existing entities.
+
+#### `datasets.get`
+Get a list of JSON BIDS dataset summaries present in a given directory.
 
 ## Participant
 
@@ -105,6 +117,27 @@ Remove a participant from a given BIDS dataset. The record will be deleted from 
 
 #### `sub.delete.file`
 Remove data file(s) from a BIDS dataset.
+
+## Project
+
+#### `project.create`
+Create a new Datalad-controlled project dataset in the collaborative space of the HIP.
+
+#### `project.sub.import`
+Import an existing `sub-<participant_label>` folder from a BIDS dataset of the center space of the HIP to the BIDS dataset of the project (located in `<project_directory>/inputs/bids-dataset`).
+
+#### `project.doc.import`
+Import an existing document from the center space of the HIP to the `documents/` folder of the project.
+
+#### `project.create_tag` 
+Create a version tag in a Datalad-controlled project dataset.
+
+#### `project.get_tags` 
+Get the list of existing version tags for a Datalad-controlled project dataset.
+
+#### `project.checkout_tag` 
+Checkout a Datalad-controlled project dataset at a specific tag, the master branch, or the HEAD.
+
 
 ## Funding
 
