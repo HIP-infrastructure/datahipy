@@ -67,8 +67,12 @@ class ParticipantHandler:
         # to make BIDS Validator happy
         post_import_bids_refinement(ds_obj.dirname)
         # Save dataset state with Datalad
-        save_msg = f'Add files for subject(s): {input_data["subjects"]}'
-        datalad.api.save(dataset=ds_obj.dirname, message=save_msg, recursive=True)
+        save_params = {
+            "dataset": ds_obj.dirname,
+            "message": f'Add files for subject(s): {input_data["subjects"]}',
+            "recursive": True,
+        }
+        datalad.api.save(**save_params)
         print(SUCCESS)
 
     def sub_delete(self, input_data=None):
@@ -86,8 +90,12 @@ class ParticipantHandler:
         # Refresh
         ds_obj.parse_bids()
         # Save dataset state with Datalad
-        save_msg = f'Remove files for subject {input_data["subject"]}'
-        datalad.api.save(dataset=ds_obj.dirname, message=save_msg, recursive=True)
+        save_params = {
+            "dataset": ds_obj.dirname,
+            "message": f'Remove files for subject {input_data["subject"]}',
+            "recursive": True,
+        }
+        datalad.api.save(**save_params)
         print(SUCCESS)
 
     def sub_delete_file(self, input_data=None):
@@ -109,8 +117,12 @@ class ParticipantHandler:
                     if file["subject"] not in subjects:
                         subjects.append(file["subject"])
         # Save dataset state with Datalad
-        save_msg = f"Remove files for subjects {subjects}"
-        datalad.api.save(dataset=ds_obj.dirname, message=save_msg, recursive=True)
+        save_params = {
+            "dataset": ds_obj.dirname,
+            "message": f"Remove files for subjects {subjects}",
+            "recursive": True,
+        }
+        datalad.api.save(**save_params)
         print(SUCCESS)
 
     def sub_get(self, input_data=None, output_file=None):

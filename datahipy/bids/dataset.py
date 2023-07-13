@@ -82,7 +82,7 @@ def create_initial_participants_tsv(bids_dir):
         f.write("participant_id\tage\tsex\tgroup")
 
 
-def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
+def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None):
     """Create an empty BIDS dataset.
 
     Parameters
@@ -92,13 +92,29 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
 
     dataset_desc : dict
         Dictionary with the content of the dataset_description.json file.
+
+    project_dir : str
+        Path to the project directory in which the BIDS dataset will be nested.
     """
     print("> Creating an empty BIDS dataset at: ", bids_dir, "...")
+    bids_dirname = os.path.basename(bids_dir)
     # Create the BIDS dataset directory if it does not exist
     if not os.path.exists(os.path.dirname(bids_dir)):
         os.makedirs(bids_dir, exist_ok=True)
-    # Initialize the BIDS dataset as a Datalad-managed dataset
-    datalad.api.create(dataset=bids_dir, cfg_proc=["text2git", "bids"])
+    # Initialize the BIDS dataset as a Datalad-managed dataset.
+    create_params = {
+        "cfg_proc": ["text2git", "bids"],
+        "force": True,  # Enforce dataset creation in a non-empty directory
+    }
+    # If project_dir is specified, create the dataset as a subdataset
+    # of the project dataset
+    if project_dir:
+        create_params["dataset"] = project_dir
+        create_params["path"] = bids_dirname
+    # Otherwise, create a standalone dataset
+    else:
+        create_params["dataset"] = bids_dir
+    datalad.api.create(**create_params)
     # Create the dataset_description.json file
     with open(os.path.join(bids_dir, "dataset_description.json"), "w") as f:
         json.dump(dataset_desc, f, indent=4)
@@ -112,9 +128,17 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
     # Create an initial participants.tsv file
     create_initial_participants_tsv(bids_dir)
     # Save the state of the initial dataset
-    datalad.api.save(
-        dataset=bids_dir, message="Initial blank BIDS dataset", recursive=True
-    )
+    save_params = {
+        "message": "Initial blank BIDS dataset of collaborative project",
+        "recursive": False,
+    }
+    if project_dir:
+        save_params["dataset"] = project_dir
+        save_params["path"] = bids_dirname
+    else:
+        save_params["dataset"] = bids_dir
+    datalad.api.save(**save_params)
+    print(SUCCESS)
 
 
 def create_bids_layout(bids_dir=None, **kwargs):

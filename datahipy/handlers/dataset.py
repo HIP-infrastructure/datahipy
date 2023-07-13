@@ -45,15 +45,23 @@ class DatasetHandler:
         if not os.path.isdir(ds_path):
             os.makedirs(ds_path)
         # Initialize the BIDS dataset as a Datalad-managed dataset
-        datalad.api.create(dataset=ds_path, cfg_proc=["text2git", "bids"])
+        create_params = {
+            "dataset": ds_path,
+            "cfg_proc": ["text2git", "bids"],
+            "force": True,  # Enforce dataset creation in a non-empty directory
+        }
+        datalad.api.create(**create_params)
         datasetdesc_path = os.path.join(ds_path, "dataset_description.json")
         if not os.path.isfile(datasetdesc_path):
             # Write the dataset_description.json file
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
             # Save the state of the dataset with Datalad
-            datalad.api.save(
-                dataset=ds_path, message="Initial BIDS dataset state", recursive=True
-            )
+            save_params = {
+                "dataset": ds_path,
+                "message": "Initial BIDS dataset state",
+                "recursive": True,
+            }
+            datalad.api.save(**save_params)
         # Load the created BIDS dataset in BIDS Manager (creates companion files)
         ds_obj = BidsDataset(ds_path)
         if ds_obj:
@@ -105,10 +113,11 @@ class DatasetHandler:
             req_dict.save_as_json(req_path)
             ds_obj.get_requirements()
             # Save state of dataset with Datalad
-            datalad.api.save(
-                dataset=BidsDataset.dirname,
-                message="Overwrite the converters in the BIDS Manager requirements.json file",
-            )
+            save_params = {
+                "dataset": BidsDataset.dirname,
+                "message": "Overwrite the converters in the BIDS Manager requirements.json file",
+            }
+            datalad.api.save(**save_params)
 
     @staticmethod
     def get_run(root_dir: str, bids_entities: dict, bids_modality: str):
