@@ -36,6 +36,9 @@ before_script:
   - apk add --no-cache python3 python3-dev py3-pip
   - pip install --upgrade pip
   - pip install wheel twine
+  #  install pre-built numpy and pandas packages, otherwise they take ages to build
+  - echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+  - apk add --update --no-cache py3-numpy py3-pandas@testing
   # install script to delete container from gitlab container registry
   # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
   - apk add --no-cache curl
