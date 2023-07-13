@@ -34,7 +34,7 @@ VALID_COMMANDS = [
 
 def get_parser():
     """Get parser object for command line interface."""
-    parser = argparse.ArgumentParser(description="BIDS dataset handler.")
+    parser = argparse.ArgumentParser(description="DataHIPy command line interface.")
     parser.add_argument("--command", choices=VALID_COMMANDS, help="Method to be run.")
     parser.add_argument("--input_data", help="Input JSON data")
     parser.add_argument("--output_file", help="File location after processing")
