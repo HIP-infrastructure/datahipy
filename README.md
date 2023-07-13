@@ -54,29 +54,25 @@ The tool can be easily run as follows:
 
 ```output
 usage: datahipy [-h]
-                  [--command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}]
-                  [--input_data INPUT_DATA]
-                  [--output_file OUTPUT_FILE]
-                  [--dataset_path DATASET_PATH]
-                  [--input_path INPUT_PATH] [-v]
+                [--command {dataset.create,dataset.get,dataset.create_tag,dataset.get_tags,dataset.checkout_tag,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file,project.create,project.sub.import,project.doc.import,project.create_tag,project.get_tags,project.checkout_tag}]
+                [--input_data INPUT_DATA] [--output_file OUTPUT_FILE]
+                [--dataset_path DATASET_PATH] [--input_path INPUT_PATH] [-v]
 
-BIDS dataset handler.
+DataHIPy command line interface.
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --command {dataset.create,dataset.get,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file}
+    -h, --help            show this help message and exit
+    --command {dataset.create,dataset.get,dataset.create_tag,dataset.get_tags,dataset.checkout_tag,datasets.get,sub.get,sub.import,sub.edit.clinical,sub.delete,sub.delete.file,project.create,project.sub.import,project.doc.import,project.create_tag,project.get_tags,project.checkout_tag}
                         Method to be run.
-  --input_data INPUT_DATA
+    --input_data INPUT_DATA
                         Input JSON data
-  --output_file OUTPUT_FILE
+    --output_file OUTPUT_FILE
                         File location after processing
-  --dataset_path DATASET_PATH
+    --dataset_path DATASET_PATH
                         Path to the dataset
-  --input_path INPUT_PATH
-                        Path to the input data (e.g.
-                        input_data.json)
-  -v, --version         show program's version number and
-                        exit
+    --input_path INPUT_PATH
+                        Path to the input data (e.g. input_data.json)
+    -v, --version         show program's version number and exit
 ```
 
 ## Commands
