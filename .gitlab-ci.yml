@@ -34,6 +34,7 @@ before_script:
   - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
   # install python environment with wheel and twine
   - apk add --no-cache python3 python3-dev py3-pip
+  - pip install --upgrade pip
   - pip install wheel twine
   # install script to delete container from gitlab container registry
   # from https://docs.gitlab.com/ee/user/packages/container_registry/delete_container_registry_images.html#use-gitlab-cicd
