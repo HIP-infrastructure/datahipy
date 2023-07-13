@@ -133,7 +133,8 @@ COPY datahipy ./datahipy
 # Install datahipy with static version taken from the argument
 ARG VERSION=unknown
 RUN echo "${VERSION}" > /apps/datahipy/datahipy/VERSION \
-    && pip install -e ".[test]"
+    && pip install -e ".[test]" \
+    && pip install pytest-order
 
 ###############################################################################
 # Create initial folders for testing / code coverage with correct permissions
