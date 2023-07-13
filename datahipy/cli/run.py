@@ -9,7 +9,7 @@ from datahipy.bids.dataset import get_all_datasets_content
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.handlers.participants import ParticipantHandler
 from datahipy.handlers.project import create_project, import_subject, import_document
-from datahipy.versioning import create_tag, get_tags, checkout_tag
+from datahipy.utils.versioning import create_tag, get_tags, checkout_tag
 
 VALID_COMMANDS = [
     "dataset.create",
