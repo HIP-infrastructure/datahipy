@@ -89,9 +89,10 @@ Contents
    :maxdepth: 5
    :caption: API Documentation
 
-   api_cli_module
-   api_handlers_module
-   api_bids_module
+   api_cli_subpackage
+   api_handlers_subpackage
+   api_bids_subpackage
+   api_utils_subpackage
 
 .. _about-docs:
 
