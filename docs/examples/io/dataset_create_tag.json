@@ -1,5 +1,8 @@
 {
     "path": "/test/tmp/NEW_BIDS_DS",
+    "type": "bids",
     "tag": "1.0.0",
-    "message": "- Import sub-carole data"
+    "changes_list": [
+        "Import sub-carole data"
+    ]
 }
