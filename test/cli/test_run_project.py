@@ -215,7 +215,7 @@ def test_run_project_get_tags(script_runner, project_path, io_path):
     ret = script_runner.run(
         "datahipy",
         "--command",
-        "dataset.get_tags",
+        "project.get_tags",
         "--input_data",
         input_file,
         "--output_file",

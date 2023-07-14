@@ -105,6 +105,7 @@ def create_project(input_data: str, output_file: str):
     create_empty_bids_dataset(
         bids_dir=(project_dir / "inputs" / "bids-dataset").absolute(),
         dataset_desc=input_data["datasetDescription"],
+        project_dir=project_dir.absolute(),
     )
     # Create output file with summary of BIDS dataset
     dataset_content = get_bidsdataset_content(
