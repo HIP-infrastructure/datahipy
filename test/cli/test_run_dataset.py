@@ -56,8 +56,9 @@ def test_run_dataset_create_init_tag(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "path": dataset_path,
+        "type": "bids",
         "tag": "0.0.0",
-        "message": "- Initial tag at dataset creation",
+        "changes_list": ["Initial tag at dataset creation"],
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "dataset_create_init_tag.json")
@@ -82,8 +83,9 @@ def test_run_dataset_create_tag(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {
         "path": dataset_path,
+        "type": "bids",
         "tag": "1.0.0",
-        "message": "- Import sub-carole data",
+        "changes_list": ["Import sub-carole data"],
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "dataset_create_tag.json")

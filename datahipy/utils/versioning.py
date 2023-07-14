@@ -3,11 +3,14 @@
 
 """Methods supporting versioning of BIDS and Collaborative project datasets."""
 
-from datetime import datetime
+import os
 import json
 from sre_constants import SUCCESS
+
 import datalad
 from datalad.support.gitrepo import GitRepo
+
+from datahipy.bids.version import create_bids_changes_tag_entry, update_bids_changes
 
 
 TAG_EXCEPTIONS = ["master", "main", "HEAD"]
@@ -52,7 +55,6 @@ def create_tag(input_data):
     If the dataset is a Collaborative Project, the tag will be created recursively on
       the project dataset and on the nested BIDS dataset of the project.
 
-
     Parameters
     ----------
     input_data : dict
@@ -61,8 +63,9 @@ def create_tag(input_data):
 
             {
                 "path": "/path/to/dataset",
+                "type": "bids",  # or "project"
                 "tag": "1.0.0",
-                "message": "Description of the changes related to the version tag"
+                "changes_list": ["Change 1", "Change 2"]
             }
     """
     # Load input data
@@ -84,15 +87,28 @@ def create_tag(input_data):
             f"Impossible to create tag {input_data['tag']}. "
             f"Tag {input_data['tag']} already exists."
         )
+    # Create the tag message based on tag, date, and list of changes
+    changes_tag_entry = create_bids_changes_tag_entry(
+        tag=input_data["tag"],
+        changes_list=input_data["changes_list"],
+    )
+    if input_data["type"] == "bids":
+        bids_dir = input_data["path"]
+    elif input_data["type"] == "project":
+        bids_dir = os.path.join(input_data["path"], "inputs", "bids-dataset")
+    # Update the CHANGES file with the generated tag text entry
+    update_bids_changes(
+        bids_dir=bids_dir,
+        changes_tag_entry=changes_tag_entry,
+    )
     # Create a tag on the dataset
     save_params = {
         "dataset": input_data["path"],
-        "message": input_data["message"],
+        "message": "".join(changes_tag_entry),
         "version_tag": input_data["tag"],
         "recursive": True,
     }
-    res = datalad.api.save(**save_params)
-    print(f"Tag creation results: {res}")
+    datalad.api.save(**save_params)
     print(SUCCESS)
 
 
@@ -176,3 +192,57 @@ def checkout_tag(input_data):
         options=checkout_opts,
     )
     print(SUCCESS)
+
+
+def get_latest_tag(path):
+    """Get the latest tag of a dataset managed by Git/Datalad.
+
+    Parameters
+    ----------
+    path : str
+        Absolute path to the dataset.
+
+    Returns
+    -------
+    str
+        The latest tag of the dataset.
+    """
+    tags = [tag_dict["name"] for tag_dict in GitRepo(path).get_tags()]
+    tags.sort(key=lambda s: list(map(int, s.split("."))), reverse=True)
+    if len(tags) == 0:
+        return "0.0.0"
+    return tags[0]
+
+
+def increment_tag(tag, level):
+    """Increment a version tag by a specific level.
+
+    Parameters
+    ----------
+    tag : str
+        Version tag to increment in the format X.Y.Z, where X, Y, and Z are integers.
+
+    level : str
+        Level to increment. Can be "major", "minor", or "patch".
+
+    Returns
+    -------
+    str
+        The incremented tag.
+    """
+    if not validate_tag(tag, discard_exceptions=True):
+        raise ValueError(
+            f"Impossible to increment tag {tag}. The format is not valid. "
+            "Please use the format X.Y.Z, where X, Y, and Z are integers."
+        )
+    tag = tag.split(".")
+    if level == "major":
+        tag[0] = str(int(tag[0]) + 1)
+        tag[1] = "0"
+        tag[2] = "0"
+    elif level == "minor":
+        tag[1] = str(int(tag[1]) + 1)
+        tag[2] = "0"
+    elif level == "patch":
+        tag[2] = str(int(tag[2]) + 1)
+    return ".".join(tag)

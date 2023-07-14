@@ -3,6 +3,8 @@
 
 """Utility functions to retrieve version related information from a BIDS dataset."""
 
+import os
+from datetime import date
 from packaging import version
 from datahipy.bids.const import BIDS_VERSION
 
@@ -37,3 +39,48 @@ def determine_bids_schema_version(dataset_desc):
     else:
         bids_schema_version = BIDS_VERSION
     return bids_schema_version
+
+
+def create_bids_changes_tag_entry(tag, changes_list):
+    """Create a release text block entry to be added to the CHANGES file of a BIDS dataset.
+
+    Parameters
+    ----------
+    tag : str
+        Tag of the dataset.
+
+    changes_list : list
+        List of changes to add to the `CHANGES` file.
+
+    Returns
+    -------
+    list
+        List of lines to be written to the `CHANGES` file.
+    """
+    return [
+        f"{tag} {date.today().strftime('%Y-%m-%d')}\n",
+        "\n\t- " + "\n\t- ".join(changes_list),
+        "\n\n",
+    ]
+
+
+def update_bids_changes(bids_dir, changes_tag_entry):
+    """Append a new release text block to the top to the `CHANGES` file of a BIDS dataset.
+
+    Parameters
+    ----------
+    bids_dir : str
+        Path to the BIDS dataset.
+
+    tag : str
+        Tag of the dataset.
+
+    changes_tag_entry : list
+        List of lines to be written to the `CHANGES` file.
+    """
+    # Read the current content of the CHANGES file
+    with open(os.path.join(bids_dir, "CHANGES"), "r") as f:
+        content = f.readlines()
+    # Create a new CHANGES file with the new release text block at the top
+    with open(os.path.join(bids_dir, "CHANGES"), "w") as f:
+        f.writelines(changes_tag_entry + content)
