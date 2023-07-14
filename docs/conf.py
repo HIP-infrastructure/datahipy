@@ -70,6 +70,7 @@ autodoc_mock_imports = [
     "pysimplegui",
     "pandas",
     "bids",
+    "bids_manager",
 ]
 
 # Make sure sphinx argparse considers the autodoc_mock_imports
