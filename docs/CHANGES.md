@@ -1,3 +1,10 @@
+# [1.2.0-dev.2](https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2023-07-14)
+
+
+### Features
+
+* write release text block in CHANGES of BIDS dataset at version tag creation ([37f4f33](https://gitlab.hbp.link/hip/datahipy/commit/37f4f33644cb56b036be26ccdba089e158eadf72))
+
 # [1.2.0-dev.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.1.1...v1.2.0-dev.1) (2023-07-14)
 
 
