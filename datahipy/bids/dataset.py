@@ -22,7 +22,7 @@ from datahipy.bids.validation import (
     get_bids_validator_output_info,
 )
 from datahipy.bids.version import determine_bids_schema_version
-
+from datahipy.utils.versioning import get_latest_tag
 
 # Set the number of threads to use for parallel processing
 # Modify this value if you want to use more or less threads or
@@ -53,7 +53,7 @@ def create_initial_bids_readme(bids_dir, dataset_desc):
         )
 
 
-def create_initial_bids_changes(bids_dir):
+def create_initial_bids_changes(bids_dir, content_lines=None):
     """Create an initial `CHANGES` file for a BIDS dataset.
 
     Parameters
@@ -61,13 +61,13 @@ def create_initial_bids_changes(bids_dir):
     bids_dir : str
         Path to the BIDS dataset.
     """
+    if content_lines is None:
+        content_lines = [
+            f"0.0.0 {date.today().strftime('%Y-%m-%d')}\n",
+            "\t- Creation of the dataset.",
+        ]
     with open(os.path.join(bids_dir, "CHANGES"), "w") as f:
-        f.writelines(
-            [
-                f"0.0.0 {date.today().strftime('%Y-%m-%d')}\n",
-                "\t- Creation of the dataset.",
-            ]
-        )
+        f.writelines(content_lines)
 
 
 def create_initial_participants_tsv(bids_dir):
@@ -119,8 +119,8 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None
         json.dump(dataset_desc, f, indent=4)
     # Create initial README file
     create_initial_bids_readme(bids_dir, dataset_desc)
-    # Create initial CHANGES file
-    create_initial_bids_changes(bids_dir)
+    # Create initial empty CHANGES file
+    create_initial_bids_changes(bids_dir, content_lines=[])
     # Create the .bidsignore file and add the line to ignore CT files
     # (not yet supported by the validator)
     add_bidsignore_validation_rule(bids_dir, "**/*_ct.*")
@@ -260,6 +260,8 @@ def get_bidsdataset_content(bids_dir=None):
     dataset_desc.update(get_bids_validator_output_info(bids_dir, bids_schema_version))
     # Add information retrieved with pybids to dataset_desc
     dataset_desc.update(get_bids_layout_info(bids_dir))
+    # Add the latest tag of the dataset as the dataset version
+    dataset_desc["DatasetVersion"] = get_latest_tag(bids_dir)
     # Return the created dataset_desc dictionary to be indexed
     return dataset_desc
 

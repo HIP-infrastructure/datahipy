@@ -20,7 +20,11 @@ try:
 except ImportError:
     print("WARNING: BIDS Manager Python package is not accessible.")
 
-from datahipy.bids.dataset import get_bidsdataset_content
+from datahipy.bids.dataset import (
+    get_bidsdataset_content,
+    create_initial_bids_changes,
+    create_initial_bids_readme,
+)
 
 
 class DatasetHandler:
@@ -55,11 +59,16 @@ class DatasetHandler:
         if not os.path.isfile(datasetdesc_path):
             # Write the dataset_description.json file
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
+            # Write an initial README.md file
+            create_initial_bids_readme(ds_path, datasetdesc_dict)
+            # Write an initial empty CHANGES file
+            create_initial_bids_changes(ds_path, content_lines=[])
             # Save the state of the dataset with Datalad
             save_params = {
                 "dataset": ds_path,
                 "message": "Initial BIDS dataset state",
                 "recursive": True,
+                # "version_tag": "0.0.0",  # Uncomment if you wish to create here a tag for the initial state
             }
             datalad.api.save(**save_params)
         # Load the created BIDS dataset in BIDS Manager (creates companion files)
