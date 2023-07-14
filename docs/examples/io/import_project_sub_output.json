@@ -1,36 +1,38 @@
 {
-    "Name": "My New BIDS dataset",
-    "BIDSVersion": "1.4.0",
-    "License": "n/a",
+    "Name": "BIDS Dataset Title",
+    "BIDSVersion": "1.6.0",
+    "License": "CC-BY-4.0",
     "Authors": [
-        "Tom"
+        "Author 1",
+        "Author 2"
     ],
-    "Acknowledgements": "Overwrite test",
-    "HowToAcknowledge": "n/a",
+    "Acknowledgements": "Acknowledgement 1",
     "Funding": [
-        "Picsou"
+        "Funding 1"
     ],
     "ReferencesAndLinks": [
-        "n/a"
+        "Reference 1",
+        "Reference 2"
     ],
-    "DatasetDOI": "n/a",
-    "AgeMin": "25",
-    "AgeMax": "25",
+    "DatasetDOI": "",
+    "AgeMin": "30",
+    "AgeMax": "30",
     "ParticipantsCount": 1,
     "ParticipantsGroups": [
-        null
+        "n/a"
     ],
     "Participants": [
         {
             "participant_id": "sub-carole",
-            "age": 25,
+            "age": 30,
             "sex": "M",
-            "hospital": "CHUV",
-            "handedness": "n/a",
-            "Subject_ready": true
+            "group": "n/a",
+            "hospital": "CHUGA",
+            "Subject_ready": true,
+            "handedness": "L"
         }
     ],
-    "Size": "281M",
+    "Size": "172M",
     "BIDSSchemaVersion": "v1.6.0",
     "BIDSErrors": [],
     "BIDSWarnings": [],
@@ -43,12 +45,11 @@
     ],
     "Formats": [
         ".json",
-        ".vmrk",
+        ".tsv",
+        ".nii",
         ".eeg",
         ".vhdr",
-        ".bidsignore",
-        ".tsv",
-        ".nii"
+        ".vmrk"
     ],
     "SessionsCount": 2,
     "Tasks": [
@@ -59,5 +60,5 @@
     "SamplingFrequency": 512,
     "RecordingDuration": 255,
     "EventsFileCount": 2,
-    "FileCount": 19
+    "FileCount": 22
 }

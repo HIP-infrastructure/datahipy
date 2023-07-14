@@ -1,0 +1,5 @@
+{
+    "sourceDocumentAbsPath": "/test/tmp/NEW_BIDS_DS/participants.tsv",
+    "targetProjectAbsPath": "/test/tmp/NEW_PROJECT",
+    "targetDocumentRelPath": "documents/other/participants.tsv"
+}

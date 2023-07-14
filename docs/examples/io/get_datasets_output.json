@@ -4,8 +4,7 @@
         "BIDSVersion": "1.4.0",
         "License": "n/a",
         "Authors": [
-            "Tom",
-            "Jerry"
+            "Tom"
         ],
         "Acknowledgements": "Overwrite test",
         "HowToAcknowledge": "n/a",
@@ -69,7 +68,6 @@
         "License": "n/a",
         "Authors": [
             "Tom",
-            "Jerry"
         ],
         "Acknowledgements": "Overwrite test",
         "HowToAcknowledge": "n/a",
