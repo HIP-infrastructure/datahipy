@@ -117,7 +117,7 @@ def create_project(input_data: str, output_file: str):
     save_params = {
         "dataset": str(project_dir.absolute()),
         "message": "Initial dataset state of collaborative project",
-        "recursive": True,  # Do not save the nested Datalad-BIDS dataset
+        "recursive": True,  # Do save the nested Datalad-BIDS dataset
     }
     datalad.api.save(**save_params)
     print(SUCCESS)

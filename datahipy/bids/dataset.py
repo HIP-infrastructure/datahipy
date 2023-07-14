@@ -97,7 +97,6 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None
         Path to the project directory in which the BIDS dataset will be nested.
     """
     print("> Creating an empty BIDS dataset at: ", bids_dir, "...")
-    bids_dirname = os.path.basename(bids_dir)
     # Create the BIDS dataset directory if it does not exist
     if not os.path.exists(os.path.dirname(bids_dir)):
         os.makedirs(bids_dir, exist_ok=True)
@@ -110,7 +109,7 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None
     # of the project dataset
     if project_dir:
         create_params["dataset"] = project_dir
-        create_params["path"] = bids_dirname
+        create_params["path"] = bids_dir
     # Otherwise, create a standalone dataset
     else:
         create_params["dataset"] = bids_dir
@@ -134,7 +133,7 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None
     }
     if project_dir:
         save_params["dataset"] = project_dir
-        save_params["path"] = bids_dirname
+        save_params["path"] = bids_dir
     else:
         save_params["dataset"] = bids_dir
     datalad.api.save(**save_params)
