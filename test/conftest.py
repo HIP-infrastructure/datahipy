@@ -24,6 +24,9 @@ def dataset_path(dataset_name):
         os.path.join(os.path.dirname(__file__), "tmp", dataset_name)
     )
     if os.path.exists(dataset_path):
+        git_dir = os.path.join(dataset_path, ".git")
+        if os.path.exists(git_dir):
+            os.system(f"chmod -R a+w {git_dir}")
         shutil.rmtree(dataset_path)
     return dataset_path
 
@@ -48,5 +51,11 @@ def project_path(project_name):
         os.path.join(os.path.dirname(__file__), "tmp", project_name)
     )
     if os.path.exists(project_path):
+        git_dir = os.path.join(project_path, ".git")
+        if os.path.exists(git_dir):
+            os.system(f"chmod -R a+w {git_dir}")
+        bids_git_dir = os.path.join(project_path, "inputs", "bids-dataset", ".git")
+        if os.path.exists(bids_git_dir):
+            os.system(f"chmod -R a+w {bids_git_dir}")
         shutil.rmtree(project_path)
     return project_path

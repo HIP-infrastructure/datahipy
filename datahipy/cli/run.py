@@ -9,10 +9,14 @@ from datahipy.bids.dataset import get_all_datasets_content
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.handlers.participants import ParticipantHandler
 from datahipy.handlers.project import create_project, import_subject, import_document
+from datahipy.utils.versioning import create_tag, get_tags, checkout_tag
 
 VALID_COMMANDS = [
     "dataset.create",
     "dataset.get",
+    "dataset.create_tag",
+    "dataset.get_tags",
+    "dataset.checkout_tag",
     "datasets.get",
     "sub.get",
     "sub.import",
@@ -22,12 +26,15 @@ VALID_COMMANDS = [
     "project.create",
     "project.sub.import",
     "project.doc.import",
+    "project.create_tag",
+    "project.get_tags",
+    "project.checkout_tag",
 ]
 
 
 def get_parser():
     """Get parser object for command line interface."""
-    parser = argparse.ArgumentParser(description="BIDS dataset handler.")
+    parser = argparse.ArgumentParser(description="DataHIPy command line interface.")
     parser.add_argument("--command", choices=VALID_COMMANDS, help="Method to be run.")
     parser.add_argument("--input_data", help="Input JSON data")
     parser.add_argument("--output_file", help="File location after processing")
@@ -49,6 +56,7 @@ def get_parser():
 
 
 def main():
+    """Run the command line interface."""
     parser = get_parser()
 
     cmd_args = parser.parse_args()
@@ -65,6 +73,12 @@ def main():
         return dhdl.dataset_create(input_data=input_data)
     if command == "dataset.get":
         dhdl.dataset_get_content(input_data=input_data, output_file=output_file)
+    if command == "dataset.create_tag":
+        return create_tag(input_data=input_data)
+    if command == "dataset.get_tags":
+        return get_tags(input_data=input_data, output_file=output_file)
+    if command == "dataset.checkout_tag":
+        return checkout_tag(input_data=input_data)
     if command == "datasets.get":
         return get_all_datasets_content(
             input_data=input_data,
@@ -86,6 +100,12 @@ def main():
         import_subject(input_data=input_data, output_file=output_file)
     if command == "project.doc.import":
         import_document(input_data=input_data)
+    if command == "project.create_tag":
+        return create_tag(input_data=input_data)
+    if command == "project.get_tags":
+        return get_tags(input_data=input_data, output_file=output_file)
+    if command == "project.checkout_tag":
+        return checkout_tag(input_data=input_data)
 
 
 if __name__ == "__main__":

@@ -71,8 +71,7 @@ def get_subject_bidsfile_info(bids_dir, **kwargs):
             file_info[
                 BIDSTSVFILE_DATATYPE_KEY_MAP[file_info["datatype"]]
             ] = get_channels_info(
-                file.path.split(f'_{file_info["datatype"]}')[0]
-                + "_channels.tsv"
+                file.path.split(f'_{file_info["datatype"]}')[0] + "_channels.tsv"
             )
         # Add the file information to the list
         subject_bids_file_info.append(file_info)
@@ -121,8 +120,6 @@ def get_participants_info(bids_dir):
         else [None]
     )
     # Store content of participants.tsv as a dictionary
-    participants_info["Participants"] = participants_df.to_dict(
-        orient="records"
-    )
+    participants_info["Participants"] = participants_df.to_dict(orient="records")
     del participants_df
     return participants_info

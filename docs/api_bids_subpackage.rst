@@ -4,7 +4,7 @@
 ``datahipy.bids``
 *******************
 
-The ``datahipy.bids`` module contains submodules that define utility functions to interact with BIDS datasets.
+The ``datahipy.bids`` subpackage contains modules that define utility functions to interact with BIDS datasets.
 
 `datahipy.bids.const`
 =========================

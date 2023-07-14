@@ -8,6 +8,8 @@ import json
 import re
 from sre_constants import SUCCESS
 
+import datalad.api
+
 # BIDS Manager Python package has to be accessible.
 try:
     from bids_manager.ins_bids_class import (
@@ -22,6 +24,8 @@ from datahipy.bids.dataset import get_bidsdataset_content
 
 
 class DatasetHandler:
+    """Class to represent the handler of a dataset with utility functions."""
+
     def __init__(self, dataset_path=None):
         self.dataset_path = os.path.abspath(dataset_path)
 
@@ -36,37 +40,51 @@ class DatasetHandler:
             datasetdesc_dict[bids_key] = bids_value
         # Write the dataset_description.json file only if it does not exist
         dataset_name = self.make_safe_filename(input_data["dataset_dirname"])
+        # Create the BIDS dataset directory if it does not exist
         ds_path = os.path.join(self.dataset_path, dataset_name)
         if not os.path.isdir(ds_path):
             os.makedirs(ds_path)
+        # Initialize the BIDS dataset as a Datalad-managed dataset
+        create_params = {
+            "dataset": ds_path,
+            "cfg_proc": ["text2git", "bids"],
+            "force": True,  # Enforce dataset creation in a non-empty directory
+        }
+        datalad.api.create(**create_params)
         datasetdesc_path = os.path.join(ds_path, "dataset_description.json")
         if not os.path.isfile(datasetdesc_path):
+            # Write the dataset_description.json file
             datasetdesc_dict.write_file(jsonfilename=datasetdesc_path)
-            # Load the created BIDS dataset in BIDS Manager (creates companion files)
-            ds_obj = BidsDataset(ds_path)
-            if ds_obj:
-                print(
-                    "INFO: The dataset_description.json file was updated. "
-                    "BIDS dataset successfully opened"
-                )
-                if os.path.isdir(ds_path):
-                    print(SUCCESS)
+            # Save the state of the dataset with Datalad
+            save_params = {
+                "dataset": ds_path,
+                "message": "Initial BIDS dataset state",
+                "recursive": True,
+            }
+            datalad.api.save(**save_params)
+        # Load the created BIDS dataset in BIDS Manager (creates companion files)
+        ds_obj = BidsDataset(ds_path)
+        if ds_obj:
+            print(
+                "INFO: The dataset_description.json file was updated. "
+                "BIDS dataset successfully opened"
+            )
+        if os.path.isdir(ds_path):
+            print(SUCCESS)
 
     def dataset_get_content(self, input_data=None, output_file=None):
         """Extract dataset information indexed by the HIP platform."""
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
 
-        # Create a disctionary storing the dataset information
+        # Create a dictionary storing the dataset information
         # indexed by the HIP platform
         dataset_desc = get_bidsdataset_content(bids_dir=self.dataset_path)
 
         # Dump the dataset_desc dict in a .json file
         if output_file:
-            self.dump_output_file(
-                output_data=dataset_desc, output_file=output_file
-            )
-            print(SUCCESS)
+            self.dump_output_file(output_data=dataset_desc, output_file=output_file)
+        print(SUCCESS)
 
     @staticmethod
     def check_converters(ds_obj=None):
@@ -85,9 +103,7 @@ class DatasetHandler:
         req_path = os.path.join(ds_obj.dirname, "code", "requirements.json")
         req_dict = Requirements(req_path)
         to_rewrite = False
-        if ("Converters" not in req_dict) or (
-            req_dict["Converters"] != def_converters
-        ):
+        if ("Converters" not in req_dict) or (req_dict["Converters"] != def_converters):
             to_rewrite = True
         if to_rewrite:
             # Write the requirements.json
@@ -96,6 +112,12 @@ class DatasetHandler:
             BidsDataset.dirname = os.path.join(ds_obj.dirname)
             req_dict.save_as_json(req_path)
             ds_obj.get_requirements()
+            # Save state of dataset with Datalad
+            save_params = {
+                "dataset": BidsDataset.dirname,
+                "message": "Overwrite the converters in the BIDS Manager requirements.json file",
+            }
+            datalad.api.save(**save_params)
 
     @staticmethod
     def get_run(root_dir: str, bids_entities: dict, bids_modality: str):
@@ -125,13 +147,8 @@ class DatasetHandler:
     def add_keys_requirements(ds_obj=None, clin_keys=None):
         """Update the requirements.json with new keys."""
         for clin_key in clin_keys:
-            if (
-                clin_key
-                not in ds_obj.requirements["Requirements"]["Subject"]["keys"]
-            ):
-                ds_obj.requirements["Requirements"]["Subject"]["keys"][
-                    clin_key
-                ] = str()
+            if clin_key not in ds_obj.requirements["Requirements"]["Subject"]["keys"]:
+                ds_obj.requirements["Requirements"]["Subject"]["keys"][clin_key] = str()
         ds_obj.requirements.save_as_json()
 
     @staticmethod
@@ -148,7 +165,23 @@ class DatasetHandler:
 
     @staticmethod
     def make_safe_filename(s):
+        """Return a modified version of the string that contains only alphanumeric characters (letters and numbers).
+
+        Any other character in the original string is replaced by an underscore (`_`).
+        The function also removes any trailing underscores from the end of the modified string.
+
+        Parameters
+        ----------
+        s: str
+            Input string
+
+        Return
+        ------
+        String that contains only alphanumeric characters.
+        """
+
         def safe_char(c):
+            """Return the character if alpha numeric, otherwise return underscore (`_`)"""
             if c.isalnum():
                 return c
             else:
