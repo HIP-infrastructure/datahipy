@@ -4,7 +4,7 @@
 ``datahipy.cli``
 ******************
 
-The ``datahipy.cli`` module contains the `run` submodule that define the command line interface (CLI) for the ``datahipy`` package.
+The ``datahipy.cli`` subpackage contains the `run` module that define the command line interface (CLI) for the ``datahipy`` package.
 
 `datahipy.cli.run`
 ======================

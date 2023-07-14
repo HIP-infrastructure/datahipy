@@ -22,6 +22,7 @@ else
     echo "Running as root."
 fi
 
+echo "Running DataHIPy pytest suite..."
 runuser -u $USER -- pytest \
     --cov-config "/apps/datahipy/.coveragerc" \
     --cov-report html:"/test/report/cov_html" \

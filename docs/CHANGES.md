@@ -1,3 +1,33 @@
+# [1.2.0-dev.2](https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2023-07-14)
+
+
+### Features
+
+* write release text block in CHANGES of BIDS dataset at version tag creation ([37f4f33](https://gitlab.hbp.link/hip/datahipy/commit/37f4f33644cb56b036be26ccdba089e158eadf72))
+
+# [1.2.0-dev.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.1.1...v1.2.0-dev.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* **conftest.py:** change permissions on .git repositories in Datalad datasets at the beginning of the tests ([bc1bf4b](https://gitlab.hbp.link/hip/datahipy/commit/bc1bf4bc3e21d3a8b3317bd72aac0d534faff15e))
+* make changes in Datalad-related code that make tests working ([5b7989e](https://gitlab.hbp.link/hip/datahipy/commit/5b7989e80b63d49d03c71b86fa8319d5d9a44462))
+* use absolute path when creating nested datalad dataset ([355ce0c](https://gitlab.hbp.link/hip/datahipy/commit/355ce0cca64d1893b26f31840fe0463e53dbd1ae))
+
+
+### Features
+
+* add versioning module file with tags-related functions ([9e85674](https://gitlab.hbp.link/hip/datahipy/commit/9e856743279608fad4160150ebb43fa6696f3f2f))
+* **bids.dataset:** add Datalad's create() and save() methods ([0aee9e1](https://gitlab.hbp.link/hip/datahipy/commit/0aee9e10fc1fffe1f59ddebe66d111bcec0138ae))
+* **cli/run.py:** add commands to inerface with tags / branches of Datalad datasets ([e299d00](https://gitlab.hbp.link/hip/datahipy/commit/e299d004417770bf08268585a59c5e1bb20c174d))
+* **Dockerfile:** install git and git-annex in Docker container image ([d8fe0dd](https://gitlab.hbp.link/hip/datahipy/commit/d8fe0ddabe624600161ed85e70ebcf690cc5850f))
+* **Dockerfile:** install recent standalone version of git-annex provided by Datalad ([32136cf](https://gitlab.hbp.link/hip/datahipy/commit/32136cfcd48e24142825413890f66e4d7e4b79dd))
+* **handlers.dataset:** call datalad create() and save() methods ([ebb7cc8](https://gitlab.hbp.link/hip/datahipy/commit/ebb7cc83de84d413189e03ec369bea8db1f2fe11))
+* **handlers.participants:** call Datalad's create() and save() methods ([08d86c9](https://gitlab.hbp.link/hip/datahipy/commit/08d86c922eabd28f9f3664d6b6e0a724a8eec4ff))
+* **handlers.project:** call Datalad's create() and save() methods ([08d1adf](https://gitlab.hbp.link/hip/datahipy/commit/08d1adf79f9d825754eb096f49e33a88ded7ed2e))
+* install pytest-order in Dockerfile and test config of setup.cfg ([23732c3](https://gitlab.hbp.link/hip/datahipy/commit/23732c38378348a13c0af807c82b1ec5efc1f6ba))
+* **setup.cfg:** add datalad-neuroimaging extension ([509e668](https://gitlab.hbp.link/hip/datahipy/commit/509e6686d186c13048768c7edaa906e18c13f53d))
+
 ## [1.1.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.1.0...v1.1.1) (2023-06-15)
 
 

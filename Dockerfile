@@ -104,6 +104,18 @@ RUN pip3 install \
     rm -rf /var/lib/apt/lists/*
 
 ###############################################################################
+# Install most recent standalone version of git-annex for Datalad
+###############################################################################
+
+RUN apt-get update && apt-get install -y wget netbase openssh-client && \
+    wget https://github.com/datalad/git-annex/releases/download/10.20230626/git-annex-standalone_10.20230626-1.ndall%2B1_amd64.deb && \
+    dpkg -i git-annex-standalone_10.20230626-1.ndall+1_amd64.deb && \
+    rm git-annex-standalone_10.20230626-1.ndall+1_amd64.deb && \
+    apt-get autoremove -y --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+###############################################################################
 # Install datahipy
 ###############################################################################
 
@@ -121,7 +133,8 @@ COPY datahipy ./datahipy
 # Install datahipy with static version taken from the argument
 ARG VERSION=unknown
 RUN echo "${VERSION}" > /apps/datahipy/datahipy/VERSION \
-    && pip install -e ".[test]"
+    && pip install -e ".[test]" \
+    && pip install pytest-order
 
 ###############################################################################
 # Create initial folders for testing / code coverage with correct permissions

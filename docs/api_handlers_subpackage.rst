@@ -4,7 +4,7 @@
 ``datahipy.handlers``
 **********************
 
-The ``datahipy.handlers`` module contains submodules that define classes and functions that handle the reading and writing of BIDS data. The classes are also designed to be used with the ``datahipy`` command line interface.
+The ``datahipy.handlers`` subpackage contains modules that define classes and functions that handle the reading and writing of BIDS data. The classes are also designed to be used with the ``datahipy`` command line interface.
 
 `datahipy.handlers.dataset`
 ================================

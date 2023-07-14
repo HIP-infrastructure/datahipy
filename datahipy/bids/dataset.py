@@ -13,6 +13,8 @@ from datetime import date
 
 from bids import BIDSLayout
 
+import datalad.api
+
 from datahipy.bids.electrophy import get_ieeg_info
 from datahipy.bids.participant import get_participants_info
 from datahipy.bids.validation import (
@@ -20,7 +22,7 @@ from datahipy.bids.validation import (
     get_bids_validator_output_info,
 )
 from datahipy.bids.version import determine_bids_schema_version
-
+from datahipy.utils.versioning import get_latest_tag
 
 # Set the number of threads to use for parallel processing
 # Modify this value if you want to use more or less threads or
@@ -43,15 +45,15 @@ def create_initial_bids_readme(bids_dir, dataset_desc):
         f.writelines(
             [
                 f'# {dataset_desc["Name"]}\n\n',
-                f"To be completed...\n\n",
-                f"Use it as the dataset landing page, "
+                "To be completed...\n\n",
+                "Use it as the dataset landing page, "
                 "which should provide enough information "
                 "about the dataset and its creation context.",
             ]
         )
 
 
-def create_initial_bids_changes(bids_dir):
+def create_initial_bids_changes(bids_dir, content_lines=None):
     """Create an initial `CHANGES` file for a BIDS dataset.
 
     Parameters
@@ -59,13 +61,13 @@ def create_initial_bids_changes(bids_dir):
     bids_dir : str
         Path to the BIDS dataset.
     """
+    if content_lines is None:
+        content_lines = [
+            f"0.0.0 {date.today().strftime('%Y-%m-%d')}\n",
+            "\t- Creation of the dataset.",
+        ]
     with open(os.path.join(bids_dir, "CHANGES"), "w") as f:
-        f.writelines(
-            [
-                f"0.0.0 {date.today().strftime('%Y-%m-%d')}\n",
-                "\t- Creation of the dataset.",
-            ]
-        )
+        f.writelines(content_lines)
 
 
 def create_initial_participants_tsv(bids_dir):
@@ -80,7 +82,7 @@ def create_initial_participants_tsv(bids_dir):
         f.write("participant_id\tage\tsex\tgroup")
 
 
-def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
+def create_empty_bids_dataset(bids_dir=None, dataset_desc=None, project_dir=None):
     """Create an empty BIDS dataset.
 
     Parameters
@@ -90,22 +92,52 @@ def create_empty_bids_dataset(bids_dir=None, dataset_desc=None):
 
     dataset_desc : dict
         Dictionary with the content of the dataset_description.json file.
+
+    project_dir : str
+        Path to the project directory in which the BIDS dataset will be nested.
     """
     print("> Creating an empty BIDS dataset at: ", bids_dir, "...")
-    # Create the BIDS dataset directory
-    os.makedirs(bids_dir, exist_ok=True)
+    # Create the BIDS dataset directory if it does not exist
+    if not os.path.exists(os.path.dirname(bids_dir)):
+        os.makedirs(bids_dir, exist_ok=True)
+    # Initialize the BIDS dataset as a Datalad-managed dataset.
+    create_params = {
+        "cfg_proc": ["text2git", "bids"],
+        "force": True,  # Enforce dataset creation in a non-empty directory
+    }
+    # If project_dir is specified, create the dataset as a subdataset
+    # of the project dataset
+    if project_dir:
+        create_params["dataset"] = project_dir
+        create_params["path"] = bids_dir
+    # Otherwise, create a standalone dataset
+    else:
+        create_params["dataset"] = bids_dir
+    datalad.api.create(**create_params)
     # Create the dataset_description.json file
     with open(os.path.join(bids_dir, "dataset_description.json"), "w") as f:
         json.dump(dataset_desc, f, indent=4)
     # Create initial README file
     create_initial_bids_readme(bids_dir, dataset_desc)
-    # Create initial CHANGES file
-    create_initial_bids_changes(bids_dir)
+    # Create initial empty CHANGES file
+    create_initial_bids_changes(bids_dir, content_lines=[])
     # Create the .bidsignore file and add the line to ignore CT files
     # (not yet supported by the validator)
     add_bidsignore_validation_rule(bids_dir, "**/*_ct.*")
     # Create an initial participants.tsv file
     create_initial_participants_tsv(bids_dir)
+    # Save the state of the initial dataset
+    save_params = {
+        "message": "Initial blank BIDS dataset of collaborative project",
+        "recursive": False,
+    }
+    if project_dir:
+        save_params["dataset"] = project_dir
+        save_params["path"] = bids_dir
+    else:
+        save_params["dataset"] = bids_dir
+    datalad.api.save(**save_params)
+    print(SUCCESS)
 
 
 def create_bids_layout(bids_dir=None, **kwargs):
@@ -228,6 +260,8 @@ def get_bidsdataset_content(bids_dir=None):
     dataset_desc.update(get_bids_validator_output_info(bids_dir, bids_schema_version))
     # Add information retrieved with pybids to dataset_desc
     dataset_desc.update(get_bids_layout_info(bids_dir))
+    # Add the latest tag of the dataset as the dataset version
+    dataset_desc["DatasetVersion"] = get_latest_tag(bids_dir)
     # Return the created dataset_desc dictionary to be indexed
     return dataset_desc
 
@@ -263,4 +297,4 @@ def get_all_datasets_content(
     if output_file:
         with open(output_file, "w") as f:
             json.dump(datasets_desc, f, indent=4)
-        print(SUCCESS)
+    print(SUCCESS)

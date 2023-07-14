@@ -70,6 +70,7 @@ autodoc_mock_imports = [
     "pysimplegui",
     "pandas",
     "bids",
+    "bids_manager",
 ]
 
 # Make sure sphinx argparse considers the autodoc_mock_imports
@@ -202,7 +203,7 @@ html_theme_options = {
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'DataHIPy: Data Manager of the Human Intracerebral Platform in Python'
+html_title = "DataHIPy: Data Manager of the Human Intracerebral Platform in Python"
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = "DataHIPy"
@@ -214,7 +215,7 @@ html_logo = "logos/datahipy-logo-flower.png"
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = "datahipy-logo-flower-32x32.png"
+html_favicon = "datahipy-logo-flower-32x32.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

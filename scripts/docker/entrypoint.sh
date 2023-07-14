@@ -22,4 +22,5 @@ else
     echo "Running as root."
 fi
 
+echo "Running DataHIPy..."
 runuser -u $USER -- datahipy "${@:3}"
