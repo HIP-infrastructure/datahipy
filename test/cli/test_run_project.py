@@ -80,8 +80,9 @@ def test_run_project_create_init_tag(script_runner, project_path, io_path):
     # Create input data
     input_data = {
         "path": project_path,
+        "type": "project",
         "tag": "0.0.0",
-        "message": "- Initial project",
+        "changes_list": ["Initial project"],
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "project_create_init_tag.json")
@@ -177,8 +178,9 @@ def test_run_project_create_tag(script_runner, project_path, io_path):
     # Create input data
     input_data = {
         "path": project_path,
+        "type": "project",
         "tag": "1.0.0",
-        "message": "- Import sub-carole data from existing dataset",
+        "changes_list": ["Import sub-carole data from existing dataset"],
     }
     # Create JSON file path for input data
     input_file = os.path.join(io_path, "project_create_tag.json")
