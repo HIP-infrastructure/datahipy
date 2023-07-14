@@ -97,7 +97,7 @@ Get a JSON summary of the BIDS dataset consisting of all fields, participants, a
 #### `datasets.get`
 Get a list of JSON BIDS dataset summaries present in a given directory.
 
-## Participant
+### Participant
 
 #### `sub.import`
 Import and update files for a given participant into an existing BIDS dataset. An appropriate record is added/updated to the ``participants.tsv`` tabular file if needed.
@@ -114,7 +114,7 @@ Remove a participant from a given BIDS dataset. The record will be deleted from 
 #### `sub.delete.file`
 Remove data file(s) from a BIDS dataset.
 
-## Project
+### Project
 
 #### `project.create`
 Create a new Datalad-controlled project dataset in the collaborative space of the HIP.
