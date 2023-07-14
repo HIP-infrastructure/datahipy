@@ -1,0 +1,5 @@
+{
+    "sourceDatasetPath": "/test/tmp/NEW_BIDS_DS",
+    "participantId": "sub-carole",
+    "targetDatasetPath": "/test/tmp/NEW_PROJECT/inputs/bids-dataset"
+}
