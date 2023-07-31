@@ -9,7 +9,7 @@ from datahipy.bids.dataset import get_all_datasets_content
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.handlers.participants import ParticipantHandler
 from datahipy.handlers.project import create_project, import_subject, import_document
-from datahipy.utils.versioning import create_tag, get_tags, checkout_tag
+from datahipy.utils.versioning import create_tag, get_tags, checkout_tag, release_version
 
 VALID_COMMANDS = [
     "dataset.create",
@@ -18,6 +18,7 @@ VALID_COMMANDS = [
     "dataset.get_tags",
     "dataset.checkout_tag",
     "datasets.get",
+    "dataset.release_version",
     "sub.get",
     "sub.import",
     "sub.edit.clinical",
@@ -29,6 +30,7 @@ VALID_COMMANDS = [
     "project.create_tag",
     "project.get_tags",
     "project.checkout_tag",
+    "project.release_version",
 ]
 
 
@@ -69,6 +71,7 @@ def main():
     dhdl = DatasetHandler(dataset_path=dataset_path)
     phdl = ParticipantHandler(dataset_path=dataset_path, input_path=input_path)
 
+    # Dataset commands
     if command == "dataset.create":
         return dhdl.dataset_create(input_data=input_data)
     if command == "dataset.get":
@@ -84,6 +87,9 @@ def main():
             input_data=input_data,
             output_file=output_file,
         )
+    if command == "dataset.release_version":
+        return release_version(input_data=input_data, output_file=output_file)
+    # Dataset subject / participant-level commands
     if command == "sub.import":
         return phdl.sub_import(input_data=input_data)
     if command == "sub.edit.clinical":
@@ -94,6 +100,7 @@ def main():
         return phdl.sub_delete(input_data=input_data)
     if command == "sub.delete.file":
         return phdl.sub_delete_file(input_data=input_data)
+    # Project commands
     if command == "project.create":
         create_project(input_data=input_data, output_file=output_file)
     if command == "project.sub.import":
@@ -106,6 +113,8 @@ def main():
         return get_tags(input_data=input_data, output_file=output_file)
     if command == "project.checkout_tag":
         return checkout_tag(input_data=input_data)
+    if command == "project.release_version":
+        return release_version(input_data=input_data, output_file=output_file)
 
 
 if __name__ == "__main__":
