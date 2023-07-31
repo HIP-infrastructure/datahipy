@@ -52,6 +52,7 @@ extensions = [
     "sphinxcontrib.apidoc",
     "sphinxemoji.sphinxemoji",
     "m2r2",
+    "sphinxcontrib.mermaid",
 ]
 
 # autodoc_default_options = {
