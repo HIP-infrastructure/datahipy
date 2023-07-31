@@ -1,0 +1,86 @@
+{
+    "Name": "My New BIDS dataset",
+    "BIDSVersion": "1.4.0",
+    "License": "n/a",
+    "Authors": [
+        "Tom",
+        "Jerry"
+    ],
+    "Acknowledgements": "Overwrite test",
+    "HowToAcknowledge": "n/a",
+    "Funding": [
+        "Picsou"
+    ],
+    "ReferencesAndLinks": [
+        "n/a"
+    ],
+    "DatasetDOI": "n/a",
+    "AgeMin": "nan",
+    "AgeMax": "nan",
+    "ParticipantsCount": 0,
+    "ParticipantsGroups": [
+        null
+    ],
+    "Participants": [],
+    "Size": "109M",
+    "BIDSSchemaVersion": "v1.6.0",
+    "BIDSErrors": [
+        {
+            "key": "SUBJECT_FOLDERS",
+            "severity": "error",
+            "reason": "There are no subject folders (labeled \"sub-*\") in the root of this dataset.",
+            "files": [
+                {
+                    "key": "SUBJECT_FOLDERS",
+                    "code": 45,
+                    "file": null,
+                    "evidence": null,
+                    "line": null,
+                    "character": null,
+                    "severity": "error",
+                    "reason": "There are no subject folders (labeled \"sub-*\") in the root of this dataset.",
+                    "helpUrl": "https://neurostars.org/search?q=SUBJECT_FOLDERS"
+                }
+            ],
+            "additionalFileCount": 0,
+            "helpUrl": "https://neurostars.org/search?q=SUBJECT_FOLDERS",
+            "code": 45
+        }
+    ],
+    "BIDSWarnings": [],
+    "BIDSIgnored": [
+        {
+            "key": "NO_T1W",
+            "severity": "ignore",
+            "reason": "Dataset does not contain any T1w scans.",
+            "files": [
+                {
+                    "key": "NO_T1W",
+                    "code": 53,
+                    "file": null,
+                    "evidence": null,
+                    "line": null,
+                    "character": null,
+                    "severity": "ignore",
+                    "reason": "Dataset does not contain any T1w scans.",
+                    "helpUrl": "https://neurostars.org/search?q=NO_T1W"
+                }
+            ],
+            "additionalFileCount": 0,
+            "helpUrl": "https://neurostars.org/search?q=NO_T1W",
+            "code": 53
+        }
+    ],
+    "BIDSValid": false,
+    "DataTypes": [],
+    "Formats": [
+        ".json",
+        ".tsv"
+    ],
+    "SessionsCount": 0,
+    "Tasks": [],
+    "RunsCount": 0,
+    "EventsFileCount": 0,
+    "FileCount": 4,
+    "DatasetVersion": "1.0.1"
+}

@@ -1,0 +1,8 @@
+{
+    "path": "/test/tmp/NEW_PROJECT",
+    "type": "project",
+    "level": "patch",
+    "changes_list": [
+        "Delete sub-carole data"
+    ]
+}
