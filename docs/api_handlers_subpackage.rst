@@ -23,3 +23,12 @@ The ``datahipy.handlers`` subpackage contains modules that define classes and fu
    :undoc-members:
    :show-inheritance:
    :noindex:
+
+`datahipy.handlers.project`
+====================================
+
+.. automodule:: datahipy.handlers.project
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :noindex:
