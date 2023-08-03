@@ -115,6 +115,36 @@ Example of content of output JSON data:
     .. include:: examples/io/get_datasets_output.json
         :code: json
 
+``dataset.publish``
+^^^^^^^^^^^^^^^^^^^
+
+Publish a Datalad-controlled BIDS dataset to the HIP public space.
+
+Example of content of input JSON data for the ``--input_data`` argument when using this command:
+
+    .. include:: examples/io/dataset_publish.json
+        :code: json
+
+Example of content of output JSON data:
+
+    .. include:: examples/io/dataset_publish_output.json
+        :code: json
+
+``dataset.clone``
+^^^^^^^^^^^^^^^^^
+
+Clone a Datalad-controlled BIDS dataset from the HIP public space to the private space of the user.
+
+Example of content of input JSON data for the ``--input_data`` argument when using this command:
+
+    .. include:: examples/io/dataset_clone.json
+        :code: json
+
+Example of content of output JSON data:
+
+    .. include:: examples/io/dataset_clone_output.json
+        :code: json
+
 Participant
 ~~~~~~~~~~~
 
