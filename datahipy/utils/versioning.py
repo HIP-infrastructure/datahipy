@@ -15,6 +15,32 @@ from datahipy.bids.version import create_bids_changes_tag_entry, update_bids_cha
 TAG_EXCEPTIONS = ["master", "main", "HEAD"]
 
 
+def set_git_user_info_global(name=None, email=None):
+    """Set Git user name and email.
+
+    Parameters
+    ----------
+    name : str
+        Git user name.
+
+    email : str
+        Git user email.
+    """
+    if name is None:
+        if "USER" in os.environ.keys():
+            if os.environ["USER"] == "root":
+                name = "hip_admin"
+            else:
+                name = os.environ["USER"]
+        else:
+            name = "hip_admin"
+    if email is None:    
+        email = f"{name}@hip.ch"
+    print(f"Set global Git user name ({name}) and email ({email})...")
+    os.system(f"cd ~ && git config --global user.name {name}")
+    os.system(f"cd ~ && git config --global user.email {email}")
+
+
 def validate_tag(tag, discard_exceptions=False):
     """Validate a tag.
 

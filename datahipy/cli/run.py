@@ -9,7 +9,9 @@ from datahipy.bids.dataset import get_all_datasets_content
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.handlers.participants import ParticipantHandler
 from datahipy.handlers.project import create_project, import_subject, import_document
-from datahipy.utils.versioning import create_tag, get_tags, checkout_tag, release_version
+from datahipy.utils.versioning import (
+    create_tag, get_tags, checkout_tag, release_version, set_git_user_info_global
+)
 
 VALID_COMMANDS = [
     "dataset.create",
@@ -70,6 +72,9 @@ def main():
 
     dhdl = DatasetHandler(dataset_path=dataset_path)
     phdl = ParticipantHandler(dataset_path=dataset_path, input_path=input_path)
+
+    # Set global git user info for Datalad operations
+    set_git_user_info_global(name=git_user_name, email=git_user_email)
 
     # Dataset commands
     if command == "dataset.create":
