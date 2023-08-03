@@ -199,6 +199,62 @@ def test_run_datasets_get(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
 
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_datasets_get")
+def test_run_dataset_publish(script_runner, dataset_path, public_dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDatasetPath": dataset_path,
+        "targetDatasetPath": public_dataset_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_publish.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_publish_output.json")
+    # Run datahipy dataset.publish command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.publish",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_dataset_publish")
+def test_run_dataset_clone(script_runner, public_dataset_path, cloned_dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDatasetPath": public_dataset_path,
+        "targetDatasetPath": cloned_dataset_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_clone.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_clone_output.json")
+    # Run datahipy dataset.clone command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.clone",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+
 
 @pytest.mark.script_launch_mode("subprocess")
 @pytest.mark.order(after="test_run_sub.py::test_run_sub_delete")
