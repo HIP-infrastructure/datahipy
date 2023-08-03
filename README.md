@@ -100,6 +100,12 @@ Get a JSON summary of the BIDS dataset consisting of all fields, participants, a
 #### `datasets.get`
 Get a list of JSON BIDS dataset summaries present in a given directory.
 
+#### `dataset.publish`
+Publish a Datalad-controlled BIDS dataset to the HIP public space.
+
+#### `dataset.clone`
+Clone a Datalad-controlled BIDS dataset from the HIP public space to the private space of the user.
+
 ### Participant
 
 #### `sub.import`
