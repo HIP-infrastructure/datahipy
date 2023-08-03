@@ -299,3 +299,102 @@ def get_all_datasets_content(
         with open(output_file, "w") as f:
             json.dump(datasets_desc, f, indent=4)
     print(SUCCESS)
+
+
+def dataset_publish(input_data, output_file):
+    """Publish a dataset to the public space of the HIP.
+
+    Parameters
+    ----------
+    input_data : str
+        Path to the input_data JSON file in the following format::
+
+            {
+                "sourceDatasetPath": "/path/to/private/or/collab/dataset",
+                "targetDatasetPath": "/path/of/dataset/to/be/published/to/public/space",
+            }
+
+    output_file : str
+        Path to the output published dataset summary in JSON format
+        to be indexed by the Data Search Engine of the HIP.
+    """
+    # Load the HIP json request
+    with open(input_data, "r") as f:
+        input_content = json.load(f)
+    # Extract the source and target dataset paths
+    source_dataset_path = input_content["sourceDatasetPath"]
+    target_dataset_path = input_content["targetDatasetPath"]
+    # Create datalad dataset sibling to publish to
+    datalad.api.create_sibling(
+        name="public",
+        dataset=source_dataset_path,
+        sshurl=target_dataset_path,
+        # Uncomment when public space could have https access
+        # as it expects sshurl to have URL protocol to be http or https
+        # as_common_datasrc=True,
+        recursive=True
+    )
+    # Publish the dataset to the public space
+    datalad.api.push(
+        dataset=source_dataset_path,
+        to="public",
+        data="anything",
+        recursive=True,
+        force="all",
+        on_failure="ignore"
+    )
+    # Get the content of the published dataset summary to
+    # be saved in the output JSON file
+    dataset_desc = get_bidsdataset_content(target_dataset_path)
+    # Dump the dataset_desc dict in a .json file
+    if output_file:
+        with open(output_file, "w") as f:
+            json.dump(dataset_desc, f, indent=4)
+    print(SUCCESS)
+
+
+def dataset_clone(input_data, output_file):
+    """Clone a dataset from the public space of the HIP.
+
+    Parameters
+    ----------
+    input_data : str
+        Path to the input_data JSON file in the following format::
+
+            {
+                "sourceDatasetPath": "/path/to/public/dataset",
+                "targetDatasetPath": "/path/of/dataset/to/be/cloned/in/private/space",
+            }
+    
+    output_file : str
+        Path to the output cloned dataset summary in JSON format
+        to be indexed by the Data Search Engine of the HIP.
+    """
+    # Load the input_data json file in a dict
+    with open(input_data, "r") as f:
+        input_content = json.load(f)
+    # Extract the source and target dataset paths
+    source_dataset_path = input_content["sourceDatasetPath"]
+    target_dataset_path = input_content["targetDatasetPath"]
+    # Create the target dataset directory if it does not exist
+    if not os.path.isdir(target_dataset_path):
+        os.makedirs(target_dataset_path)
+    # set_git_user_info(dataset_dir=target_dataset_path)
+    # Clone the dataset from the public space
+    datalad.api.install(
+        source=source_dataset_path,
+        path=target_dataset_path,
+        description=f"Clone of {source_dataset_path}",
+        get_data=True,
+        reckless=None,
+        recursive=True,
+        on_failure="continue"
+    )
+    # Get the content of the cloned dataset summary to
+    # be saved in the output JSON file
+    dataset_desc = get_bidsdataset_content(target_dataset_path)
+    # Dump the dataset_desc dict in a .json file
+    if output_file:
+        with open(output_file, "w") as f:
+            json.dump(dataset_desc, f, indent=4)
+    print(SUCCESS)

@@ -5,7 +5,7 @@
 
 import argparse
 from datahipy import __version__, __release_date__
-from datahipy.bids.dataset import get_all_datasets_content
+from datahipy.bids.dataset import get_all_datasets_content, dataset_publish, dataset_clone
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.handlers.participants import ParticipantHandler
 from datahipy.handlers.project import create_project, import_subject, import_document
@@ -21,6 +21,8 @@ VALID_COMMANDS = [
     "dataset.checkout_tag",
     "datasets.get",
     "dataset.release_version",
+    "dataset.publish",
+    "dataset.clone",
     "sub.get",
     "sub.import",
     "sub.edit.clinical",
@@ -49,6 +51,16 @@ def get_parser():
         default="/input",
     )
     parser.add_argument(
+        "--git_user_name",
+        help="Git user name to use for Datalad ops",
+        default=None
+    )
+    parser.add_argument(
+        "--git_user_email",
+        help="Git user email to use for Datalad ops",
+        default=None
+    )
+    parser.add_argument(
         "-v",
         "--version",
         action="version",
@@ -61,15 +73,20 @@ def get_parser():
 
 def main():
     """Run the command line interface."""
+    # Create parser object
     parser = get_parser()
 
+    # Parse arguments
     cmd_args = parser.parse_args()
     command = cmd_args.command
     input_data = cmd_args.input_data
     output_file = cmd_args.output_file
     dataset_path = cmd_args.dataset_path
     input_path = cmd_args.input_path
+    git_user_name = cmd_args.git_user_name
+    git_user_email = cmd_args.git_user_email
 
+    # Initialize dataset and participant handler objects
     dhdl = DatasetHandler(dataset_path=dataset_path)
     phdl = ParticipantHandler(dataset_path=dataset_path, input_path=input_path)
 
@@ -94,6 +111,10 @@ def main():
         )
     if command == "dataset.release_version":
         return release_version(input_data=input_data, output_file=output_file)
+    if command == "dataset.publish":
+        return dataset_publish(input_data=input_data, output_file=output_file)
+    if command == "dataset.clone":
+        return dataset_clone(input_data=input_data, output_file=output_file)
     # Dataset subject / participant-level commands
     if command == "sub.import":
         return phdl.sub_import(input_data=input_data)
