@@ -8,6 +8,25 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "sebastientourbier",
+      "name": "Sébastien Tourbier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22279770?v=4",
+      "profile": "https://github.com/sebastientourbier",
+      "contributions": [
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "example",
+        "ideas",
+        "infra",
+        "maintenance",
+        "mentoring",
+        "review",
+        "test"
+      ]
+    },
+    {
       "login": "nicedexter",
       "name": "Manuel Spuhler",
       "avatar_url": "https://avatars.githubusercontent.com/u/7804?v=4",
