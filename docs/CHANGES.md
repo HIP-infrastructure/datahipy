@@ -1,3 +1,17 @@
+# [1.3.0-dev.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0...v1.3.0-dev.1) (2023-08-04)
+
+
+### Bug Fixes
+
+* handle datasets not datalad-managed for import / edit commands ([a1a4bde](https://gitlab.hbp.link/hip/datahipy/commit/a1a4bdecfdebdb62452704d23fe4f1f62bef7701))
+* set git user name and email used by Datalad ops ([de489e2](https://gitlab.hbp.link/hip/datahipy/commit/de489e248acab4e4d08af1cf02dbb28173bec640))
+
+
+### Features
+
+* add dataset and project commands / methods to release a version ([c295ff6](https://gitlab.hbp.link/hip/datahipy/commit/c295ff64c81f97a2805df34e34ec482a1376fdc3))
+* add dataset.publish and dataset.clone commands and corresponding functions ([bd9d270](https://gitlab.hbp.link/hip/datahipy/commit/bd9d2707a3ad3e17f3bf09eaec7ed0983d58ce28))
+
 # [1.2.0](https://gitlab.hbp.link/hip/datahipy/compare/v1.1.1...v1.2.0) (2023-07-14)
 
 
