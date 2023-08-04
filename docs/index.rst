@@ -21,6 +21,12 @@ This data management software is developed by the HIP team at the University Hos
 .. image:: https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN 
   :target: https://codecov.io/github/HIP-infrastructure/datahipy
   :alt: Code Coverage
+.. image:: https://github.com/HIP-infrastructure/datahipy/actions/workflows/documentation.yml/badge.svg
+   :target: https://github.com/HIP-infrastructure/datahipy/actions/workflows/documentation.yml
+   :alt: Docs
+.. image:: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
+  :target: https://hip-infrastructure.github.io/datahipy/contributors.html
+  :alt: All Contributors
 
 .. TODO add badge for maybe docs 
 
@@ -103,4 +109,5 @@ Contents
    LICENSE
    citing
    CHANGES
+   contributors
    contributing
