@@ -28,8 +28,6 @@ This data management software is developed by the HIP team at the University Hos
   :target: https://hip-infrastructure.github.io/datahipy/contributors.html
   :alt: All Contributors
 
-.. TODO add badge for maybe docs 
-
 Introduction
 -------------
 
