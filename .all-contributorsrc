@@ -70,6 +70,16 @@
         "example",
         "ideas"
       ]
+    },
+    {
+      "login": "BSchaffhauser",
+      "name": "BSchaffhauser",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91893580?v=4",
+      "profile": "https://github.com/BSchaffhauser",
+      "contributions": [
+        "financial",
+        "fundingFinding"
+      ]
     }
   ],
   "contributorsPerLine": 7,
