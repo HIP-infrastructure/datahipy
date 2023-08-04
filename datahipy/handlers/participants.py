@@ -21,7 +21,7 @@ try:
         Ieeg,
         CT,
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     print("WARNING: BIDS Manager Python package is not accessible.")
 
 from datahipy.handlers.dataset import DatasetHandler
@@ -178,7 +178,7 @@ class ParticipantHandler:
             for clin_key, clin_value in input_data["clinical"].items():
                 if clin_value:
                     sub_info[clin_key] = clin_value
-                else:
+                else:  # pragma: no cover
                     sub_info[clin_key] = "n/a"
             del sub_info["sub"]
             ds_obj.parse_bids()  # To update the participants.tsv with the new columns
@@ -212,10 +212,10 @@ class ParticipantHandler:
             if sub_dict["sub"] == subject
         ]
         if not matched_sub:
-            raise IndexError("Could not find the subject in the BIDS dataset.")
+            raise IndexError("Could not find the subject in the BIDS dataset.")  # pragma: no cover
         elif len(matched_sub) > 1:
             raise IndexError(
-                "Several subjects with the same ID found in the BIDS dataset."
+                "Several subjects with the same ID found in the BIDS dataset."  # pragma: no cover
             )
         sub_dict = ds_obj["Subject"][matched_sub[0]]
         return sub_dict
