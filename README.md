@@ -91,13 +91,16 @@ Get the list of existing version tags for a Datalad-controlled BIDS dataset.
 #### `dataset.checkout_tag` 
 Checkout a Datalad-controlled BIDS dataset at a specific tag, the master branch, or the HEAD.
 
+#### `dataset.release_version`
+Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.0.0`) version release of a Datalad-controlled BIDS dataset.
+
 #### `dataset.get`  
 Get a JSON summary of the BIDS dataset consisting of all fields, participants, and existing entities.
 
 #### `datasets.get`
 Get a list of JSON BIDS dataset summaries present in a given directory.
 
-## Participant
+### Participant
 
 #### `sub.import`
 Import and update files for a given participant into an existing BIDS dataset. An appropriate record is added/updated to the ``participants.tsv`` tabular file if needed.
@@ -114,7 +117,7 @@ Remove a participant from a given BIDS dataset. The record will be deleted from 
 #### `sub.delete.file`
 Remove data file(s) from a BIDS dataset.
 
-## Project
+### Project
 
 #### `project.create`
 Create a new Datalad-controlled project dataset in the collaborative space of the HIP.
@@ -134,6 +137,12 @@ Get the list of existing version tags for a Datalad-controlled project dataset.
 #### `project.checkout_tag` 
 Checkout a Datalad-controlled project dataset at a specific tag, the master branch, or the HEAD.
 
+#### `project.release_version`
+Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.0.0`) version release of a Datalad-controlled project dataset and its nested BIDS dataset.
+
+### More documentation
+
+[Commandline Usage](https://hip-infrastructure.github.io/datahipy/usage.html) documentation page provides more documentation about the inputs and outputs of the above commands.
 
 ## Funding
 

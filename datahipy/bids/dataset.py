@@ -22,7 +22,6 @@ from datahipy.bids.validation import (
     get_bids_validator_output_info,
 )
 from datahipy.bids.version import determine_bids_schema_version
-from datahipy.utils.versioning import get_latest_tag
 
 # Set the number of threads to use for parallel processing
 # Modify this value if you want to use more or less threads or
@@ -241,6 +240,8 @@ def get_bidsdataset_content(bids_dir=None):
     dataset_desc : dict
         Dictionary storing dataset information indexed by the HIP platform.
     """
+    # Import here to avoid circular import
+    from datahipy.utils.versioning import get_latest_tag
     # Load the dataset_description.json as initial dictionary-based description
     with open(os.path.join(bids_dir, "dataset_description.json"), "r") as f:
         dataset_desc = json.load(f)

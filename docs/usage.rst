@@ -70,6 +70,21 @@ Example of content of input JSON data for the ``--input_data`` argument when usi
     .. include:: examples/io/dataset_checkout_tag.json
         :code: json
 
+``dataset.release_version``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Make a patch (``1.0.0`` → ``1.0.1``) / minor (``1.0.0`` → ``1.1.0``) / major (``1.1.0`` → ``2.0.0``) version release of a Datalad-controlled BIDS dataset.
+
+Example of content of input JSON data for the ``--input_data`` argument when using this command:
+
+    .. include:: examples/io/dataset_release_version.json
+        :code: json
+
+Example of content of output JSON data:
+
+    .. include:: examples/io/dataset_release_version_output.json
+        :code: json
+
 ``dataset.get``
 ^^^^^^^^^^^^^^^
 
@@ -229,6 +244,21 @@ Checkout a Datalad-controlled project dataset at a specific tag, the master bran
 Example of content of input JSON data for the ``--input_data`` argument when using this command:
 
     .. include:: examples/io/project_checkout_tag.json
+        :code: json
+
+``project.release_version``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Make a patch (``1.0.0`` → ``1.0.1``) / minor (``1.0.0`` → ``1.1.0``) / major (``1.1.0`` → ``2.0.0``) version release of a Datalad-controlled project dataset and its nested BIDS dataset.
+
+Example of content of input JSON data for the ``--input_data`` argument when using this command:
+
+    .. include:: examples/io/project_release_version.json
+        :code: json
+
+Example of content of output JSON data:
+
+    .. include:: examples/io/project_release_version_output.json
         :code: json
 
 .. _cmdusage-docker:

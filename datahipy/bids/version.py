@@ -6,6 +6,7 @@
 import os
 from datetime import date
 from packaging import version
+import datalad.api
 from datahipy.bids.const import BIDS_VERSION
 
 
@@ -84,3 +85,15 @@ def update_bids_changes(bids_dir, changes_tag_entry):
     # Create a new CHANGES file with the new release text block at the top
     with open(os.path.join(bids_dir, "CHANGES"), "w") as f:
         f.writelines(changes_tag_entry + content)
+
+
+def manage_bids_dataset_with_datalad(bids_dir):
+    """Create a Datalad dataset out of an existing BIDS dataset not Datalad-managed yet."""
+    print(f"Initializing Datalad dataset at {bids_dir}...")
+    # Initialize the BIDS dataset as a Datalad-managed dataset
+    create_params = {
+        "dataset": bids_dir,
+        "cfg_proc": ["text2git", "bids"],
+        "force": True,  # Enforce dataset creation in a non-empty directory
+    }
+    datalad.api.create(**create_params)
