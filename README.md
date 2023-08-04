@@ -1,4 +1,7 @@
 # ![DataHIPy logo](https://raw.githubusercontent.com/HIP-infrastructure/datahipy/chore/update-tool-name-and-logo/docs/logos/datahipy-logo-text.png)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Copyright © 2022-2023 The HIP team, University Hospital of Lausanne (CHUV), Switzerland & Contributors, All rights reserved.
 
@@ -138,3 +141,25 @@ Checkout a Datalad-controlled project dataset at a specific tag, the master bran
 ## Funding
 
 This project received funding from the European Union's H2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3, as part the Human Intracerebral EEG Platform (HIP)).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/BSchaffhauser"><img src="https://avatars.githubusercontent.com/u/91893580?v=4?s=100" width="100px;" alt="BSchaffhauser"/><br /><sub><b>BSchaffhauser</b></sub></a><br /><a href="#financial-BSchaffhauser" title="Financial">💵</a> <a href="#fundingFinding-BSchaffhauser" title="Funding Finding">🔍</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
