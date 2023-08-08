@@ -96,8 +96,9 @@ def test_run_project_create_init_tag(script_runner, project_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the tag was created
+    tag_dicts = GitRepo(project_path).get_tags()
     assert "0.0.0" in [
-        tag_dict["name"] for tag_dict in GitRepo(project_path).get_tags()
+        tag_dict["name"] for tag_dict in tag_dicts
     ]
 
 
@@ -194,8 +195,9 @@ def test_run_project_create_tag(script_runner, project_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the tag was created
+    tag_dicts = GitRepo(project_path).get_tags()
     assert "1.0.0" in [
-        tag_dict["name"] for tag_dict in GitRepo(project_path).get_tags()
+        tag_dict["name"] for tag_dict in tag_dicts
     ]
 
 
@@ -236,6 +238,44 @@ def test_run_project_get_tags(script_runner, project_path, io_path):
 
 @pytest.mark.script_launch_mode("subprocess")
 @pytest.mark.order(after="test_run_sub.py::test_run_project_sub_delete")
+def test_run_project_release_version(script_runner, project_path, io_path):
+    # Create input data
+    input_data = {
+        "path": project_path,
+        "type": "project",
+        "level": "patch",
+        "changes_list": ["Delete sub-carole data"],
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "project_release_version.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "project_release_version_output.json")
+    # Run datahipy project.release_version command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "project.release_version",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the dataset summary JSON output file was created
+    assert os.path.exists(output_file)
+    # Load the output json file and check the dataset version
+    # in the dataset summary JSON output file
+    with open(output_file, "r") as f:
+        output_data = json.load(f)
+    assert "1.0.1" in output_data["DatasetVersion"]
+
+
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_project_release_version")
 def test_run_project_checkout_tag(script_runner, project_path, io_path):
     # Create input data
     input_data = {"path": project_path, "tag": "0.0.0"}

@@ -21,12 +21,13 @@ try:
         Ieeg,
         CT,
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     print("WARNING: BIDS Manager Python package is not accessible.")
 
 from datahipy.handlers.dataset import DatasetHandler
 from datahipy.bids.participant import get_subject_bidsfile_info
 from datahipy.bids.bids_manager import post_import_bids_refinement
+from datahipy.bids.version import manage_bids_dataset_with_datalad
 
 
 class ParticipantHandler:
@@ -38,6 +39,12 @@ class ParticipantHandler:
 
     def sub_import(self, input_data=None):
         """Import subject(s) data into a BIDS dataset."""
+        # Check if the dataset is managed by Datalad based on
+        # the presence of the .datalad directory. If not, create it.
+        # Otherwise, this would fail when trying to save the
+        # dataset state with Datalad.
+        if not os.path.isdir(os.path.join(self.dataset_path, ".datalad")):
+           manage_bids_dataset_with_datalad(self.dataset_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager and check converters
@@ -77,6 +84,12 @@ class ParticipantHandler:
 
     def sub_delete(self, input_data=None):
         """Delete a subject from an already existing BIDS dataset."""
+        # Check if the dataset is managed by Datalad based on
+        # the presence of the .datalad directory. If not, create it.
+        # Otherwise, this would fail when trying to save the
+        # dataset state with Datalad.
+        if not os.path.isdir(os.path.join(self.dataset_path, ".datalad")):
+           manage_bids_dataset_with_datalad(self.dataset_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
@@ -100,6 +113,12 @@ class ParticipantHandler:
 
     def sub_delete_file(self, input_data=None):
         """Delete data files from /raw and /source."""
+        # Check if the dataset is managed by Datalad based on
+        # the presence of the .datalad directory. If not, create it.
+        # Otherwise, this would fail when trying to save the
+        # dataset state with Datalad.
+        if not os.path.isdir(os.path.join(self.dataset_path, ".datalad")):
+           manage_bids_dataset_with_datalad(self.dataset_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
@@ -138,6 +157,12 @@ class ParticipantHandler:
 
     def sub_edit_clinical(self, input_data=None):
         """Update subject clinical info in BIDS dataset."""
+        # Check if the dataset is managed by Datalad based on
+        # the presence of the .datalad directory. If not, create it.
+        # Otherwise, this would fail when trying to save the
+        # dataset state with Datalad.
+        if not os.path.isdir(os.path.join(self.dataset_path, ".datalad")):
+           manage_bids_dataset_with_datalad(self.dataset_path)
         # Load the input_data json in a dict
         input_data = self.load_input_data(input_data)
         # Load the targeted BIDS dataset in BIDS Manager
@@ -153,7 +178,7 @@ class ParticipantHandler:
             for clin_key, clin_value in input_data["clinical"].items():
                 if clin_value:
                     sub_info[clin_key] = clin_value
-                else:
+                else:  # pragma: no cover
                     sub_info[clin_key] = "n/a"
             del sub_info["sub"]
             ds_obj.parse_bids()  # To update the participants.tsv with the new columns
@@ -187,10 +212,10 @@ class ParticipantHandler:
             if sub_dict["sub"] == subject
         ]
         if not matched_sub:
-            raise IndexError("Could not find the subject in the BIDS dataset.")
+            raise IndexError("Could not find the subject in the BIDS dataset.")  # pragma: no cover
         elif len(matched_sub) > 1:
             raise IndexError(
-                "Several subjects with the same ID found in the BIDS dataset."
+                "Several subjects with the same ID found in the BIDS dataset."  # pragma: no cover
             )
         sub_dict = ds_obj["Subject"][matched_sub[0]]
         return sub_dict

@@ -91,11 +91,20 @@ Get the list of existing version tags for a Datalad-controlled BIDS dataset.
 #### `dataset.checkout_tag` 
 Checkout a Datalad-controlled BIDS dataset at a specific tag, the master branch, or the HEAD.
 
+#### `dataset.release_version`
+Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.0.0`) version release of a Datalad-controlled BIDS dataset.
+
 #### `dataset.get`  
 Get a JSON summary of the BIDS dataset consisting of all fields, participants, and existing entities.
 
 #### `datasets.get`
 Get a list of JSON BIDS dataset summaries present in a given directory.
+
+#### `dataset.publish`
+Publish a Datalad-controlled BIDS dataset to the HIP public space.
+
+#### `dataset.clone`
+Clone a Datalad-controlled BIDS dataset from the HIP public space to the private space of the user.
 
 ### Participant
 
@@ -134,6 +143,12 @@ Get the list of existing version tags for a Datalad-controlled project dataset.
 #### `project.checkout_tag` 
 Checkout a Datalad-controlled project dataset at a specific tag, the master branch, or the HEAD.
 
+#### `project.release_version`
+Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.0.0`) version release of a Datalad-controlled project dataset and its nested BIDS dataset.
+
+### More documentation
+
+[Commandline Usage](https://hip-infrastructure.github.io/datahipy/usage.html) documentation page provides more documentation about the inputs and outputs of the above commands.
 
 ## Funding
 

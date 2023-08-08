@@ -74,6 +74,9 @@ Ready to contribute? Here's how to set up `DataHIPy` for local development.
 
 6. Submit a pull request through the GitHub website.
 
+   .. important::
+       Please make sure that the pull request is made against the ``dev`` branch. The ``master`` branch is used for the stable version releases of `DataHIPy`.
+
 Pull Request Guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -82,6 +85,54 @@ Before you submit a pull request, check that it meets these guidelines:
 1. If the pull request adds functionality, the docs should be updated (See :ref:`documentation build instructions <instructions_docs_build>`). 
 
 2. Make sure that the tests pass (See :ref:`instructions for testing <instructions_tests>` )
+
+CI/CD Pipeline: Under the Hood
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`DataHIPy` has a `mirror repository on GitLab <https://gitlab.hbp.link/hip/datahipy>`_ that is synced with a `GitHub Action <https://github.com/HIP-infrastructure/datahipy/actions/workflows/gitlab-sync.yml>`_, and that is used for continuous integration (CI) and continuous deployment (CD).
+
+The pipeline, described by the file `.gitlab-ci.yml <https://github.com/HIP-infrastructure/datahipy/blob/master/.gitlab-ci.yml>`_, consists of the following stages:
+
+    1. `test-install-python`: install Python and the dependencies of DataHIPy in a Docker container.
+
+    2. `build`: Build the Docker image of DataHIPy in the GitLab Container Registry (Login to the GitLab Container Registry is done using the ``$CI_REGISTRY_USER`` and ``$CI_REGISTRY_PASSWORD`` environment variables).
+
+    3. `test`: Run the tests with pytest using the built Docker image. Send the coverage report to `codecov.io <https://codecov.io/gh/HIP-infrastructure/datahipy>`_ using the ``$CODECOV_TOKEN`` environment variable.
+
+    4. `clean`: Clean the Docker container.
+
+    5. `semantic-release`: Make a version release of DataHIPy with semantic-release. This updates the version tag of DataHIPy, updates ``docs/CHANGES.md``, commits the changes, and creates a new tag on GitLab using ``$GL_TOKEN`` environment variable. The configuration of semantic-release is described by the file `.releaserc.json <https://github.com/HIP-infrastructure/datahipy/blob/master/.releaserc.json>`_. It uses the ``dev`` branch for beta releases and the ``master`` branch for stable releases.
+
+    6. `deploy-release`: Build the Docker image with the new version of DataHIPy and push it to the GitLab Container Registry. This stage takes also care of pushing the changes and tags made by `semantic-release` stage to GitHub using SSH. A private key on gitlab is read from ``$SSH_PRIVATE_KEY`` variable and set in ``.gitlab-ci.yml``.
+
+Depending on the event, the pipeline will run all the stages of the CI/CD pipeline or only a subset of them.
+
+The diagram below shows the different stages of the pipeline and the events that trigger them:
+
+.. mermaid::
+
+    graph LR
+
+    subgraph "Stages"
+    test_python_install["test-python-install"]
+    build["build"]
+    test["test"]
+    clean["clean"]
+    semantic_release["semantic-release"]
+    deploy_release["deploy-release"]
+    end
+
+    test_python_install --> build
+    build --> test
+    test --> clean
+    clean -->|if $CI_COMMIT_REF_NAME == master or $CI_COMMIT_REF_NAME == dev| semantic_release
+
+    semantic_release --> deploy_release
+
+When a new branch is pushed on GitHub or a new commit is pushed to an existing branch (different than ``master`` or ``dev``) on GitHub, then only the stages `test-install-python`, `build`, `test`, `clean` are executed.
+
+When a Pull Request towards the ``dev`` and ``master`` branches is opened, updated, or merged on GitHub, then only the additional stages `semantic-release` and `deploy-release` are executed.
+
 
 Not listed as a contributor?
 ----------------------------

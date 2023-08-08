@@ -1,0 +1,23 @@
+{
+    "path": "/test/tmp/NEW_PROJECT",
+    "title": "New Project Title",
+    "description": "Project Description that would be put in the README.md file",
+    "datasetDescription": {
+        "Name": "BIDS Dataset Title",
+        "BIDSVersion": "1.6.0",
+        "License": "CC-BY-4.0",
+        "Authors": [
+            "Author 1",
+            "Author 2"
+        ],
+        "Acknowledgements": "Acknowledgement 1",
+        "Funding": [
+            "Funding 1"
+        ],
+        "ReferencesAndLinks": [
+            "Reference 1",
+            "Reference 2"
+        ],
+        "DatasetDOI": ""
+    }
+}

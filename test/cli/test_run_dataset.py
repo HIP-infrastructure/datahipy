@@ -72,8 +72,9 @@ def test_run_dataset_create_init_tag(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the tag was created
+    tag_dicts = GitRepo(dataset_path).get_tags()
     assert "0.0.0" in [
-        tag_dict["name"] for tag_dict in GitRepo(dataset_path).get_tags()
+        tag_dict["name"] for tag_dict in tag_dicts
     ]
 
 
@@ -99,8 +100,9 @@ def test_run_dataset_create_tag(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
     # Check that the tag was created
+    tag_dicts = GitRepo(dataset_path).get_tags()
     assert "1.0.0" in [
-        tag_dict["name"] for tag_dict in GitRepo(dataset_path).get_tags()
+        tag_dict["name"] for tag_dict in tag_dicts
     ]
 
 
@@ -197,9 +199,103 @@ def test_run_datasets_get(script_runner, dataset_path, io_path):
     # Check that the command ran successfully
     assert ret.success
 
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_datasets_get")
+def test_run_dataset_publish(script_runner, dataset_path, public_dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDatasetPath": dataset_path,
+        "targetDatasetPath": public_dataset_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_publish.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_publish_output.json")
+    # Run datahipy dataset.publish command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.publish",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_dataset_publish")
+def test_run_dataset_clone(script_runner, public_dataset_path, cloned_dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "sourceDatasetPath": public_dataset_path,
+        "targetDatasetPath": cloned_dataset_path,
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_clone.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_clone_output.json")
+    # Run datahipy dataset.clone command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.clone",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file
+    )
+    # Check that the command ran successfully
+    assert ret.success
+
 
 @pytest.mark.script_launch_mode("subprocess")
 @pytest.mark.order(after="test_run_sub.py::test_run_sub_delete")
+def test_run_dataset_release_version(script_runner, dataset_path, io_path):
+    # Create input data
+    input_data = {
+        "path": dataset_path,
+        "type": "bids",
+        "level": "patch",
+        "changes_list": ["Delete sub-carole data"],
+    }
+    # Create JSON file path for input data
+    input_file = os.path.join(io_path, "dataset_release_version.json")
+    # Write input data to file
+    with open(input_file, "w") as f:
+        json.dump(input_data, f, indent=4)
+    # Output file path
+    output_file = os.path.join(io_path, "dataset_release_version_output.json")
+    # Run datahipy dataset.release_version command
+    ret = script_runner.run(
+        "datahipy",
+        "--command",
+        "dataset.release_version",
+        "--input_data",
+        input_file,
+        "--output_file",
+        output_file,
+    )
+    # Check that the command ran successfully
+    assert ret.success
+    # Check that the dataset summary JSON output file was created
+    assert os.path.exists(output_file)
+    # Load the output json file and check the dataset version
+    # in the dataset summary JSON output file
+    with open(output_file, "r") as f:
+        output_data = json.load(f)
+    assert "1.0.1" in output_data["DatasetVersion"]
+
+
+@pytest.mark.script_launch_mode("subprocess")
+@pytest.mark.order(after="test_run_dataset_release_version")
 def test_run_dataset_checkout_tag(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {"path": dataset_path, "tag": "0.0.0"}

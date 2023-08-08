@@ -123,6 +123,32 @@ def create_project(input_data: str, output_file: str):
     print(SUCCESS)
 
 
+def manage_project_with_datalad(project_dir: str):
+    """Create a Datalad dataset out of an existing project not Datalad-managed yet.
+
+    Parameters
+    ----------
+    project_dir : str
+        Path to the project directory.
+    """
+    print(f"Initializing Datalad dataset and subdataset at {project_dir}...")
+    # Initialize the project dataset as a Datalad-managed dataset
+    create_project_params = {
+        "dataset": project_dir,
+        "cfg_proc": ["text2git"],
+        "force": True,  # Enforce dataset creation in a non-empty directory
+    }
+    datalad.api.create(**create_project_params)
+    # Initialize the BIDS dataset as a Datalad-managed sub-dataset
+    create_bids_params = {
+        "dataset": project_dir,
+        "path": os.path.join(project_dir, "inputs", "bids-dataset"),
+        "cfg_proc": ["text2git", "bids"],
+        "force": True,  # Enforce dataset creation in a non-empty directory
+    }
+    datalad.api.create(**create_bids_params)
+
+
 def import_subject(input_data: str, output_file: str):
     """Import a new subject from a BIDS dataset of the HIP Center space to the BIDS dataset of the HIP Collaborative Project.
 
@@ -149,6 +175,12 @@ def import_subject(input_data: str, output_file: str):
         f"from {input_data['sourceDatasetPath']} "
         f"to {input_data['targetDatasetPath']}..."
     )
+    # Check if project root directory is already Datalad-managed. If not,
+    # initialize it. Otherwise, this would fail when trying to save the
+    # dataset state with Datalad.
+    project_dir = os.path.join(input_data["targetDatasetPath"], "..", '..', ".datalad")
+    if not os.path.exists(project_dir):
+        manage_project_with_datalad(project_dir)
     # Copy subject directory from source to target
     shutil.copytree(
         (
@@ -244,6 +276,11 @@ def import_document(input_data: str):
         f"Importing document {source_document_path} from HIP Center space "
         f"to HIP Collaborative Project at {target_document_path}... "
     )
+    # Check if project root directory is already Datalad-managed. If not,
+    # initialize it. Otherwise, this would fail when trying to save the
+    # dataset state with Datalad.
+    if not os.path.exists(input_data["targetProjectAbsPath"]):
+        manage_project_with_datalad(input_data["targetProjectAbsPath"])
     # Create intermediate directories if they don't exist
     os.makedirs(target_document_path.parent, exist_ok=True)
     # Remove target document if it already exists

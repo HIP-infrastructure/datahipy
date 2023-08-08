@@ -108,7 +108,7 @@ def test_run_sub_import(script_runner, input_path, dataset_path, io_path):
 
 
 @pytest.mark.script_launch_mode("subprocess")
-@pytest.mark.order(after="test_run_dataset.py::test_run_datasets_get")
+@pytest.mark.order(after="test_run_dataset.py::test_run_dataset_clone")
 def test_run_sub_get(script_runner, dataset_path, io_path):
     # Create input data
     input_data = {"owner": "hipadmin", "path": dataset_path, "sub": "carole"}
