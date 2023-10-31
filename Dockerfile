@@ -59,7 +59,7 @@ ARG BIDSVALIDATOR_BRANCH=dev-hip
 
 # Clone and install the latest version of a specific branch of bids-manager
 ADD https://api.github.com/repos/HIP-infrastructure/bids-validator/git/refs/heads/$BIDSVALIDATOR_BRANCH version.json
-RUN apt-get update && curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+RUN apt-get update && curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get update && apt-get install --no-install-recommends -y \
     git nodejs && \
     mkdir -p bids-validator/install && \
