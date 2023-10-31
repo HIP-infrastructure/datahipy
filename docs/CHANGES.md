@@ -1,3 +1,10 @@
+# [1.3.0-dev.3](https://gitlab.hbp.link/hip/datahipy/compare/v1.3.0-dev.2...v1.3.0-dev.3) (2023-10-31)
+
+
+### Bug Fixes
+
+* **bids/dataset.py:** remove target sibling if it exists during create_sibling ([385f72b](https://gitlab.hbp.link/hip/datahipy/commit/385f72bb28249dbab57e39062e697d30fe1cd8a2))
+
 # [1.3.0-dev.2](https://gitlab.hbp.link/hip/datahipy/compare/v1.3.0-dev.1...v1.3.0-dev.2) (2023-10-31)
 
 
