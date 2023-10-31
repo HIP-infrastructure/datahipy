@@ -1,3 +1,15 @@
+# [1.3.0-dev.2](https://gitlab.hbp.link/hip/datahipy/compare/v1.3.0-dev.1...v1.3.0-dev.2) (2023-10-31)
+
+
+### Bug Fixes
+
+* **Dockerfile:** update nodejs to 18 as bids-validator failed to build ([c4d6aac](https://gitlab.hbp.link/hip/datahipy/commit/c4d6aacb081fca5515a9be0d8b872e1c08f15158))
+
+
+### Features
+
+* **bids/dataset.py:** add arguments to datalad create_siblings to make it more robust ([4851724](https://gitlab.hbp.link/hip/datahipy/commit/4851724183603e22aadb63c5d71463bb74daaa69))
+
 # [1.3.0-dev.1](https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0...v1.3.0-dev.1) (2023-08-04)
 
 
