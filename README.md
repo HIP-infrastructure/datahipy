@@ -150,9 +150,9 @@ Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.
 
 [Commandline Usage](https://hip-infrastructure.github.io/datahipy/usage.html) documentation page provides more documentation about the inputs and outputs of the above commands.
 
-## Funding
+## Acknowledgement
 
-This project received funding from the European Union's H2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3, as part the Human Intracerebral EEG Platform (HIP)).
+This research was supported by the EBRAINS research infrastructure, funded from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3).
 
 ## Contributors ✨
 
