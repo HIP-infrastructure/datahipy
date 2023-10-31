@@ -4,6 +4,7 @@
 """Utility functions to retrieve BIDS dataset content to be indexed by the Elasticsearch engine of the HIP."""
 
 import os
+import shutil
 import json
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
@@ -324,6 +325,10 @@ def dataset_publish(input_data, output_file):
     # Extract the source and target dataset paths
     source_dataset_path = input_content["sourceDatasetPath"]
     target_dataset_path = input_content["targetDatasetPath"]
+    # Remove target sibling if it does exist
+    if os.path.isdir(target_dataset_path):
+        print(f"WARNING: Remove existing target sibling dataset ({target_dataset_path})")
+        shutil.rmtree(target_dataset_path)
     # Create datalad dataset sibling to publish to
     datalad.api.create_sibling(
         name="public",
