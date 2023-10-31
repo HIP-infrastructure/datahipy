@@ -332,7 +332,9 @@ def dataset_publish(input_data, output_file):
         # Uncomment when public space could have https access
         # as it expects sshurl to have URL protocol to be http or https
         # as_common_datasrc=True,
-        recursive=True
+        recursive=True,
+        existing='replace',
+        on_failure='ignore'
     )
     # Publish the dataset to the public space
     datalad.api.push(
