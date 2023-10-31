@@ -6,7 +6,7 @@ This software is distributed under the open-source Apache 2.0 license. See [LICE
 
 ---
 
-![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/datahipy) ![Latest GitHub Release Date](https://img.shields.io/github/release-date/HIP-infrastructure/datahipy) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/datahipy/badges/master/pipeline.svg?private_token=glpat-a_qxRwZSNcAq9CMoK2tA)](https://gitlab.hbp.link/hip/datahipy/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/datahipy)
+![Latest GitHub Release](https://img.shields.io/github/v/release/HIP-infrastructure/datahipy) ![Latest GitHub Release Date](https://img.shields.io/github/release-date/HIP-infrastructure/datahipy) [![Digital Object Identifier (DOI)](https://zenodo.org/badge/428721094.svg)](https://zenodo.org/badge/latestdoi/428721094) [![CI/CD](https://gitlab.hbp.link/hip/datahipy/badges/master/pipeline.svg?private_token=glpat-a_qxRwZSNcAq9CMoK2tA)](https://gitlab.hbp.link/hip/datahipy/-/commits/master) [![codecov](https://codecov.io/github/HIP-infrastructure/datahipy/branch/master/graph/badge.svg?token=F1CWBIGXJN)](https://codecov.io/github/HIP-infrastructure/datahipy) [![Docs](https://github.com/HIP-infrastructure/datahipy/actions/workflows/documentation.yml/badge.svg)](https://github.com/HIP-infrastructure/datahipy/actions/workflows/documentation.yml) [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 
 `DataHIPy` is an open-source tool written in Python and encapsulated in a Docker image to handle neuroimaging data on the Human Intracranial EEG Platform (HIP) following Brain Imaging Data Structure ([BIDS](https://bids-specification.readthedocs.io)).
 
@@ -153,3 +153,29 @@ Make a patch (`1.0.0`->`1.0.1`) / minor (`1.0.0`->`1.1.0`) / major (`1.1.0`->`2.
 ## Acknowledgement
 
 This research was supported by the EBRAINS research infrastructure, funded from the European Union’s Horizon 2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sebastientourbier"><img src="https://avatars.githubusercontent.com/u/22279770?v=4?s=100" width="100px;" alt="Sébastien Tourbier"/><br /><sub><b>Sébastien Tourbier</b></sub></a><br /><a href="https://github.com/HIP-infrastructure/datahipy/issues?q=author%3Asebastientourbier" title="Bug reports">🐛</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=sebastientourbier" title="Code">💻</a> <a href="#design-sebastientourbier" title="Design">🎨</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=sebastientourbier" title="Documentation">📖</a> <a href="#example-sebastientourbier" title="Examples">💡</a> <a href="#ideas-sebastientourbier" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-sebastientourbier" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-sebastientourbier" title="Maintenance">🚧</a> <a href="#mentoring-sebastientourbier" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/HIP-infrastructure/datahipy/pulls?q=is%3Apr+reviewed-by%3Asebastientourbier" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=sebastientourbier" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nicedexter"><img src="https://avatars.githubusercontent.com/u/7804?v=4?s=100" width="100px;" alt="Manuel Spuhler"/><br /><sub><b>Manuel Spuhler</b></sub></a><br /><a href="https://github.com/HIP-infrastructure/datahipy/issues?q=author%3Anicedexter" title="Bug reports">🐛</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=nicedexter" title="Code">💻</a> <a href="#design-nicedexter" title="Design">🎨</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=nicedexter" title="Documentation">📖</a> <a href="#example-nicedexter" title="Examples">💡</a> <a href="#ideas-nicedexter" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-nicedexter" title="Maintenance">🚧</a> <a href="#mentoring-nicedexter" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/HIP-infrastructure/datahipy/pulls?q=is%3Apr+reviewed-by%3Anicedexter" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=nicedexter" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/iDmple"><img src="https://avatars.githubusercontent.com/u/5065505?v=4?s=100" width="100px;" alt="iDmple"/><br /><sub><b>iDmple</b></sub></a><br /><a href="https://github.com/HIP-infrastructure/datahipy/issues?q=author%3AiDmple" title="Bug reports">🐛</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=iDmple" title="Code">💻</a> <a href="#design-iDmple" title="Design">🎨</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=iDmple" title="Documentation">📖</a> <a href="#example-iDmple" title="Examples">💡</a> <a href="#ideas-iDmple" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AnthonyAMU"><img src="https://avatars.githubusercontent.com/u/71336718?v=4?s=100" width="100px;" alt="AnthonyAMU"/><br /><sub><b>AnthonyAMU</b></sub></a><br /><a href="https://github.com/HIP-infrastructure/datahipy/commits?author=AnthonyAMU" title="Code">💻</a> <a href="#design-AnthonyAMU" title="Design">🎨</a> <a href="https://github.com/HIP-infrastructure/datahipy/commits?author=AnthonyAMU" title="Documentation">📖</a> <a href="#example-AnthonyAMU" title="Examples">💡</a> <a href="#ideas-AnthonyAMU" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/BSchaffhauser"><img src="https://avatars.githubusercontent.com/u/91893580?v=4?s=100" width="100px;" alt="BSchaffhauser"/><br /><sub><b>BSchaffhauser</b></sub></a><br /><a href="#financial-BSchaffhauser" title="Financial">💵</a> <a href="#fundingFinding-BSchaffhauser" title="Funding Finding">🔍</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
