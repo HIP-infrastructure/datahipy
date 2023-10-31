@@ -1,0 +1,7 @@
+datahipy
+========
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy

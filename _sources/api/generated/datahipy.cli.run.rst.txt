@@ -1,0 +1,7 @@
+datahipy.cli.run module
+=======================
+
+.. automodule:: datahipy.cli.run
+   :members:
+   :undoc-members:
+   :show-inheritance:

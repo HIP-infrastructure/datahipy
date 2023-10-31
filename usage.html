@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commandline Usage &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Instructions for Developers" href="developer.html" />
+    <link rel="prev" title="Installation Instructions for Users" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Commandline Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#commandline-arguments">Commandline Arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#named-arguments">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commands">Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dataset">Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#participant">Participant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#project">Project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-datahipy-in-docker">Running <cite>DataHIPy</cite> in Docker</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Commandline Usage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="commandline-usage">
+<span id="cmdusage"></span><h1>Commandline Usage<a class="headerlink" href="#commandline-usage" title="Permalink to this heading"></a></h1>
+<section id="commandline-arguments">
+<h2>Commandline Arguments<a class="headerlink" href="#commandline-arguments" title="Permalink to this heading"></a></h2>
+<p>The command to run the main <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> commandline interface is as follows.</p>
+<p><p>DataHIPy command line interface.</p>
+</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">datahipy</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">command</span> <span class="p">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">create</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">create_tag</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_tags</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">checkout_tag</span><span class="p">,</span><span class="n">datasets</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">release_version</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">publish</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">clone</span><span class="p">,</span><span class="n">sub</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">sub</span><span class="o">.</span><span class="n">import</span><span class="p">,</span><span class="n">sub</span><span class="o">.</span><span class="n">edit</span><span class="o">.</span><span class="n">clinical</span><span class="p">,</span><span class="n">sub</span><span class="o">.</span><span class="n">delete</span><span class="p">,</span><span class="n">sub</span><span class="o">.</span><span class="n">delete</span><span class="o">.</span><span class="n">file</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">create</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">sub</span><span class="o">.</span><span class="n">import</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">import</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">create_tag</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">get_tags</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">checkout_tag</span><span class="p">,</span><span class="n">project</span><span class="o">.</span><span class="n">release_version</span><span class="p">}]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">input_data</span> <span class="n">INPUT_DATA</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">output_file</span> <span class="n">OUTPUT_FILE</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">dataset_path</span> <span class="n">DATASET_PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">input_path</span> <span class="n">INPUT_PATH</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">git_user_name</span> <span class="n">GIT_USER_NAME</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">git_user_email</span> <span class="n">GIT_USER_EMAIL</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="named-arguments">
+<h3>Named Arguments<a class="headerlink" href="#named-arguments" title="Permalink to this heading"></a></h3>
+<dl class="option-list">
+<dt><kbd>--command</kbd></dt>
+<dd><p>Possible choices: dataset.create, dataset.get, dataset.create_tag, dataset.get_tags, dataset.checkout_tag, datasets.get, dataset.release_version, dataset.publish, dataset.clone, sub.get, sub.import, sub.edit.clinical, sub.delete, sub.delete.file, project.create, project.sub.import, project.doc.import, project.create_tag, project.get_tags, project.checkout_tag, project.release_version</p>
+<p>Method to be run.</p>
+</dd>
+<dt><kbd>--input_data</kbd></dt>
+<dd><p>Input JSON data</p>
+</dd>
+<dt><kbd>--output_file</kbd></dt>
+<dd><p>File location after processing</p>
+</dd>
+<dt><kbd>--dataset_path</kbd></dt>
+<dd><p>Path to the dataset</p>
+<p>Default: “/output”</p>
+</dd>
+<dt><kbd>--input_path</kbd></dt>
+<dd><p>Path to the input data (e.g. input_data.json)</p>
+<p>Default: “/input”</p>
+</dd>
+<dt><kbd>--git_user_name</kbd></dt>
+<dd><p>Git user name to use for Datalad ops</p>
+</dd>
+<dt><kbd>--git_user_email</kbd></dt>
+<dd><p>Git user email to use for Datalad ops</p>
+</dd>
+<dt><kbd>-v, --version</kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+</dl>
+</section>
+<section id="commands">
+<h3>Commands<a class="headerlink" href="#commands" title="Permalink to this heading"></a></h3>
+<p>Here is a list of all the commands available in the <code class="docutils literal notranslate"><span class="pre">--command</span></code> argument of the <cite>datahipy</cite> commandline interface with an example of input JSON file (<code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument) generated and used by the <code class="docutils literal notranslate"><span class="pre">test/cli/test_run.py</span></code> script for testing each command.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The tests in <code class="docutils literal notranslate"><span class="pre">test/cli/test_run.py</span></code> can also provide a good support for understanding the usage of each command.</p>
+</div>
+<section id="dataset">
+<h4>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading"></a></h4>
+<section id="dataset-create">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.create</span></code><a class="headerlink" href="#dataset-create" title="Permalink to this heading"></a></h5>
+<p>Create a version tag in a Datalad-controlled BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;dataset_dirname&quot;</span><span class="p">:</span> <span class="s2">&quot;NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DatasetDescJSON&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Jerry&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="s2">&quot;Picsou&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-create-tag">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.create_tag</span></code><a class="headerlink" href="#dataset-create-tag" title="Permalink to this heading"></a></h5>
+<p>Create a version tag in a Datalad-controlled BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;bids&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Import sub-carole data&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-get-tags">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.get_tags</span></code><a class="headerlink" href="#dataset-get-tags" title="Permalink to this heading"></a></h5>
+<p>Get the list of existing version tags for a Datalad-controlled BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span> <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;0.0.0&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-checkout-tag">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.checkout_tag</span></code><a class="headerlink" href="#dataset-checkout-tag" title="Permalink to this heading"></a></h5>
+<p>Checkout a Datalad-controlled BIDS dataset at a specific tag, the master branch, or the HEAD.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.0&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-release-version">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.release_version</span></code><a class="headerlink" href="#dataset-release-version" title="Permalink to this heading"></a></h5>
+<p>Make a patch (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1</span></code>) / minor (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> → <code class="docutils literal notranslate"><span class="pre">1.1.0</span></code>) / major (<code class="docutils literal notranslate"><span class="pre">1.1.0</span></code> → <code class="docutils literal notranslate"><span class="pre">2.0.0</span></code>) version release of a Datalad-controlled BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;bids&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;patch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Delete sub-carole data&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Jerry&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Picsou&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;nan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;nan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">null</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;109M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;SUBJECT_FOLDERS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;There are no subject folders (labeled </span><span class="se">\&quot;</span><span class="s2">sub-*</span><span class="se">\&quot;</span><span class="s2">) in the root of this dataset.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;SUBJECT_FOLDERS&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
+                    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;evidence&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;character&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;There are no subject folders (labeled </span><span class="se">\&quot;</span><span class="s2">sub-*</span><span class="se">\&quot;</span><span class="s2">) in the root of this dataset.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=SUBJECT_FOLDERS&quot;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;additionalFileCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=SUBJECT_FOLDERS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">45</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;NO_T1W&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataset does not contain any T1w scans.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;NO_T1W&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">53</span><span class="p">,</span>
+                    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;evidence&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;character&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataset does not contain any T1w scans.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=NO_T1W&quot;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;additionalFileCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=NO_T1W&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">53</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;DatasetVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-get">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.get</span></code><a class="headerlink" href="#dataset-get" title="Permalink to this heading"></a></h5>
+<p>Get a JSON summary of dataset consisting of all fields, participants, and existing entities.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;hipadmin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Tom&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Picsou&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">null</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+            <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;handedness&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;281M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ieeg&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vmrk&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.bidsignore&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.nii&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;stimulation&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">19</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="datasets-get">
+<h5><code class="docutils literal notranslate"><span class="pre">datasets.get</span></code><a class="headerlink" href="#datasets-get" title="Permalink to this heading"></a></h5>
+<p>Get a list of JSON summaries of all datasets.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;hipadmin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;datasets&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Tom&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Picsou&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;n/a&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="n">null</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+                <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;handedness&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;281M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ieeg&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.vmrk&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.bidsignore&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.nii&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;stimulation&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+        <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+        <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">19</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Picsou&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;n/a&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="n">null</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+                <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;handedness&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;281M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ieeg&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.vmrk&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.bidsignore&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.nii&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;stimulation&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+        <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+        <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">19</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-publish">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.publish</span></code><a class="headerlink" href="#dataset-publish" title="Permalink to this heading"></a></h5>
+<p>Publish a Datalad-controlled BIDS dataset to the HIP public space.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/public/PUBLIC_NEW_BIDS_DS&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Jerry&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Picsou&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">null</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+            <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;109M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ieeg&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.nii&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vmrk&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;stimulation&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;DatasetVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.0&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="dataset-clone">
+<h5><code class="docutils literal notranslate"><span class="pre">dataset.clone</span></code><a class="headerlink" href="#dataset-clone" title="Permalink to this heading"></a></h5>
+<p>Clone a Datalad-controlled BIDS dataset from the HIP public space to the private space of the user.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/public/PUBLIC_NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/PUBLIC_NEW_BIDS_DS&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;My New BIDS dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Tom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Jerry&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HowToAcknowledge&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Picsou&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">null</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+            <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;110M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ieeg&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.nii&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vmrk&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;stimulation&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;DatasetVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.0&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="participant">
+<h4>Participant<a class="headerlink" href="#participant" title="Permalink to this heading"></a></h4>
+<section id="sub-import">
+<h5><code class="docutils literal notranslate"><span class="pre">sub.import</span></code><a class="headerlink" href="#sub-import" title="Permalink to this heading"></a></h5>
+<p>Import and update files for a given participant into an existing BIDS dataset. An appropriate record is added/updated to the <code class="docutils literal notranslate"><span class="pre">participants.tsv</span></code> tabular file if needed.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="s2">&quot;25&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUV&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;ieeg&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/SZ1.TRC&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;postimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;stimulation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;1024hz&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;ieeg&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/SZ2.TRC&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;postimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;stimulation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;1024hz&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/3DT1post_deface.nii&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;postimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;lowres&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ce&quot;</span><span class="p">:</span> <span class="s2">&quot;gadolinium&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/3DT1post_deface_2.nii&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;postimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;lowres&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ce&quot;</span><span class="p">:</span> <span class="s2">&quot;gadolinium&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/3DT1pre_deface.nii&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;preimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;lowres&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/test_data/sub-carole/3DCTpost_deface.nii&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ses&quot;</span><span class="p">:</span> <span class="s2">&quot;postimp&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acq&quot;</span><span class="p">:</span> <span class="s2">&quot;electrodes&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="sub-get">
+<h5><code class="docutils literal notranslate"><span class="pre">sub.get</span></code><a class="headerlink" href="#sub-get" title="Permalink to this heading"></a></h5>
+<p>Get information about data available for a given participant of a dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;hipadmin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div></div></blockquote>
+</section>
+<section id="sub-edit-clinical">
+<h5><code class="docutils literal notranslate"><span class="pre">sub.edit.clinical</span></code><a class="headerlink" href="#sub-edit-clinical" title="Permalink to this heading"></a></h5>
+<p>Edit the participant’s information stored in the <code class="docutils literal notranslate"><span class="pre">participants.tsv</span></code> tabular file.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;clinical&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;handedness&quot;</span><span class="p">:</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUGA&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="sub-delete">
+<h5><code class="docutils literal notranslate"><span class="pre">sub.delete</span></code><a class="headerlink" href="#sub-delete" title="Permalink to this heading"></a></h5>
+<p>Remove a participant from a given BIDS dataset. The record will be deleted from the <code class="docutils literal notranslate"><span class="pre">participants.tsv</span></code> tabular file.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="sub-delete-file">
+<h5><code class="docutils literal notranslate"><span class="pre">sub.delete.file</span></code><a class="headerlink" href="#sub-delete-file" title="Permalink to this heading"></a></h5>
+<p>Remove data file(s) from a BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;modality&quot;</span><span class="p">:</span> <span class="s2">&quot;Anat&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fullpath&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole/ses-postimp/anat/sub-carole_ses-postimp_acq-lowres_ce-gadolinium_run-02_T1w.nii&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="project">
+<h4>Project<a class="headerlink" href="#project" title="Permalink to this heading"></a></h4>
+<section id="project-create">
+<h5><code class="docutils literal notranslate"><span class="pre">project.create</span></code><a class="headerlink" href="#project-create" title="Permalink to this heading"></a></h5>
+<p>Create a new Datalad-controlled project dataset in the collaborative space of the HIP.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New Project Title&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Project Description that would be put in the README.md file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;datasetDescription&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;BIDS Dataset Title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;CC-BY-4.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Author 1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Author 2&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Acknowledgement 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Funding 1&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Reference 1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Reference 2&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-sub-import">
+<h5><code class="docutils literal notranslate"><span class="pre">project.sub.import</span></code><a class="headerlink" href="#project-sub-import" title="Permalink to this heading"></a></h5>
+<p>Import an existing <cite>sub-&lt;participant_label&gt;</cite> folder from a BIDS dataset of the center space of the HIP to the BIDS dataset of the project (located in <code class="docutils literal notranslate"><span class="pre">&lt;project_directory&gt;/inputs/bids-dataset</span></code>).</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;participantId&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT/inputs/bids-dataset&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;BIDS Dataset Title&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;CC-BY-4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Author 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Author 2&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Acknowledgement 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Funding 1&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Reference 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Reference 2&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;30&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;n/a&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;participant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-carole&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="s2">&quot;n/a&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;hospital&quot;</span><span class="p">:</span> <span class="s2">&quot;CHUGA&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Subject_ready&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s2">&quot;handedness&quot;</span><span class="p">:</span> <span class="s2">&quot;L&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;172M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;anat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ct&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ieeg&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.nii&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.eeg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.vmrk&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;stimulation&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;SEEGChannelCount&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="s2">&quot;SamplingFrequency&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;RecordingDuration&quot;</span><span class="p">:</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">22</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-doc-import">
+<h5><code class="docutils literal notranslate"><span class="pre">project.doc.import</span></code><a class="headerlink" href="#project-doc-import" title="Permalink to this heading"></a></h5>
+<p>Import an existing document from the center space of the HIP to the <cite>documents/</cite> folder of the project.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDocumentAbsPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_BIDS_DS/participants.tsv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetDocumentRelPath&quot;</span><span class="p">:</span> <span class="s2">&quot;documents/other/participants.tsv&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-create-tag">
+<h5><code class="docutils literal notranslate"><span class="pre">project.create_tag</span></code><a class="headerlink" href="#project-create-tag" title="Permalink to this heading"></a></h5>
+<p>Create a version tag in a Datalad-controlled project dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Import sub-carole data from existing dataset&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-get-tags">
+<h5><code class="docutils literal notranslate"><span class="pre">project.get_tags</span></code><a class="headerlink" href="#project-get-tags" title="Permalink to this heading"></a></h5>
+<p>Get the list of existing version tags for a Datalad-controlled project dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span> <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;0.0.0&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-checkout-tag">
+<h5><code class="docutils literal notranslate"><span class="pre">project.checkout_tag</span></code><a class="headerlink" href="#project-checkout-tag" title="Permalink to this heading"></a></h5>
+<p>Checkout a Datalad-controlled project dataset at a specific tag, the master branch, or the HEAD.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.0&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="project-release-version">
+<h5><code class="docutils literal notranslate"><span class="pre">project.release_version</span></code><a class="headerlink" href="#project-release-version" title="Permalink to this heading"></a></h5>
+<p>Make a patch (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> → <code class="docutils literal notranslate"><span class="pre">1.0.1</span></code>) / minor (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> → <code class="docutils literal notranslate"><span class="pre">1.1.0</span></code>) / major (<code class="docutils literal notranslate"><span class="pre">1.1.0</span></code> → <code class="docutils literal notranslate"><span class="pre">2.0.0</span></code>) version release of a Datalad-controlled project dataset and its nested BIDS dataset.</p>
+<p>Example of content of input JSON data for the <code class="docutils literal notranslate"><span class="pre">--input_data</span></code> argument when using this command:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/test/tmp/NEW_PROJECT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;project&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;patch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Delete sub-carole data&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Example of content of output JSON data:</p>
+<blockquote>
+<div><div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;BIDS Dataset Title&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;CC-BY-4.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Author 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Author 2&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Acknowledgement 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Funding 1&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Reference 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Reference 2&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMin&quot;</span><span class="p">:</span> <span class="s2">&quot;nan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgeMax&quot;</span><span class="p">:</span> <span class="s2">&quot;nan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Participants&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Size&quot;</span><span class="p">:</span> <span class="s2">&quot;76M&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSSchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.6.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BIDSErrors&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;QUICK_VALIDATION_FAILED&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;Quick validation failed - the general folder structure does not resemble a BIDS dataset. Have you chosen the right folder (with </span><span class="se">\&quot;</span><span class="s2">sub-*/</span><span class="se">\&quot;</span><span class="s2"> subfolders)? Check for structural/naming issues and presence of at least one subject.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;QUICK_VALIDATION_FAILED&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">61</span><span class="p">,</span>
+                    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;relativePath&quot;</span><span class="p">:</span> <span class="s2">&quot;bids-dataset&quot;</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;evidence&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;character&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+                    <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;Quick validation failed - the general folder structure does not resemble a BIDS dataset. Have you chosen the right folder (with </span><span class="se">\&quot;</span><span class="s2">sub-*/</span><span class="se">\&quot;</span><span class="s2"> subfolders)? Check for structural/naming issues and presence of at least one subject.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=QUICK_VALIDATION_FAILED&quot;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;additionalFileCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;helpUrl&quot;</span><span class="p">:</span> <span class="s2">&quot;https://neurostars.org/search?q=QUICK_VALIDATION_FAILED&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">61</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;BIDSWarnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSIgnored&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;BIDSValid&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;DataTypes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Formats&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;.tsv&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;SessionsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;Tasks&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;RunsCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;EventsFileCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;FileCount&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;DatasetVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+</section>
+</section>
+<section id="running-datahipy-in-docker">
+<span id="cmdusage-docker"></span><h2>Running <cite>DataHIPy</cite> in Docker<a class="headerlink" href="#running-datahipy-in-docker" title="Permalink to this heading"></a></h2>
+<p>Please have a look at the special REST API service of the HIP Gateway! This service creates and executes the different commands of <cite>DataHIPy</cite> in Docker. The source code is available at the following URL:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/HIP-infrastructure/gateway/blob/master/src/tools/tools.service.ts">https://github.com/HIP-infrastructure/gateway/blob/master/src/tools/tools.service.ts</a></p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation Instructions for Users" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developer.html" class="btn btn-neutral float-right" title="Instructions for Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.version &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.bids.version</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.bids.version</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Utility functions to retrieve version related information from a BIDS dataset.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">packaging</span> <span class="kn">import</span> <span class="n">version</span>
+<span class="kn">import</span> <span class="nn">datalad.api</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.const</span> <span class="kn">import</span> <span class="n">BIDS_VERSION</span>
+
+
+<div class="viewcode-block" id="determine_bids_schema_version"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.version.determine_bids_schema_version">[docs]</a><span class="k">def</span> <span class="nf">determine_bids_schema_version</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determine the BIDS schema version of the BIDS dataset against which it will be validated.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Content of the dataset_description.json file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bids_schema_version : str</span>
+<span class="sd">        BIDS schema version against which the BIDS dataset will be validated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;BIDSVersion&quot;</span> <span class="ow">in</span> <span class="n">dataset_desc</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;BIDSVersion&quot;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;1.6.0&quot;</span><span class="p">):</span>
+                <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="s2">&quot;v1.6.0&quot;</span>
+            <span class="k">elif</span> <span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;BIDSVersion&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;1.6.0&quot;</span><span class="p">,</span> <span class="s2">&quot;1.7.0&quot;</span><span class="p">]:</span>
+                <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;BIDSVersion&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;BIDSVersion&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">version</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;1.7.0&quot;</span><span class="p">):</span>
+                <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="s2">&quot;v1.7.0&quot;</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error parsing BIDSVersion: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Using default BIDS version: </span><span class="si">{</span><span class="n">BIDS_VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="n">BIDS_VERSION</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="n">BIDS_VERSION</span>
+    <span class="k">return</span> <span class="n">bids_schema_version</span></div>
+
+
+<div class="viewcode-block" id="create_bids_changes_tag_entry"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.version.create_bids_changes_tag_entry">[docs]</a><span class="k">def</span> <span class="nf">create_bids_changes_tag_entry</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">changes_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a release text block entry to be added to the CHANGES file of a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tag : str</span>
+<span class="sd">        Tag of the dataset.</span>
+
+<span class="sd">    changes_list : list</span>
+<span class="sd">        List of changes to add to the `CHANGES` file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        List of lines to be written to the `CHANGES` file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">changes_list</span><span class="p">),</span>
+        <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="update_bids_changes"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.version.update_bids_changes">[docs]</a><span class="k">def</span> <span class="nf">update_bids_changes</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">changes_tag_entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append a new release text block to the top to the `CHANGES` file of a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    tag : str</span>
+<span class="sd">        Tag of the dataset.</span>
+
+<span class="sd">    changes_tag_entry : list</span>
+<span class="sd">        List of lines to be written to the `CHANGES` file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Read the current content of the CHANGES file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;CHANGES&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="c1"># Create a new CHANGES file with the new release text block at the top</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;CHANGES&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">changes_tag_entry</span> <span class="o">+</span> <span class="n">content</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="manage_bids_dataset_with_datalad"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.version.manage_bids_dataset_with_datalad">[docs]</a><span class="k">def</span> <span class="nf">manage_bids_dataset_with_datalad</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Datalad dataset out of an existing BIDS dataset not Datalad-managed yet.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing Datalad dataset at </span><span class="si">{</span><span class="n">bids_dir</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="c1"># Initialize the BIDS dataset as a Datalad-managed dataset</span>
+    <span class="n">create_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">bids_dir</span><span class="p">,</span>
+        <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">,</span> <span class="s2">&quot;bids&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_params</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

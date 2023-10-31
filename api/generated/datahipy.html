@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy package &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../_static/twemoji.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">datahipy package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datahipy-package">
+<h1>datahipy package<a class="headerlink" href="#datahipy-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datahipy.bids.html">datahipy.bids package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.bids.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.config.html">datahipy.bids.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.config.html#module-datahipy.bids.config">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.bids.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.bids_manager.html">datahipy.bids.bids_manager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.clean_empty_events_tsv_files"><code class="docutils literal notranslate"><span class="pre">clean_empty_events_tsv_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.correct_bids_ieeg_json_file"><code class="docutils literal notranslate"><span class="pre">correct_bids_ieeg_json_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.correct_bids_ieeg_json_files"><code class="docutils literal notranslate"><span class="pre">correct_bids_ieeg_json_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.correct_run_index_filename"><code class="docutils literal notranslate"><span class="pre">correct_run_index_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.ensure_list_fields_in_dataset_description"><code class="docutils literal notranslate"><span class="pre">ensure_list_fields_in_dataset_description()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.post_import_bids_refinement"><code class="docutils literal notranslate"><span class="pre">post_import_bids_refinement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.bids_manager.html#datahipy.bids.bids_manager.remove_scans_tsv_files"><code class="docutils literal notranslate"><span class="pre">remove_scans_tsv_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.const.html">datahipy.bids.const module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.dataset.html">datahipy.bids.dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.create_bids_layout"><code class="docutils literal notranslate"><span class="pre">create_bids_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.create_empty_bids_dataset"><code class="docutils literal notranslate"><span class="pre">create_empty_bids_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.create_initial_bids_changes"><code class="docutils literal notranslate"><span class="pre">create_initial_bids_changes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.create_initial_bids_readme"><code class="docutils literal notranslate"><span class="pre">create_initial_bids_readme()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.create_initial_participants_tsv"><code class="docutils literal notranslate"><span class="pre">create_initial_participants_tsv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.dataset_clone"><code class="docutils literal notranslate"><span class="pre">dataset_clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.dataset_publish"><code class="docutils literal notranslate"><span class="pre">dataset_publish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.get_all_datasets_content"><code class="docutils literal notranslate"><span class="pre">get_all_datasets_content()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.get_bids_layout_info"><code class="docutils literal notranslate"><span class="pre">get_bids_layout_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.get_bidsdataset_content"><code class="docutils literal notranslate"><span class="pre">get_bidsdataset_content()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.dataset.html#datahipy.bids.dataset.get_dataset_size"><code class="docutils literal notranslate"><span class="pre">get_dataset_size()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.electrophy.html">datahipy.bids.electrophy module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.electrophy.html#datahipy.bids.electrophy.get_channels_info"><code class="docutils literal notranslate"><span class="pre">get_channels_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.electrophy.html#datahipy.bids.electrophy.get_ieeg_info"><code class="docutils literal notranslate"><span class="pre">get_ieeg_info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.participant.html">datahipy.bids.participant module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.participant.html#datahipy.bids.participant.get_participants_info"><code class="docutils literal notranslate"><span class="pre">get_participants_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.participant.html#datahipy.bids.participant.get_subject_bidsfile_info"><code class="docutils literal notranslate"><span class="pre">get_subject_bidsfile_info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.validation.html">datahipy.bids.validation module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.validation.html#datahipy.bids.validation.add_bidsignore_validation_rule"><code class="docutils literal notranslate"><span class="pre">add_bidsignore_validation_rule()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.validation.html#datahipy.bids.validation.get_bids_validator_output_info"><code class="docutils literal notranslate"><span class="pre">get_bids_validator_output_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.validation.html#datahipy.bids.validation.validate_bids_dataset"><code class="docutils literal notranslate"><span class="pre">validate_bids_dataset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.bids.version.html">datahipy.bids.version module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.version.html#datahipy.bids.version.create_bids_changes_tag_entry"><code class="docutils literal notranslate"><span class="pre">create_bids_changes_tag_entry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.version.html#datahipy.bids.version.determine_bids_schema_version"><code class="docutils literal notranslate"><span class="pre">determine_bids_schema_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.version.html#datahipy.bids.version.manage_bids_dataset_with_datalad"><code class="docutils literal notranslate"><span class="pre">manage_bids_dataset_with_datalad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.bids.version.html#datahipy.bids.version.update_bids_changes"><code class="docutils literal notranslate"><span class="pre">update_bids_changes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.bids.html#module-datahipy.bids">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datahipy.cli.html">datahipy.cli package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.cli.run.html">datahipy.cli.run module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.cli.run.html#datahipy.cli.run.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.cli.run.html#datahipy.cli.run.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.cli.html#module-datahipy.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datahipy.handlers.html">datahipy.handlers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.handlers.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.handlers.dataset.html">datahipy.handlers.dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.dataset.html#datahipy.handlers.dataset.DatasetHandler"><code class="docutils literal notranslate"><span class="pre">DatasetHandler</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.handlers.participants.html">datahipy.handlers.participants module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.participants.html#datahipy.handlers.participants.ParticipantHandler"><code class="docutils literal notranslate"><span class="pre">ParticipantHandler</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.handlers.project.html">datahipy.handlers.project module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.create_project"><code class="docutils literal notranslate"><span class="pre">create_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.import_document"><code class="docutils literal notranslate"><span class="pre">import_document()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.import_subject"><code class="docutils literal notranslate"><span class="pre">import_subject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.initialize_project_structure"><code class="docutils literal notranslate"><span class="pre">initialize_project_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.manage_project_with_datalad"><code class="docutils literal notranslate"><span class="pre">manage_project_with_datalad()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.handlers.project.html#datahipy.handlers.project.transfer_subject_participants_tsv_row"><code class="docutils literal notranslate"><span class="pre">transfer_subject_participants_tsv_row()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.handlers.html#module-datahipy.handlers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datahipy.utils.html">datahipy.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datahipy.utils.versioning.html">datahipy.utils.versioning module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.checkout_tag"><code class="docutils literal notranslate"><span class="pre">checkout_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.create_tag"><code class="docutils literal notranslate"><span class="pre">create_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.get_latest_tag"><code class="docutils literal notranslate"><span class="pre">get_latest_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.get_tags"><code class="docutils literal notranslate"><span class="pre">get_tags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.increment_tag"><code class="docutils literal notranslate"><span class="pre">increment_tag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.release_version"><code class="docutils literal notranslate"><span class="pre">release_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.set_git_user_info_global"><code class="docutils literal notranslate"><span class="pre">set_git_user_info_global()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="datahipy.utils.versioning.html#datahipy.utils.versioning.validate_tag"><code class="docutils literal notranslate"><span class="pre">validate_tag()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datahipy.utils.html#module-datahipy.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datahipy.info.html">datahipy.info module</a></li>
+</ul>
+</div>
+</section>
+<section id="module-datahipy">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-datahipy" title="Permalink to this heading"></a></h2>
+<p>This file contains datahipy package information.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

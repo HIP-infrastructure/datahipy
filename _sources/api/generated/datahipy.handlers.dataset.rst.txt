@@ -1,0 +1,7 @@
+datahipy.handlers.dataset module
+================================
+
+.. automodule:: datahipy.handlers.dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:

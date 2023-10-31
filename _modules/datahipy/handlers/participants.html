@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.handlers.participants &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.handlers.participants</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.handlers.participants</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Manage BIDS participants using BIDS Manager.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">sre_constants</span> <span class="kn">import</span> <span class="n">SUCCESS</span>
+
+<span class="kn">import</span> <span class="nn">datalad.api</span>
+
+<span class="c1"># BIDS Manager Python package has to be accessible.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bids_manager.ins_bids_class</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">BidsDataset</span><span class="p">,</span>
+        <span class="n">Data2Import</span><span class="p">,</span>
+        <span class="n">Subject</span><span class="p">,</span>
+        <span class="n">Anat</span><span class="p">,</span>
+        <span class="n">Ieeg</span><span class="p">,</span>
+        <span class="n">CT</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: BIDS Manager Python package is not accessible.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.handlers.dataset</span> <span class="kn">import</span> <span class="n">DatasetHandler</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.participant</span> <span class="kn">import</span> <span class="n">get_subject_bidsfile_info</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.bids_manager</span> <span class="kn">import</span> <span class="n">post_import_bids_refinement</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.version</span> <span class="kn">import</span> <span class="n">manage_bids_dataset_with_datalad</span>
+
+
+<div class="viewcode-block" id="ParticipantHandler"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler">[docs]</a><span class="k">class</span> <span class="nc">ParticipantHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to represent the handler of a dataset&#39;s participant with utility functions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_path</span> <span class="o">=</span> <span class="n">input_path</span>
+
+<div class="viewcode-block" id="ParticipantHandler.sub_import"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.sub_import">[docs]</a>    <span class="k">def</span> <span class="nf">sub_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import subject(s) data into a BIDS dataset.&quot;&quot;&quot;</span>
+        <span class="c1"># Check if the dataset is managed by Datalad based on</span>
+        <span class="c1"># the presence of the .datalad directory. If not, create it.</span>
+        <span class="c1"># Otherwise, this would fail when trying to save the</span>
+        <span class="c1"># dataset state with Datalad.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="s2">&quot;.datalad&quot;</span><span class="p">)):</span>
+           <span class="n">manage_bids_dataset_with_datalad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Load the targeted BIDS dataset in BIDS Manager and check converters</span>
+        <span class="n">ds_obj</span> <span class="o">=</span> <span class="n">BidsDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="n">DatasetHandler</span><span class="o">.</span><span class="n">check_converters</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">)</span>
+        <span class="c1"># Add clinical keys to the requirements.json</span>
+        <span class="n">clin_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subjects&quot;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;sub&quot;</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clin_keys</span><span class="p">:</span>
+                    <span class="n">clin_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">DatasetHandler</span><span class="o">.</span><span class="n">add_keys_requirements</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">,</span> <span class="n">clin_keys</span><span class="o">=</span><span class="n">clin_keys</span><span class="p">)</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">parse_bids</span><span class="p">()</span>
+        <span class="c1"># Create the Data2Import object needed by BIDS_Manager to import the data</span>
+        <span class="n">data2import</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_data2import</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Saving the data2import now it is populated. Note: subjects without data to import are ignored</span>
+        <span class="n">data2import</span><span class="o">.</span><span class="n">save_as_json</span><span class="p">()</span>
+        <span class="c1"># Importation of the data into the BIDS dataset using BIDS Manager</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">make_upload_issues</span><span class="p">(</span><span class="n">data2import</span><span class="p">,</span> <span class="n">force_verif</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Create a /sourcedata + source_data_trace.tsv</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span>
+            <span class="n">data2import</span><span class="o">=</span><span class="n">data2import</span><span class="p">,</span> <span class="n">keep_sourcedata</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">keep_file_trace</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="c1"># Refresh</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">parse_bids</span><span class="p">()</span>
+        <span class="c1"># Post-importation BIDS Manager output refinements</span>
+        <span class="c1"># to make BIDS Validator happy</span>
+        <span class="n">post_import_bids_refinement</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">)</span>
+        <span class="c1"># Save dataset state with Datalad</span>
+        <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Add files for subject(s): </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subjects&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.sub_delete"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.sub_delete">[docs]</a>    <span class="k">def</span> <span class="nf">sub_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete a subject from an already existing BIDS dataset.&quot;&quot;&quot;</span>
+        <span class="c1"># Check if the dataset is managed by Datalad based on</span>
+        <span class="c1"># the presence of the .datalad directory. If not, create it.</span>
+        <span class="c1"># Otherwise, this would fail when trying to save the</span>
+        <span class="c1"># dataset state with Datalad.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="s2">&quot;.datalad&quot;</span><span class="p">)):</span>
+           <span class="n">manage_bids_dataset_with_datalad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Load the targeted BIDS dataset in BIDS Manager</span>
+        <span class="n">ds_obj</span> <span class="o">=</span> <span class="n">BidsDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Find the subject dict</span>
+        <span class="n">sub_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_subject_dict</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">])</span>
+        <span class="c1"># Delete the subject from the BIDS dataset</span>
+        <span class="c1"># Will remove from /raw, /source, participants.tsv, source_data_trace.tsv</span>
+        <span class="c1"># but not from derivatives</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">sub_dict</span><span class="p">,</span> <span class="n">with_issues</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">in_deriv</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># Refresh</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">parse_bids</span><span class="p">()</span>
+        <span class="c1"># Save dataset state with Datalad</span>
+        <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Remove files for subject </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.sub_delete_file"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.sub_delete_file">[docs]</a>    <span class="k">def</span> <span class="nf">sub_delete_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete data files from /raw and /source.&quot;&quot;&quot;</span>
+        <span class="c1"># Check if the dataset is managed by Datalad based on</span>
+        <span class="c1"># the presence of the .datalad directory. If not, create it.</span>
+        <span class="c1"># Otherwise, this would fail when trying to save the</span>
+        <span class="c1"># dataset state with Datalad.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="s2">&quot;.datalad&quot;</span><span class="p">)):</span>
+           <span class="n">manage_bids_dataset_with_datalad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Load the targeted BIDS dataset in BIDS Manager</span>
+        <span class="n">ds_obj</span> <span class="o">=</span> <span class="n">BidsDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="n">subjects</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="n">sub_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_subject_dict</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">file_dict</span> <span class="ow">in</span> <span class="n">sub_dict</span><span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]]:</span>
+                <span class="k">if</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;fullpath&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">file_dict</span><span class="p">[</span><span class="s2">&quot;fileLoc&quot;</span><span class="p">]:</span>
+                    <span class="c1"># Delete the file from the BIDS dataset:</span>
+                    <span class="c1"># remove from /raw, /source, participants.tsv, source_data_trace.tsv</span>
+                    <span class="c1"># but not from derivatives</span>
+                    <span class="n">ds_obj</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_dict</span><span class="p">,</span> <span class="n">with_issues</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">in_deriv</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> was deleted.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;fullpath&quot;</span><span class="p">]))</span>
+                    <span class="k">if</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">:</span>
+                        <span class="n">subjects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">])</span>
+        <span class="c1"># Save dataset state with Datalad</span>
+        <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Remove files for subjects </span><span class="si">{</span><span class="n">subjects</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.sub_get"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.sub_get">[docs]</a>    <span class="k">def</span> <span class="nf">sub_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get info of a subject.&quot;&quot;&quot;</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">sub_info</span> <span class="o">=</span> <span class="n">get_subject_bidsfile_info</span><span class="p">(</span>
+            <span class="n">bids_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sub&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump_output_file</span><span class="p">(</span><span class="n">output_data</span><span class="o">=</span><span class="n">sub_info</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.sub_edit_clinical"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.sub_edit_clinical">[docs]</a>    <span class="k">def</span> <span class="nf">sub_edit_clinical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update subject clinical info in BIDS dataset.&quot;&quot;&quot;</span>
+        <span class="c1"># Check if the dataset is managed by Datalad based on</span>
+        <span class="c1"># the presence of the .datalad directory. If not, create it.</span>
+        <span class="c1"># Otherwise, this would fail when trying to save the</span>
+        <span class="c1"># dataset state with Datalad.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="s2">&quot;.datalad&quot;</span><span class="p">)):</span>
+           <span class="n">manage_bids_dataset_with_datalad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Load the targeted BIDS dataset in BIDS Manager</span>
+        <span class="n">ds_obj</span> <span class="o">=</span> <span class="n">BidsDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="c1"># Edit subject clinical info</span>
+        <span class="n">sub_exists</span><span class="p">,</span> <span class="n">sub_info</span><span class="p">,</span> <span class="n">sub_idx</span> <span class="o">=</span> <span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;ParticipantsTSV&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">is_subject_present</span><span class="p">(</span>
+            <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">sub_exists</span><span class="p">:</span>
+            <span class="n">DatasetHandler</span><span class="o">.</span><span class="n">add_keys_requirements</span><span class="p">(</span>
+                <span class="n">ds_obj</span><span class="o">=</span><span class="n">ds_obj</span><span class="p">,</span> <span class="n">clin_keys</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;clinical&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">clin_key</span><span class="p">,</span> <span class="n">clin_value</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;clinical&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">clin_value</span><span class="p">:</span>
+                    <span class="n">sub_info</span><span class="p">[</span><span class="n">clin_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">clin_value</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="n">sub_info</span><span class="p">[</span><span class="n">clin_key</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;n/a&quot;</span>
+            <span class="k">del</span> <span class="n">sub_info</span><span class="p">[</span><span class="s2">&quot;sub&quot;</span><span class="p">]</span>
+            <span class="n">ds_obj</span><span class="o">.</span><span class="n">parse_bids</span><span class="p">()</span>  <span class="c1"># To update the participants.tsv with the new columns</span>
+            <span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;ParticipantsTSV&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update_subject</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">],</span> <span class="n">sub_info</span><span class="p">)</span>
+            <span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;ParticipantsTSV&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">write_file</span><span class="p">()</span>
+            <span class="c1"># Save dataset state with Datalad</span>
+            <span class="n">save_msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Update participants.tsv file for subject </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+            <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">save_msg</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.load_input_data"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.load_input_data">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the input_data JSON file.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.dump_output_file"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.dump_output_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">dump_output_file</span><span class="p">(</span><span class="n">output_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dump output_data dict in a JSON file.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.find_subject_dict"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.find_subject_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">find_subject_dict</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Find the subject dict in the parsed BIDS dataset object.&quot;&quot;&quot;</span>
+        <span class="n">matched_sub</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">sub_idx</span>
+            <span class="k">for</span> <span class="n">sub_idx</span><span class="p">,</span> <span class="n">sub_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">sub_dict</span><span class="p">[</span><span class="s2">&quot;sub&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">subject</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">matched_sub</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;Could not find the subject in the BIDS dataset.&quot;</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">matched_sub</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="s2">&quot;Several subjects with the same ID found in the BIDS dataset.&quot;</span>  <span class="c1"># pragma: no cover</span>
+            <span class="p">)</span>
+        <span class="n">sub_dict</span> <span class="o">=</span> <span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">][</span><span class="n">matched_sub</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">sub_dict</span></div>
+
+<div class="viewcode-block" id="ParticipantHandler.create_data2import"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.participants.ParticipantHandler.create_data2import">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_data2import</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a data2import object.</span>
+
+<span class="sd">        This object will be used to import data in the BIDS dataset.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ds_obj : BIDS Manager BidsDataset object</span>
+<span class="sd">            The BIDS Manager object representing a BIDS dataset.</span>
+
+<span class="sd">        input_data : dict</span>
+<span class="sd">            The input_data dictionary containing the data to import in the BIDS dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data2import : BIDS Manager Data2Import object</span>
+<span class="sd">            The BIDS Manager object representing the data to import in the BIDS dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Init importation directory</span>
+        <span class="n">import_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span> <span class="s2">&quot;BIDS_import&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">import_path</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">import_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">import_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">import_path</span><span class="p">)</span>
+        <span class="c1"># Init a BIDS Manager data2import dict</span>
+        <span class="n">requirements_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;requirements.json&quot;</span><span class="p">)</span>
+        <span class="n">data2import</span> <span class="o">=</span> <span class="n">Data2Import</span><span class="p">(</span>
+            <span class="n">data2import_dir</span><span class="o">=</span><span class="n">import_path</span><span class="p">,</span> <span class="n">requirements_fileloc</span><span class="o">=</span><span class="n">requirements_path</span>
+        <span class="p">)</span>
+        <span class="c1"># Populate the data2import with the data extracted from the dataset_description.json of the BIDS dataset.</span>
+        <span class="n">data2import</span><span class="p">[</span><span class="s2">&quot;DatasetDescJSON&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds_obj</span><span class="p">[</span><span class="s2">&quot;DatasetDescJSON&quot;</span><span class="p">]</span>
+        <span class="c1"># Populate the data2import with the subjects found in the data_to_import dict</span>
+        <span class="c1"># Need to track subject indexes to populate their respective modality dict later</span>
+        <span class="n">sub_idx</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">subject</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;subjects&quot;</span><span class="p">]):</span>
+            <span class="c1"># Init a BIDS Manager subject dict used for clinical info</span>
+            <span class="n">new_sub</span> <span class="o">=</span> <span class="n">Subject</span><span class="p">()</span>
+            <span class="c1"># Populate the subject dict with the content of the data_to_import dict</span>
+            <span class="k">for</span> <span class="n">bids_key</span><span class="p">,</span> <span class="n">bids_value</span> <span class="ow">in</span> <span class="n">subject</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">new_sub</span><span class="p">[</span><span class="n">bids_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_value</span>
+            <span class="n">data2import</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_sub</span><span class="p">)</span>
+            <span class="n">sub_idx</span><span class="p">[</span><span class="n">subject</span><span class="p">[</span><span class="s2">&quot;sub&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="c1"># Variable to track the RUN number of files to import</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="c1"># Populate the data2import with the files found in the data_to_import dict</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="c1"># Copy the targeted file in a unique importation dir</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+            <span class="n">token_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">import_path</span><span class="p">,</span> <span class="s2">&quot;temp_bids&quot;</span><span class="p">),</span> <span class="n">token_dir</span><span class="p">,</span> <span class="n">file_name</span>
+            <span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_file_path</span><span class="p">))</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">)</span>
+            <span class="c1"># Determine the BIDS data type to use and init a BIDS Manager modality dict</span>
+            <span class="n">bids_dtype</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">bids_dtype_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;T1w&quot;</span><span class="p">,</span> <span class="s2">&quot;T2w&quot;</span><span class="p">,</span> <span class="s2">&quot;FLAIR&quot;</span><span class="p">]:</span>
+                <span class="n">bids_dtype</span> <span class="o">=</span> <span class="s2">&quot;Anat&quot;</span>
+                <span class="n">bids_dtype_dict</span> <span class="o">=</span> <span class="n">Anat</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ieeg&quot;</span><span class="p">]:</span>
+                <span class="n">bids_dtype</span> <span class="o">=</span> <span class="s2">&quot;Ieeg&quot;</span>
+                <span class="n">bids_dtype_dict</span> <span class="o">=</span> <span class="n">Ieeg</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ct&quot;</span><span class="p">]:</span>
+                <span class="n">bids_dtype</span> <span class="o">=</span> <span class="s2">&quot;CT&quot;</span>
+                <span class="n">bids_dtype_dict</span> <span class="o">=</span> <span class="n">CT</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>  <span class="c1"># Add other BIDS data types here</span>
+            <span class="c1"># Populate the modality dict with the BIDS entities found in the input_data dict</span>
+            <span class="k">for</span> <span class="n">bids_key</span><span class="p">,</span> <span class="n">bids_value</span> <span class="ow">in</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">bids_dtype_dict</span><span class="p">[</span><span class="n">bids_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_value</span>
+            <span class="n">bids_dtype_dict</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span>
+            <span class="n">bids_dtype_dict</span><span class="p">[</span><span class="s2">&quot;fileLoc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;temp_bids&quot;</span><span class="p">,</span> <span class="n">token_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="c1"># Determine RUN</span>
+            <span class="n">bids_values</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">bids_values</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">:</span>
+                <span class="n">runs</span><span class="p">[</span><span class="n">bids_values</span><span class="p">]</span> <span class="o">=</span> <span class="n">DatasetHandler</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span> <span class="s2">&quot;sub-&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]),</span>
+                    <span class="n">file</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">],</span>
+                    <span class="n">file</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="n">runs</span><span class="p">[</span><span class="n">bids_values</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">bids_dtype_dict</span><span class="p">[</span><span class="s2">&quot;run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">runs</span><span class="p">[</span><span class="n">bids_values</span><span class="p">]</span>
+            <span class="n">data2import</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">][</span><span class="n">sub_idx</span><span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">][</span><span class="s2">&quot;sub&quot;</span><span class="p">]]][</span><span class="n">bids_dtype</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">bids_dtype_dict</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">data2import</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

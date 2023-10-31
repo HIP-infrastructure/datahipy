@@ -1,0 +1,7 @@
+datahipy.info module
+====================
+
+.. automodule:: datahipy.info
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,29 @@
+datahipy package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.bids
+   datahipy.cli
+   datahipy.handlers
+   datahipy.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.info
+
+Module contents
+---------------
+
+.. automodule:: datahipy
+   :members:
+   :undoc-members:
+   :show-inheritance:

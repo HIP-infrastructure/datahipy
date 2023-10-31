@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.participant &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.bids.participant</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.bids.participant</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Utility functions to retrieve participant-level information from a BIDS dataset.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span> <span class="k">as</span> <span class="n">op</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.const</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">VALID_EXTENSIONS</span><span class="p">,</span>
+    <span class="n">BIDS_ENTITY_MAP</span><span class="p">,</span>
+    <span class="n">BIDSJSONFILE_DATATYPE_KEY_MAP</span><span class="p">,</span>
+    <span class="n">BIDSTSVFILE_DATATYPE_KEY_MAP</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_subject_bidsfile_info"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.participant.get_subject_bidsfile_info">[docs]</a><span class="k">def</span> <span class="nf">get_subject_bidsfile_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of dictionaries with BIDS file information for a given subject.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    kwargs : dict</span>
+<span class="sd">        Dictionary of arguments key/value to pass to the pybids BIDSLayout.get() function.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    subject_info : list</span>
+<span class="sd">        List of dictionaries with BIDS file information for a given subject.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Import the required functions</span>
+    <span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">create_bids_layout</span>
+    <span class="kn">from</span> <span class="nn">datahipy.bids.electrophy</span> <span class="kn">import</span> <span class="n">get_channels_info</span>
+
+    <span class="c1"># Create a pybids representation of the dataset</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">create_bids_layout</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Get the list of files for the given subject (and session, task and run if provided)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="c1"># Initialize the dictionary to be returned</span>
+    <span class="n">subject_bids_file_info</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Loop over the found files</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="c1"># Initialize the dictionary with the file information</span>
+        <span class="n">file_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Skip the json and tsv files</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="s2">&quot;.tsv&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_EXTENSIONS</span>
+        <span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="c1"># Extract the datatype</span>
+        <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]</span>
+        <span class="c1"># Extract the modality from the suffix</span>
+        <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;modality&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;suffix&quot;</span><span class="p">]</span>
+        <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>
+        <span class="c1"># Extract all the &quot;proper&quot; BIDS entities</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">BIDS_ENTITY_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">file_info</span><span class="p">[</span><span class="n">BIDS_ENTITY_MAP</span><span class="p">[</span><span class="n">key</span><span class="p">]]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="c1"># Extract the relative path of the file</span>
+        <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;fileLoc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">relpath</span>
+        <span class="c1"># Extract the file metadata from the BIDS json sidecar file</span>
+        <span class="n">file_metadata</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_metadata</span><span class="p">:</span>
+            <span class="n">file_info</span><span class="p">[</span>
+                <span class="n">BIDSJSONFILE_DATATYPE_KEY_MAP</span><span class="p">[</span><span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]]</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">file_metadata</span>
+            <span class="k">del</span> <span class="n">file_metadata</span>
+        <span class="c1"># Extract the channel information from the channels tsv file for EEG, MEG and iEEG</span>
+        <span class="k">if</span> <span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;eeg&quot;</span><span class="p">,</span> <span class="s2">&quot;meg&quot;</span><span class="p">,</span> <span class="s2">&quot;ieeg&quot;</span><span class="p">]:</span>
+            <span class="n">file_info</span><span class="p">[</span>
+                <span class="n">BIDSTSVFILE_DATATYPE_KEY_MAP</span><span class="p">[</span><span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]]</span>
+            <span class="p">]</span> <span class="o">=</span> <span class="n">get_channels_info</span><span class="p">(</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;_</span><span class="si">{</span><span class="n">file_info</span><span class="p">[</span><span class="s2">&quot;datatype&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_channels.tsv&quot;</span>
+            <span class="p">)</span>
+        <span class="c1"># Add the file information to the list</span>
+        <span class="n">subject_bids_file_info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_info</span><span class="p">)</span>
+    <span class="c1"># Return the list of dictionaries</span>
+    <span class="k">return</span> <span class="n">subject_bids_file_info</span></div>
+
+
+<div class="viewcode-block" id="get_participants_info"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.participant.get_participants_info">[docs]</a><span class="k">def</span> <span class="nf">get_participants_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the input `dataset_desc` dictionary with information from the `participants.tsv` file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Input dictionary with the dataset content to be indexed.</span>
+
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Updated dictionary with the dataset content to be indexed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">participants_info</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Load the participants.tsv file to extract information about participants</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">participants_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;participants.tsv&quot;</span><span class="p">),</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">na_filter</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">pd</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">EmptyDataError</span><span class="p">:</span>
+        <span class="n">participants_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="c1"># Get min and max age of participants</span>
+    <span class="k">if</span> <span class="s2">&quot;age&quot;</span> <span class="ow">in</span> <span class="n">participants_df</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;AgeMin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">participants_df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;AgeMax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">participants_df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;AgeMin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;AgeMax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;ParticipantsCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">participants_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;ParticipantsGroups&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">participants_df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="k">if</span> <span class="s2">&quot;group&quot;</span> <span class="ow">in</span> <span class="n">participants_df</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">else</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Store content of participants.tsv as a dictionary</span>
+    <span class="n">participants_info</span><span class="p">[</span><span class="s2">&quot;Participants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">participants_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">participants_df</span>
+    <span class="k">return</span> <span class="n">participants_info</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.cli.run &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.cli.run</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.cli.run</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Command line interface for datahipy.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">datahipy</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">__release_date__</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">get_all_datasets_content</span><span class="p">,</span> <span class="n">dataset_publish</span><span class="p">,</span> <span class="n">dataset_clone</span>
+<span class="kn">from</span> <span class="nn">datahipy.handlers.dataset</span> <span class="kn">import</span> <span class="n">DatasetHandler</span>
+<span class="kn">from</span> <span class="nn">datahipy.handlers.participants</span> <span class="kn">import</span> <span class="n">ParticipantHandler</span>
+<span class="kn">from</span> <span class="nn">datahipy.handlers.project</span> <span class="kn">import</span> <span class="n">create_project</span><span class="p">,</span> <span class="n">import_subject</span><span class="p">,</span> <span class="n">import_document</span>
+<span class="kn">from</span> <span class="nn">datahipy.utils.versioning</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">create_tag</span><span class="p">,</span> <span class="n">get_tags</span><span class="p">,</span> <span class="n">checkout_tag</span><span class="p">,</span> <span class="n">release_version</span><span class="p">,</span> <span class="n">set_git_user_info_global</span>
+<span class="p">)</span>
+
+<span class="n">VALID_COMMANDS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;dataset.create&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.get&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.create_tag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.get_tags&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.checkout_tag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;datasets.get&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.release_version&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.publish&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dataset.clone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub.get&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub.import&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub.edit.clinical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub.delete&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub.delete.file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.create&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.sub.import&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.doc.import&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.create_tag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.get_tags&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.checkout_tag&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;project.release_version&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_parser"><a class="viewcode-back" href="../../../api_cli_subpackage.html#datahipy.cli.run.get_parser">[docs]</a><span class="k">def</span> <span class="nf">get_parser</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get parser object for command line interface.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;DataHIPy command line interface.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--command&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">VALID_COMMANDS</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Method to be run.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_data&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Input JSON data&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--output_file&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;File location after processing&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--dataset_path&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the dataset&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/output&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--input_path&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input data (e.g. input_data.json)&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/input&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--git_user_name&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Git user name to use for Datalad ops&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--git_user_email&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Git user email to use for Datalad ops&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="s2">&quot;datahipy version </span><span class="si">{}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">(release date: </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">__version__</span><span class="p">,</span> <span class="n">__release_date__</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../api_cli_subpackage.html#datahipy.cli.run.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the command line interface.&quot;&quot;&quot;</span>
+    <span class="c1"># Create parser object</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">()</span>
+
+    <span class="c1"># Parse arguments</span>
+    <span class="n">cmd_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">command</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">input_data</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">output_file</span>
+    <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">dataset_path</span>
+    <span class="n">input_path</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">input_path</span>
+    <span class="n">git_user_name</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">git_user_name</span>
+    <span class="n">git_user_email</span> <span class="o">=</span> <span class="n">cmd_args</span><span class="o">.</span><span class="n">git_user_email</span>
+
+    <span class="c1"># Initialize dataset and participant handler objects</span>
+    <span class="n">dhdl</span> <span class="o">=</span> <span class="n">DatasetHandler</span><span class="p">(</span><span class="n">dataset_path</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">)</span>
+    <span class="n">phdl</span> <span class="o">=</span> <span class="n">ParticipantHandler</span><span class="p">(</span><span class="n">dataset_path</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">input_path</span><span class="o">=</span><span class="n">input_path</span><span class="p">)</span>
+
+    <span class="c1"># Set global git user info for Datalad operations</span>
+    <span class="n">set_git_user_info_global</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">git_user_name</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">git_user_email</span><span class="p">)</span>
+
+    <span class="c1"># Dataset commands</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.create&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dhdl</span><span class="o">.</span><span class="n">dataset_create</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.get&quot;</span><span class="p">:</span>
+        <span class="n">dhdl</span><span class="o">.</span><span class="n">dataset_get_content</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.create_tag&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_tag</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.get_tags&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_tags</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.checkout_tag&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">checkout_tag</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;datasets.get&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_all_datasets_content</span><span class="p">(</span>
+            <span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span>
+            <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.release_version&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">release_version</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.publish&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dataset_publish</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dataset.clone&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dataset_clone</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="c1"># Dataset subject / participant-level commands</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;sub.import&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phdl</span><span class="o">.</span><span class="n">sub_import</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;sub.edit.clinical&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phdl</span><span class="o">.</span><span class="n">sub_edit_clinical</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;sub.get&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phdl</span><span class="o">.</span><span class="n">sub_get</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;sub.delete&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phdl</span><span class="o">.</span><span class="n">sub_delete</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;sub.delete.file&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phdl</span><span class="o">.</span><span class="n">sub_delete_file</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="c1"># Project commands</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.create&quot;</span><span class="p">:</span>
+        <span class="n">create_project</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.sub.import&quot;</span><span class="p">:</span>
+        <span class="n">import_subject</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.doc.import&quot;</span><span class="p">:</span>
+        <span class="n">import_document</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.create_tag&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_tag</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.get_tags&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_tags</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.checkout_tag&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">checkout_tag</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;project.release_version&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">release_version</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

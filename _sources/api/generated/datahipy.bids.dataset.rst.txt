@@ -1,0 +1,7 @@
+datahipy.bids.dataset module
+============================
+
+.. automodule:: datahipy.bids.dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:

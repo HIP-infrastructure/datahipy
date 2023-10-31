@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.handlers &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="datahipy.bids" href="api_bids_subpackage.html" />
+    <link rel="prev" title="datahipy.cli" href="api_cli_subpackage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#datahipy-handlers-dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.dataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#datahipy-handlers-participants"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.participants</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#datahipy-handlers-project"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.project</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datahipy-handlers">
+<span id="apidoc-handlers"></span><h1><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code><a class="headerlink" href="#datahipy-handlers" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code> subpackage contains modules that define classes and functions that handle the reading and writing of BIDS data. The classes are also designed to be used with the <code class="docutils literal notranslate"><span class="pre">datahipy</span></code> command line interface.</p>
+<section id="datahipy-handlers-dataset">
+<h2><a class="reference internal" href="api/generated/datahipy.handlers.dataset.html#module-datahipy.handlers.dataset" title="datahipy.handlers.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.dataset</span></code></a><a class="headerlink" href="#datahipy-handlers-dataset" title="Permalink to this heading"></a></h2>
+<p>Manage BIDS dataset using BIDS Manager.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datahipy.handlers.dataset.</span></span><span class="sig-name descname"><span class="pre">DatasetHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent the handler of a dataset with utility functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_keys_requirements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clin_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.add_keys_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Update the requirements.json with new keys.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_converters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.check_converters"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Check if the converters are specified and (re)write the requirements.json if necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dataset_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.dataset_create"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a new BIDS dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dataset_get_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.dataset_get_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Extract dataset information indexed by the HIP platform.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dump_output_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.dump_output_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Dump output_data dict in a JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_modality</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.get_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Parse the BIDS dataset to get the max run for a set of BIDS entities.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_input_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.load_input_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Return input_data JSON file in a dict.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_safe_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/dataset.html#DatasetHandler.make_safe_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Return a modified version of the string that contains only alphanumeric characters (letters and numbers).</p>
+<p>Any other character in the original string is replaced by an underscore (<code class="xref py py-obj docutils literal notranslate"><span class="pre">_</span></code>).
+The function also removes any trailing underscores from the end of the modified string.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>s: str</dt><dd><p>Input string</p>
+</dd>
+</dl>
+</section>
+<section id="return">
+<h3>Return<a class="headerlink" href="#return" title="Permalink to this heading"></a></h3>
+<p>String that contains only alphanumeric characters.</p>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="datahipy-handlers-participants">
+<h2><a class="reference internal" href="api/generated/datahipy.handlers.participants.html#module-datahipy.handlers.participants" title="datahipy.handlers.participants"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.participants</span></code></a><a class="headerlink" href="#datahipy-handlers-participants" title="Permalink to this heading"></a></h2>
+<p>Manage BIDS participants using BIDS Manager.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datahipy.handlers.participants.</span></span><span class="sig-name descname"><span class="pre">ParticipantHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent the handler of a dataset’s participant with utility functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_data2import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.create_data2import"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a data2import object.</p>
+<p>This object will be used to import data in the BIDS dataset.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>ds_obj<span class="classifier">BIDS Manager BidsDataset object</span></dt><dd><p>The BIDS Manager object representing a BIDS dataset.</p>
+</dd>
+<dt>input_data<span class="classifier">dict</span></dt><dd><p>The input_data dictionary containing the data to import in the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>data2import<span class="classifier">BIDS Manager Data2Import object</span></dt><dd><p>The BIDS Manager object representing the data to import in the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dump_output_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.dump_output_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Dump output_data dict in a JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_subject_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.find_subject_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Find the subject dict in the parsed BIDS dataset object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_input_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.load_input_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Load the input_data JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sub_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.sub_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Delete a subject from an already existing BIDS dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sub_delete_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.sub_delete_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Delete data files from /raw and /source.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sub_edit_clinical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.sub_edit_clinical"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Update subject clinical info in BIDS dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sub_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.sub_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get info of a subject.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">sub_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/participants.html#ParticipantHandler.sub_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Import subject(s) data into a BIDS dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="datahipy-handlers-project">
+<h2><a class="reference internal" href="api/generated/datahipy.handlers.project.html#module-datahipy.handlers.project" title="datahipy.handlers.project"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.handlers.project</span></code></a><a class="headerlink" href="#datahipy-handlers-project" title="Permalink to this heading"></a></h2>
+<p>Methods supporting  the Collaborative Space of the HIP.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#create_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a new Collaborative Project on the HIP initialized with directory/file structure.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">str</span></dt><dd><p>Path to input data JSON file sent by the HIP that contains all information
+about Project and corresponding BIDS dataset in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/project/directory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Project Title&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Project Description that would be put in the README.md file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;datasetDescription&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;BIDS Dataset Title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BIDSVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License&quot;</span><span class="p">:</span> <span class="s2">&quot;CC-BY-4.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Author 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Author 2&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;Acknowledgements&quot;</span><span class="p">:</span> <span class="s2">&quot;Acknowledgement 1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Funding&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Funding 1&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Reference 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Reference 2&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;DatasetDOI&quot;</span><span class="p">:</span> <span class="s2">&quot;10.18112/openneuro.ds000000.v1.0.0&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>output_file<span class="classifier">str</span></dt><dd><p>Path to output file that will contain the JSON summary of the BIDS dataset of the project.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">import_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#import_document"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Import a new supporting document to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">documents/</span></code> folder of the HIP Collaborative Project.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">str</span></dt><dd><p>Path to input data JSON file sent by the HIP that contains all information
+about the document to import in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDocumentAbsPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/source/document/file&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/target/project/directory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sourceDocumentRelPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/project/relative/path/to/target/document/file&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">import_subject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#import_subject"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Import a new subject from a BIDS dataset of the HIP Center space to the BIDS dataset of the HIP Collaborative Project.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">str</span></dt><dd><p>Path to input data JSON file sent by the HIP that contains all information
+about the subject and files to import in the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/source/bids/dataset/directory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;participantId&quot;</span><span class="p">:</span> <span class="s2">&quot;sub-01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/target/bids/dataset/directory&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>output_file<span class="classifier">str</span></dt><dd><p>Path to output file that will contain the JSON summary of the BIDS dataset of the project.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">initialize_project_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#initialize_project_structure"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Initialize the directory structure of a Collaborative Project on the HIP.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>project_dir<span class="classifier">pathlib.Path</span></dt><dd><p>Path to the project directory.</p>
+</dd>
+<dt>project_title<span class="classifier">str</span></dt><dd><p>Title of the project.</p>
+</dd>
+<dt>project_description<span class="classifier">str</span></dt><dd><p>Description of the project.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">manage_project_with_datalad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#manage_project_with_datalad"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a Datalad dataset out of an existing project not Datalad-managed yet.</p>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>project_dir<span class="classifier">str</span></dt><dd><p>Path to the project directory.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.handlers.project.</span></span><span class="sig-name descname"><span class="pre">transfer_subject_participants_tsv_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">participant_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_participant_tsv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_participants_tsv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/handlers/project.html#transfer_subject_participants_tsv_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Transfer subject row from the participants.tsv file of the source to the participants.tsv file of the target BIDS dataset.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>participant_id<span class="classifier">str</span></dt><dd><p>ID of the participant to transfer (e.g. “sub-01”).</p>
+</dd>
+<dt>source_participant_tsv<span class="classifier">str</span></dt><dd><p>Path to the participants.tsv file of the source BIDS dataset.</p>
+</dd>
+<dt>target_participants_tsv<span class="classifier">str</span></dt><dd><p>Path to the participants.tsv file of the target BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_cli_subpackage.html" class="btn btn-neutral float-left" title="datahipy.cli" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_bids_subpackage.html" class="btn btn-neutral float-right" title="datahipy.bids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

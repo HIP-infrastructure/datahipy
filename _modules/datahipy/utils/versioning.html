@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.utils.versioning &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.utils.versioning</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.utils.versioning</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Methods supporting versioning of BIDS and Collaborative project datasets.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sre_constants</span> <span class="kn">import</span> <span class="n">SUCCESS</span>
+
+<span class="kn">import</span> <span class="nn">datalad</span>
+<span class="kn">from</span> <span class="nn">datalad.support.gitrepo</span> <span class="kn">import</span> <span class="n">GitRepo</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.bids.version</span> <span class="kn">import</span> <span class="n">create_bids_changes_tag_entry</span><span class="p">,</span> <span class="n">update_bids_changes</span>
+
+<span class="n">TAG_EXCEPTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;master&quot;</span><span class="p">,</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="set_git_user_info_global"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.set_git_user_info_global">[docs]</a><span class="k">def</span> <span class="nf">set_git_user_info_global</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set Git user name and email.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Git user name.</span>
+
+<span class="sd">    email : str</span>
+<span class="sd">        Git user email.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;USER&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;USER&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;root&quot;</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;hip_admin&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;USER&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;hip_admin&quot;</span>
+    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>    
+        <span class="n">email</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">@hip.ch&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Set global Git user name (</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">) and email (</span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd ~ &amp;&amp; git config --global user.name </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cd ~ &amp;&amp; git config --global user.email </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_tag"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.validate_tag">[docs]</a><span class="k">def</span> <span class="nf">validate_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">discard_exceptions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate a tag.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tag : str</span>
+<span class="sd">        Tag to validate.</span>
+
+<span class="sd">    discard_exceptions : bool</span>
+<span class="sd">        If True, discard the exceptions listed by `TAG_EXCEPTIONS`</span>
+<span class="sd">        and return False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        True if the tag is valid, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Check if the tag is in the format X.Y.Z</span>
+    <span class="c1"># where X, Y, and Z are integers via regex</span>
+    <span class="c1"># https://stackoverflow.com/questions/1265665/how-can-i-check-if-a-string-represents-an-int-without-using-try-except</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">discard_exceptions</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">TAG_EXCEPTIONS</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="create_tag"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.create_tag">[docs]</a><span class="k">def</span> <span class="nf">create_tag</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a version tag on a dataset managed by Git/Datalad.</span>
+
+<span class="sd">    **Note:** The tag is created on a Datalad dataset, not on a specific file.</span>
+<span class="sd">    If the dataset is a BIDS dataset, the tag will be created only on this dataset.</span>
+<span class="sd">    If the dataset is a Collaborative Project, the tag will be created recursively on</span>
+<span class="sd">      the project dataset and on the nested BIDS dataset of the project.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : dict</span>
+<span class="sd">        Dictionary or JSON file containing the input data for the command</span>
+<span class="sd">        in the format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/dataset&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;bids&quot;,  # or &quot;project&quot;</span>
+<span class="sd">                &quot;tag&quot;: &quot;1.0.0&quot;,</span>
+<span class="sd">                &quot;changes_list&quot;: [&quot;Change 1&quot;, &quot;Change 2&quot;]</span>
+<span class="sd">            }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Create tag </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> for dataset </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="c1"># Check if the tag is valid</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_tag</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">],</span> <span class="n">discard_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Impossible to create tag </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">. The format is not valid. &quot;</span>
+            <span class="s2">&quot;Please use the format X.Y.Z, where X, Y, and Z are integers.&quot;</span>
+        <span class="p">)</span>
+    <span class="c1"># Check if the tag already exists</span>
+    <span class="k">if</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="n">tag_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag_dict</span> <span class="ow">in</span> <span class="n">GitRepo</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span>
+    <span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Impossible to create tag </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Tag </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> already exists.&quot;</span>
+        <span class="p">)</span>
+    <span class="c1"># Create the tag message based on tag, date, and list of changes</span>
+    <span class="n">changes_tag_entry</span> <span class="o">=</span> <span class="n">create_bids_changes_tag_entry</span><span class="p">(</span>
+        <span class="n">tag</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">],</span>
+        <span class="n">changes_list</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;changes_list&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bids&quot;</span><span class="p">:</span>
+        <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;project&quot;</span><span class="p">:</span>
+        <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="s2">&quot;inputs&quot;</span><span class="p">,</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">)</span>
+    <span class="c1"># Update the CHANGES file with the generated tag text entry</span>
+    <span class="n">update_bids_changes</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="n">bids_dir</span><span class="p">,</span>
+        <span class="n">changes_tag_entry</span><span class="o">=</span><span class="n">changes_tag_entry</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># Create a tag on the BIDS dataset or on the nested BIDS dataset of a project</span>
+    <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">changes_tag_entry</span><span class="p">),</span>
+        <span class="s2">&quot;version_tag&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_tags"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.get_tags">[docs]</a><span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the list of tags of a dataset managed by Git/Datalad via subprocess.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : dict</span>
+<span class="sd">        Dictionary containing the input data for the command</span>
+<span class="sd">        in the format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/dataset&quot;,</span>
+<span class="sd">            }</span>
+
+<span class="sd">    output_file : str</span>
+<span class="sd">        Absolute path to the output JSON file containing the tags</span>
+<span class="sd">        in the format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/dataset&quot;,</span>
+<span class="sd">                &quot;tags&quot;: [&quot;1.0.0&quot;, &quot;1.0.1&quot;, &quot;1.1.0&quot;]</span>
+<span class="sd">            }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag_dict</span> <span class="ow">in</span> <span class="n">GitRepo</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()]</span>
+    <span class="c1"># Save the tags to a JSON file</span>
+    <span class="n">dict_tags</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="n">tags</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dict_tags</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="checkout_tag"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.checkout_tag">[docs]</a><span class="k">def</span> <span class="nf">checkout_tag</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checkout a specific tag of a dataset managed by Git/Datalad via subprocess.</span>
+
+<span class="sd">    **Note:** The master / main branch / or the HEAD can also be checked out by specifying</span>
+<span class="sd">      &quot;master&quot; / &quot;main&quot; / &quot;HEAD&quot; for the tag value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : dict</span>
+<span class="sd">        Dictionary containing the input data for the command</span>
+<span class="sd">        in the format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/dataset&quot;,</span>
+<span class="sd">                &quot;tag&quot;: &quot;1.0.0&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Check of the tag format is valid</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_tag</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Impossible to checkout tag </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">. The format is not valid. &quot;</span>
+            <span class="s2">&quot;Please use the format X.Y.Z, where X, Y, and Z are integers, or &quot;</span>
+            <span class="s2">&quot;specify &#39;master&#39; / &#39;main&#39; to checkout the master / main branch.&quot;</span>
+        <span class="p">)</span>
+    <span class="c1"># Set the name and options for tag / branch checkout</span>
+    <span class="k">if</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TAG_EXCEPTIONS</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tags/</span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">checkout_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;--force&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;tag&quot;</span><span class="p">]</span>
+        <span class="n">checkout_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--force&quot;</span><span class="p">]</span>
+    <span class="c1"># Checkout a specific tag of the dataset to a new eponymous branch</span>
+    <span class="c1"># or checkout the master / main branch / HEAD</span>
+    <span class="n">GitRepo</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="n">checkout_opts</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_latest_tag"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.get_latest_tag">[docs]</a><span class="k">def</span> <span class="nf">get_latest_tag</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the latest tag of a dataset managed by Git/Datalad.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Absolute path to the dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The latest tag of the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag_dict</span> <span class="ow">in</span> <span class="n">GitRepo</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()]</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0.0.0&quot;</span>
+    <span class="k">return</span> <span class="n">tags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="increment_tag"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.increment_tag">[docs]</a><span class="k">def</span> <span class="nf">increment_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Increment a version tag by a specific level.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tag : str</span>
+<span class="sd">        Version tag to increment in the format X.Y.Z, where X, Y, and Z are integers.</span>
+
+<span class="sd">    level : str</span>
+<span class="sd">        Level to increment. Can be &quot;major&quot;, &quot;minor&quot;, or &quot;patch&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The incremented tag.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">discard_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Impossible to increment tag </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">. The format is not valid. &quot;</span>
+            <span class="s2">&quot;Please use the format X.Y.Z, where X, Y, and Z are integers.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="s2">&quot;major&quot;</span><span class="p">:</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">==</span> <span class="s2">&quot;minor&quot;</span><span class="p">:</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+    <span class="k">elif</span> <span class="n">level</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span><span class="p">:</span>
+        <span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="release_version"><a class="viewcode-back" href="../../../api_utils_subpackage.html#datahipy.utils.versioning.release_version">[docs]</a><span class="k">def</span> <span class="nf">release_version</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Release a new version of a project / BIDS dataset managed by Git/Datalad.</span>
+
+<span class="sd">    **Note:** The tag is created on a Datalad dataset, not on a specific file.</span>
+<span class="sd">    If the dataset is a BIDS dataset, the tag will be created only on this dataset.</span>
+<span class="sd">    If the dataset is a Collaborative Project, the tag will be created recursively on</span>
+<span class="sd">      the project dataset and on the nested BIDS dataset of the project.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : dict</span>
+<span class="sd">        Dictionary containing the input data for the command</span>
+<span class="sd">        in the format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/dataset&quot;,</span>
+<span class="sd">                &quot;type&quot;: &quot;bids&quot;,  # or &quot;project&quot;</span>
+<span class="sd">                &quot;level&quot;: &quot;major&quot;,  # or &quot;minor&quot; or &quot;patch&quot;</span>
+<span class="sd">                &quot;changes_list&quot;: [&quot;Change 1&quot;, &quot;Change 2&quot;]</span>
+<span class="sd">            }</span>
+<span class="sd">    </span>
+<span class="sd">    output_file : str</span>
+<span class="sd">        Absolute path to the output JSON file containing the dataset summary</span>
+<span class="sd">        generated by :py:func:`datahipy.bids.dataset.get_bidsdataset_content`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Import here to avoid circular imports</span>
+    <span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">get_bidsdataset_content</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Release version for dataset </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="c1"># Get the latest tag of the dataset</span>
+    <span class="n">latest_tag</span> <span class="o">=</span> <span class="n">get_latest_tag</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+    <span class="c1"># Increment the latest tag by the specified level</span>
+    <span class="n">new_tag</span> <span class="o">=</span> <span class="n">increment_tag</span><span class="p">(</span><span class="n">latest_tag</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">])</span>
+    <span class="c1"># Create a tag on the dataset</span>
+    <span class="n">create_tag</span><span class="p">(</span>
+        <span class="n">input_data</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="n">new_tag</span><span class="p">,</span>
+            <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;changes_list&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="c1"># Get the BIDS directory of the dataset if it is</span>
+    <span class="c1"># a project dataset or a BIDS dataset itself </span>
+    <span class="n">bids_dir</span>  <span class="o">=</span> <span class="p">(</span>
+        <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bids&quot;</span>
+        <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="s2">&quot;inputs&quot;</span><span class="p">,</span> <span class="s2">&quot;bids-dataset&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1"># Generate the dataset summary dictionary</span>
+    <span class="n">dataset_summary</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="n">bids_dir</span>
+    <span class="p">)</span>
+    <span class="c1"># Save the dataset summary to a JSON file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_summary</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

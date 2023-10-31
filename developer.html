@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instructions for Developers &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="datahipy.cli" href="api_cli_subpackage.html" />
+    <link rel="prev" title="Commandline Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instructions for Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-build-the-docker-image-locally">How to build the Docker image locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-install-datahipy-locally">How to install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-build-the-documentation-locally">How to build the documentation locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-run-the-tests-via-the-docker-image">How to run the tests via the Docker image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-run-the-tests-locally">How to run the tests locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outputs-of-tests">Outputs of tests</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Instructions for Developers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instructions-for-developers">
+<span id="instructions"></span><h1>Instructions for Developers<a class="headerlink" href="#instructions-for-developers" title="Permalink to this heading"></a></h1>
+<section id="how-to-build-the-docker-image-locally">
+<span id="instructions-docker-build"></span><h2>How to build the Docker image locally<a class="headerlink" href="#how-to-build-the-docker-image-locally" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Go to the clone directory of your fork and run the following command in the terminal</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">DataHIPy</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">B</span> <span class="n">build</span><span class="o">-</span><span class="n">docker</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The tag of the version of the image is generated from the git tag thanks to the versioneer.py library.</p>
+</div>
+</section>
+<section id="how-to-install-datahipy-locally">
+<span id="instructions-datahipy-install"></span><h2>How to install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> locally<a class="headerlink" href="#how-to-install-datahipy-locally" title="Permalink to this heading"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> requires a Python environment with <code class="xref py py-obj docutils literal notranslate"><span class="pre">python&gt;=3.8</span></code>.</p>
+</div>
+<ol class="arabic">
+<li><p>Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">bids_manager</span></code> dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> \
+    <span class="n">PyQt5</span><span class="o">==</span><span class="mf">5.15.4</span> \
+    <span class="n">xlrd</span> \
+    <span class="n">PySimpleGUI</span> \
+    <span class="n">pydicom</span> \
+    <span class="n">paramiko</span> \
+    <span class="n">tkcalendar</span> \
+    <span class="n">bids_validator</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> along with all dependencies (including dependencies to build the documentation and to test the package):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span><span class="p">[</span><span class="nb">all</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>\<span class="p">[</span><span class="nb">all</span>\<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="how-to-build-the-documentation-locally">
+<span id="instructions-docs-build"></span><h2>How to build the documentation locally<a class="headerlink" href="#how-to-build-the-documentation-locally" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> and its dependencies (see <a class="reference internal" href="#instructions-datahipy-install"><span class="std std-ref">How to install DataHIPy locally</span></a>).</p></li>
+<li><p>Go to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">docs</span></code> of the cloned repository and build the HTML documentation with <code class="xref py py-obj docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span>
+<span class="n">make</span> <span class="n">clean</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>The built HTML files of the documentation, including its main page (<code class="docutils literal notranslate"><span class="pre">index.html</span></code>), can be found in the <code class="docutils literal notranslate"><span class="pre">docs/build/html</span></code> directory, and can be opened in your favorite browser.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have made any changes in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> docstrings, make sure to re-install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> prior to building the documentation by running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[all]</span></code> / <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.\[all\]</span></code>.</p>
+</div>
+</section>
+<section id="how-to-run-the-tests-via-the-docker-image">
+<span id="instructions-tests"></span><h2>How to run the tests via the Docker image<a class="headerlink" href="#how-to-run-the-tests-via-the-docker-image" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Go to the clone directory of your fork and (re-)build the Docker image with the following commands</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">DataHIPy</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">B</span> <span class="n">build</span><span class="o">-</span><span class="n">docker</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the tests throughout the Docker image</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">test</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="how-to-run-the-tests-locally">
+<span id="instructions-tests-local"></span><h2>How to run the tests locally<a class="headerlink" href="#how-to-run-the-tests-locally" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>(Re-)Install <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> and its dependencies (see <a class="reference internal" href="#instructions-datahipy-install"><span class="std std-ref">How to install DataHIPy locally</span></a>).</p></li>
+<li><p>Run the <code class="xref py py-obj docutils literal notranslate"><span class="pre">pytest</span></code> tests with the script provided in the repository as follow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">test</span><span class="o">/</span><span class="n">run_tests</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="outputs-of-tests">
+<span id="tests-outputs"></span><h2>Outputs of tests<a class="headerlink" href="#outputs-of-tests" title="Permalink to this heading"></a></h2>
+<p>In both cases, the tests are run in a temporary <code class="xref py py-obj docutils literal notranslate"><span class="pre">tmp</span></code> directory in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">test</span></code> directory, so that the original data are not modified. After completion, coverage report in HTML format can be found in <code class="docutils literal notranslate"><span class="pre">test/report/cov_html</span></code> and be displayed by opening <code class="docutils literal notranslate"><span class="pre">index.html</span></code> in your favorite browser.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Commandline Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_cli_subpackage.html" class="btn btn-neutral float-right" title="datahipy.cli" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

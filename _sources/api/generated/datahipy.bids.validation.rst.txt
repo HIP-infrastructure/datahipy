@@ -1,0 +1,7 @@
+datahipy.bids.validation module
+===============================
+
+.. automodule:: datahipy.bids.validation
+   :members:
+   :undoc-members:
+   :show-inheritance:

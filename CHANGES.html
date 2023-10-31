@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changes &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="How to cite?" href="citing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dev-2-2023-10-31">1.3.0-dev.2 (2023-10-31)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dev-1-2023-08-04">1.3.0-dev.1 (2023-08-04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">1.2.0 (2023-07-14)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dev-2-2023-07-14">1.2.0-dev.2 (2023-07-14)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dev-1-2023-07-14">1.2.0-dev.1 (2023-07-14)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id29">1.1.1 (2023-06-15)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id32">1.1.0 (2023-06-15)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id34">Features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id36">1.0.1 (2023-03-02)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id37">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id38">1.0.0 (2023-03-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id39">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id40">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverts">Reverts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dev-2-2023-03-02">1.0.0-dev.2 (2023-03-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id42">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id47">Reverts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dev-1-2023-02-26">1.0.0-dev.1 (2023-02-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id49">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id67">Features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changes">
+<span id="id1"></span><h1>Changes<a class="headerlink" href="#changes" title="Permalink to this heading"></a></h1>
+<section id="dev-2-2023-10-31">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.3.0-dev.1...v1.3.0-dev.2">1.3.0-dev.2</a> (2023-10-31)<a class="headerlink" href="#dev-2-2023-10-31" title="Permalink to this heading"></a></h2>
+<section id="bug-fixes">
+<h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Dockerfile:</strong> update nodejs to 18 as bids-validator failed to build (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/c4d6aacb081fca5515a9be0d8b872e1c08f15158">c4d6aac</a>)</p></li>
+</ul>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>bids/dataset.py:</strong> add arguments to datalad create_siblings to make it more robust (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/4851724183603e22aadb63c5d71463bb74daaa69">4851724</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dev-1-2023-08-04">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0...v1.3.0-dev.1">1.3.0-dev.1</a> (2023-08-04)<a class="headerlink" href="#dev-1-2023-08-04" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>Bug Fixes<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>handle datasets not datalad-managed for import / edit commands (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/a1a4bdecfdebdb62452704d23fe4f1f62bef7701">a1a4bde</a>)</p></li>
+<li><p>set git user name and email used by Datalad ops (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/de489e248acab4e4d08af1cf02dbb28173bec640">de489e2</a>)</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Features<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add dataset and project commands / methods to release a version (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/c295ff64c81f97a2805df34e34ec482a1376fdc3">c295ff6</a>)</p></li>
+<li><p>add dataset.publish and dataset.clone commands and corresponding functions (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/bd9d2707a3ad3e17f3bf09eaec7ed0983d58ce28">bd9d270</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.1.1...v1.2.0">1.2.0</a> (2023-07-14)<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<section id="id7">
+<h3>Bug Fixes<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>conftest.py:</strong> change permissions on .git repositories in Datalad datasets at the beginning of the tests (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/bc1bf4bc3e21d3a8b3317bd72aac0d534faff15e">bc1bf4b</a>)</p></li>
+<li><p>make changes in Datalad-related code that make tests working (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/5b7989e80b63d49d03c71b86fa8319d5d9a44462">5b7989e</a>)</p></li>
+<li><p>use absolute path when creating nested datalad dataset (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/355ce0cca64d1893b26f31840fe0463e53dbd1ae">355ce0c</a>)</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Features<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add versioning module file with tags-related functions (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/9e856743279608fad4160150ebb43fa6696f3f2f">9e85674</a>)</p></li>
+<li><p><strong>bids.dataset:</strong> add Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/0aee9e10fc1fffe1f59ddebe66d111bcec0138ae">0aee9e1</a>)</p></li>
+<li><p><strong>cli/run.py:</strong> add commands to inerface with tags / branches of Datalad datasets (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/e299d004417770bf08268585a59c5e1bb20c174d">e299d00</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install git and git-annex in Docker container image (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/d8fe0ddabe624600161ed85e70ebcf690cc5850f">d8fe0dd</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install recent standalone version of git-annex provided by Datalad (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/32136cfcd48e24142825413890f66e4d7e4b79dd">32136cf</a>)</p></li>
+<li><p><strong>handlers.dataset:</strong> call datalad create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/ebb7cc83de84d413189e03ec369bea8db1f2fe11">ebb7cc8</a>)</p></li>
+<li><p><strong>handlers.participants:</strong> call Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/08d86c922eabd28f9f3664d6b6e0a724a8eec4ff">08d86c9</a>)</p></li>
+<li><p><strong>handlers.project:</strong> call Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/08d1adf79f9d825754eb096f49e33a88ded7ed2e">08d1adf</a>)</p></li>
+<li><p>install pytest-order in Dockerfile and test config of setup.cfg (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/23732c38378348a13c0af807c82b1ec5efc1f6ba">23732c3</a>)</p></li>
+<li><p><strong>setup.cfg:</strong> add datalad-neuroimaging extension (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/509e6686d186c13048768c7edaa906e18c13f53d">509e668</a>)</p></li>
+<li><p>write release text block in CHANGES of BIDS dataset at version tag creation (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/37f4f33644cb56b036be26ccdba089e158eadf72">37f4f33</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dev-2-2023-07-14">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.2.0-dev.1...v1.2.0-dev.2">1.2.0-dev.2</a> (2023-07-14)<a class="headerlink" href="#dev-2-2023-07-14" title="Permalink to this heading"></a></h2>
+<section id="id10">
+<h3>Features<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>write release text block in CHANGES of BIDS dataset at version tag creation (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/37f4f33644cb56b036be26ccdba089e158eadf72">37f4f33</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dev-1-2023-07-14">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.1.1...v1.2.0-dev.1">1.2.0-dev.1</a> (2023-07-14)<a class="headerlink" href="#dev-1-2023-07-14" title="Permalink to this heading"></a></h2>
+<section id="id13">
+<h3>Bug Fixes<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>conftest.py:</strong> change permissions on .git repositories in Datalad datasets at the beginning of the tests (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/bc1bf4bc3e21d3a8b3317bd72aac0d534faff15e">bc1bf4b</a>)</p></li>
+<li><p>make changes in Datalad-related code that make tests working (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/5b7989e80b63d49d03c71b86fa8319d5d9a44462">5b7989e</a>)</p></li>
+<li><p>use absolute path when creating nested datalad dataset (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/355ce0cca64d1893b26f31840fe0463e53dbd1ae">355ce0c</a>)</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Features<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add versioning module file with tags-related functions (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/9e856743279608fad4160150ebb43fa6696f3f2f">9e85674</a>)</p></li>
+<li><p><strong>bids.dataset:</strong> add Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/0aee9e10fc1fffe1f59ddebe66d111bcec0138ae">0aee9e1</a>)</p></li>
+<li><p><strong>cli/run.py:</strong> add commands to inerface with tags / branches of Datalad datasets (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/e299d004417770bf08268585a59c5e1bb20c174d">e299d00</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install git and git-annex in Docker container image (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/d8fe0ddabe624600161ed85e70ebcf690cc5850f">d8fe0dd</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install recent standalone version of git-annex provided by Datalad (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/32136cfcd48e24142825413890f66e4d7e4b79dd">32136cf</a>)</p></li>
+<li><p><strong>handlers.dataset:</strong> call datalad create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/ebb7cc83de84d413189e03ec369bea8db1f2fe11">ebb7cc8</a>)</p></li>
+<li><p><strong>handlers.participants:</strong> call Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/08d86c922eabd28f9f3664d6b6e0a724a8eec4ff">08d86c9</a>)</p></li>
+<li><p><strong>handlers.project:</strong> call Datalad’s create() and save() methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/08d1adf79f9d825754eb096f49e33a88ded7ed2e">08d1adf</a>)</p></li>
+<li><p>install pytest-order in Dockerfile and test config of setup.cfg (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/23732c38378348a13c0af807c82b1ec5efc1f6ba">23732c3</a>)</p></li>
+<li><p><strong>setup.cfg:</strong> add datalad-neuroimaging extension (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/509e6686d186c13048768c7edaa906e18c13f53d">509e668</a>)</p></li>
+</ul>
+<section id="id29">
+<h4><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.1.0...v1.1.1">1.1.1</a> (2023-06-15)<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h4>
+</section>
+</section>
+<section id="id30">
+<h3>Bug Fixes<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>docs/CHANGES.md:</strong> clean duplicated version change logs (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/35e33f4c33cc1cac722f90e7fa9cf9735c3b33f2">35e33f4</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id32">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/compare/v1.0.1...v1.1.0">1.1.0</a> (2023-06-15)<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h2>
+<section id="id33">
+<h3>Bug Fixes<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>.gitlab-ci.yml:</strong> add github to list of known ssh hosts (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/9ce3ae9536bcb3169cf615a554d629be9ac8c1a2">9ce3ae9</a>)</p></li>
+<li><p><strong>.gitlab-ci.yml:</strong> inverse order of steps and make sure we work with updated branch in deploy-release (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/144aca13d0a6197610c2396b9ef5eb5cc81e51fa">144aca1</a>)</p></li>
+<li><p><strong>.gitlab-ci.yml:</strong> review ssh key for github push (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/b5a6f66f3ee11f31b199c36fa0691569e3a961ab">b5a6f66</a>)</p></li>
+<li><p><strong>.gitlab-ci.yml:</strong> use ssh instead of https for github push in deploy-release (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/23bc34a17732d0d2d324ab1855bdb93b4bebe534">23bc34a</a>)</p></li>
+<li><p>comment codecov check (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/3d685b7ee3d04882514d455a95e173da65af65e9">3d685b7</a>)</p></li>
+<li><p><strong>handlers.project:</strong> changes to make all tests passed (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/4d6a1265e23010d16899844f27958f1d89bb34dd">4d6a126</a>)</p></li>
+<li><p><strong>handlers.project:</strong> correct way to extract input paths and create intermediate dirs for doc import (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/c44fb700b716732cb9e68cbbba7a7b8ef6aa23f6">c44fb70</a>)</p></li>
+<li><p><strong>Makefile:</strong> update image tag (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/ee91f2ac5cf5a90e9a75273c0e2b1624e34940d4">ee91f2a</a>)</p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Features<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add new <code class="docutils literal notranslate"><span class="pre">project</span></code> module with draft of methods supporting the HIP collab space (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/0aa717b89872d6a57fc4be4d9803f5e1500f3926">0aa717b</a>)</p></li>
+<li><p>add PNG images for logos of dataHIPy package (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/412ca28494b8243968b0405429c0d6d41232f09d">412ca28</a>)</p></li>
+<li><p><strong>bids.dataset:</strong> add methods to support the creation of an initial BIDS dataset (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/8b95bcc0b7d61845e3900fde38b5994980537c9a">8b95bcc</a>)</p></li>
+<li><p><strong>cli.run:</strong> add new commands to the commandline interface (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/47e97029786f130a891dd8b9ee339f7beb421c73">47e9702</a>)</p></li>
+<li><p><strong>handlers.project:</strong> add environments folder to project structure (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/d387507b0358fac4768f4f190eef7e790b3def35">d387507</a>)</p></li>
+<li><p><strong>handlers.project:</strong> create initial documents directory structure with “clinical”, “reports”, “protocols”, “other” folders (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/e9feeae26d93b66a505ce8bad1a376a199586358">e9feeae</a>)</p></li>
+<li><p><strong>handlers.project:</strong> implement methods supporting the creation and population of collab projects (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/71d79bfab9a2ede39aedc8efed8eb802df734d0d">71d79bf</a>)</p></li>
+<li><p><strong>handlers.project:</strong> print info at start and end with “SUCCESS” message in main methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/c35a49adec80d014ff874c5fa5b53992b7c06637">c35a49a</a>)</p></li>
+<li><p>write JSON dataset summary in project methods (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/17b96a30cc9517aad97608dee74be324137a2fc0">17b96a3</a>)</p></li>
+</ul>
+<section id="id36">
+<h4><a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.0...v1.0.1">1.0.1</a> (2023-03-02)<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h4>
+</section>
+</section>
+<section id="id37">
+<h3>Bug Fixes<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>remove orcid from .zenodo.json (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/865335e9a66f1fc0290fcd1e6bdc556255b51cd3">865335e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id38">
+<h2>1.0.0 (2023-03-02)<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h2>
+<section id="id39">
+<h3>Bug Fixes<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add  dedicated bids_manager module with method to remove AcquisitionDate from ieeg json files created by BIDS_Manager (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ed26784a4ae349bd55bc76c10b244e8af00c6608">ed26784</a>)</p></li>
+<li><p>add print to get_version.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/f83f9e13a233a9a8b55f7a7eff6900d41d39ddfd">f83f9e1</a>)</p></li>
+<li><p>add versioneer in docs/requirements.txt (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/7fb67a3e491ae2bc79b8da09c816cce7388fbcd4">7fb67a3</a>)</p></li>
+<li><p>better handle the insertion of the SEEG information into the indexed content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a299d739675eab89396415a63c27d982c2990b69">a299d73</a>)</p></li>
+<li><p><strong>bids/utils/update_with_participants_info:</strong> handle case when participants.tsv is empty (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/9e20468755e24ac1b8fba37ba1f4bc9364fe6b22">9e20468</a>)</p></li>
+<li><p><strong>bids/utils:</strong> better handle bids dataset and schema version in get_bidsdataset_content() (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/6e8fd0e94dfc862dd09addca188003cc296af8ba">6e8fd0e</a>)</p></li>
+<li><p>change regex in from field of semantic release replace plugin (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/8f843bea8c925eecd5296473f501382aa16ce4e5">8f843be</a>)</p></li>
+<li><p>correct how version tags are generated and used in Makefile (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ade139b1ea3a4c8dc43e7873a30f29b0f1b7b9f6">ade139b</a>)</p></li>
+<li><p>generation of list of participant groups (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/dd48a3a6bd1de666ff360b848f38d6671de71b7b">dd48a3a</a>)</p></li>
+<li><p>import resource_filename from pkg_resources in bids/utils.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/082a7f94b8119337e0e8c4708d8df5e386b5dc8a">082a7f9</a>)</p></li>
+<li><p><strong>Makefile:</strong> replace / and _ in branch name of docker tag (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/128d54bb2a555137d4f3f88c6075630cdefef8aa">128d54b</a>)</p></li>
+<li><p><strong>Makefile:</strong> review how to normalize the tag (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a9125116102ddb3b7c6decd19c0e6082e0aab465">a912511</a>)</p></li>
+<li><p>paths in github action yaml file (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/5963d50c4095753288cad5dc361fdf1d3801573e">5963d50</a>)</p></li>
+<li><p>remove AcquisitionDate from ieeg json files created by BIDS_Manager (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/1bbf98cf39122e145c420c268bdba9626119ce11">1bbf98c</a>)</p></li>
+<li><p>replace sub.create by sub.import in VALID_COMMANDS of scripts/main.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/b791593fc248ccf1577a5f29c05224f438139d02">b791593</a>)</p></li>
+<li><p>review how to insert the year <strong>release_date</strong> that was causing troubles in get_version.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/cc9852ecdc75874ee9ec62164b01ecc3b894a3bf">cc9852e</a>)</p></li>
+<li><p>review imports of bids_manager to allow sphinx argparse to generate the documentation of the parser in usage.rst (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/86e5960a03d85d345533282916dafeb650086799">86e5960</a>)</p></li>
+<li><p>set “id” in dataset content to be indexed (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ea765b9c26a5f914f1afdfcd8e66104c879a030f">ea765b9</a>)</p></li>
+<li><p>Set “n/a” values as null in dataset json content to make elasticsearch happy indexing it (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/dcf3abfb30a9be951a3eb493ac01a588c2e821af">dcf3abf</a>)</p></li>
+<li><p>update main doc only if master and dev branches are updated (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/c52af1d1ccb5047958aa3f43d89967b223ceaeb1">c52af1d</a>)</p></li>
+<li><p>update regex for replacement of <strong>version</strong> (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/96c112890ab740395c4af9c811bc9e7cb421c529">96c1128</a>)</p></li>
+</ul>
+</section>
+<section id="id40">
+<h3>Features<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add BIDS_VERSION to bids.const (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a986ccef970b02c99a368eb8f4900f83b7ac908c">a986cce</a>)</p></li>
+<li><p>add get_subject_bidsfile_info in bids.utils to handle this task with pybids (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/65b7d251ecc47ea39f4851d6522ba30b8eadfa85">65b7d25</a>)</p></li>
+<li><p>add methods to create the json summarizing bids datasets for indexing (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/f54d291d6e3ebdbe625351abbe29857b8bac4706">f54d291</a>)</p></li>
+<li><p>add original pybids bids.json config file (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/5687d17adb07f638b1369b9f059ca5a955de333e">5687d17</a>)</p></li>
+<li><p><strong>bids_utils:</strong> extract additional ChannelCount fields in get_bidsdataset_content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/9e23ebf7bf65f4fdc6ed7bde7a418851d4c1754a">9e23ebf</a>)</p></li>
+<li><p><strong>bids_utils:</strong> use asyncio to generate asynchronously the indexed content of multiple datasets (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/edcf7427908db41a9d9d7ac55d8ddbc829e28e3f">edcf742</a>)</p></li>
+<li><p>check the validity of the value given to –command parser’s argument (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/e2b3f145fb15a385aae63d2e7e7a0cc655e39224">e2b3f14</a>)</p></li>
+<li><p>create function to get dataset size in bids/utils.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/680ffc33d52a563da49b80089c1042b7108055c1">680ffc3</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install bids-validator npm package from our fork on dev-hip branch (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/85f9afdb1f9e5bc55f4b32115b963b4408c7be19">85f9afd</a>)</p></li>
+<li><p>fixed build and tag name for backward compatibility (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/93e81a0a4d687a2b52a852e115de8523610184ae">93e81a0</a>)</p></li>
+<li><p>get dataset content to be indexed for all at once (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a397b002e0bc00c04238a9e27087feffb2b2dab6">a397b00</a>)</p></li>
+<li><p>handle CT in sub_import() of participants.py using our modified BIDS Manager fork (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/4552e8c6b0e1433d1a52ec98684c7fc033cd66bc">4552e8c</a>)</p></li>
+<li><p>implement function to create BIDSLayout object with custom config to handle CT (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/fea0b72cefc1f6237050126e351d59407bfcca12">fea0b72</a>)</p></li>
+<li><p>install pybids and pandas in docker (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/8d3f7e043ad25260d7792f7becfc97ed9c23fd39">8d3f7e0</a>)</p></li>
+<li><p>make adjustment of bids dataset content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/15008ada069dc210b36d02ea7d18d5a3f9511947">15008ad</a>)</p></li>
+<li><p><strong>Makefile:</strong> use BuildKit for docker build (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/fa0b55bcb8a3ba2b8bc8988f1e6c7d00348e0ab5">fa0b55b</a>)</p></li>
+<li><p>perform test and code coverage with pytest and pytest-cov (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/8a89db1b1ede9ca9d3e7d0bb3c0087f6b8191d71">8a89db1</a>)</p></li>
+<li><p>validate with bids-validator and put outputs into the dataset’s JSON to be indexed (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/c1bcd792adb5c71b4340981d7af406dd7d0e60e8">c1bcd79</a>)</p></li>
+</ul>
+</section>
+<section id="reverts">
+<h3>Reverts<a class="headerlink" href="#reverts" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>change back to from: <strong>version</strong> = “.*” for semrel replace plugin (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ea516e10b64409e6b6461e97d6978a548da29583">ea516e1</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dev-2-2023-03-02">
+<h2><a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/compare/v1.0.0-dev.1...v1.0.0-dev.2">1.0.0-dev.2</a> (2023-03-02)<a class="headerlink" href="#dev-2-2023-03-02" title="Permalink to this heading"></a></h2>
+<section id="id42">
+<h3>Bug Fixes<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>change regex in from field of semantic release replace plugin (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/8f843bea8c925eecd5296473f501382aa16ce4e5">8f843be</a>)</p></li>
+<li><p>review how to insert the year <strong>release_date</strong> that was causing troubles in get_version.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/cc9852ecdc75874ee9ec62164b01ecc3b894a3bf">cc9852e</a>)</p></li>
+<li><p>update main doc only if master and dev branches are updated (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/c52af1d1ccb5047958aa3f43d89967b223ceaeb1">c52af1d</a>)</p></li>
+<li><p>update regex for replacement of <strong>version</strong> (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/96c112890ab740395c4af9c811bc9e7cb421c529">96c1128</a>)</p></li>
+</ul>
+</section>
+<section id="id47">
+<h3>Reverts<a class="headerlink" href="#id47" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>change back to from: <strong>version</strong> = “.*” for semrel replace plugin (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ea516e10b64409e6b6461e97d6978a548da29583">ea516e1</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dev-1-2023-02-26">
+<h2>1.0.0-dev.1 (2023-02-26)<a class="headerlink" href="#dev-1-2023-02-26" title="Permalink to this heading"></a></h2>
+<section id="id49">
+<h3>Bug Fixes<a class="headerlink" href="#id49" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add  dedicated bids_manager module with method to remove AcquisitionDate from ieeg json files created by BIDS_Manager (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ed26784a4ae349bd55bc76c10b244e8af00c6608">ed26784</a>)</p></li>
+<li><p>add print to get_version.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/f83f9e13a233a9a8b55f7a7eff6900d41d39ddfd">f83f9e1</a>)</p></li>
+<li><p>add versioneer in docs/requirements.txt (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/7fb67a3e491ae2bc79b8da09c816cce7388fbcd4">7fb67a3</a>)</p></li>
+<li><p>better handle the insertion of the SEEG information into the indexed content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a299d739675eab89396415a63c27d982c2990b69">a299d73</a>)</p></li>
+<li><p><strong>bids/utils/update_with_participants_info:</strong> handle case when participants.tsv is empty (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/9e20468755e24ac1b8fba37ba1f4bc9364fe6b22">9e20468</a>)</p></li>
+<li><p><strong>bids/utils:</strong> better handle bids dataset and schema version in get_bidsdataset_content() (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/6e8fd0e94dfc862dd09addca188003cc296af8ba">6e8fd0e</a>)</p></li>
+<li><p>correct how version tags are generated and used in Makefile (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ade139b1ea3a4c8dc43e7873a30f29b0f1b7b9f6">ade139b</a>)</p></li>
+<li><p>generation of list of participant groups (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/dd48a3a6bd1de666ff360b848f38d6671de71b7b">dd48a3a</a>)</p></li>
+<li><p>import resource_filename from pkg_resources in bids/utils.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/082a7f94b8119337e0e8c4708d8df5e386b5dc8a">082a7f9</a>)</p></li>
+<li><p><strong>Makefile:</strong> replace / and _ in branch name of docker tag (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/128d54bb2a555137d4f3f88c6075630cdefef8aa">128d54b</a>)</p></li>
+<li><p><strong>Makefile:</strong> review how to normalize the tag (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a9125116102ddb3b7c6decd19c0e6082e0aab465">a912511</a>)</p></li>
+<li><p>paths in github action yaml file (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/5963d50c4095753288cad5dc361fdf1d3801573e">5963d50</a>)</p></li>
+<li><p>remove AcquisitionDate from ieeg json files created by BIDS_Manager (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/1bbf98cf39122e145c420c268bdba9626119ce11">1bbf98c</a>)</p></li>
+<li><p>replace sub.create by sub.import in VALID_COMMANDS of scripts/main.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/b791593fc248ccf1577a5f29c05224f438139d02">b791593</a>)</p></li>
+<li><p>review imports of bids_manager to allow sphinx argparse to generate the documentation of the parser in usage.rst (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/86e5960a03d85d345533282916dafeb650086799">86e5960</a>)</p></li>
+<li><p>set “id” in dataset content to be indexed (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/ea765b9c26a5f914f1afdfcd8e66104c879a030f">ea765b9</a>)</p></li>
+<li><p>Set “n/a” values as null in dataset json content to make elasticsearch happy indexing it (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/dcf3abfb30a9be951a3eb493ac01a588c2e821af">dcf3abf</a>)</p></li>
+</ul>
+</section>
+<section id="id67">
+<h3>Features<a class="headerlink" href="#id67" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>add BIDS_VERSION to bids.const (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a986ccef970b02c99a368eb8f4900f83b7ac908c">a986cce</a>)</p></li>
+<li><p>add get_subject_bidsfile_info in bids.utils to handle this task with pybids (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/65b7d251ecc47ea39f4851d6522ba30b8eadfa85">65b7d25</a>)</p></li>
+<li><p>add methods to create the json summarizing bids datasets for indexing (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/f54d291d6e3ebdbe625351abbe29857b8bac4706">f54d291</a>)</p></li>
+<li><p>add original pybids bids.json config file (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/5687d17adb07f638b1369b9f059ca5a955de333e">5687d17</a>)</p></li>
+<li><p><strong>bids_utils:</strong> extract additional ChannelCount fields in get_bidsdataset_content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/9e23ebf7bf65f4fdc6ed7bde7a418851d4c1754a">9e23ebf</a>)</p></li>
+<li><p><strong>bids_utils:</strong> use asyncio to generate asynchronously the indexed content of multiple datasets (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/edcf7427908db41a9d9d7ac55d8ddbc829e28e3f">edcf742</a>)</p></li>
+<li><p>check the validity of the value given to –command parser’s argument (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/e2b3f145fb15a385aae63d2e7e7a0cc655e39224">e2b3f14</a>)</p></li>
+<li><p>create function to get dataset size in bids/utils.py (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/680ffc33d52a563da49b80089c1042b7108055c1">680ffc3</a>)</p></li>
+<li><p><strong>Dockerfile:</strong> install bids-validator npm package from our fork on dev-hip branch (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/85f9afdb1f9e5bc55f4b32115b963b4408c7be19">85f9afd</a>)</p></li>
+<li><p>fixed build and tag name for backward compatibility (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/93e81a0a4d687a2b52a852e115de8523610184ae">93e81a0</a>)</p></li>
+<li><p>get dataset content to be indexed for all at once (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/a397b002e0bc00c04238a9e27087feffb2b2dab6">a397b00</a>)</p></li>
+<li><p>handle CT in sub_import() of participants.py using our modified BIDS Manager fork (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/4552e8c6b0e1433d1a52ec98684c7fc033cd66bc">4552e8c</a>)</p></li>
+<li><p>implement function to create BIDSLayout object with custom config to handle CT (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/fea0b72cefc1f6237050126e351d59407bfcca12">fea0b72</a>)</p></li>
+<li><p>install pybids and pandas in docker (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/8d3f7e043ad25260d7792f7becfc97ed9c23fd39">8d3f7e0</a>)</p></li>
+<li><p>make adjustment of bids dataset content (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/15008ada069dc210b36d02ea7d18d5a3f9511947">15008ad</a>)</p></li>
+<li><p><strong>Makefile:</strong> use BuildKit for docker build (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/fa0b55bcb8a3ba2b8bc8988f1e6c7d00348e0ab5">fa0b55b</a>)</p></li>
+<li><p>perform test and code coverage with pytest and pytest-cov (<a class="reference external" href="https://gitlab.hbp.link/hip/datahipy/commit/8a89db1b1ede9ca9d3e7d0bb3c0087f6b8191d71">8a89db1</a>)</p></li>
+<li><p>validate with bids-validator and put outputs into the dataset’s JSON to be indexed (<a class="reference external" href="https://gitlab.hbp.link/hip/bids-tools/commit/c1bcd792adb5c71b4340981d7af406dd7d0e60e8">c1bcd79</a>)</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="citing.html" class="btn btn-neutral float-left" title="How to cite?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

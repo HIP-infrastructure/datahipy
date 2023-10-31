@@ -1,0 +1,7 @@
+datahipy.bids.version module
+============================
+
+.. automodule:: datahipy.bids.version
+   :members:
+   :undoc-members:
+   :show-inheritance:

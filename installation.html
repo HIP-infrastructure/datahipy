@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Instructions for Users &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Commandline Usage" href="usage.html" />
+    <link rel="prev" title="Welcome to DataHIPy’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Instructions for Users</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-of-docker-engine">Installation of Docker Engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-docker-image">Building the Docker Image</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Instructions for Users</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-instructions-for-users">
+<span id="installation"></span><h1>Installation Instructions for Users<a class="headerlink" href="#installation-instructions-for-users" title="Permalink to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<p>Installation and use of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> and dependencies have been facilitated through the use of <a class="reference external" href="https://www.docker.com/">Docker</a> software containerization. If you adopt this approach, which is recommended, you need to have Docker engine installed (see instructions in <a class="reference internal" href="#manual-install-docker"><span class="std std-ref">Installation of Docker Engine</span></a>).</p>
+<p>While Docker enables <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> to be run on all major operating systems where you have root privileges. A Docker image can be easily converted to a Singularity image to run <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> on Linux systems where you might not have root privileges such as a High Performance Computing cluster (See <a class="reference external" href="https://docs.sylabs.io/guides/3.7/user-guide/cli/singularity_pull.html#examples">examples</a>).</p>
+<p>Please check <a class="reference external" href="https://docs.docker.com/get-started/overview/">https://docs.docker.com/get-started/overview/</a> if you want to learn more about Docker.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not want to use Docker, <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> can also be installed locally (see <a class="reference internal" href="developer.html#instructions-datahipy-install"><span class="std std-ref">How to install DataHIPy locally</span></a>).</p>
+</div>
+<section id="installation-of-docker-engine">
+<span id="manual-install-docker"></span><h3>Installation of Docker Engine<a class="headerlink" href="#installation-of-docker-engine" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>Install Docker Engine corresponding to your system:</p>
+<ul class="simple">
+<li><p>For Ubuntu, follow the instructions from <a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p></li>
+<li><p>For Mac OSX (&gt;=10.10.3), get the .dmg installer from <a class="reference external" href="https://store.docker.com/editions/community/docker-ce-desktop-mac">https://store.docker.com/editions/community/docker-ce-desktop-mac</a></p></li>
+<li><p>For Windows (&gt;=10), get the installer from <a class="reference external" href="https://store.docker.com/editions/community/docker-ce-desktop-windows">https://store.docker.com/editions/community/docker-ce-desktop-windows</a></p></li>
+</ul>
+</li>
+<li><p>Set Docker to be managed as a non-root user</p>
+<ul>
+<li><p>Open a terminal</p></li>
+<li><p>Create the docker group:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo groupadd docker
+</pre></div>
+</div>
+</li>
+<li><p>Add the current user to the docker group:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo usermod -G docker -a $USER
+</pre></div>
+</div>
+</li>
+<li><p>Reboot</p>
+<p>After reboot, test if docker is managed as non-root:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run hello-world
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="building-the-docker-image">
+<span id="manual-build-docker-image"></span><h2>Building the Docker Image<a class="headerlink" href="#building-the-docker-image" title="Permalink to this heading"></a></h2>
+<p>The Docker image can be built from the Makefile provided in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> repository as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="c1"># Clone locally the datahipy repository</span>
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/HIP-infrastructure/DataHIPy.git<span class="w"> </span>DataHIPy
+$<span class="w"> </span><span class="c1"># Go to the DataHIPy directory</span>
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>DataHIPy
+$<span class="w"> </span><span class="c1"># Build the docker image</span>
+$<span class="w"> </span>make<span class="w"> </span>-B<span class="w"> </span>build-docker
+</pre></div>
+</div>
+<p>You can then inspect the Docker image version tag with the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>images
+REPOSITORY<span class="w">          </span>TAG<span class="w">                 </span>IMAGE<span class="w"> </span>ID<span class="w">            </span>CREATED<span class="w">             </span>SIZE
+datahipy<span class="w">          </span>&lt;version&gt;<span class="w">           </span>0e0b0b0b0b0b<span class="w">        </span><span class="m">1</span><span class="w"> </span>minute<span class="w"> </span>ago<span class="w">        </span><span class="m">2</span>.94GB
+</pre></div>
+</div>
+<p>Once you know the image tag, you can test the built image by running the command which returns the version installed in the Docker image as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>datahipy:&lt;version&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--version
+</pre></div>
+</div>
+<p>We refer to <a class="reference internal" href="usage.html#cmdusage-docker"><span class="std std-ref">Running DataHIPy in Docker</span></a> for more details on how to run the Docker image.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to DataHIPy’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Commandline Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

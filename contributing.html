@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Changes" href="CHANGES.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contribution-types">Contribution Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#get-started">Get Started!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ci-cd-pipeline-under-the-hood">CI/CD Pipeline: Under the Hood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#not-listed-as-a-contributor">Not listed as a contributor?</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Contributing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="contributing">
+<span id="id1"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading"></a></h1>
+<p>This project follows the <a class="reference external" href="https://allcontributors.org/">all contributors specification</a>. Contributions in many different ways are welcome!</p>
+<section id="contribution-types">
+<h2>Contribution Types<a class="headerlink" href="#contribution-types" title="Permalink to this heading"></a></h2>
+<section id="report-bugs">
+<h3>Report Bugs<a class="headerlink" href="#report-bugs" title="Permalink to this heading"></a></h3>
+<p>Report bugs at <a class="reference external" href="https://github.com/HIP-infrastructure/datahipy/issues">https://github.com/HIP-infrastructure/datahipy/issues</a>.</p>
+<p>If you are reporting a bug, please include:</p>
+<ul class="simple">
+<li><p>Your operating system name and version.</p></li>
+<li><p>Any details about your local setup that might be helpful in troubleshooting.</p></li>
+<li><p>Detailed steps to reproduce the bug.</p></li>
+</ul>
+</section>
+<section id="fix-bugs">
+<h3>Fix Bugs<a class="headerlink" href="#fix-bugs" title="Permalink to this heading"></a></h3>
+<p>Look through the GitHub issues for bugs. Anything tagged with “bug” and “help wanted” is open to whoever wants to implement it.</p>
+</section>
+<section id="implement-features">
+<h3>Implement Features<a class="headerlink" href="#implement-features" title="Permalink to this heading"></a></h3>
+<p>Look through the GitHub issues for features. Anything tagged with “enhancement” and “help wanted” is open to whoever wants to implement it.</p>
+</section>
+<section id="write-documentation">
+<h3>Write Documentation<a class="headerlink" href="#write-documentation" title="Permalink to this heading"></a></h3>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> could always use more documentation, whether as part of the official <a class="reference internal" href="api/generated/datahipy.html#module-datahipy" title="datahipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy</span></code></a> docs, in docstrings, or even on the web in blog posts, articles, and such.</p>
+</section>
+<section id="submit-feedback">
+<h3>Submit Feedback<a class="headerlink" href="#submit-feedback" title="Permalink to this heading"></a></h3>
+<p>The best way to send feedback is to create an issue at <a class="reference external" href="https://github.com/HIP-infrastructure/datahipy/issues">https://github.com/HIP-infrastructure/datahipy/issues</a>.</p>
+<p>If you are proposing a feature:</p>
+<ul class="simple">
+<li><p>Explain in detail how it would work.</p></li>
+<li><p>Keep the scope as narrow as possible, to make it easier to implement.</p></li>
+<li><p>Remember that this is a volunteer-driven project, and that contributions
+are welcome :)</p></li>
+</ul>
+</section>
+</section>
+<section id="get-started">
+<h2>Get Started!<a class="headerlink" href="#get-started" title="Permalink to this heading"></a></h2>
+<p>Ready to contribute? Here’s how to set up <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> for local development.</p>
+<ol class="arabic">
+<li><p>Fork the repository of <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> on GitHub.</p></li>
+<li><p>Clone your fork locally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">your_name_here</span><span class="o">/</span><span class="n">datahipy</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">datahipy</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a branch for local development:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">name</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">your</span><span class="o">-</span><span class="n">bug</span><span class="o">-</span><span class="n">fix</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="n">feature</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now you can make your changes locally.</p></li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Please keep your commit the most specific to a change it describes. It is highly advice to track unstaged files with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code>, add a file involved in the change to the stage one by one with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">&lt;file&gt;</span></code>. The use of <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code> is highly disencouraged. When all the files for a given change are staged, commit the files with a brieg message using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;&lt;type&gt;[optional</span> <span class="pre">scope]:</span> <span class="pre">&lt;description&gt;&quot;</span></code> that describes your change and where <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> can be <code class="docutils literal notranslate"><span class="pre">fix</span></code> for a bug fix, <code class="docutils literal notranslate"><span class="pre">feat</span></code> for a new feature, <code class="docutils literal notranslate"><span class="pre">refactor</span></code> for a code change that neither fixes a bug nor adds a feature, <code class="docutils literal notranslate"><span class="pre">docs</span></code> for documentation, <code class="docutils literal notranslate"><span class="pre">ci</span></code> for continuous integration testing, and <code class="docutils literal notranslate"><span class="pre">test</span></code> for adding missing tests or correcting existing tests. This follows the Angular conventional commits, please see <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0-beta.4/">https://www.conventionalcommits.org/en/v1.0.0-beta.4/</a> for more details.</p>
+</div>
+<ol class="arabic" start="5">
+<li><p>When you’re done making changes, push your branch to GitHub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">name</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">your</span><span class="o">-</span><span class="n">bugfix</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="n">feature</span>
+</pre></div>
+</div>
+</li>
+<li><p>Submit a pull request through the GitHub website.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Please make sure that the pull request is made against the <code class="docutils literal notranslate"><span class="pre">dev</span></code> branch. The <code class="docutils literal notranslate"><span class="pre">master</span></code> branch is used for the stable version releases of <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code>.</p>
+</div>
+</li>
+</ol>
+<section id="pull-request-guidelines">
+<h3>Pull Request Guidelines<a class="headerlink" href="#pull-request-guidelines" title="Permalink to this heading"></a></h3>
+<p>Before you submit a pull request, check that it meets these guidelines:</p>
+<ol class="arabic simple">
+<li><p>If the pull request adds functionality, the docs should be updated (See <a class="reference internal" href="developer.html#instructions-docs-build"><span class="std std-ref">documentation build instructions</span></a>).</p></li>
+<li><p>Make sure that the tests pass (See <a class="reference internal" href="developer.html#instructions-tests"><span class="std std-ref">instructions for testing</span></a> )</p></li>
+</ol>
+</section>
+<section id="ci-cd-pipeline-under-the-hood">
+<h3>CI/CD Pipeline: Under the Hood<a class="headerlink" href="#ci-cd-pipeline-under-the-hood" title="Permalink to this heading"></a></h3>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> has a <a class="reference external" href="https://gitlab.hbp.link/hip/datahipy">mirror repository on GitLab</a> that is synced with a <a class="reference external" href="https://github.com/HIP-infrastructure/datahipy/actions/workflows/gitlab-sync.yml">GitHub Action</a>, and that is used for continuous integration (CI) and continuous deployment (CD).</p>
+<p>The pipeline, described by the file <a class="reference external" href="https://github.com/HIP-infrastructure/datahipy/blob/master/.gitlab-ci.yml">.gitlab-ci.yml</a>, consists of the following stages:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">test-install-python</span></code>: install Python and the dependencies of DataHIPy in a Docker container.</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code>: Build the Docker image of DataHIPy in the GitLab Container Registry (Login to the GitLab Container Registry is done using the <code class="docutils literal notranslate"><span class="pre">$CI_REGISTRY_USER</span></code> and <code class="docutils literal notranslate"><span class="pre">$CI_REGISTRY_PASSWORD</span></code> environment variables).</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">test</span></code>: Run the tests with pytest using the built Docker image. Send the coverage report to <a class="reference external" href="https://codecov.io/gh/HIP-infrastructure/datahipy">codecov.io</a> using the <code class="docutils literal notranslate"><span class="pre">$CODECOV_TOKEN</span></code> environment variable.</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean</span></code>: Clean the Docker container.</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">semantic-release</span></code>: Make a version release of DataHIPy with semantic-release. This updates the version tag of DataHIPy, updates <code class="docutils literal notranslate"><span class="pre">docs/CHANGES.md</span></code>, commits the changes, and creates a new tag on GitLab using <code class="docutils literal notranslate"><span class="pre">$GL_TOKEN</span></code> environment variable. The configuration of semantic-release is described by the file <a class="reference external" href="https://github.com/HIP-infrastructure/datahipy/blob/master/.releaserc.json">.releaserc.json</a>. It uses the <code class="docutils literal notranslate"><span class="pre">dev</span></code> branch for beta releases and the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch for stable releases.</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deploy-release</span></code>: Build the Docker image with the new version of DataHIPy and push it to the GitLab Container Registry. This stage takes also care of pushing the changes and tags made by <code class="xref py py-obj docutils literal notranslate"><span class="pre">semantic-release</span></code> stage to GitHub using SSH. A private key on gitlab is read from <code class="docutils literal notranslate"><span class="pre">$SSH_PRIVATE_KEY</span></code> variable and set in <code class="docutils literal notranslate"><span class="pre">.gitlab-ci.yml</span></code>.</p></li>
+</ol>
+</div></blockquote>
+<p>Depending on the event, the pipeline will run all the stages of the CI/CD pipeline or only a subset of them.</p>
+<p>The diagram below shows the different stages of the pipeline and the events that trigger them:</p>
+<div class="mermaid">
+            graph LR
+
+subgraph &quot;Stages&quot;
+test_python_install[&quot;test-python-install&quot;]
+build[&quot;build&quot;]
+test[&quot;test&quot;]
+clean[&quot;clean&quot;]
+semantic_release[&quot;semantic-release&quot;]
+deploy_release[&quot;deploy-release&quot;]
+end
+
+test_python_install --&gt; build
+build --&gt; test
+test --&gt; clean
+clean --&gt;|if $CI_COMMIT_REF_NAME == master or $CI_COMMIT_REF_NAME == dev| semantic_release
+
+semantic_release --&gt; deploy_release
+        </div><p>When a new branch is pushed on GitHub or a new commit is pushed to an existing branch (different than <code class="docutils literal notranslate"><span class="pre">master</span></code> or <code class="docutils literal notranslate"><span class="pre">dev</span></code>) on GitHub, then only the stages <code class="xref py py-obj docutils literal notranslate"><span class="pre">test-install-python</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">test</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">clean</span></code> are executed.</p>
+<p>When a Pull Request towards the <code class="docutils literal notranslate"><span class="pre">dev</span></code> and <code class="docutils literal notranslate"><span class="pre">master</span></code> branches is opened, updated, or merged on GitHub, then only the additional stages <code class="xref py py-obj docutils literal notranslate"><span class="pre">semantic-release</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">deploy-release</span></code> are executed.</p>
+</section>
+</section>
+<section id="not-listed-as-a-contributor">
+<h2>Not listed as a contributor?<a class="headerlink" href="#not-listed-as-a-contributor" title="Permalink to this heading"></a></h2>
+<p>This is easy, <code class="xref py py-obj docutils literal notranslate"><span class="pre">DataHIPy</span></code> has the <a class="reference external" href="https://allcontributors.org/docs/en/bot/usage">all contributors bot</a> installed.</p>
+<p>Just comment on Issue or Pull Request (PR), asking <code class="xref py py-obj docutils literal notranslate"><span class="pre">&#64;all-contributors</span></code> to add you as contributor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@all</span><span class="o">-</span><span class="n">contributors</span> <span class="n">please</span> <span class="n">add</span> <span class="o">&lt;</span><span class="n">github_username</span><span class="o">&gt;</span> <span class="k">for</span> <span class="o">&lt;</span><span class="n">contributions</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;contribution&gt;</span></code>: See the <a class="reference external" href="https://github.com/all-contributors/all-contributors/blob/master/docs/emoji-key.md">Emoji Key Contribution Types Reference</a> for a list of valid <code class="xref py py-obj docutils literal notranslate"><span class="pre">contribution</span></code> types.</p>
+<p>The all-contributors bot will create a PR to add you in the README and reply with the pull request details.</p>
+<p>When the PR is merged you will have to make an extra Pull Request where you have to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>add your entry in the <code class="xref py py-obj docutils literal notranslate"><span class="pre">zenodo.json</span></code> (for that you will need an ORCID ID - <a class="reference external" href="https://orcid.org/">https://orcid.org/</a>). Doing so, you will appear as a contributor on Zenodo in the future version releases of DataHIPy. Zenodo is used by DataHIPy to publish and archive each of the version release with a unique Digital Object Identifier (DOI), which can then be used for citation.</p></li>
+<li><p>update the content of the table in <code class="xref py py-obj docutils literal notranslate"><span class="pre">documentation/contributors.rst</span></code> with the new content generated by the bot in the README. Doing so, you will appear in the <a class="reference internal" href="#contributing"><span class="std std-ref">Contributing Page</span></a>.</p></li>
+</ol>
+</div></blockquote>
+<hr class="docutils" />
+<p>This document has been inspired and adapted from <a class="reference external" href="https://github.com/dPys/PyNets/edit/master/docs/contributing.rst">these great contributing guidelines</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CHANGES.html" class="btn btn-neutral float-left" title="Changes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

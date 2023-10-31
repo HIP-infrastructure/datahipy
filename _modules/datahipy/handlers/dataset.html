@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.handlers.dataset &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.handlers.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.handlers.dataset</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Manage BIDS dataset using BIDS Manager.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">sre_constants</span> <span class="kn">import</span> <span class="n">SUCCESS</span>
+
+<span class="kn">import</span> <span class="nn">datalad.api</span>
+
+<span class="c1"># BIDS Manager Python package has to be accessible.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bids_manager.ins_bids_class</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">BidsDataset</span><span class="p">,</span>
+        <span class="n">Requirements</span><span class="p">,</span>
+        <span class="n">DatasetDescJSON</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: BIDS Manager Python package is not accessible.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">get_bidsdataset_content</span><span class="p">,</span>
+    <span class="n">create_initial_bids_changes</span><span class="p">,</span>
+    <span class="n">create_initial_bids_readme</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="DatasetHandler"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler">[docs]</a><span class="k">class</span> <span class="nc">DatasetHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to represent the handler of a dataset with utility functions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DatasetHandler.dataset_create"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.dataset_create">[docs]</a>    <span class="k">def</span> <span class="nf">dataset_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new BIDS dataset.&quot;&quot;&quot;</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="c1"># Init a BIDS Manager DatasetDescJSON dict</span>
+        <span class="n">datasetdesc_dict</span> <span class="o">=</span> <span class="n">DatasetDescJSON</span><span class="p">()</span>
+        <span class="c1"># Populate datasetdesc_dict with the data extracted from the create_bids_db.json.</span>
+        <span class="k">for</span> <span class="n">bids_key</span><span class="p">,</span> <span class="n">bids_value</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;DatasetDescJSON&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">datasetdesc_dict</span><span class="p">[</span><span class="n">bids_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_value</span>
+        <span class="c1"># Write the dataset_description.json file only if it does not exist</span>
+        <span class="n">dataset_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_safe_filename</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;dataset_dirname&quot;</span><span class="p">])</span>
+        <span class="c1"># Create the BIDS dataset directory if it does not exist</span>
+        <span class="n">ds_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">ds_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ds_path</span><span class="p">)</span>
+        <span class="c1"># Initialize the BIDS dataset as a Datalad-managed dataset</span>
+        <span class="n">create_params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">ds_path</span><span class="p">,</span>
+            <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">,</span> <span class="s2">&quot;bids&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+        <span class="p">}</span>
+        <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_params</span><span class="p">)</span>
+        <span class="n">datasetdesc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds_path</span><span class="p">,</span> <span class="s2">&quot;dataset_description.json&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">datasetdesc_path</span><span class="p">):</span>
+            <span class="c1"># Write the dataset_description.json file</span>
+            <span class="n">datasetdesc_dict</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">jsonfilename</span><span class="o">=</span><span class="n">datasetdesc_path</span><span class="p">)</span>
+            <span class="c1"># Write an initial README.md file</span>
+            <span class="n">create_initial_bids_readme</span><span class="p">(</span><span class="n">ds_path</span><span class="p">,</span> <span class="n">datasetdesc_dict</span><span class="p">)</span>
+            <span class="c1"># Write an initial empty CHANGES file</span>
+            <span class="n">create_initial_bids_changes</span><span class="p">(</span><span class="n">ds_path</span><span class="p">,</span> <span class="n">content_lines</span><span class="o">=</span><span class="p">[])</span>
+            <span class="c1"># Save the state of the dataset with Datalad</span>
+            <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">ds_path</span><span class="p">,</span>
+                <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Initial BIDS dataset state&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="c1"># &quot;version_tag&quot;: &quot;0.0.0&quot;,  # Uncomment if you wish to create here a tag for the initial state</span>
+            <span class="p">}</span>
+            <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+        <span class="c1"># Load the created BIDS dataset in BIDS Manager (creates companion files)</span>
+        <span class="n">ds_obj</span> <span class="o">=</span> <span class="n">BidsDataset</span><span class="p">(</span><span class="n">ds_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ds_obj</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;INFO: The dataset_description.json file was updated. &quot;</span>
+                <span class="s2">&quot;BIDS dataset successfully opened&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">ds_path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.dataset_get_content"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.dataset_get_content">[docs]</a>    <span class="k">def</span> <span class="nf">dataset_get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract dataset information indexed by the HIP platform.&quot;&quot;&quot;</span>
+        <span class="c1"># Load the input_data json in a dict</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+        <span class="c1"># Create a dictionary storing the dataset information</span>
+        <span class="c1"># indexed by the HIP platform</span>
+        <span class="n">dataset_desc</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+
+        <span class="c1"># Dump the dataset_desc dict in a .json file</span>
+        <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dump_output_file</span><span class="p">(</span><span class="n">output_data</span><span class="o">=</span><span class="n">dataset_desc</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.check_converters"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.check_converters">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_converters</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the converters are specified and (re)write the requirements.json if necessary.&quot;&quot;&quot;</span>
+        <span class="c1"># Converter paths in the docker image</span>
+        <span class="n">dcm2niix_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;/apps/dcm2niix/install/dcm2niix&quot;</span>
+        <span class="n">anywave_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;/usr/bin/anywave&quot;</span>
+        <span class="n">def_converters</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Electrophy&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.vhdr&quot;</span><span class="p">,</span> <span class="s2">&quot;.vmrk&quot;</span><span class="p">,</span> <span class="s2">&quot;.eeg&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">anywave_path</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;Imaging&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">],</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">dcm2niix_path</span><span class="p">},</span>
+        <span class="p">}</span>
+        <span class="c1"># Get the requirements.json dict</span>
+        <span class="n">req_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;requirements.json&quot;</span><span class="p">)</span>
+        <span class="n">req_dict</span> <span class="o">=</span> <span class="n">Requirements</span><span class="p">(</span><span class="n">req_path</span><span class="p">)</span>
+        <span class="n">to_rewrite</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;Converters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req_dict</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">req_dict</span><span class="p">[</span><span class="s2">&quot;Converters&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">def_converters</span><span class="p">):</span>
+            <span class="n">to_rewrite</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">to_rewrite</span><span class="p">:</span>
+            <span class="c1"># Write the requirements.json</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;INFO: Updating the requirements.json converters.&quot;</span><span class="p">)</span>
+            <span class="n">req_dict</span><span class="p">[</span><span class="s2">&quot;Converters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">def_converters</span>
+            <span class="n">BidsDataset</span><span class="o">.</span><span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">.</span><span class="n">dirname</span><span class="p">)</span>
+            <span class="n">req_dict</span><span class="o">.</span><span class="n">save_as_json</span><span class="p">(</span><span class="n">req_path</span><span class="p">)</span>
+            <span class="n">ds_obj</span><span class="o">.</span><span class="n">get_requirements</span><span class="p">()</span>
+            <span class="c1"># Save state of dataset with Datalad</span>
+            <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">BidsDataset</span><span class="o">.</span><span class="n">dirname</span><span class="p">,</span>
+                <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Overwrite the converters in the BIDS Manager requirements.json file&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.get_run"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.get_run">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_run</span><span class="p">(</span><span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bids_entities</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">bids_modality</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse the BIDS dataset to get the max run for a set of BIDS entities.&quot;&quot;&quot;</span>
+        <span class="c1"># Generate regexp from entities</span>
+        <span class="n">regexp_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">bids_key</span><span class="p">,</span> <span class="n">bids_value</span> <span class="ow">in</span> <span class="n">bids_entities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">bids_value</span><span class="p">:</span>
+                <span class="n">regexp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bids_key</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">bids_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">regexp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;run-[0-9]{1,3}&quot;</span><span class="p">)</span>
+        <span class="n">regexp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bids_modality</span><span class="p">)</span>
+        <span class="n">regexp_filename</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">regexp_list</span><span class="p">)</span>
+        <span class="c1"># Get run number parsing BIDS</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">directories</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">root_dir</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regexp_filename</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+                    <span class="n">matched_run</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;run-([0-9]{1,3})&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+                    <span class="n">runs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">matched_run</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+        <span class="n">runs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">runs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.add_keys_requirements"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.add_keys_requirements">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_keys_requirements</span><span class="p">(</span><span class="n">ds_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clin_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the requirements.json with new keys.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">clin_key</span> <span class="ow">in</span> <span class="n">clin_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">clin_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds_obj</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;Requirements&quot;</span><span class="p">][</span><span class="s2">&quot;Subject&quot;</span><span class="p">][</span><span class="s2">&quot;keys&quot;</span><span class="p">]:</span>
+                <span class="n">ds_obj</span><span class="o">.</span><span class="n">requirements</span><span class="p">[</span><span class="s2">&quot;Requirements&quot;</span><span class="p">][</span><span class="s2">&quot;Subject&quot;</span><span class="p">][</span><span class="s2">&quot;keys&quot;</span><span class="p">][</span><span class="n">clin_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()</span>
+        <span class="n">ds_obj</span><span class="o">.</span><span class="n">requirements</span><span class="o">.</span><span class="n">save_as_json</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.load_input_data"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.load_input_data">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_input_data</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return input_data JSON file in a dict.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.dump_output_file"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.dump_output_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">dump_output_file</span><span class="p">(</span><span class="n">output_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dump output_data dict in a JSON file.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetHandler.make_safe_filename"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.dataset.DatasetHandler.make_safe_filename">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">make_safe_filename</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a modified version of the string that contains only alphanumeric characters (letters and numbers).</span>
+
+<span class="sd">        Any other character in the original string is replaced by an underscore (`_`).</span>
+<span class="sd">        The function also removes any trailing underscores from the end of the modified string.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s: str</span>
+<span class="sd">            Input string</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">        String that contains only alphanumeric characters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">safe_char</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Return the character if alpha numeric, otherwise return underscore (`_`)&quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalnum</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">c</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;_&quot;</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">safe_char</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

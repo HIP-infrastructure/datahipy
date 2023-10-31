@@ -1,0 +1,18 @@
+datahipy.cli package
+====================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.cli.run
+
+Module contents
+---------------
+
+.. automodule:: datahipy.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:

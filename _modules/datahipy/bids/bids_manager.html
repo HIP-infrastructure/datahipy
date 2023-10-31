@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.bids_manager &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.bids.bids_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.bids.bids_manager</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Utility functions to modify BIDS datasets created using `BIDS_Manager`.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">create_bids_layout</span>
+
+
+<div class="viewcode-block" id="post_import_bids_refinement"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.post_import_bids_refinement">[docs]</a><span class="k">def</span> <span class="nf">post_import_bids_refinement</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Refine BIDS files after import.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create BIDSLayout object representation</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">create_bids_layout</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Correct BIDS iEEG json files</span>
+    <span class="n">correct_bids_ieeg_json_files</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="c1"># Remove scans.tsv files</span>
+    <span class="n">remove_scans_tsv_files</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="c1"># Remove events.tsv files if they consist only of one line (i.e., header)</span>
+    <span class="n">clean_empty_events_tsv_files</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="c1"># Correct format of some fields expecting list type in dataset_description.json</span>
+    <span class="n">ensure_list_fields_in_dataset_description</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Funding&quot;</span><span class="p">,</span> <span class="s2">&quot;ReferencesAndLinks&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Rename files with run-0X to run-X</span>
+    <span class="n">correct_run_index_filename</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="correct_bids_ieeg_json_files"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.correct_bids_ieeg_json_files">[docs]</a><span class="k">def</span> <span class="nf">correct_bids_ieeg_json_files</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Correct BIDS iEEG json files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    layout : bids.BIDSLayout</span>
+<span class="sd">        BIDSLayout object representation of the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ieeg_json_files</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;ieeg&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ieeg_json_file</span> <span class="ow">in</span> <span class="n">ieeg_json_files</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; Correcting </span><span class="si">{</span><span class="n">ieeg_json_file</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">correct_bids_ieeg_json_content</span> <span class="o">=</span> <span class="n">correct_bids_ieeg_json_file</span><span class="p">(</span>
+            <span class="n">ieeg_json_file</span><span class="o">.</span><span class="n">path</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  .. New content: </span><span class="si">{</span><span class="n">correct_bids_ieeg_json_content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="correct_bids_ieeg_json_file"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.correct_bids_ieeg_json_file">[docs]</a><span class="k">def</span> <span class="nf">correct_bids_ieeg_json_file</span><span class="p">(</span><span class="n">bids_ieeg_json</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Correct BIDS iEEG json file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_ieeg_json : str</span>
+<span class="sd">        Path to the BIDS iEEG json file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bids_ieeg_json_content : dict</span>
+<span class="sd">        Corrected content overwritten to the BIDS iEEG json file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load the BIDS iEEG json file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bids_ieeg_json</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">bids_ieeg_json_content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># Correct the BIDS iEEG json file</span>
+    <span class="c1"># Remove AcquisitionDate field as additional fields are not allowed</span>
+    <span class="k">if</span> <span class="s2">&quot;AcquisitionDate&quot;</span> <span class="ow">in</span> <span class="n">bids_ieeg_json_content</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">del</span> <span class="n">bids_ieeg_json_content</span><span class="p">[</span><span class="s2">&quot;AcquisitionDate&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Save the corrected BIDS iEEG json file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bids_ieeg_json</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">bids_ieeg_json_content</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bids_ieeg_json_content</span></div>
+
+
+<div class="viewcode-block" id="remove_scans_tsv_files"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.remove_scans_tsv_files">[docs]</a><span class="k">def</span> <span class="nf">remove_scans_tsv_files</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove scans.tsv files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    layout : bids.BIDSLayout</span>
+<span class="sd">        BIDSLayout object representation of the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scans_files</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;scans&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;tsv&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">scans_file</span> <span class="ow">in</span> <span class="n">scans_files</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; Removing </span><span class="si">{</span><span class="n">scans_file</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">scans_file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="clean_empty_events_tsv_files"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.clean_empty_events_tsv_files">[docs]</a><span class="k">def</span> <span class="nf">clean_empty_events_tsv_files</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove empty events.tsv files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    layout : bids.BIDSLayout</span>
+<span class="sd">        BIDSLayout object representation of the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">events_files</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;events&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;tsv&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">events_file</span> <span class="ow">in</span> <span class="n">events_files</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">events_file</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">events_file_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">events_file_content</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; Removing </span><span class="si">{</span><span class="n">events_file</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2"> which is empty...&quot;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">events_file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ensure_list_fields_in_dataset_description"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.ensure_list_fields_in_dataset_description">[docs]</a><span class="k">def</span> <span class="nf">ensure_list_fields_in_dataset_description</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure that some fields are list type in dataset_description.json.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+<span class="sd">    fields : list of str</span>
+<span class="sd">        List of fields to ensure are list type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load dataset_description.json</span>
+    <span class="n">dataset_desc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;dataset_description.json&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataset_desc_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">dataset_desc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Ensure that some fields are list type</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">dataset_desc</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">dataset_desc</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset_desc</span><span class="p">[</span><span class="n">field</span><span class="p">]]</span>
+    <span class="c1"># Overwrite dataset_description.json</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataset_desc_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="correct_run_index_filename"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.bids_manager.correct_run_index_filename">[docs]</a><span class="k">def</span> <span class="nf">correct_run_index_filename</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Correct run index in BIDS filenames.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    layout : bids.BIDSLayout</span>
+<span class="sd">        BIDSLayout object representation of the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;_run-0[0-9]_&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)):</span>
+            <span class="n">run_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;_run-0([0-9])_&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">new_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;run-0</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;run-</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; Renaming </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">new_filename</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">new_filename</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

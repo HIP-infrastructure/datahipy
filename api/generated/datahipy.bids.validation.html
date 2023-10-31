@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.validation module &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../_static/twemoji.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">datahipy.bids.validation module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datahipy.bids.validation">
+<span id="datahipy-bids-validation-module"></span><h1>datahipy.bids.validation module<a class="headerlink" href="#module-datahipy.bids.validation" title="Permalink to this heading"></a></h1>
+<p>Functions for validating BIDS datasets.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.validation.add_bidsignore_validation_rule">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.validation.</span></span><span class="sig-name descname"><span class="pre">add_bidsignore_validation_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bids_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/validation.html#add_bidsignore_validation_rule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.validation.add_bidsignore_validation_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Create/update a <code class="xref py py-obj docutils literal notranslate"><span class="pre">bidsignore</span></code> file to ignore specific files by the BIDS Validator.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_dir<span class="classifier">str</span></dt><dd><p>Path to the BIDS dataset.</p>
+</dd>
+<dt>rule<span class="classifier">str</span></dt><dd><p>Rule to add to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">bidsignore</span></code> file,
+e.g. “<a href="#id1"><span class="problematic" id="id2">**</span></a>/<em>_ct.</em>” to ignore all CT files.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.validation.get_bids_validator_output_info">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.validation.</span></span><span class="sig-name descname"><span class="pre">get_bids_validator_output_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bids_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_schema_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/validation.html#get_bids_validator_output_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.validation.get_bids_validator_output_info" title="Permalink to this definition"></a></dt>
+<dd><p>Run the bids-validator on the dataset with the specified schema version and the option to ignore subject consistency.</p>
+<section id="id3">
+<h2>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_dir<span class="classifier">str</span></dt><dd><p>Path to the BIDS dataset.</p>
+</dd>
+<dt>bids_schema_version<span class="classifier">str</span></dt><dd><p>BIDS schema version to use for the validation.
+(e.g. “v1.7.0”)</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_validator_output_info<span class="classifier">dict</span></dt><dd><p>Dictionary containing the bids-validator output
+to be integrated in the dataset content to be indexed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.validation.validate_bids_dataset">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.validation.</span></span><span class="sig-name descname"><span class="pre">validate_bids_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container_dataset_path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/validation.html#validate_bids_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.validation.validate_bids_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Validate a BIDS dataset using the BIDS Validator.</p>
+<section id="id4">
+<h2>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>container_dataset_path<span class="classifier">str</span></dt><dd><p>Path to the BIDS dataset</p>
+</dd>
+<dt>args<span class="classifier">list</span></dt><dd><p>List of options to pass to the <code class="xref py py-obj docutils literal notranslate"><span class="pre">bids-validator</span></code>.
+Can be used to ignore warnings (<code class="xref py py-obj docutils literal notranslate"><span class="pre">[&quot;--ignoreWarnings&quot;]</span></code>)
+or nifti headers (<code class="xref py py-obj docutils literal notranslate"><span class="pre">[&quot;--ignoreNiftiHeaders&quot;]</span></code>) or to
+skip checking that any given file for one subject
+is present for all other subjects (<code class="xref py py-obj docutils literal notranslate"><span class="pre">[&quot;--ignoreSubjectConsistency&quot;]</span></code>)
+or to use a specific BIDS schema (<code class="xref py py-obj docutils literal notranslate"><span class="pre">[&quot;-s&quot;,</span> <span class="pre">&quot;v1.6.0&quot;]</span></code>)</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h2>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>output<span class="classifier">dict</span></dt><dd><p>Output of the bids-validator as a dictionary.</p>
+</dd>
+<dt>return_code<span class="classifier">int</span></dt><dd><p>Return code of the bids-validator.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

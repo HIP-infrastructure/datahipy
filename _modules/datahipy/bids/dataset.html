@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.dataset &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.bids.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.bids.dataset</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Utility functions to retrieve BIDS dataset content to be indexed by the Elasticsearch engine of the HIP.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">resource_filename</span>
+<span class="kn">from</span> <span class="nn">sre_constants</span> <span class="kn">import</span> <span class="n">SUCCESS</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+
+<span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
+
+<span class="kn">import</span> <span class="nn">datalad.api</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.bids.electrophy</span> <span class="kn">import</span> <span class="n">get_ieeg_info</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.participant</span> <span class="kn">import</span> <span class="n">get_participants_info</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.validation</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">add_bidsignore_validation_rule</span><span class="p">,</span>
+    <span class="n">get_bids_validator_output_info</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.version</span> <span class="kn">import</span> <span class="n">determine_bids_schema_version</span>
+
+<span class="c1"># Set the number of threads to use for parallel processing</span>
+<span class="c1"># Modify this value if you want to use more or less threads or</span>
+<span class="c1"># if you want to set it to 1 to avoid parallel processing</span>
+<span class="n">NUM_THREADS</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="create_initial_bids_readme"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.create_initial_bids_readme">[docs]</a><span class="k">def</span> <span class="nf">create_initial_bids_readme</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">dataset_desc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an initial `README` file for a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Dictionary with the content of the dataset_description.json file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;README&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s1">&#39;# </span><span class="si">{</span><span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span><span class="si">}</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;To be completed...</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Use it as the dataset landing page, &quot;</span>
+                <span class="s2">&quot;which should provide enough information &quot;</span>
+                <span class="s2">&quot;about the dataset and its creation context.&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_initial_bids_changes"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.create_initial_bids_changes">[docs]</a><span class="k">def</span> <span class="nf">create_initial_bids_changes</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">content_lines</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an initial `CHANGES` file for a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">content_lines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">content_lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;0.0.0 </span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">- Creation of the dataset.&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;CHANGES&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">content_lines</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_initial_participants_tsv"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.create_initial_participants_tsv">[docs]</a><span class="k">def</span> <span class="nf">create_initial_participants_tsv</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an initial `participants.tsv` file for a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;participants.tsv&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;participant_id</span><span class="se">\t</span><span class="s2">age</span><span class="se">\t</span><span class="s2">sex</span><span class="se">\t</span><span class="s2">group&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_empty_bids_dataset"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.create_empty_bids_dataset">[docs]</a><span class="k">def</span> <span class="nf">create_empty_bids_dataset</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">project_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an empty BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Dictionary with the content of the dataset_description.json file.</span>
+
+<span class="sd">    project_dir : str</span>
+<span class="sd">        Path to the project directory in which the BIDS dataset will be nested.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; Creating an empty BIDS dataset at: &quot;</span><span class="p">,</span> <span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+    <span class="c1"># Create the BIDS dataset directory if it does not exist</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Initialize the BIDS dataset as a Datalad-managed dataset.</span>
+    <span class="n">create_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">,</span> <span class="s2">&quot;bids&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+    <span class="p">}</span>
+    <span class="c1"># If project_dir is specified, create the dataset as a subdataset</span>
+    <span class="c1"># of the project dataset</span>
+    <span class="k">if</span> <span class="n">project_dir</span><span class="p">:</span>
+        <span class="n">create_params</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_dir</span>
+        <span class="n">create_params</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_dir</span>
+    <span class="c1"># Otherwise, create a standalone dataset</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">create_params</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_dir</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_params</span><span class="p">)</span>
+    <span class="c1"># Create the dataset_description.json file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;dataset_description.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># Create initial README file</span>
+    <span class="n">create_initial_bids_readme</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">dataset_desc</span><span class="p">)</span>
+    <span class="c1"># Create initial empty CHANGES file</span>
+    <span class="n">create_initial_bids_changes</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">content_lines</span><span class="o">=</span><span class="p">[])</span>
+    <span class="c1"># Create the .bidsignore file and add the line to ignore CT files</span>
+    <span class="c1"># (not yet supported by the validator)</span>
+    <span class="n">add_bidsignore_validation_rule</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;**/*_ct.*&quot;</span><span class="p">)</span>
+    <span class="c1"># Create an initial participants.tsv file</span>
+    <span class="n">create_initial_participants_tsv</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Save the state of the initial dataset</span>
+    <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Initial blank BIDS dataset of collaborative project&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">project_dir</span><span class="p">:</span>
+        <span class="n">save_params</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project_dir</span>
+        <span class="n">save_params</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_dir</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">save_params</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bids_dir</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_bids_layout"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.create_bids_layout">[docs]</a><span class="k">def</span> <span class="nf">create_bids_layout</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a pybids representation of a BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    kwargs : dict</span>
+<span class="sd">        Dictionary of arguments key/value to pass to the pybids BIDSLayout function.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    layout : pybids.BIDSLayout</span>
+<span class="sd">        Pybids representation of the BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create a pybids representation of the dataset</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="n">bids_dir</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">config</span><span class="o">=</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;datahipy&quot;</span><span class="p">,</span> <span class="s2">&quot;bids/config/bids.json&quot;</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">layout</span></div>
+
+
+<div class="viewcode-block" id="get_bids_layout_info"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.get_bids_layout_info">[docs]</a><span class="k">def</span> <span class="nf">get_bids_layout_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a dictionary with information retrieved via the PyBIDS BIDSLayout object representation of the dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bids_layout_info : dict</span>
+<span class="sd">        Dictionary with information retrieved via the PyBIDS BIDSLayout object representation of the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialize the dictionary to be returned</span>
+    <span class="n">bids_layout_info</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Create a pybids representation of the dataset</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">create_bids_layout</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Add basic information retrieved with pybids to dataset_desc</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;DataTypes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_datatypes</span><span class="p">()</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;Formats&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_extensions</span><span class="p">()</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;SessionsCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_sessions</span><span class="p">())</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;Tasks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_tasks</span><span class="p">()</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;RunsCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_runs</span><span class="p">())</span>
+    <span class="c1"># Get general info about ieeg recordings</span>
+    <span class="k">if</span> <span class="s2">&quot;ieeg&quot;</span> <span class="ow">in</span> <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;DataTypes&quot;</span><span class="p">]:</span>
+        <span class="n">bids_layout_info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">get_ieeg_info</span><span class="p">(</span><span class="n">layout</span><span class="p">))</span>
+    <span class="c1"># Get the number of events files</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;EventsFileCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;events&quot;</span><span class="p">))</span>
+    <span class="c1"># Get the number of files</span>
+    <span class="n">bids_layout_info</span><span class="p">[</span><span class="s2">&quot;FileCount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_files</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">bids_layout_info</span></div>
+
+
+<div class="viewcode-block" id="get_dataset_size"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.get_dataset_size">[docs]</a><span class="k">def</span> <span class="nf">get_dataset_size</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the size of the BIDS dataset in megabytes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    total_size_megabytes : str</span>
+<span class="sd">        Size of the BIDS dataset in megabytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get total number of files and size</span>
+    <span class="n">total_size_megabytes</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;du&quot;</span><span class="p">,</span> <span class="s2">&quot;-sh&quot;</span><span class="p">,</span> <span class="n">bids_dir</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1">## Alternative: Count only files outside sourcedata/</span>
+    <span class="c1"># total_size_bytes = 0</span>
+    <span class="c1"># files = layout.get_files()</span>
+    <span class="c1"># for f in files:</span>
+    <span class="c1">#     total_size_bytes += os.path.getsize(f)</span>
+    <span class="c1"># # Convert once from bytes to megabytes (getsize return bytes)</span>
+    <span class="c1"># total_size_megabytes = 1e-6 * total_size_bytes</span>
+    <span class="c1"># total_size_megabytes = f&#39;{total_size_megabytes:.2f}&#39;</span>
+    <span class="c1"># del files</span>
+    <span class="k">return</span> <span class="n">total_size_megabytes</span></div>
+
+
+<div class="viewcode-block" id="get_bidsdataset_content"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.get_bidsdataset_content">[docs]</a><span class="k">def</span> <span class="nf">get_bidsdataset_content</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a dictionary storing dataset information indexed by the HIP platform.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    bids_dir : str</span>
+<span class="sd">        Path to the BIDS dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dataset_desc : dict</span>
+<span class="sd">        Dictionary storing dataset information indexed by the HIP platform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Import here to avoid circular import</span>
+    <span class="kn">from</span> <span class="nn">datahipy.utils.versioning</span> <span class="kn">import</span> <span class="n">get_latest_tag</span>
+    <span class="c1"># Load the dataset_description.json as initial dictionary-based description</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;dataset_description.json&quot;</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">dataset_desc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Load the participants.tsv file to extract information about participants</span>
+    <span class="n">dataset_desc</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">get_participants_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="o">=</span><span class="n">bids_dir</span><span class="p">))</span>
+    <span class="c1"># Get the dataset size</span>
+    <span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;Size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_dataset_size</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Check if the field BIDSVersion is present in the dataset_description.json.</span>
+    <span class="c1"># If not, use the default BIDS_VERSION. If present, add &#39;v&#39; to match the</span>
+    <span class="c1"># schema version expected by the validator</span>
+    <span class="n">bids_schema_version</span> <span class="o">=</span> <span class="n">determine_bids_schema_version</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">)</span>
+    <span class="c1"># Create the .bidsignore file if it does not exist and</span>
+    <span class="c1"># add the line to ignore CT files (not yet supported by the validator)</span>
+    <span class="n">add_bidsignore_validation_rule</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="s2">&quot;**/*_ct.*&quot;</span><span class="p">)</span>
+    <span class="c1"># Run the bids-validator on the dataset with the specified schema version and</span>
+    <span class="c1"># update dataset_desc with the execution dictionary output</span>
+    <span class="n">dataset_desc</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">get_bids_validator_output_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">,</span> <span class="n">bids_schema_version</span><span class="p">))</span>
+    <span class="c1"># Add information retrieved with pybids to dataset_desc</span>
+    <span class="n">dataset_desc</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">get_bids_layout_info</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">))</span>
+    <span class="c1"># Add the latest tag of the dataset as the dataset version</span>
+    <span class="n">dataset_desc</span><span class="p">[</span><span class="s2">&quot;DatasetVersion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_latest_tag</span><span class="p">(</span><span class="n">bids_dir</span><span class="p">)</span>
+    <span class="c1"># Return the created dataset_desc dictionary to be indexed</span>
+    <span class="k">return</span> <span class="n">dataset_desc</span></div>
+
+
+<div class="viewcode-block" id="get_all_datasets_content"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.get_all_datasets_content">[docs]</a><span class="k">def</span> <span class="nf">get_all_datasets_content</span><span class="p">(</span>
+    <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a JSON file containing a list of dataset dictionaries as response to HIP request.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to the HIP json request.</span>
+
+<span class="sd">    output_file : str</span>
+<span class="sd">        Path to the output JSON file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load the HIP json request</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Extract the list of dataset paths</span>
+    <span class="n">dataset_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">input_content</span><span class="p">[</span><span class="s2">&quot;datasets&quot;</span><span class="p">]]</span>
+    <span class="c1"># Create a list of dictionaries storing the dataset information</span>
+    <span class="c1"># indexed by the HIP platform</span>
+    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">NUM_THREADS</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+        <span class="n">datasets_desc</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_bidsdataset_content</span><span class="p">,</span> <span class="n">ds_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ds_path</span> <span class="ow">in</span> <span class="n">dataset_paths</span>
+        <span class="p">]</span>
+        <span class="n">datasets_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">datasets_desc</span><span class="p">]</span>
+    <span class="c1"># Dump the dataset_desc dict in a .json file</span>
+    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">datasets_desc</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dataset_publish"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.dataset_publish">[docs]</a><span class="k">def</span> <span class="nf">dataset_publish</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Publish a dataset to the public space of the HIP.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to the input_data JSON file in the following format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;sourceDatasetPath&quot;: &quot;/path/to/private/or/collab/dataset&quot;,</span>
+<span class="sd">                &quot;targetDatasetPath&quot;: &quot;/path/of/dataset/to/be/published/to/public/space&quot;,</span>
+<span class="sd">            }</span>
+
+<span class="sd">    output_file : str</span>
+<span class="sd">        Path to the output published dataset summary in JSON format</span>
+<span class="sd">        to be indexed by the Data Search Engine of the HIP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load the HIP json request</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Extract the source and target dataset paths</span>
+    <span class="n">source_dataset_path</span> <span class="o">=</span> <span class="n">input_content</span><span class="p">[</span><span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">]</span>
+    <span class="n">target_dataset_path</span> <span class="o">=</span> <span class="n">input_content</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">]</span>
+    <span class="c1"># Remove target sibling if it does exist</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARNING: Remove existing target sibling dataset (</span><span class="si">{</span><span class="n">target_dataset_path</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">)</span>
+    <span class="c1"># Create datalad dataset sibling to publish to</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create_sibling</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;public&quot;</span><span class="p">,</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">source_dataset_path</span><span class="p">,</span>
+        <span class="n">sshurl</span><span class="o">=</span><span class="n">target_dataset_path</span><span class="p">,</span>
+        <span class="c1"># Uncomment when public space could have https access</span>
+        <span class="c1"># as it expects sshurl to have URL protocol to be http or https</span>
+        <span class="c1"># as_common_datasrc=True,</span>
+        <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">existing</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">,</span>
+        <span class="n">on_failure</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span>
+    <span class="p">)</span>
+    <span class="c1"># Publish the dataset to the public space</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">push</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">source_dataset_path</span><span class="p">,</span>
+        <span class="n">to</span><span class="o">=</span><span class="s2">&quot;public&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="s2">&quot;anything&quot;</span><span class="p">,</span>
+        <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">force</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+        <span class="n">on_failure</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Get the content of the published dataset summary to</span>
+    <span class="c1"># be saved in the output JSON file</span>
+    <span class="n">dataset_desc</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">)</span>
+    <span class="c1"># Dump the dataset_desc dict in a .json file</span>
+    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dataset_clone"><a class="viewcode-back" href="../../../api_bids_subpackage.html#datahipy.bids.dataset.dataset_clone">[docs]</a><span class="k">def</span> <span class="nf">dataset_clone</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clone a dataset from the public space of the HIP.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to the input_data JSON file in the following format::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;sourceDatasetPath&quot;: &quot;/path/to/public/dataset&quot;,</span>
+<span class="sd">                &quot;targetDatasetPath&quot;: &quot;/path/of/dataset/to/be/cloned/in/private/space&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">    </span>
+<span class="sd">    output_file : str</span>
+<span class="sd">        Path to the output cloned dataset summary in JSON format</span>
+<span class="sd">        to be indexed by the Data Search Engine of the HIP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load the input_data json file in a dict</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Extract the source and target dataset paths</span>
+    <span class="n">source_dataset_path</span> <span class="o">=</span> <span class="n">input_content</span><span class="p">[</span><span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">]</span>
+    <span class="n">target_dataset_path</span> <span class="o">=</span> <span class="n">input_content</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">]</span>
+    <span class="c1"># Create the target dataset directory if it does not exist</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">)</span>
+    <span class="c1"># set_git_user_info(dataset_dir=target_dataset_path)</span>
+    <span class="c1"># Clone the dataset from the public space</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">install</span><span class="p">(</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">source_dataset_path</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">target_dataset_path</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Clone of </span><span class="si">{</span><span class="n">source_dataset_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">get_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">reckless</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">on_failure</span><span class="o">=</span><span class="s2">&quot;continue&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Get the content of the cloned dataset summary to</span>
+    <span class="c1"># be saved in the output JSON file</span>
+    <span class="n">dataset_desc</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span><span class="n">target_dataset_path</span><span class="p">)</span>
+    <span class="c1"># Dump the dataset_desc dict in a .json file</span>
+    <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_desc</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+datahipy.bids package
+=====================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.bids.config
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.bids.bids_manager
+   datahipy.bids.const
+   datahipy.bids.dataset
+   datahipy.bids.electrophy
+   datahipy.bids.participant
+   datahipy.bids.validation
+   datahipy.bids.version
+
+Module contents
+---------------
+
+.. automodule:: datahipy.bids
+   :members:
+   :undoc-members:
+   :show-inheritance:

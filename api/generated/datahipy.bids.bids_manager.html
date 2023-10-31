@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.bids.bids_manager module &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../_static/twemoji.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">datahipy.bids.bids_manager module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datahipy.bids.bids_manager">
+<span id="datahipy-bids-bids-manager-module"></span><h1>datahipy.bids.bids_manager module<a class="headerlink" href="#module-datahipy.bids.bids_manager" title="Permalink to this heading"></a></h1>
+<p>Utility functions to modify BIDS datasets created using <code class="xref py py-obj docutils literal notranslate"><span class="pre">BIDS_Manager</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.clean_empty_events_tsv_files">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">clean_empty_events_tsv_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#clean_empty_events_tsv_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.clean_empty_events_tsv_files" title="Permalink to this definition"></a></dt>
+<dd><p>Remove empty events.tsv files.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>layout<span class="classifier">bids.BIDSLayout</span></dt><dd><p>BIDSLayout object representation of the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.correct_bids_ieeg_json_file">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">correct_bids_ieeg_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bids_ieeg_json</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#correct_bids_ieeg_json_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.correct_bids_ieeg_json_file" title="Permalink to this definition"></a></dt>
+<dd><p>Correct BIDS iEEG json file.</p>
+<section id="id1">
+<h2>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_ieeg_json<span class="classifier">str</span></dt><dd><p>Path to the BIDS iEEG json file.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_ieeg_json_content<span class="classifier">dict</span></dt><dd><p>Corrected content overwritten to the BIDS iEEG json file.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.correct_bids_ieeg_json_files">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">correct_bids_ieeg_json_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#correct_bids_ieeg_json_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.correct_bids_ieeg_json_files" title="Permalink to this definition"></a></dt>
+<dd><p>Correct BIDS iEEG json files.</p>
+<section id="id2">
+<h2>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>layout<span class="classifier">bids.BIDSLayout</span></dt><dd><p>BIDSLayout object representation of the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.correct_run_index_filename">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">correct_run_index_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#correct_run_index_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.correct_run_index_filename" title="Permalink to this definition"></a></dt>
+<dd><p>Correct run index in BIDS filenames.</p>
+<section id="id3">
+<h2>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>layout<span class="classifier">bids.BIDSLayout</span></dt><dd><p>BIDSLayout object representation of the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.ensure_list_fields_in_dataset_description">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">ensure_list_fields_in_dataset_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bids_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#ensure_list_fields_in_dataset_description"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.ensure_list_fields_in_dataset_description" title="Permalink to this definition"></a></dt>
+<dd><p>Ensure that some fields are list type in dataset_description.json.</p>
+<section id="id4">
+<h2>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_dir<span class="classifier">str</span></dt><dd><p>Path to the BIDS dataset.</p>
+</dd>
+<dt>fields<span class="classifier">list of str</span></dt><dd><p>List of fields to ensure are list type.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.post_import_bids_refinement">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">post_import_bids_refinement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bids_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#post_import_bids_refinement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.post_import_bids_refinement" title="Permalink to this definition"></a></dt>
+<dd><p>Refine BIDS files after import.</p>
+<section id="id5">
+<h2>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>bids_dir<span class="classifier">str</span></dt><dd><p>Path to the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datahipy.bids.bids_manager.remove_scans_tsv_files">
+<span class="sig-prename descclassname"><span class="pre">datahipy.bids.bids_manager.</span></span><span class="sig-name descname"><span class="pre">remove_scans_tsv_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/datahipy/bids/bids_manager.html#remove_scans_tsv_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datahipy.bids.bids_manager.remove_scans_tsv_files" title="Permalink to this definition"></a></dt>
+<dd><p>Remove scans.tsv files.</p>
+<section id="id6">
+<h2>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>layout<span class="classifier">bids.BIDSLayout</span></dt><dd><p>BIDSLayout object representation of the BIDS dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.utils &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="LICENSE.html" />
+    <link rel="prev" title="datahipy.bids" href="api_bids_subpackage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#datahipy-utils-versioning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.utils.versioning</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datahipy-utils">
+<span id="apidoc-utils"></span><h1><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code><a class="headerlink" href="#datahipy-utils" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code> subpackage contains modules that define utility functions.</p>
+<section id="datahipy-utils-versioning">
+<h2><a class="reference internal" href="api/generated/datahipy.utils.versioning.html#module-datahipy.utils.versioning" title="datahipy.utils.versioning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datahipy.utils.versioning</span></code></a><a class="headerlink" href="#datahipy-utils-versioning" title="Permalink to this heading"></a></h2>
+<p>Methods supporting versioning of BIDS and Collaborative project datasets.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">checkout_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#checkout_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Checkout a specific tag of a dataset managed by Git/Datalad via subprocess.</p>
+<dl class="simple">
+<dt><strong>Note:</strong> The master / main branch / or the HEAD can also be checked out by specifying</dt><dd><p>“master” / “main” / “HEAD” for the tag value.</p>
+</dd>
+</dl>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">dict</span></dt><dd><p>Dictionary containing the input data for the command
+in the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">create_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#create_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Create a version tag on a dataset managed by Git/Datalad.</p>
+<p><strong>Note:</strong> The tag is created on a Datalad dataset, not on a specific file.
+If the dataset is a BIDS dataset, the tag will be created only on this dataset.
+If the dataset is a Collaborative Project, the tag will be created recursively on</p>
+<blockquote>
+<div><p>the project dataset and on the nested BIDS dataset of the project.</p>
+</div></blockquote>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">dict</span></dt><dd><p>Dictionary or JSON file containing the input data for the command
+in the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;bids&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;project&quot;</span>
+    <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Change 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Change 2&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">get_latest_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#get_latest_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the latest tag of a dataset managed by Git/Datalad.</p>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>path<span class="classifier">str</span></dt><dd><p>Absolute path to the dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>str</dt><dd><p>The latest tag of the dataset.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">get_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#get_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Get the list of tags of a dataset managed by Git/Datalad via subprocess.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">dict</span></dt><dd><p>Dictionary containing the input data for the command
+in the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>output_file<span class="classifier">str</span></dt><dd><p>Absolute path to the output JSON file containing the tags
+in the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tags&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;1.1.0&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">increment_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#increment_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Increment a version tag by a specific level.</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tag<span class="classifier">str</span></dt><dd><p>Version tag to increment in the format X.Y.Z, where X, Y, and Z are integers.</p>
+</dd>
+<dt>level<span class="classifier">str</span></dt><dd><p>Level to increment. Can be “major”, “minor”, or “patch”.</p>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>str</dt><dd><p>The incremented tag.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">release_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#release_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Release a new version of a project / BIDS dataset managed by Git/Datalad.</p>
+<p><strong>Note:</strong> The tag is created on a Datalad dataset, not on a specific file.
+If the dataset is a BIDS dataset, the tag will be created only on this dataset.
+If the dataset is a Collaborative Project, the tag will be created recursively on</p>
+<blockquote>
+<div><p>the project dataset and on the nested BIDS dataset of the project.</p>
+</div></blockquote>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<dl>
+<dt>input_data<span class="classifier">dict</span></dt><dd><p>Dictionary containing the input data for the command
+in the format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;bids&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;project&quot;</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;major&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;minor&quot; or &quot;patch&quot;</span>
+    <span class="s2">&quot;changes_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Change 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Change 2&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>output_file<span class="classifier">str</span></dt><dd><p>Absolute path to the output JSON file containing the dataset summary
+generated by <a class="reference internal" href="api/generated/datahipy.bids.dataset.html#datahipy.bids.dataset.get_bidsdataset_content" title="datahipy.bids.dataset.get_bidsdataset_content"><code class="xref py py-func docutils literal notranslate"><span class="pre">datahipy.bids.dataset.get_bidsdataset_content()</span></code></a>.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">set_git_user_info_global</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#set_git_user_info_global"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Set Git user name and email.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Git user name.</p>
+</dd>
+<dt>email<span class="classifier">str</span></dt><dd><p>Git user email.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">datahipy.utils.versioning.</span></span><span class="sig-name descname"><span class="pre">validate_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_exceptions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datahipy/utils/versioning.html#validate_tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Validate a tag.</p>
+<section id="id8">
+<h3>Parameters<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tag<span class="classifier">str</span></dt><dd><p>Tag to validate.</p>
+</dd>
+<dt>discard_exceptions<span class="classifier">bool</span></dt><dd><p>If True, discard the exceptions listed by <code class="xref py py-obj docutils literal notranslate"><span class="pre">TAG_EXCEPTIONS</span></code>
+and return False.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Returns<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>bool</dt><dd><p>True if the tag is valid, False otherwise.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_bids_subpackage.html" class="btn btn-neutral float-left" title="datahipy.bids" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="LICENSE.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

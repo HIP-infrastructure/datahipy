@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datahipy.handlers.project &mdash; DataHIPy: Data Manager of the Human Intracerebral Platform in Python</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/twemoji.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/datahipy-logo-flower-32x32.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"></script>
+        <script src="../../../_static/twemoji.js"></script>
+        <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/datahipy-logo-flower.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Instructions for Users</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Commandline Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Instructions for Developers</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_cli_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.cli</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_handlers_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.handlers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_bids_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.bids</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_utils_subpackage.html"><code class="docutils literal notranslate"><span class="pre">datahipy.utils</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About DataHIPy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">How to cite?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CHANGES.html">Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataHIPy: Data Manager of the Human Intra-cerebral EEG Platform</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">datahipy.handlers.project</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for datahipy.handlers.project</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2022-2023, The HIP team and Contributors, All rights reserved.</span>
+<span class="c1">#  This software is distributed under the open-source Apache 2.0 license.</span>
+
+<span class="sd">&quot;&quot;&quot;Methods supporting  the Collaborative Space of the HIP.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">sre_constants</span> <span class="kn">import</span> <span class="n">SUCCESS</span>
+
+<span class="kn">import</span> <span class="nn">datalad.api</span>
+
+<span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">create_empty_bids_dataset</span>
+<span class="kn">from</span> <span class="nn">datahipy.bids.dataset</span> <span class="kn">import</span> <span class="n">get_bidsdataset_content</span>
+
+
+<span class="n">PROJECT_FOLDERS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;documents&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;environments&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;inputs/bids-dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">DOCUMENTS_FOLDERS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;clinical&quot;</span><span class="p">,</span> <span class="s2">&quot;reports&quot;</span><span class="p">,</span> <span class="s2">&quot;protocols&quot;</span><span class="p">,</span> <span class="s2">&quot;other&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="initialize_project_structure"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.initialize_project_structure">[docs]</a><span class="k">def</span> <span class="nf">initialize_project_structure</span><span class="p">(</span>
+    <span class="n">project_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">project_title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">project_description</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the directory structure of a Collaborative Project on the HIP.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    project_dir : pathlib.Path</span>
+<span class="sd">        Path to the project directory.</span>
+
+<span class="sd">    project_title : str</span>
+<span class="sd">        Title of the project.</span>
+
+<span class="sd">    project_description : str</span>
+<span class="sd">        Description of the project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create initial project directory structure</span>
+    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">PROJECT_FOLDERS</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">project_dir</span> <span class="o">/</span> <span class="n">folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Create initial documents directory structure</span>
+    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">DOCUMENTS_FOLDERS</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">project_dir</span> <span class="o">/</span> <span class="s2">&quot;documents&quot;</span> <span class="o">/</span> <span class="n">folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Initialize the project dataset as a Datalad-managed dataset</span>
+    <span class="n">create_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">project_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+        <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_params</span><span class="p">)</span>
+
+    <span class="c1"># Create initial project README.md file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">project_dir</span> <span class="o">/</span> <span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;# </span><span class="si">{</span><span class="n">project_title</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="create_project"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.create_project">[docs]</a><span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new Collaborative Project on the HIP initialized with directory/file structure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to input data JSON file sent by the HIP that contains all information</span>
+<span class="sd">        about Project and corresponding BIDS dataset in the form::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;path&quot;: &quot;/path/to/project/directory&quot;,</span>
+<span class="sd">                &quot;title&quot;: &quot;Project Title&quot;,</span>
+<span class="sd">                &quot;description&quot;: &quot;Project Description that would be put in the README.md file&quot;,</span>
+<span class="sd">                &quot;datasetDescription&quot;: {</span>
+<span class="sd">                    &quot;Name&quot;: &quot;BIDS Dataset Title&quot;,</span>
+<span class="sd">                    &quot;BIDSVersion&quot;: &quot;1.6.0&quot;,</span>
+<span class="sd">                    &quot;License&quot;: &quot;CC-BY-4.0&quot;,</span>
+<span class="sd">                    &quot;Authors&quot;: [&quot;Author 1&quot;, &quot;Author 2&quot;],</span>
+<span class="sd">                    &quot;Acknowledgements&quot;: &quot;Acknowledgement 1&quot;,</span>
+<span class="sd">                    &quot;Funding&quot;: [&quot;Funding 1&quot;],</span>
+<span class="sd">                    &quot;ReferencesAndLinks&quot;: [&quot;Reference 1&quot;, &quot;Reference 2&quot;],</span>
+<span class="sd">                    &quot;DatasetDOI&quot;: &quot;10.18112/openneuro.ds000000.v1.0.0&quot;</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+<span class="sd">    output_file : str</span>
+<span class="sd">        Path to output file that will contain the JSON summary of the BIDS dataset of the project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Creating new collaborative project at </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+    <span class="c1"># Extract input data</span>
+    <span class="n">project_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+    <span class="n">project_title</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+    <span class="n">project_description</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
+    <span class="c1"># Initialize project directory structure with README.md file</span>
+    <span class="n">initialize_project_structure</span><span class="p">(</span><span class="n">project_dir</span><span class="p">,</span> <span class="n">project_title</span><span class="p">,</span> <span class="n">project_description</span><span class="p">)</span>
+    <span class="c1"># Create initial BIDS dataset</span>
+    <span class="n">create_empty_bids_dataset</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="p">(</span><span class="n">project_dir</span> <span class="o">/</span> <span class="s2">&quot;inputs&quot;</span> <span class="o">/</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+        <span class="n">dataset_desc</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;datasetDescription&quot;</span><span class="p">],</span>
+        <span class="n">project_dir</span><span class="o">=</span><span class="n">project_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="c1"># Create output file with summary of BIDS dataset</span>
+    <span class="n">dataset_content</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">((</span><span class="n">project_dir</span> <span class="o">/</span> <span class="s2">&quot;inputs&quot;</span> <span class="o">/</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_content</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># Save the state of the dataset with Datalad</span>
+    <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">project_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Initial dataset state of collaborative project&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Do save the nested Datalad-BIDS dataset</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="manage_project_with_datalad"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.manage_project_with_datalad">[docs]</a><span class="k">def</span> <span class="nf">manage_project_with_datalad</span><span class="p">(</span><span class="n">project_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Datalad dataset out of an existing project not Datalad-managed yet.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    project_dir : str</span>
+<span class="sd">        Path to the project directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing Datalad dataset and subdataset at </span><span class="si">{</span><span class="n">project_dir</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="c1"># Initialize the project dataset as a Datalad-managed dataset</span>
+    <span class="n">create_project_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">project_dir</span><span class="p">,</span>
+        <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_project_params</span><span class="p">)</span>
+    <span class="c1"># Initialize the BIDS dataset as a Datalad-managed sub-dataset</span>
+    <span class="n">create_bids_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">project_dir</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_dir</span><span class="p">,</span> <span class="s2">&quot;inputs&quot;</span><span class="p">,</span> <span class="s2">&quot;bids-dataset&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;cfg_proc&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text2git&quot;</span><span class="p">,</span> <span class="s2">&quot;bids&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Enforce dataset creation in a non-empty directory</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">**</span><span class="n">create_bids_params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="import_subject"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.import_subject">[docs]</a><span class="k">def</span> <span class="nf">import_subject</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import a new subject from a BIDS dataset of the HIP Center space to the BIDS dataset of the HIP Collaborative Project.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to input data JSON file sent by the HIP that contains all information</span>
+<span class="sd">        about the subject and files to import in the form::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;sourceDatasetPath&quot;: &quot;/path/to/source/bids/dataset/directory&quot;,</span>
+<span class="sd">                &quot;participantId&quot;: &quot;sub-01&quot;,</span>
+<span class="sd">                &quot;targetDatasetPath&quot;: &quot;/path/to/target/bids/dataset/directory&quot;,</span>
+<span class="sd">            }</span>
+
+<span class="sd">    output_file : str</span>
+<span class="sd">        Path to output file that will contain the JSON summary of the BIDS dataset of the project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Importing subject </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;participantId&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;from </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;sourceDatasetPath&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;to </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s1">&#39;targetDatasetPath&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Check if project root directory is already Datalad-managed. If not,</span>
+    <span class="c1"># initialize it. Otherwise, this would fail when trying to save the</span>
+    <span class="c1"># dataset state with Datalad.</span>
+    <span class="n">project_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">],</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s2">&quot;.datalad&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">project_dir</span><span class="p">):</span>
+        <span class="n">manage_project_with_datalad</span><span class="p">(</span><span class="n">project_dir</span><span class="p">)</span>
+    <span class="c1"># Copy subject directory from source to target</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;participantId&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+        <span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;participantId&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+        <span class="n">dirs_exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># Update participants.tsv file of target dataset with subject row from source dataset</span>
+    <span class="n">transfer_subject_participants_tsv_row</span><span class="p">(</span>
+        <span class="n">participant_id</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;participantId&quot;</span><span class="p">],</span>
+        <span class="n">source_participant_tsv</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="s2">&quot;participants.tsv&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+        <span class="n">target_participants_tsv</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="s2">&quot;participants.tsv&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="c1"># Create output file with summary of BIDS dataset</span>
+    <span class="n">dataset_content</span> <span class="o">=</span> <span class="n">get_bidsdataset_content</span><span class="p">(</span>
+        <span class="n">bids_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">((</span><span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">absolute</span><span class="p">()),</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dataset_content</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># Save dataset state with Datalad</span>
+    <span class="n">save_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Import subject </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;participantId&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> from </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sourceDatasetPath&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDatasetPath&quot;</span><span class="p">],</span> <span class="n">message</span><span class="o">=</span><span class="n">save_msg</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="transfer_subject_participants_tsv_row"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.transfer_subject_participants_tsv_row">[docs]</a><span class="k">def</span> <span class="nf">transfer_subject_participants_tsv_row</span><span class="p">(</span>
+    <span class="n">participant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_participant_tsv</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_participants_tsv</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Transfer subject row from the participants.tsv file of the source to the participants.tsv file of the target BIDS dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    participant_id : str</span>
+<span class="sd">        ID of the participant to transfer (e.g. &quot;sub-01&quot;).</span>
+
+<span class="sd">    source_participant_tsv : str</span>
+<span class="sd">        Path to the participants.tsv file of the source BIDS dataset.</span>
+
+<span class="sd">    target_participants_tsv : str</span>
+<span class="sd">        Path to the participants.tsv file of the target BIDS dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract subject line from participants.tsv file of source dataset as dataframe</span>
+    <span class="n">source_participants_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">source_participant_tsv</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">source_subject_df</span> <span class="o">=</span> <span class="n">source_participants_df</span><span class="p">[</span>
+        <span class="n">source_participants_df</span><span class="p">[</span><span class="s2">&quot;participant_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">participant_id</span>
+    <span class="p">]</span>
+    <span class="c1"># Extract participants.tsv file of target dataset as dataframe</span>
+    <span class="n">target_participants_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">target_participants_tsv</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Append subject row dataframe to target dataframe</span>
+    <span class="n">target_participants_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">target_participants_df</span><span class="p">,</span> <span class="n">source_subject_df</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Replace any NaN values with &#39;n/a&#39; following BIDS convention</span>
+    <span class="n">target_participants_df</span> <span class="o">=</span> <span class="n">target_participants_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;n/a&quot;</span><span class="p">)</span>
+    <span class="c1"># Write updated participants.tsv file of target dataset</span>
+    <span class="n">target_participants_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">target_participants_tsv</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="import_document"><a class="viewcode-back" href="../../../api_handlers_subpackage.html#datahipy.handlers.project.import_document">[docs]</a><span class="k">def</span> <span class="nf">import_document</span><span class="p">(</span><span class="n">input_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import a new supporting document to the `documents/` folder of the HIP Collaborative Project.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input_data : str</span>
+<span class="sd">        Path to input data JSON file sent by the HIP that contains all information</span>
+<span class="sd">        about the document to import in the form::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;sourceDocumentAbsPath&quot;: &quot;/path/to/source/document/file&quot;,</span>
+<span class="sd">                &quot;targetProjectAbsPath&quot;: &quot;/path/to/target/project/directory&quot;,</span>
+<span class="sd">                &quot;sourceDocumentRelPath&quot;: &quot;/project/relative/path/to/target/document/file&quot;,</span>
+<span class="sd">            }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Load input data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1"># Extract input data</span>
+    <span class="n">source_document_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sourceDocumentAbsPath&quot;</span><span class="p">])</span>
+    <span class="n">target_document_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetDocumentRelPath&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># Print information</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Importing document </span><span class="si">{</span><span class="n">source_document_path</span><span class="si">}</span><span class="s2"> from HIP Center space &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;to HIP Collaborative Project at </span><span class="si">{</span><span class="n">target_document_path</span><span class="si">}</span><span class="s2">... &quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Check if project root directory is already Datalad-managed. If not,</span>
+    <span class="c1"># initialize it. Otherwise, this would fail when trying to save the</span>
+    <span class="c1"># dataset state with Datalad.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">]):</span>
+        <span class="n">manage_project_with_datalad</span><span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">])</span>
+    <span class="c1"># Create intermediate directories if they don&#39;t exist</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">target_document_path</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Remove target document if it already exists</span>
+    <span class="k">if</span> <span class="n">target_document_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARNING: Overwriting target document at </span><span class="si">{</span><span class="n">target_document_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target_document_path</span><span class="p">)</span>
+    <span class="c1"># Copy document from source to target</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">source_document_path</span><span class="p">,</span> <span class="n">target_document_path</span><span class="p">)</span>
+    <span class="c1"># Save dataset state with Datalad</span>
+    <span class="n">save_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;targetProjectAbsPath&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Import document </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="s2">&quot;sourceDocumentAbsPath&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> from HIP Center space&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;recursive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">datalad</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">save_params</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2023, The HIP team, University Hospital of Lausanne (CHUV), Switzerland &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 31, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

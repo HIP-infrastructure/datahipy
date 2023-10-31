@@ -1,0 +1,7 @@
+datahipy.bids.bids\_manager module
+==================================
+
+.. automodule:: datahipy.bids.bids_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
