@@ -79,14 +79,7 @@ build-python-wheel:
 	python setup.py sdist bdist_wheel
 
 #test-python-install: @ Tests the python package installation
-test-python-install: install-python
-	datahipy --version
-
-#test-python-wheel: @ Tests the python wheel installation
-test-python-wheel: build-python-wheel
-	pip uninstall -y datahipy || true
-	pip install datahipy
-	datahipy --version
+test-python-install: install-python install-python-wheel	
 
 #debug-deps: @ Debug dependency versions and conflicts
 debug-deps:
