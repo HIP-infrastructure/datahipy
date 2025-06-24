@@ -1,0 +1,7 @@
+datahipy.utils.versioning module
+================================
+
+.. automodule:: datahipy.utils.versioning
+   :members:
+   :undoc-members:
+   :show-inheritance:

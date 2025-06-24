@@ -1,0 +1,7 @@
+datahipy.handlers.project module
+================================
+
+.. automodule:: datahipy.handlers.project
+   :members:
+   :undoc-members:
+   :show-inheritance:

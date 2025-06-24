@@ -1,0 +1,7 @@
+datahipy.bids.electrophy module
+===============================
+
+.. automodule:: datahipy.bids.electrophy
+   :members:
+   :undoc-members:
+   :show-inheritance:

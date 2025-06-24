@@ -1,0 +1,20 @@
+datahipy.handlers package
+=========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.handlers.dataset
+   datahipy.handlers.participants
+   datahipy.handlers.project
+
+Module contents
+---------------
+
+.. automodule:: datahipy.handlers
+   :members:
+   :undoc-members:
+   :show-inheritance:

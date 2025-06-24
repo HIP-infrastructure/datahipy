@@ -1,0 +1,18 @@
+datahipy.utils package
+======================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   datahipy.utils.versioning
+
+Module contents
+---------------
+
+.. automodule:: datahipy.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

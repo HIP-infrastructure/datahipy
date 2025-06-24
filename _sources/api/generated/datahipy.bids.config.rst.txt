@@ -1,0 +1,10 @@
+datahipy.bids.config package
+============================
+
+Module contents
+---------------
+
+.. automodule:: datahipy.bids.config
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+datahipy.bids.const module
+==========================
+
+.. automodule:: datahipy.bids.const
+   :members:
+   :undoc-members:
+   :show-inheritance:
