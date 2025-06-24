@@ -4,7 +4,7 @@
 PROJECT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # Define the version tag 
-TAG = $(shell python get_version.py)
+TAG = $(shell python3 get_version.py)
 $(info TAG = $(TAG))
 # Replace +, /, _ with - to normalize the tag
 # in case the tag includes a branch name
@@ -67,15 +67,15 @@ rm-docker-ci:
 
 #python-install: @ Installs the python package
 install-python:
-	pip install -e .[all]
+	pip3 install -e .[all] --ignore-installed packaging
 
 #install-python-wheel: @ Installs the python wheel
 install-python-wheel: build-python-wheel
-	pip install datahipy
+	pip3 install datahipy
 
 #build-python-wheel: @ Builds the python wheel
 build-python-wheel:
-	python setup.py sdist bdist_wheel
+	python3 setup.py sdist bdist_wheel
 
 #test-python-install: @ Tests the python package installation
 test-python-install: install-python install-python-wheel	
