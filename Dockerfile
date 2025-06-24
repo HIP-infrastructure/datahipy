@@ -133,7 +133,9 @@ COPY datahipy ./datahipy
 # Install datahipy with static version taken from the argument
 ARG VERSION=unknown
 RUN echo "${VERSION}" > /apps/datahipy/datahipy/VERSION \
-    && pip install -e ".[test]" \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install "urllib3>=1.25.4,<1.27" --force-reinstall \
+    && pip install -e ".[test]" --force-reinstall --no-cache-dir \
     && pip install pytest-order
 
 ###############################################################################

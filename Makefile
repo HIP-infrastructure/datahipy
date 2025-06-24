@@ -67,7 +67,8 @@ rm-docker-ci:
 
 #python-install: @ Installs the python package
 install-python:
-	pip install -e .[all]
+	pip install --upgrade pip setuptools wheel
+	pip install -e .[all] --force-reinstall --no-cache-dir
 
 #install-python-wheel: @ Installs the python wheel
 install-python-wheel: build-python-wheel
@@ -78,7 +79,29 @@ build-python-wheel:
 	python setup.py sdist bdist_wheel
 
 #test-python-install: @ Tests the python package installation
-test-python-install: install-python install-python-wheel	
+test-python-install: install-python
+	datahipy --version
+
+#test-python-wheel: @ Tests the python wheel installation
+test-python-wheel: build-python-wheel
+	pip uninstall -y datahipy || true
+	pip install datahipy
+	datahipy --version
+
+#debug-deps: @ Debug dependency versions and conflicts
+debug-deps:
+	@echo "=== Python Version ==="
+	python --version
+	@echo "=== Pip Version ==="
+	pip --version
+	@echo "=== Installed Packages ==="
+	pip list | grep -E "(urllib3|pandas|numpy|datalad|pkg-resources)" || true
+	@echo "=== Checking for conflicts ==="
+	pip check || true
+
+#fix-urllib3: @ Fix urllib3 version conflict for Python < 3.10
+fix-urllib3:
+	pip install "urllib3>=1.25.4,<1.27" --force-reinstall
 
 #help:	@ List available tasks on this project
 help:
