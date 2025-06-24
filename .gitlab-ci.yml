@@ -31,7 +31,7 @@ before_script:
   - git checkout $CI_COMMIT_REF_NAME
   # install Node.js/npm and semantic release packages
   - apk add --no-cache nodejs npm
-  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 @google/semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
+  - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
   # install python environment with wheel and twine
   - apk add --no-cache python3 python3-dev py3-pip
   - pip install --upgrade pip
