@@ -67,7 +67,7 @@ rm-docker-ci:
 
 #python-install: @ Installs the python package
 install-python:
-	pip install -e .[all]
+	pip3 install -e .[all] --force-reinstall
 
 #install-python-wheel: @ Installs the python wheel
 install-python-wheel: build-python-wheel
