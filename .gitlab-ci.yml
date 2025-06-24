@@ -1,4 +1,4 @@
-image: docker:20
+image: docker:20.10.7
 variables:
   # Prevent normal checkout for semantic-release
   GIT_STRATEGY: none
@@ -15,7 +15,7 @@ variables:
   GH_TOKEN: $GH_TOKEN
   SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
 services:
-  - name: docker:20-dind
+  - name: docker:20.10.7-dind
     alias: docker
     # in our experience although you'd assume this would be sufficient, this did 
     # nothing to prevent connection errors without `DOCKER_TLS_CERTDIR` being set 
