@@ -23,7 +23,7 @@ services:
     command: ["--tls=false", "--mtu=1450"]
 before_script:
   # system dependencies to build external package that are required by wheel
-  - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev
+  - apk add --no-cache make gcc gfortran build-base wget freetype-dev libpng-dev openblas-dev libffi-dev
   # install and setup git
   - apk add --no-cache bash git
   # clone the repo to make sure new commits are part of the history to push to github
