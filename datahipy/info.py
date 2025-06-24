@@ -6,7 +6,7 @@
 import datetime
 
 
-__version__ = "1.3.0-dev.3"
+__version__ = "1.3.0"
 
 __current_year__ = datetime.datetime.now().strftime("%Y")
 
