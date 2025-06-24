@@ -68,7 +68,7 @@ rm-docker-ci:
 #python-install: @ Installs the python package
 install-python:
 	pip install --upgrade pip setuptools wheel
-	pip install -e .[all] --force-reinstall --no-cache-dir
+	pip install -e .[all] --no-cache-dir
 
 #install-python-wheel: @ Installs the python wheel
 install-python-wheel: build-python-wheel
@@ -94,7 +94,14 @@ debug-deps:
 
 #fix-urllib3: @ Fix urllib3 version conflict for Python < 3.10
 fix-urllib3:
-	pip install "urllib3>=1.25.4,<1.27" --force-reinstall
+	pip install "urllib3>=1.25.4,<1.27" --upgrade
+
+#fix-distutils-conflicts: @ Fix conflicts with distutils-installed packages
+fix-distutils-conflicts:
+	pip install --upgrade pip setuptools wheel
+	pip install --ignore-installed six --user || pip install --ignore-installed six
+	pip install "urllib3>=1.25.4,<1.27" --upgrade
+	pip install -e .[all] --no-cache-dir
 
 #help:	@ List available tasks on this project
 help:

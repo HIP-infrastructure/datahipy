@@ -165,13 +165,13 @@ def create_bids_layout(bids_dir=None, **kwargs):
     # Get the config file using importlib.resources
     config_files = files("datahipy.bids.config")
     with as_file(config_files / "bids.json") as config_path:
-        # Create a pybids representation of the dataset
-        layout = BIDSLayout(
-            root=bids_dir,
-            validate=False,
+    # Create a pybids representation of the dataset
+    layout = BIDSLayout(
+        root=bids_dir,
+        validate=False,
             config=str(config_path),
-            **kwargs,
-        )
+        **kwargs,
+    )
     return layout
 
 
