@@ -34,8 +34,8 @@ before_script:
   - npm i semantic-release@20.1.0 semantic-release-python@2.5.30 @semantic-release/changelog@6.0.2 semantic-release-replace-plugin@1.2.0 @semantic-release/github@8.0.7 @semantic-release/git@10.0.1 -D
   # install python environment with wheel and twine
   - apk add --no-cache python3 python3-dev py3-pip
-  - pip install --upgrade pip
-  - pip install wheel twine
+  - pip3 install --upgrade pip
+  - pip3 install wheel twine
   #  install pre-built numpy and pandas packages, otherwise they take ages to build
   - echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
   - apk add --update --no-cache py3-numpy py3-pandas@testing
@@ -77,7 +77,7 @@ test:
   needs: ["build"]
   script:
     # Run tests
-    - make test TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make test TAG=$(python3 get_version.py)-dev.${CI_COMMIT_REF_NAME}
     # Download codecov uploader with integrity check
     # - curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
     - curl -Os https://uploader.codecov.io/latest/alpine/codecov
@@ -104,14 +104,14 @@ build:
   stage: build
   needs: ["test-python-install"]
   script:
-    - make build-docker TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
-    - make push-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make build-docker TAG=$(python3 get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make push-docker-ci TAG=$(python3 get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
 clean:
   stage: clean
   needs: ["test"]
   script:
-    - make rm-docker-ci TAG=$(python get_version.py)-dev.${CI_COMMIT_REF_NAME}
+    - make rm-docker-ci TAG=$(python3 get_version.py)-dev.${CI_COMMIT_REF_NAME}
 
 semantic-release:
   stage: semantic-release
@@ -143,6 +143,6 @@ deploy-release:
     # Push the new tag created by semantic-release
     - git push --tags github_origin $CI_COMMIT_REF_NAME
     # Build the Docker image with prerelease/release version tag
-    - make build-docker TAG=$(python get_version.py)
-    - make push-docker-ci TAG=$(python get_version.py)
+    - make build-docker TAG=$(python3 get_version.py)
+    - make push-docker-ci TAG=$(python3 get_version.py)
     
