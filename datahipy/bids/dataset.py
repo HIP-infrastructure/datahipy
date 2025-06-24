@@ -8,7 +8,13 @@ import shutil
 import json
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
-from pkg_resources import resource_filename
+try:
+    from importlib.resources import files
+    from importlib.resources import as_file
+except ImportError:
+    # Fallback for Python < 3.9
+    from importlib_resources import files
+    from importlib_resources import as_file
 from sre_constants import SUCCESS
 from datetime import date
 
@@ -156,13 +162,16 @@ def create_bids_layout(bids_dir=None, **kwargs):
     layout : pybids.BIDSLayout
         Pybids representation of the BIDS dataset.
     """
-    # Create a pybids representation of the dataset
-    layout = BIDSLayout(
-        root=bids_dir,
-        validate=False,
-        config=resource_filename("datahipy", "bids/config/bids.json"),
-        **kwargs,
-    )
+    # Get the config file using importlib.resources
+    config_files = files("datahipy.bids.config")
+    with as_file(config_files / "bids.json") as config_path:
+        # Create a pybids representation of the dataset
+        layout = BIDSLayout(
+            root=bids_dir,
+            validate=False,
+            config=str(config_path),
+            **kwargs,
+        )
     return layout
 
 
