@@ -6,6 +6,6 @@ setup() {
 }
 
 @test "Teardown tmp folder" {
-    sudo rm -rf ${PROJET_TMP_FOLDER}
+    rm -rf ${PROJET_TMP_FOLDER}
 }
 

@@ -20,5 +20,5 @@ setup() {
 }
 
 @test 'delete BIDS dataset created by tests' {
-    rm -r ${PROJET_TMP_FOLDER}/${DATASET_NAME}
+    rm -rf ${PROJET_TMP_FOLDER}/${DATASET_NAME}
 }
